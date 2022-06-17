@@ -1,2 +1,3 @@
 *.scss linguist-detectable=false
+*.hbs linguist-detectable=false
 *.js linguist-detectable=true
