@@ -22,7 +22,7 @@
     "primaryTokenAttribute": "health",
     "license": "LICENSE.txt",
     "url": "https://github.com/alexskylark/foundryvtt-animaprime",
-    "manifest": "https://raw.githubusercontent.com/alexskylark/foundryvtt-animaprime/v0.1/system.json",
-    "readme": "https://raw.githubusercontent.com/alexskylark/foundryvtt-animaprime/v0.1/README.md",
+    "manifest": "https://raw.githubusercontent.com/alexskylark/foundryvtt-animaprime/main/system.json",
+    "readme": "https://raw.githubusercontent.com/alexskylark/foundryvtt-animaprime/main/README.md",
     "download": "https://github.com/AlexSkylark/foundryvtt-animaprime/releases/download/v0.1/foundryvtt-animaprime-v001.zip"
 }
