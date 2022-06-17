@@ -11,7 +11,7 @@ import AnimaPrimeCombatant from "../src/AnimaPrimeCombatant.js";
 import AnimaPrimeCombat from "../src/AnimaPrimeCombat.js";
 import AnimaPrimeActor from "../src/AnimaPrimeActor.js";
 
-import * as HandlebarsHelpers from "./handlebars.js";
+import * as HandlebarsHelpers from "./Handlebars.js";
 
 async function preloadTemplates() {
     const templatePaths = [

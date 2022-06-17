@@ -7,11 +7,7 @@
     "compatibleCoreVersion": "9",
     "author": "AlexionStar",
     "socket": true,
-    "esmodules": [
-        "src/Handlebars.js",
-        "src/dice-rolls/dice-rerolls.js",
-        "src/AnimaPrime.js"
-    ],
+    "esmodules": ["src/dice-rolls/dice-rerolls.js", "src/AnimaPrime.js"],
     "styles": ["animaprime.css"],
     "packs": [],
     "languages": [
