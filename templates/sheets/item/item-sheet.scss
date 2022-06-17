@@ -1,0 +1,28 @@
+img {
+    flex: 0 0 48px !important;
+    height: 48px;
+    margin: 4px;
+    margin-right: 12px;
+}
+
+.field-container {
+    
+    height: 48px;    
+
+    label {
+        font-size: 10px;
+        margin-bottom: 4px;
+        margin-top: 10px;
+        text-transform: capitalize;
+    }
+
+    .value-field {
+        height: 26px;
+        padding-top: 11px;
+        font-size: 14px;
+
+        input[type=text] {
+            height: 15px;
+        }
+    }
+}

@@ -1,0 +1,166 @@
+$maneuver-color: #212cce;
+$maneuver-background: #e5e6f3   ;
+
+@mixin item-color($color, $background, $cellcolor) {
+    
+    img {            
+        border-color: $color;
+    }
+
+    .item-card {
+        background-color: $background;
+        border-color: $color;
+    
+        .item-header {
+            background-color: $color;
+        }
+    
+        
+    
+        .cells {
+            div {
+                border-color: $color;
+    
+                .cell-label {
+                    color: $color;
+                    background-color: $cellcolor;              
+                }
+            }
+        }
+    }
+}
+
+.item-card-container {
+    width: 49%;
+
+    img {
+        margin: 0;
+        border-width: 3px;
+        padding: 2px;
+        border-radius: 34px;
+        background-color: #fff;
+        height: 64px;
+        margin-bottom: -58px;
+        margin-left: calc(100% - 71px);
+        position: relative;
+    }
+
+    &.maneuver {
+        @include item-color(#212cce, #e5e6f3, #d8daf7)
+    }
+
+    &.strike {
+        @include item-color(#b80523, #f9e0e8, #f0b7c5)
+    }
+
+    &.achievement {
+        @include item-color(#12886e, #e0faee, #b8f1e3)
+    }
+
+    &.power {
+        @include item-color(#6105b8, #ebe1ff, #dbc3f1)
+    }
+
+    &.boost {
+        @include item-color(#d36702, #f8e7d1, #f1d3b8)
+    }
+
+    &.reaction {
+        @include item-color(#0490a8, #d1ecf8, #c2e8f8)
+    }
+
+    &.extra {
+        @include item-color(#6b6b6b, #f3f0f0, #dbd5d5)
+    }
+}
+
+.item-card {    
+    border: 2px solid;
+    border-radius: 12px;
+    margin-right: 18px;
+    padding-top: 9px;
+    display: flex;
+    flex-direction: column;
+    border-top-right-radius: 24px;
+
+    .item-header {
+
+        display: flex;
+        flex-direction: row;
+        width: 90%;
+        
+        span {
+            color: #fff;
+        }
+
+        i {
+            margin-top: 3px;
+            padding: 0px 2px !important;
+        }
+
+        label {
+            margin-right: 8px;
+        }
+
+        .item-title {
+            display: block;
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 2px;
+            padding-left: 8px;   
+        }        
+    }
+
+    .item-description {
+        
+        &:first-of-type {
+            margin-top: 24px;
+        }
+
+        margin-bottom: 8px;
+        font-size: 12px;
+        padding: 0px 9px;
+        padding-bottom: 0;
+    }
+
+    .cells {
+        
+        display: flex;
+        flex-direction: row;        
+
+        div {
+            background-color: #fff;
+            width: 45px;
+            height: 39px;
+            border-top: 2px solid;
+            border-right: 2px solid;
+
+            &:first-child {
+                border-bottom-left-radius: 12px;
+            }
+
+            &:last-child {
+                border-top-right-radius: 12px;
+                .cell-label {
+                    border-top-right-radius: 10px;
+                }
+            }
+
+            .cell-label {
+                text-align: center;
+                font-size: 12px;
+                font-weight: 600;
+                flex: 0;
+                padding-bottom: 1px;
+            }
+
+            span {
+                text-align: center;
+                font-size: 16px;
+                padding-top: 1px;
+            }
+        }        
+    }
+    
+}

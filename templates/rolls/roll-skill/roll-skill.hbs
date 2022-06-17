@@ -1,0 +1,34 @@
+<div class="roll-skill roll {{flavor.entityData.type}}" data-type="{{flavor.entityData.type}}">
+    <div class="roll item" data-item-id="{{_id}}">        
+        <div class="roll-header flexrow">
+            <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
+            <div class="flexcol">
+                <h4 class="header-title">Skill {{#if flavor.isReroll}}re{{/if}}roll:</h4>
+                <h4 class="header-name">{{flavor.entityData.name}}</h4>
+            </div>
+        </div>        
+        <div class="flexcol">
+            <div class="flexrow">
+                <ol class="rolls">
+                    {{#each flavor.rollResults.dice.0.results}}
+                    <li class="roll{{#if (isGreatSuccess this.result)}} success{{/if}}{{#if (isSuccess this.result)}} partial{{/if}}">{{{this.result}}}</li>
+                    {{/each}}                
+                </ol>
+                {{#if flavor.enableReroll}}
+                <div class="button-reroll-container flex0">
+                    <div class="button-roll reroll"><i class="fas fa-redo"></i></div>
+                </div>
+                {{/if}}
+            </div>            
+            {{#if (isTotal flavor.resultData)}}
+            <span class="result-message success">Total Success!</span>
+            {{/if}}
+            {{#if (isPartial flavor.resultData)}}            
+            <span class="result-message partial">Partial Success!</span>
+            {{/if}}
+            {{#if (isFailure flavor.resultData)}}            
+            <span class="result-message failure">Failure!</span>
+            {{/if}}
+        </div>        
+    </div>    
+</div>

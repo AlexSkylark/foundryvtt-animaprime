@@ -1,0 +1,70 @@
+<div class="roll-strike roll strike" data-type="strike">
+    <div class="roll item" data-item-id="{{_id}}">        
+        <div class="roll-header flexrow">
+            <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
+            <div class="flexcol">
+                <h4 class="header-title">{{flavor.entityData.type}} roll:</h4>
+                <h4 class="header-name">{{flavor.entityData.name}}</h4>
+            </div>
+        </div>
+        <div class="flexcol">
+            <div class="flexrow">
+                <ol class="rolls">
+                    {{#each flavor.additionalData.weakenedDice}}
+                    <li class="roll weaken">&nbsp;</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.resistanceDice}}
+                    <li class="roll resistance">&nbsp;</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.abilityDice}}
+                    <li title="Ability die" class="roll{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.strikeDice}}
+                    <li title="Strike die" class="roll strike{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.actionDice}}
+                    <li title="Action die"class="roll action{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.variableDice}}
+                    <li title="Threat / Progress die"class="roll threat{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.bonusDice}}
+                    <li title="Bonus die"class="roll bonus{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.empoweredDice}}
+                    <li title="Empowered Condition die"class="roll condition{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.successDice}}
+                    <li title="Ability Modifier die" class="roll successdice success">&nbsp;</li>
+                    {{/each}}                
+                </ol>
+                {{#if flavor.enableReroll}}
+                <div class="button-reroll-container flex0">
+                    <div class="button-roll reroll"><i class="fas fa-redo"></i></div>
+                    <div class="button-roll commit"><i class="fas fa-check"></i></div>
+                </div>
+                {{/if}}
+            </div>            
+            <span class="result-message{{#if flavor.resultData.hit}} success{{/if}} {{#unless flavor.resultData.successes}} failure{{/unless}}">
+            {{#if flavor.resultData.hit}}
+            MAJOR WOUND! {{flavor.entityData.targets.0.data.name}} <br /> takes a point of damage!
+            {{else}}
+                {{#if flavor.resultData.successes}}
+                    Minor wound! {{flavor.entityData.targets.0.data.name}} gained <br /> {{flavor.resultData.successes}} threat {{#if (is1 flavor.resultData.successes)}}die{{else}}dice{{/if}}.
+                {{else}}
+                    Complete miss!
+                {{/if}}
+            {{/if}}
+            </span>
+        </div>
+        
+    </div>    
+</div>

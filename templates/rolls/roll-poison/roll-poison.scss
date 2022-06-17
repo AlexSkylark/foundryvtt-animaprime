@@ -1,0 +1,12 @@
+@use '../../variables';
+@use '../roll.scss';
+
+.roll-poison {
+    .roll-header {
+        h4 {
+            &.header-name {
+                margin-top: 10px !important;
+            }  
+        }
+    } 
+}

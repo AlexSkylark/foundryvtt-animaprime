@@ -1,0 +1,54 @@
+<div class="roll-achievement roll achievement" data-type="achievement">
+    <div class="roll item" data-item-id="{{_id}}">        
+        <div class="roll-header flexrow">
+            <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
+            <div class="flexcol">
+                <h4 class="header-title">achievement:</h4>
+                <h4 class="header-name">{{flavor.entityData.name}}</h4>
+            </div>
+        </div>        
+        <div class="flexcol">
+            <div class="flexrow">
+                <ol class="rolls">
+                    {{#each flavor.additionalData.abilityDice}}
+                    <li class="roll{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.strikeDice}}
+                    <li class="roll strike{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.actionDice}}
+                    <li class="roll action{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.variableDice}}
+                    <li class="roll progress{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{/each}}
+
+                    {{#each flavor.additionalData.bonusDice}}
+                    <li class="roll bonus{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{/each}}
+                </ol>
+                {{#if flavor.enableReroll}}
+                <div class="button-reroll-container flex0">
+                    <div class="button-roll reroll"><i class="fas fa-redo"></i></div>
+                    <div class="button-roll commit"><i class="fas fa-check"></i></div>
+                </div>
+                {{/if}}
+            </div>                        
+            <span class="result-message {{#if flavor.resultData.hit}}success{{/if}}">
+                {{#if flavor.resultData.hit}}
+                Goal "{{flavor.entityData.targets.0.data.name}}" COMPLETE!!
+                {{else}}
+                    {{#if flavor.resultData.successes}}
+                        Some progress! <br /> {{flavor.resultData.successes}} progress {{#if (is1 flavor.resultData.successes)}}die{{else}}dice{{/if}} added.
+                    {{else}}
+                        No progress.
+                    {{/if}}
+                {{/if}}            
+            </span>        
+        </div>
+        
+    </div>    
+</div>

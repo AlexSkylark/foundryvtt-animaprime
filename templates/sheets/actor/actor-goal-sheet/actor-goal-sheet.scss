@@ -1,0 +1,98 @@
+@use '../actor-sheet.scss';
+@use '../../../variables';
+
+.goal-sheet {
+    
+    .main-frame {
+        align-items: center;
+    }
+
+    img {
+        border: 4px solid variables.$primary-color;
+        width: 200px;
+        height: 200px;
+        border-radius: 32px;
+        padding: 4px;        
+        background-color: #fff;
+    }
+
+    .image-container {
+        position: relative;
+        flex: 0 0 200px;
+    }
+
+    .cell {
+        
+        align-items: center;
+        margin-top: 12px;
+        justify-content: center;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        .looming-line {
+            align-items: center;
+        }
+
+        label {
+            display: flex;
+            font-size: 20px;
+            font-weight: 600;
+            color: variables.$primary-color;
+            text-align: center;
+            align-items: flex-end;
+
+            &.label-looming {
+                text-align: end;
+                padding-right: 11px;
+                margin-top: 8px;
+                display: inline-block;
+                width: 195px;
+            }
+        }
+        input[type=checkbox] {
+            flex: 0 0 30px;
+            margin-top: 11px;
+            display: inline-block;
+        }        
+
+        .property-value {       
+            border: 2px solid variables.$primary-color;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 60px;
+            max-width: 60px;
+            line-height: 55px;
+            border-radius: 30px;
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 26px;        
+
+            .button-changevalue {                
+                position: absolute;
+                border: 2px solid variables.$primary-color;
+                background-color: #fff;
+                padding: 2px 4px;
+                border-radius: 15px;
+                font-size: 13px;
+                line-height: 16px;
+                cursor: pointer;
+    
+                &.plus {
+                    top: 36px;
+                    left: 40px;
+                }
+    
+                &.minus {
+                    top: 36px;
+                    left: -8px;
+                }
+            }
+        }
+
+        
+    }
+}

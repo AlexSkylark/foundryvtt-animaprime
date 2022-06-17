@@ -1,0 +1,156 @@
+<form class="{{cssClass}} action-sheet">
+    <section class="flexrow flex-0">
+        <img src="{{item.img}}" />
+        <div class="field-container name flexcol">
+            <label>{{item.type}} Name</label>
+            <div class="value-field">        
+                <input type="text" name="name" value="{{item.name}}" />
+            </div>
+        </div>
+        <div class="field-container flexcol">
+            <label>cost</label>
+            <div class="value-field">        
+                <input type="text" name="data.cost" value="{{data.cost}}" data-dtype="Number" />
+            </div>
+        </div>
+        <div class="field-container flexcol">
+            <label>basic?</label>
+            <div class="value-field">        
+                <input type="checkbox" name="data.basic" {{checked data.basic}} data-dtype="Boolean" />
+            </div>
+        </div>
+    </section>    
+    <section class="action-data flexrow">    
+        {{#if data.effect}}
+        <div class="flexrow">
+            {{#if data.trigger}}
+            <div class="field-container flexcol">
+                <label>trigger</label>
+                <div class="value-field">        
+                    <input type="text" name="data.trigger"  value="{{data.trigger}}" data-dtype="String" />
+                </div>
+            </div>
+            {{/if}}
+             {{#if data.key}}
+            <div class="field-container flexcol">
+                <label>key</label>
+                <div class="value-field">        
+                    <input type="text" name="data.key"  value="{{data.key}}" data-dtype="String" />
+                </div>
+            </div>
+            {{/if}}
+            {{#if data.effect}}
+            <div class="field-container flexcol">
+                <label>effect</label>
+                <div class="value-field">        
+                    <input type="text" name="data.effect"  value="{{data.effect}}" data-dtype="String" />
+                </div>
+            </div>
+            {{/if}}        
+        </div>
+        {{/if}}
+        {{#if data.roll}}
+        <div class="field-container flexcol" {{#if data.gain}} style="flex: 0 0 40%" {{/if}}>
+            <label>roll</label>
+            <div class="value-field">        
+                <input type="text" name="data.roll"  value="{{data.roll}}" data-dtype="String" />
+            </div>
+        </div>
+        {{/if}}         
+        {{#if data.targets}}
+        <div class="field-container flexcol">
+            <label>targets</label>
+            <div class="value-field">        
+                <input type="text" name="data.targets"  value="{{data.targets}}" data-dtype="String" />
+            </div>
+        </div>
+        {{/if}}
+        {{#if data.range includeZero=true}}
+        <div class="field-container flexcol">
+            <label>range</label>
+            <div class="value-field">        
+                <input type="text" name="data.range"  value="{{data.range}}" data-dtype="String" />
+            </div>
+        </div>
+        {{/if}}
+        {{#if data.sdl}}
+        <div class="field-container flexcol">
+            <label>sdl</label>
+            <div class="value-field">        
+                <input type="text" name="data.sdl"  value="{{data.sdl}}" data-dtype="String" />
+            </div>
+        </div>
+        {{/if}}
+        {{#if data.damage}}
+        <div class="field-container flexcol">
+            <label>damage</label>
+            <div class="value-field">        
+                <input type="text" name="data.damage"  value="{{data.damage}}" data-dtype="String" />
+            </div>
+        </div>
+        {{/if}}
+        {{#if data.gain}}
+        <div class="gain">            
+            <h4 class="box-title">Gain Selection</h4>
+            <div class="flexrow">
+                <div class="flexrow">
+                    <span>1: </span>
+                    <select class="gain-select" data-field="data.gain.r1">
+                        <option value="0" {{#if (is0 data.gain.r1)}} selected {{/if}}>Fail</option>
+                        <option value="1" {{#if (is1 data.gain.r1)}} selected {{/if}}>Strike</option>
+                        <option value="2" {{#if (is2 data.gain.r1)}} selected {{/if}}>Charge</option>
+                    </select>
+                </div>
+                <div class="flexrow">
+                    <span>2: </span>
+                <select class="gain-select" data-field="data.gain.r2">
+                    <option value="0" {{#if (is0 data.gain.r2)}} selected {{/if}}>Fail</option>
+                    <option value="1" {{#if (is1 data.gain.r2)}} selected {{/if}}>Strike</option>
+                    <option value="2" {{#if (is2 data.gain.r2)}} selected {{/if}}>Charge</option>
+                </select>
+                </div>
+                <div class="flexrow">
+                    <span>3: </span>
+                <select class="gain-select" data-field="data.gain.r3">
+                    <option value="0" {{#if (is0 data.gain.r3)}} selected {{/if}}>Fail</option>
+                    <option value="1" {{#if (is1 data.gain.r3)}} selected {{/if}}>Strike</option>
+                    <option value="2" {{#if (is2 data.gain.r3)}} selected {{/if}}>Charge</option>
+                </select>
+                </div>
+                <div class="flexrow">
+                    <span>4: </span>
+                <select class="gain-select" data-field="data.gain.r4">
+                    <option value="0" {{#if (is0 data.gain.r4)}} selected {{/if}}>Fail</option>
+                    <option value="1" {{#if (is1 data.gain.r4)}} selected {{/if}}>Strike</option>
+                    <option value="2" {{#if (is2 data.gain.r4)}} selected {{/if}}>Charge</option>
+                </select>
+                </div>
+                <div class="flexrow">
+                    <span>5: </span>
+                <select class="gain-select" data-field="data.gain.r5">
+                    <option value="0" {{#if (is0 data.gain.r5)}} selected {{/if}}>Fail</option>
+                    <option value="1" {{#if (is1 data.gain.r5)}} selected {{/if}}>Strike</option>
+                    <option value="2" {{#if (is2 data.gain.r5)}} selected {{/if}}>Charge</option>
+                </select>
+                </div>
+                <div class="flexrow">
+                    <span>6: </span>
+                <select class="gain-select" data-field="data.gain.r6">
+                    <option value="0" {{#if (is0 data.gain.r6)}} selected {{/if}}>Fail</option>
+                    <option value="1" {{#if (is1 data.gain.r6)}} selected {{/if}}>Strike</option>
+                    <option value="2" {{#if (is2 data.gain.r6)}} selected {{/if}}>Charge</option>
+                </select>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+    </section>
+    <section class="flexrow description-section" {{#if data.gain}}style=" margin-top: 0 "{{/if}}>
+        <div class="field-container flexcol">
+            <label>description</label>
+            <div class="value-field">        
+                <input type="text" name="data.description" value="{{data.description}}" data-dtype="String" />
+            </div>
+        </div>        
+    </section>
+</form>

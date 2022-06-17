@@ -1,0 +1,131 @@
+
+@use 'variables';
+
+@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/montserrat/v24/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aXo.woff2) format('woff2');	
+  }
+
+@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/montserrat/v24/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCu173w5aXo.woff2) format('woff2');
+}
+
+@font-face {
+	font-family: 'Caveat';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(https://fonts.gstatic.com/s/caveat/v15/WnznHAc5bAfYB2QRah7pcpNvOx-pjfJ9eIWpYQ.woff2) format('woff2');
+  }
+
+@font-face {
+	font-family: 'Modesto Condensed';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../../fonts/modesto-condensed/modesto-condensed.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Modesto Condensed';
+	font-style: normal;
+	font-weight: 700;
+	src: url('../../fonts/modesto-condensed/modesto-condensed-bold.woff2') format('woff2');
+}
+
+input[type=text], span {
+	background: none;
+	border: 0;
+	color: #444;
+}
+
+li {
+	list-style: none;
+}
+
+.flex {
+	display: flex;
+}
+
+.box-title {
+	height: 18px;
+	line-height: 10px;
+	margin: -3px 8px 6px;
+	font-size: 20px;
+	font-weight: 700;
+	font-size: 18px;
+	color: #4b4a44;
+	border-bottom: 2px solid #aaa;
+	white-space: nowrap;
+	position: relative;
+	top: 4px;
+	text-align: center;
+
+	a {
+		margin-left: 8px;
+	}
+}
+
+input {
+	&:disabled:hover {
+		border-bottom: 2px solid variables.$input-line-color !important;                    
+	}
+}
+
+.button {
+	font-size: 11px;
+    padding: 1px 2px;
+    border: 1px solid #888;
+    margin-top: -2px;
+    margin-right: 2px;
+    max-width: 17px;
+    max-height: 16px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.value-field {
+	border-bottom: 1px solid #999;
+	background-color: variables.$base-mask;
+	font-family: Signika, sans-serif;
+	font-size: 11px;
+	padding-top: 1px;
+	line-height: 16px;
+	height: 20px;
+    padding-top: 8px;
+    padding-left: 6px;
+
+	input[type=text] {
+        height: 12px;
+    }
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+.item-roll {
+	cursor: pointer;
+}
+
+.icon-container {
+
+	&:hover > .icon {
+		
+		opacity: 1;
+	}
+
+	.icon {		
+		opacity: 0;
+		cursor: pointer;
+	}
+}
+
+.edit-hidden {
+	visibility: hidden !important;
+}

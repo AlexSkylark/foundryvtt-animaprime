@@ -1,0 +1,17 @@
+$base-grey: #666;
+$base-mask: rgba(0, 0, 0, 0.05);
+
+$primary-color: #643b68;
+$primary-color-light: lighten($primary-color, 60);
+$input-line-color: #333;
+$input-font-color: #555;
+$input-placeholder-color: #777;
+
+$success-foreground: #286856;
+$success-foreground-dice: #449777;
+$success-background: #70dbbd;
+$failure-foreground: #9c0606;
+$failure-background: #e995a7;
+
+
+$grooved-border: 2px groove #eeede0;

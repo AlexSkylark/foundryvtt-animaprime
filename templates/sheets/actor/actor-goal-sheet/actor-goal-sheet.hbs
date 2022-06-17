@@ -1,0 +1,42 @@
+<form class="{{cssClass}} goal-sheet" autocomplete="on">
+    
+    <div class="container-section">
+        <label class="container-header">{{actor.name}}</label>
+        <div class="container-wrapper">
+            <div class="flexrow main-frame">
+                <section class="cell image-container">
+                    <img src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />
+                </section>
+                <section class="flexcol">
+                    <div class="cell flexcol">
+                        <label>Difficulty</label>
+                        <div class="property-value">
+                            <div class="icon button-changevalue plus" data-property="difficulty" data-operation="plus"><i class="fas fa-plus"></i></div>
+                            <div class="icon button-changevalue minus" data-property="difficulty" data-operation="minus"><i class="fas fa-minus"></i></div>                            
+                            <span>{{data.difficulty}}</span>
+                        </div>
+                    </div>
+                    <div class="cell flexcol">
+                        <label>Progress Dice</label>
+                        <div class="property-value">
+                            <div class="icon button-changevalue plus" data-property="progressDice" data-operation="plus"><i class="fas fa-plus"></i></div>
+                            <div class="icon button-changevalue minus" data-property="progressDice" data-operation="minus"><i class="fas fa-minus"></i></div>
+                            <span>{{data.progressDice}}</span>
+                        </div>
+                    </div>
+                    <div class="cell flexcol">
+                        <div class="flexrow looming-line">
+                            <input class="input-text check" name="data.looming" type="checkbox" {{checked data.looming}} />
+                            <label class="label-looming">Looming turns</label>
+                        </div>                        
+                        <div class="property-value looming">
+                            <div class="icon button-changevalue plus" data-property="loomingTurns" data-operation="plus"><i class="fas fa-plus"></i></div>
+                            <div class="icon button-changevalue minus" data-property="loomingTurns" data-operation="minus"><i class="fas fa-minus"></i></div>
+                            <span>{{data.loomingTurns}}</span>
+                        </div>
+                    </div>
+                </section>
+            </div>           
+        </div>
+    </div>
+</form>

@@ -1,0 +1,130 @@
+$friendly-background: #008cff33;
+$friendly-border: #007aaa;
+
+$hostile-background: #f74e5229;
+$hostile-border: #d30058;
+
+.combat-tracker-tab {
+    .encounter-title {
+        margin: 0 !important;
+    }
+
+    .directory-list {
+        li {
+            padding: 2px 0px;
+            padding-left: 8px;
+        }
+    }
+
+    .header-next-turn {
+        width: 100;
+        text-align: center;
+        padding-bottom: 8px;      
+        border-bottom: 2px groove var(--color-border-dark-4);
+    }
+
+    .active-faction-friendly {
+        .friendly-section {
+            background-color: $friendly-background;
+        }
+    }
+
+    .active-faction-hostile {
+        .hostile-section {
+            background-color: $hostile-background;
+        }
+    }
+
+    .combat-section-title {
+        /* width: 100%; */
+        text-align: center;
+        border: 2px solid #fff;
+        padding: 3px;
+        margin: 2px 4px;
+        border-radius: 16px;
+
+        &.friendly-section {
+            border-color: $friendly-border;
+        }
+
+        &.hostile-section {
+            border-color: $hostile-border;
+        }
+    }
+
+    .turn-queue-list {
+        min-height: calc(50% - 136px);
+    }
+
+    .waiting-line {
+        
+        .combatant {
+            
+            &.friendly {
+                background-color: $friendly-background;                
+                border-top: 1px solid $friendly-border;
+                border-bottom: none;
+                &:last-child {
+                    border-bottom: 1px solid $friendly-border
+                }
+                &.active {                    
+                    background: $friendly-background !important;
+                    border: 0 !important;
+                    border-top: 1px solid $friendly-border !important;
+                }
+
+                &:hover {
+                    background: $friendly-background !important;
+                }
+            }
+
+            &.hostile {
+                background-color: $hostile-background;                
+                border-top: 1px solid $hostile-border;
+                border-bottom: none;
+                &:last-child {
+                    border-bottom: 1px solid $hostile-border
+                }
+                &.active {                    
+                    background: $hostile-background !important;
+                    border: 0 !important;
+                    border-top: 1px solid $hostile-border !important;
+                }
+
+                &:hover {
+                    background: $hostile-background !important;
+                }
+            }
+        }            
+    }
+/*    
+        
+
+        .combatant {            
+            &.friendly {
+                
+
+                &.active {
+                    background-color: rgba(0, 140, 255, 0.2) !important;
+
+                    border-top: 1px solid rgb(0, 122, 170) !important;                    
+                    border-bottom: none !important;
+                    &:last-child {
+                        border-bottom: 1px solid rgb(0, 122, 170) !important;
+                    }
+                }
+            }
+        }
+*/
+    button {
+        display: block;
+        width: 80px;
+        height: calc(var(--sidebar-item-height) - 24px);
+        background: rgba(0,0,0,0);
+        background-size: 32px;
+        margin-top: calc(var(--sidebar-item-height) - 36px);
+        margin-right: 1em;
+        line-height: 20px;
+        color: #bddcfb;
+    }
+}

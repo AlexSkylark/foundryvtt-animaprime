@@ -1,0 +1,24 @@
+@use '../../variables';
+@use '../roll.scss';
+
+.roll-strike {
+    
+    .roll-header {        
+        h4 {            
+            color: #666;
+            &.header-title {
+                margin-top: 2px;
+                font-size: 16px;
+                margin-bottom: 0;
+            }
+
+            &.header-name {
+                font-size: 23px;    
+            }
+        }
+    }
+    
+    .result-message {
+        font-size: 14px;
+    }
+}

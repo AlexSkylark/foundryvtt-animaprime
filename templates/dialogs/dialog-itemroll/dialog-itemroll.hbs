@@ -1,0 +1,100 @@
+<script>
+    function modifyDice(diceType, add, maxValue, type) {        
+        if (add && $(".form-" + diceType)[0].value < maxValue)
+            $(".form-" + diceType)[0].value++;
+        else if (!add && $(".form-" + diceType)[0].value > 0)
+            $(".form-" + diceType)[0].value--;
+    }
+</script>
+
+<form>
+    <div class="flexrow dialog-container">
+        {{#if (isCharacter owner.type)}}
+        <div class=" dialog-field-container flexrow">
+            <label>Add Strike Dice?</label>        
+            <div class="flexrow dialog-buttons">
+                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('strike-dice', false)">
+                    <span class="fas fa-minus" />
+                </button>
+                <div class="form-dice-field flexrow">
+                    <input type="text" class="form-strike-dice" name="strikeDice" disabled value="0" />
+                    <span>/</span>
+                    <span>{{this.maxStrikeDice}}</span> 
+                </div>
+                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('strike-dice', true, {{this.maxStrikeDice}})">
+                    <span class="fas fa-plus" />
+                </button>
+            </div>
+        </div>
+        <div class=" dialog-field-container flexrow">
+            <label>Add Action Dice?</label>        
+            <div class="flexrow dialog-buttons">
+                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('action-dice', false)">
+                    <span class="fas fa-minus" />
+                </button>
+                <div class="form-dice-field flexrow">
+                    <input type="text" class="form-action-dice" name="actionDice" disabled value="0" />
+                    <span>/</span>
+                    <span>{{this.maxActionDice}}</span> 
+                </div>            
+                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('action-dice', true, {{this.maxActionDice}})">
+                    <span class="fas fa-plus" />
+                </button>
+            </div>
+        </div>
+        {{/if}}
+        <div class=" dialog-field-container flexrow">
+            <label>Add {{this.variableDiceName}} from target?</label>        
+            <div class="flexrow dialog-buttons">
+                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('variable-dice', false)">
+                    <span class="fas fa-minus" />
+                </button>
+                <div class="form-dice-field flexrow">
+                    <input type="text" class="form-variable-dice" name="variableDice" disabled value="0" />
+                    <span>/</span>
+                    <span>{{this.maxVariableDice}}</span> 
+                </div>            
+                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('variable-dice', true, {{this.maxVariableDice}})">
+                    <span class="fas fa-plus" />
+                </button>
+            </div>
+        </div>
+        <div class=" dialog-field-container flexrow">
+            <label>Add Bonus Dice?</label>        
+            <div class="flexrow dialog-buttons">
+                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('bonus-dice', false)">
+                    <span class="fas fa-minus" />
+                </button>
+                <div class="form-dice-field flexrow">
+                    <input type="text" class="form-bonus-dice" name="bonusDice" disabled value="0" />
+                </div>            
+                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('bonus-dice', true, 9999)">
+                    <span class="fas fa-plus" />
+                </button>
+            </div>
+        </div>
+        {{#unless (isAchievement type)}}
+        <div class=" dialog-field-container flexcol">
+            <label class="label-resistance">Target has Weakness?</label>        
+            <div class="flexrow dialog-buttons">
+                <input class="input-text check" name="weakness" value="1" type="radio" checked>No</input>
+                <input class="input-text check" name="weakness" value="2" type="radio">Yes</input>
+            </div>
+        </div>
+        <div class=" dialog-field-container flexrow">
+            <label>Target has resistance?</label>        
+            <div class="flexrow dialog-buttons">
+                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('resistance', false)">
+                    <span class="fas fa-minus" />
+                </button>
+                <div class="form-dice-field flexrow">
+                    <input type="text" class="form-resistance" name="resistance" disabled value="0" />
+                </div>            
+                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('resistance', true, 9999)">
+                    <span class="fas fa-plus" />
+                </button>
+            </div>
+        </div>
+        {{/unless}}
+    </div>
+</form>

@@ -1,0 +1,42 @@
+<div class="roll-maneuver roll maneuver" data-type="maneuver">
+    <div class="roll item" data-item-id="{{_id}}">        
+        <div class="roll-header flexrow">            
+            <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
+            <div class="flexcol">
+                <h4 class="header-title">Maneuver {{#if flavor.isReroll}}re{{/if}}roll:</h4>
+                <h4 class="header-name">{{flavor.entityData.name}}</h4>
+            </div>
+        </div>        
+        <div class="flexcol">
+            <div class="flexrow">
+                <ol class="rolls">
+                    {{#if flavor.additionalData.isSlowed}}
+                    <li class="roll slowed" title="Slowed Condition die"></li>
+                    {{/if}}
+                    {{#each flavor.rollResults.dice.0.results}}
+                    <li class="roll" title="Maneuver die">{{{this.result}}}</li>
+                    {{/each}}
+                    {{#if flavor.additionalData.isQuickened}}
+                    <li class="roll quickened" title="Quickened Condition die">{{{flavor.additionalData.quickenedDie.result}}}</li>
+                    {{/if}}
+                </ol>
+                {{#if flavor.enableReroll}}
+                <div class="button-reroll-container flex0">
+                    <div class="button-roll reroll"><i class="fas fa-redo"></i></div>
+                    <div class="button-roll commit"><i class="fas fa-check"></i></div>
+                </div>
+                {{/if}}
+            </div>            
+            <span class="result-message">
+            {{#if flavor.resultData.strike}}
+            + {{flavor.resultData.strike}} strike
+            {{/if}}
+            &nbsp;
+            {{#if flavor.resultData.charge}}
+            + {{flavor.resultData.charge}} charge
+            {{/if}}
+            </span>        
+        </div>
+        
+    </div>    
+</div>

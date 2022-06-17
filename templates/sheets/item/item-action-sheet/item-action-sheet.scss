@@ -1,0 +1,45 @@
+@use '../../../root-elements.scss';
+@use '../item-sheet.scss';
+
+.action-sheet {
+    
+    .name {
+        flex: 0 0 60%
+    }
+    
+    .field-container {
+        padding-right: 16px;
+    }
+
+    .description-section {
+        margin-top: 12px;
+    }
+
+    .description {        
+        flex: 0 0 65%;  
+    }
+
+    select {
+        height: 16px;
+        font-size: 11px;
+        margin: 4px 4px;
+        flex: 0 0 60%;
+    }
+
+    .action-data {
+        
+        span {
+            display: block;
+            margin-top: 4px;
+            flex: 0;
+        }
+
+        .box-title {
+            margin-bottom: 16px;            
+        }
+
+        .gain {
+            margin-top: 12px;
+        }
+    }
+}

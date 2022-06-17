@@ -1,0 +1,24 @@
+{
+    "name": "animaprime",
+    "version": "1.0.0",
+    "description": "CSS compiler for the Anima Prime Resurgence system",
+    "scripts": {
+        "build": "gulp build",
+        "compile": "gulp css",
+        "watch": "gulp",
+        "gulp": "gulp"
+    },
+    "browserslist": [
+        "last 3 versions"
+    ],
+    "author": "AlexionStar",
+    "license": "MIT",
+    "private": true,
+    "dependencies": {
+        "dart-sass": "^1.25.0",
+        "gulp": "4.0.2",
+        "gulp-sass": "5.1.0",
+        "gulp-sourcemaps": "3.0.0",
+        "sass": "^1.52.1"
+    }
+}

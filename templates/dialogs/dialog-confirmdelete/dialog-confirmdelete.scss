@@ -1,0 +1,18 @@
+@use '../../root-elements.scss';
+@use '../../sheets/item/item-sheet.scss';
+
+.dialog-confirmdelete {
+    
+    margin-bottom: 8px;
+
+    .value-field {
+        border: 0;
+        background: none;
+        line-height: 20px;
+        text-align: center;
+        font-size: 16px;
+        padding: 7px;
+        margin-bottom: 12px;
+        line-height: 16px;
+    }
+}

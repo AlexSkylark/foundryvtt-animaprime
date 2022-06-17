@@ -1,0 +1,140 @@
+{
+    "Actor": {
+        "types": ["character", "adversity", "hazard", "goal"],
+        "templates": {
+            "base": {
+                "health": {
+                    "value": 3,
+                    "max": 3
+                },
+                "defense": 5,
+                "enableEdit": false
+            },
+            "dice": {
+                "actionDice": 0,
+                "strikeDice": 0,
+                "chargeDice": 0,
+                "threatDice": 0
+            },
+            "actions": {
+                "maneuvers": [],
+                "strikes": [],
+                "achievements": [],
+                "powers": [],
+                "reactions": [],
+                "boosts": [],
+                "extras": []
+            }
+        },
+        "adversity": {
+            "templates": ["base"],
+            "chargeDice": 0,
+            "threatDice": 0,
+            "strikes": [],
+            "powers": []
+        },
+        "hazard": {
+            "health": {
+                "value": 1,
+                "max": 1
+            },
+            "defense": 8,
+            "threatDice": 0,
+            "strikes": []
+        },
+        "character": {
+            "templates": ["base", "dice", "actions"],
+            "race": "",
+            "concept": "",
+            "passion": "",
+            "profession": "",
+            "background": "",
+            "skills": [],
+            "traits": {
+                "trait1": {
+                    "name": "",
+                    "marked": false
+                },
+                "trait2": {
+                    "name": "",
+                    "marked": false
+                },
+                "trait3": {
+                    "name": "",
+                    "marked": false
+                }
+            }
+        },
+        "goal": {
+            "difficulty": 0,
+            "progressDice": 0,
+            "looming": false,
+            "loomingTurns": 0
+        }
+    },
+    "Item": {
+        "types": [
+            "maneuver",
+            "power",
+            "strike",
+            "boost",
+            "achievement",
+            "reaction",
+            "skill",
+            "extra"
+        ],
+        "templates": {
+            "base": {
+                "description": "-",
+                "cost": 0,
+                "basic": false
+            },
+            "effect": {
+                "effect": "-"
+            }
+        },
+        "skill": {
+            "icon": "icons/trades/academics-study-reading-book.webp",
+            "name": "New Skill"
+        },
+        "maneuver": {
+            "templates": ["base"],
+            "roll": "4d",
+            "gain": {
+                "r1": "fail",
+                "r2": "fail",
+                "r3": "strike",
+                "r4": "strike",
+                "r5": "strike",
+                "r6": "charge"
+            },
+            "gainText": ""
+        },
+        "strike": {
+            "targets": 1,
+            "range": 0,
+            "sdl": 4,
+            "roll": "1d",
+            "damage": "physical"
+        },
+        "power": {
+            "templates": ["base", "effect"],
+            "key": "-"
+        },
+        "boost": {
+            "templates": ["base", "effect"]
+        },
+        "achievement": {
+            "templates": ["base", "effect"],
+            "sdl": 4,
+            "roll": "1d"
+        },
+        "reaction": {
+            "templates": ["base", "effect"],
+            "trigger": "-"
+        },
+        "extra": {
+            "templates": ["base", "effect"]
+        }
+    }
+}

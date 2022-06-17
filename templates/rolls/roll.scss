@@ -1,0 +1,157 @@
+@use 'variables';
+
+.roll-img {
+    flex: 0 0 40px !important;
+    width: 40px;
+    height: 40px;
+    margin-right: 0;
+}
+
+.roll-header {
+    border-top: variables.$grooved-border;
+    border-bottom: variables.$grooved-border;
+
+    h4 {
+        font-family: "Modesto Condensed";
+        font-size: 18px;
+        color: #666;
+        margin-top: 0px;
+        margin-left: 8px;
+
+        &.header-title {
+            margin-top: 2px !important;
+            font-size: 16px !important;
+            margin-bottom: 0 !important;
+        }
+
+        &.header-name {
+            font-size: 23px !important;
+            margin-bottom: 3px !important;
+            margin-top: 0 !important;   
+        }
+    }
+}
+
+.rolls {
+    list-style: none;
+    margin: 5px 0;
+    padding: 1px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 2;
+
+    .roll {
+        position: relative;
+        width: 24px;
+        line-height: 24px;
+        float: left;
+        margin: 0px 3px;
+        padding-top: 3px;
+        background-image: url(../../icons/svg/d6-grey.svg);
+        background-repeat: no-repeat;
+        background-size: 24px 24px;
+        font-size: var(--font-size-16);
+        color: rgba(0, 0, 0, 0.65);
+        font-weight: bold;
+        text-align: center;
+        background-position-x: center;
+        background-position-y: center;
+
+        &.strike {
+            background-image: url(../../systems/animaprime/assets/d6-blue.svg);
+        }
+        
+        &.action {
+            background-image: url(../../systems/animaprime/assets/d6-purple.svg);
+        }
+
+        &.threat, &.progress {
+            background-image: url(../../systems/animaprime/assets/d6-yellow.svg);
+        }
+
+        &.bonus {
+            background-image: url(../../systems/animaprime/assets/d6-green.svg);
+        }
+
+        &.condition {
+            background-image: url(../../systems/animaprime/assets/d6-condition.svg);
+        }
+
+        &.resistance {
+            background-image: url(../../systems/animaprime/assets/d6-red-forbidden.svg);
+        }
+
+        &.weaken {
+            background-image: url(../../systems/animaprime/assets/d6-condition-forbidden.svg);
+        }
+
+        &.successdice {
+            background-image: url(../../systems/animaprime/assets/d6-green-successmodifier.svg);
+        }
+
+        &.success {
+            position: relative;
+            top: 1px;
+            padding-top: 2px;
+            border-bottom: 2px solid #45af86 !important;
+        }
+
+        &.partial {
+            border-bottom: 2px solid rgb(225, 140, 14);
+        }
+
+        
+    }
+}
+
+.button-reroll-container {        
+    align-self: center;    
+    display: flex !important;
+    margin-left: 3px;
+            
+    .button-roll {
+        border: 2px solid;
+        flex: 0;
+        padding: 4px;
+        padding-bottom: 2px;
+        padding-right: 7px;
+        width: 28px;
+        background-color: #fff;
+        border-radius: 8px;
+        margin-right: 4px;
+        cursor: pointer;
+
+        &.reroll {
+            color: #990f38;
+        }
+
+        &.commit {
+            color: #0f9986;
+        }
+    }
+}
+
+.result-message {
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid;
+    margin: 6px;
+    padding: 3px;
+    font-weight: bold;
+    background-color: #bbb;
+    width: calc(100% - 12px);
+    display: block;
+
+    &.success {
+        border-color: variables.$success-foreground;
+        color: variables.$success-foreground;
+        background-color: variables.$success-background;
+    }
+
+    &.failure {
+        border-color: variables.$failure-foreground;
+        color: variables.$failure-foreground;
+        background-color: variables.$failure-background;
+    }
+}

@@ -1,0 +1,48 @@
+@use '../../root-elements.scss';
+@use '../../variables';
+
+.adversity-sheet,
+.character-sheet,
+.goal-sheet,
+.hazard-sheet {
+	background: #fff;
+	color: #333;
+	font-family: 'Montserrat', sans-serif;
+	margin: -7px;
+}
+
+.container-section {
+
+	margin-top: 24px;
+	z-index: 1;
+
+	.container-header {
+		background-color: variables.$primary-color;
+		border-radius: 8px;
+		padding: 6px 20px;
+		text-align: center;
+		color: #fff;
+		font-weight: 600;                
+		margin-left: 22px;
+		position: relative;
+		bottom: 4px;
+		border-bottom-left-radius: 0px;
+		border-bottom-right-radius: 0px;
+	}
+
+	.container-wrapper {
+		border: 2px solid variables.$primary-color;
+		overflow: auto;
+		border-radius: 8px;
+		padding: 16px 8px;
+		margin-left: 11px;
+		background-color: #fff;
+		width: calc(100% - 20px);
+
+		.input-text {
+			font-size: 22px;
+			width: calc(100% - 26px);
+			color: #222;
+		}
+	}
+}

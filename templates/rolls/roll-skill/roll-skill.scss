@@ -1,0 +1,39 @@
+@use '../../variables';
+@use '../roll.scss';
+
+.roll-skill {
+    
+    .roll-header {        
+        h4 {
+            font-size: 23px;
+            color: #666;
+            margin-top: 9px;
+        }
+    }
+
+    .result-message {
+        font-size: 16px;
+        text-align: center;
+        border: 1px solid;
+        margin: 6px;
+        font-weight: bold;
+
+        &.success {
+            border-color: variables.$success-foreground;
+            color: variables.$success-foreground;
+            background-color: variables.$success-background;
+        }
+
+        &.partial {
+            border-color: rgb(104, 69, 23);
+            color: rgb(104, 69, 23);
+            background-color: rgb(230, 187, 132);
+        }
+
+        &.failure {
+            border-color: variables.$failure-foreground;
+            color: variables.$failure-foreground;
+            background-color: variables.$failure-background;
+        }
+    }
+}
