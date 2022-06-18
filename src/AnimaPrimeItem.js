@@ -20,38 +20,41 @@ export default class AnimaPrimeItem extends Item {
     prepareBaseData() {
         // Data modifications in this step occur before processing embedded
         // documents or derived data.
+    }
 
-        switch (this.type) {
+    _onCreate(data, options, userId) {
+        super._onCreate(data, options, userId);
+
+        switch (data.type) {
             case "skill":
-                this.data.img =
+                data.img =
                     "icons/skills/trades/academics-study-reading-book.webp";
                 break;
             case "maneuver":
-                this.data.img = "icons/magic/air/air-smoke-casting.webp";
+                data.img = "icons/magic/air/air-smoke-casting.webp";
                 break;
             case "strike":
-                this.data.img = "icons/weapons/swords/sword-guard-brown.webp";
+                data.img = "icons/weapons/swords/sword-guard-brown.webp";
                 break;
             case "power":
-                this.data.img = "icons/magic/light/projectile-smoke-blue.webp";
+                data.img = "icons/magic/light/projectile-smoke-blue.webp";
                 break;
             case "boost":
-                this.data.img =
-                    "icons/skills/movement/arrow-upward-yellow.webp";
+                data.img = "icons/skills/movement/arrow-upward-yellow.webp";
                 break;
             case "reaction":
-                this.data.img =
+                data.img =
                     "icons/skills/targeting/target-strike-triple-blue.webp";
                 break;
             case "extra":
-                this.data.img =
-                    "icons/commodities/materials/feather-orange.webp";
+                data.img = "icons/commodities/materials/feather-orange.webp";
                 break;
             case "achievement":
-                this.data.img =
-                    "icons/sundries/books/book-red-exclamation.webp";
+                data.img = "icons/sundries/books/book-red-exclamation.webp";
                 break;
         }
+
+        return data;
     }
 
     async roll(ctrl, shift, alt) {

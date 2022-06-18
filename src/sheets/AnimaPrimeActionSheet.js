@@ -24,6 +24,7 @@ export default class AnimaPrimeActionSheet extends ItemSheet {
     }
 
     async activateListeners(html) {
+        super.activateListeners(html);
         html.find(".gain-select").change(async (ev) => {
             ev.preventDefault();
 

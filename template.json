@@ -94,11 +94,12 @@
             }
         },
         "skill": {
-            "icon": "icons/trades/academics-study-reading-book.webp",
+            "img": "icons/trades/academics-study-reading-book.webp",
             "name": "New Skill"
         },
         "maneuver": {
             "templates": ["base"],
+            "img": "icons/magic/air/air-smoke-casting.webp",
             "roll": "4d",
             "gain": {
                 "r1": "fail",

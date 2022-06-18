@@ -126,20 +126,20 @@
             
             <nav class="sheet-tabs tabs" data-group="primary-tabs">                
                 <a data-tab="basic">Basic Actions</a>
-                <a data-tab="profession">Profession Actions</a>
+                <a data-tab="profession">Character Actions</a>
             </nav>            
             <section class="sheet-body">
                 <div class="tab" data-tab="basic" data-group="primary-tabs">
                     <div class="actions-section">                    
                         {{#each data.basicActions as |item id|}}
-                        {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item}}
+                        {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../data.enableEdit}}
                         {{/each}}
                     </div>
                 </div>
                 <div class="tab" data-tab="profession" data-group="primary-tabs">
                     <div class="actions-section">                    
                         {{#each data.actions as |item id|}}
-                        {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item}}
+                        {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../data.enableEdit}}
                         {{/each}}
                     </div>
                 </div>
