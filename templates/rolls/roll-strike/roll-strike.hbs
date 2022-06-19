@@ -1,5 +1,5 @@
 <div class="roll-strike roll strike" data-type="strike">
-    <div class="roll item" data-item-id="{{_id}}">        
+    <div class="roll item" data-item-id="{{id}}">        
         <div class="roll-header flexrow">
             <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
             <div class="flexcol">
@@ -55,10 +55,10 @@
             </div>            
             <span class="result-message{{#if flavor.resultData.hit}} success{{/if}} {{#unless flavor.resultData.successes}} failure{{/unless}}">
             {{#if flavor.resultData.hit}}
-            MAJOR WOUND! {{flavor.entityData.targets.0.data.name}} <br /> takes a point of damage!
+            MAJOR WOUND! {{flavor.targetNames.[0]}} takes a point of damage!
             {{else}}
                 {{#if flavor.resultData.successes}}
-                    Minor wound! {{flavor.entityData.targets.0.data.name}} gained <br /> {{flavor.resultData.successes}} threat {{#if (is1 flavor.resultData.successes)}}die{{else}}dice{{/if}}.
+                    Minor wound! {{flavor.targetNames.[0]}} gained <br /> {{flavor.resultData.successes}} threat {{#if (is1 flavor.resultData.successes)}}die{{else}}dice{{/if}}.
                 {{else}}
                     Complete miss!
                 {{/if}}

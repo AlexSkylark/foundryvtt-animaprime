@@ -21,6 +21,10 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         return `/systems/animaprime/templates/sheets/actor/actor-${this.actor.data.type}-sheet/actor-${this.actor.data.type}-sheet.hbs`;
     }
 
+    get editUnlocked() {
+        return data.enableEdit || game.user.isGM;
+    }
+
     getData() {
         const context = super.getData();
         const actorData = context.actor.data;
@@ -56,6 +60,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         context.data.skills = skills;
         context.data.basicActions = basicActions;
         context.data.actions = actions;
+
+        context.editUnlocked = context.data.enableEdit || game.user.isGM;
     }
 
     formatManeuverGains(elem) {

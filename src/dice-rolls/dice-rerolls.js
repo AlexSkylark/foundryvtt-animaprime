@@ -1,12 +1,14 @@
 import * as SkillRoll from "./skill-roll.js";
 import * as ManeuverRoll from "./maneuver-roll.js";
 import * as AttackRoll from "./attack-roll.js";
+import AnimaPrimeActor from "../AnimaPrimeActor.js";
 
 Hooks.on("renderChatMessage", (app, [html]) => {
     html.addEventListener("click", async (event) => {
         if ($(event.target).parent().hasClass("button-roll")) {
             const flags = app.data.flags;
-            if (!game.actors.get(app.data.speaker.actor).isOwner) {
+
+            if (!game.actors.get(app.data.flags.actorId).isOwner) {
                 ui.notifications.error("You did not perform this roll!");
                 return;
             }
@@ -20,18 +22,30 @@ Hooks.on("renderChatMessage", (app, [html]) => {
                 return;
             }
 
+            app.data.flags.sourceItem.owner = game.scenes.active.tokens.get(
+                app.data.flags.tokenId
+            ).actor;
+
             if ($(event.target).parent().hasClass("reroll")) {
-                await performReroll(flags);
-                await app.update({ "flags.reroll": true });
+                try {
+                    await performReroll(flags);
+                    await app.update({ "flags.reroll": true });
+                } catch (ex) {
+                    throw ex;
+                }
             } else if ($(event.target).parent().hasClass("commit")) {
-                await performCommit(flags);
-                await app.update({ "flags.commit": true });
+                try {
+                    await performCommit(flags);
+                    await app.update({ "flags.commit": true });
+                } catch (ex) {
+                    throw ex;
+                }
             }
         }
     });
 });
 
-function performReroll(flags) {
+async function performReroll(flags) {
     if (flags.sourceItem.type == "skill")
         SkillRoll.skillCheck(flags.sourceItem, flags.additionalData.withHelp);
     else if (flags.sourceItem.type == "maneuver")
@@ -46,15 +60,12 @@ function performReroll(flags) {
 
 async function performCommit(flags) {
     if (flags.sourceItem.type == "maneuver") {
-        let ownerId = flags.sourceItem.owner.id ?? flags.sourceItem.owner._id;
-        ManeuverRoll.commitResults(ownerId, flags.resultData, flags.sourceItem);
+        ManeuverRoll.commitResults(flags.resultData, flags.sourceItem);
     } else if (
         flags.sourceItem.type == "strike" ||
         flags.sourceItem.type == "achievement"
     ) {
-        let ownerId = flags.sourceItem.owner.id ?? flags.sourceItem.owner._id;
         AttackRoll.commitResults(
-            ownerId,
             flags.resultData,
             flags.sourceItem,
             flags.dialogOptions,

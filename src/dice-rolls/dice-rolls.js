@@ -9,8 +9,7 @@ export async function renderRoll(
     dialogOptions,
     itemTargets
 ) {
-    let ownerId = entityData.owner.id ?? entityData.owner._id;
-    let enableReroll = checkForReroll(ownerId);
+    let enableReroll = checkForReroll(entityData.owner);
 
     if (entityData.type == "skill" && resultData == "total")
         enableReroll = false;
@@ -25,6 +24,7 @@ export async function renderRoll(
             additionalData: additionalData,
             enableReroll: enableReroll,
             isReroll: isReroll,
+            targetNames: entityData.targets.map((i) => i.name),
         },
     });
 
@@ -39,19 +39,15 @@ export async function renderRoll(
             itemTargets: itemTargets,
             reroll: false,
             commit: false,
+            tokenId: entityData.owner.token.id,
+            actorId: entityData.owner.id,
         },
     };
 
     await rollResult.toMessage(messageData);
 
     if (!enableReroll && commitCallback)
-        commitCallback(
-            ownerId,
-            resultData,
-            entityData,
-            dialogOptions,
-            itemTargets
-        );
+        commitCallback(resultData, entityData, dialogOptions, itemTargets);
 }
 
 export async function getItemRollOptions(item) {
@@ -204,10 +200,7 @@ export function checkSkillSuccess(results, disadvantage = false) {
     }
 }
 
-export function checkForReroll(ownerId) {
-    let owner = game.actors.get(ownerId);
-    if (!owner) owner = game.scenes.active.tokens.get(ownerId);
-
+export function checkForReroll(owner) {
     if (owner.type != "character") return false;
 
     const traits = owner.data.data.traits;

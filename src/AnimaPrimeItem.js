@@ -22,39 +22,41 @@ export default class AnimaPrimeItem extends Item {
         // documents or derived data.
     }
 
-    _onCreate(data, options, userId) {
-        super._onCreate(data, options, userId);
+    _preCreate(data, options, user) {
+        super._preCreate(data, options, user);
 
-        switch (data.type) {
-            case "skill":
-                data.img =
-                    "icons/skills/trades/academics-study-reading-book.webp";
-                break;
-            case "maneuver":
-                data.img = "icons/magic/air/air-smoke-casting.webp";
-                break;
-            case "strike":
-                data.img = "icons/weapons/swords/sword-guard-brown.webp";
-                break;
-            case "power":
-                data.img = "icons/magic/light/projectile-smoke-blue.webp";
-                break;
-            case "boost":
-                data.img = "icons/skills/movement/arrow-upward-yellow.webp";
-                break;
-            case "reaction":
-                data.img =
-                    "icons/skills/targeting/target-strike-triple-blue.webp";
-                break;
-            case "extra":
-                data.img = "icons/commodities/materials/feather-orange.webp";
-                break;
-            case "achievement":
-                data.img = "icons/sundries/books/book-red-exclamation.webp";
-                break;
+        if (!data.img) {
+            switch (data.type) {
+                case "skill":
+                    img =
+                        "icons/skills/trades/academics-study-reading-book.webp";
+                    break;
+                case "maneuver":
+                    img = "icons/magic/air/air-smoke-casting.webp";
+                    break;
+                case "strike":
+                    img = "icons/weapons/swords/sword-guard-brown.webp";
+                    break;
+                case "power":
+                    img = "icons/magic/light/projectile-smoke-blue.webp";
+                    break;
+                case "boost":
+                    img = "icons/skills/movement/arrow-upward-yellow.webp";
+                    break;
+                case "reaction":
+                    img =
+                        "icons/skills/targeting/target-strike-triple-blue.webp";
+                    break;
+                case "extra":
+                    img = "icons/commodities/materials/feather-orange.webp";
+                    break;
+                case "achievement":
+                    img = "icons/sundries/books/book-red-exclamation.webp";
+                    break;
+            }
+
+            this.data.update({ img: img });
         }
-
-        return data;
     }
 
     async roll(ctrl, shift, alt) {

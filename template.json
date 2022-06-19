@@ -28,6 +28,7 @@
         },
         "adversity": {
             "templates": ["base"],
+            "strikeDice": 0,
             "chargeDice": 0,
             "threatDice": 0,
             "strikes": [],

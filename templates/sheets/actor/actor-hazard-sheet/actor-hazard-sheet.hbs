@@ -47,10 +47,10 @@
 
     <section class="actions-section">
         {{#each data.basicActions as |item id|}}
-        {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item}}
+        {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=true}}
         {{/each}}
         {{#each data.actions as |item id|}}
-        {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item}}
+        {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=true}}
         {{/each}}
     </section> 
 </form>

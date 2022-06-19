@@ -10,7 +10,7 @@
     </header>
     <div class="flexrow sheet-columns">
         <div class="left-side flexcol">
-            <div class="flex0">
+            <div class="left-side-container flex0">
                 <div class="image-container">
                     <img src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />
                 </div>
@@ -35,6 +35,14 @@
         </div>
         <div class="right-side flexcol dice-pools">                        
             <div class="dice-pool-strip icon-container flex0">
+                <div class="icon button-changevalue plus" data-property="strikeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
+                <div class="icon button-changevalue minus" data-property="strikeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
+                <label>Strike Dice</label>
+                <div class="attribute-value">
+                    <span>{{data.strikeDice}}</span>
+                </div>
+            </div>
+            <div class="dice-pool-strip icon-container flex0">
                 <div class="icon button-changevalue plus" data-property="chargeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
                 <div class="icon button-changevalue minus" data-property="chargeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
                 <label>Charge Dice</label>
@@ -54,21 +62,21 @@
     </div>
 
     <nav class="sheet-tabs tabs" data-group="primary-tabs">                
-        <a data-tab="basic">Basic Actions</a>
         <a data-tab="profession">Adversity Actions</a>
+        <a data-tab="basic">Basic Actions</a>
     </nav>            
     <section class="sheet-body">
         <div class="tab actions-section-container" data-tab="basic" data-group="primary-tabs">
-            <div class="actions-section">                    
+            <div class="actions-section">
                 {{#each data.basicActions as |item id|}}
-                {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item}}
+                {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=true}}
                 {{/each}}
             </div>
         </div>
-        <div class="tab" data-tab="profession" data-group="primary-tabs">
-            <div class="actions-section">                    
+        <div class="tab actions-section-container" data-tab="profession" data-group="primary-tabs">
+            <div class="actions-section">
                 {{#each data.actions as |item id|}}
-                {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item}}
+                {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=true}}
                 {{/each}}
             </div>
         </div>

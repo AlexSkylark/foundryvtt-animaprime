@@ -10,6 +10,7 @@ import AnimaPrimeCombatTracker from "../src/sidebars/AnimaPrimeCombatTracker.js"
 import AnimaPrimeCombatant from "../src/AnimaPrimeCombatant.js";
 import AnimaPrimeCombat from "../src/AnimaPrimeCombat.js";
 import AnimaPrimeActor from "../src/AnimaPrimeActor.js";
+import AnimaPrimeChatLog from "../src/AnimaPrimeChatLog.js";
 
 import * as HandlebarsHelpers from "./Handlebars.js";
 
@@ -69,9 +70,10 @@ Hooks.once("init", () => {
 
     CONFIG.Actor.documentClass = AnimaPrimeActor;
     CONFIG.Item.documentClass = AnimaPrimeItem;
-    CONFIG.ui.combat = AnimaPrimeCombatTracker;
     CONFIG.Combat.documentClass = AnimaPrimeCombat;
     CONFIG.Combatant.documentClass = AnimaPrimeCombatant;
+    CONFIG.ui.combat = AnimaPrimeCombatTracker;
+    CONFIG.ui.chat = AnimaPrimeChatLog;
 
     preloadTemplates();
     HandlebarsHelpers.registerHandlebarsHelpers();

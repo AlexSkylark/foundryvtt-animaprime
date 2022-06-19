@@ -7,7 +7,7 @@
 
     .decorative-square {
         background-color: variables.$primary-color-light;
-        height: 513px;
+        height: 537px;
         width: 159px;
         position: absolute;
         top: 62px;
@@ -144,6 +144,11 @@
         flex: 0 0 200px;
         margin-left: 4px;
         display: flex;
+
+        .left-side-container {
+            margin-top: 10px;
+        }
+
 
         img {
             border: 4px solid variables.$primary-color;
@@ -356,11 +361,10 @@
 
         &.dice-pools {
 
-            align-items: center;
-            margin-bottom: 24px;
+            align-items: center;            
             margin-right: 27px;
-            justify-content: flex-end;
-            position: relative;
+            justify-content: flex-start;
+            margin-top: 3px;            
             bottom: 10px;
 
             .dice-pool-strip {
@@ -425,7 +429,7 @@
         border-bottom: 2px solid variables.$primary-color;
         padding: 0;
         margin: 0px 24px;
-        margin-top: 8px;
+        margin-top: -63px;
         
         a {
             padding: 4px 12px;

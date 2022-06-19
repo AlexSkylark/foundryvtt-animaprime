@@ -11,7 +11,7 @@
         width: 159px;
         position: absolute;
         top: 62px;
-        left: 27px;
+        left: 42px;
         z-index: -1;
     }
 
@@ -154,9 +154,13 @@
     }
         
     .left-side {        
-        flex: 0 0 200px;
+        flex: 0 0 235px;
         margin-left: 4px;
         display: flex;
+
+        .profile-container {
+            margin-left: 15px
+        }
 
         img {
             border: 4px solid variables.$primary-color;
@@ -419,7 +423,7 @@
         }
         .actions-section {            
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             flex-wrap: wrap;
             margin-left: 18px;
             margin-bottom: 18px;

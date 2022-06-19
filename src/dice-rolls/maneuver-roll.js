@@ -76,18 +76,15 @@ function checkManeuverResult(maneuverGain, results, isSlowed) {
     return { strike: strikeGain, charge: chargeGain, slowedDie: slowedDie };
 }
 
-export async function commitResults(ownerId, resultData, item) {
-    let owner =
-        game.scenes.active.tokens.get(ownerId) ?? game.actors.get(ownerId);
+export async function commitResults(resultData, item) {
+    const ownerStrikeDice = item.owner.data.data.strikeDice;
+    const ownerChargeDice = item.owner.data.data.chargeDice;
 
-    const ownerStrikeDice = owner.data.data.strikeDice;
-    const ownerChargeDice = owner.data.data.chargeDice;
-
-    await owner.update({
+    await item.owner.update({
         "data.strikeDice": ownerStrikeDice + resultData.strike,
     });
 
-    await owner.update({
+    await item.owner.update({
         "data.chargeDice": ownerChargeDice + resultData.charge,
     });
 }

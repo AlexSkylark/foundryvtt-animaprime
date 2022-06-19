@@ -5,9 +5,9 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
     const messageTemplate = `systems/animaprime/templates/rolls/roll-${item.type}/roll-${item.type}.hbs`;
 
     const isEmpowered =
-        item.owner.checkCondition("empowered") && item.type == "strike";
+        checkCondition(item.owner, "empowered") && item.type == "strike";
     const isWeakened =
-        item.owner.checkCondition("weakened") && item.type == "strike";
+        checkCondition(item.owner, "weakened") && item.type == "strike";
 
     // validations
     const targetCheck = {
@@ -34,7 +34,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
 
     if (item.data.cost) {
         const ownerChargeDice = item.owner.data.data.chargeDice;
-        const isHexed = item.owner.checkCondition("hexed");
+        const isHexed = checkCondition(item.owner, "hexed");
         item.capitalizedType =
             item.type.charAt(0).toUpperCase() + item.type.slice(1);
 
@@ -142,27 +142,12 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
     );
 }
 
-function checkItemResult(targetDefense, successes) {
-    let returnValue = {
-        hit: false,
-        successes: successes,
-    };
-
-    if (successes >= targetDefense) returnValue.hit = true;
-
-    return returnValue;
-}
-
 export async function commitResults(
-    ownerId,
     resultData,
     item,
     dialogOptions,
     itemTargets
 ) {
-    let owner =
-        game.scenes.active.tokens.get(ownerId) ?? game.actors.get(ownerId);
-
     for (let targetId of itemTargets) {
         const target = game.scenes.active.tokens.get(targetId);
 
@@ -209,14 +194,29 @@ export async function commitResults(
         }
     }
 
-    let ownerData = owner.data.data ?? owner.data;
+    let ownerData = item.owner.data.data ?? item.owner.data;
 
     const ownerStrikeDice = ownerData.strikeDice;
     const ownerActionDice = ownerData.actionDice;
-    await owner.update({
+    await item.owner.update({
         "data.strikeDice": ownerStrikeDice - dialogOptions.strikeDice,
     });
-    await owner.update({
+    await item.owner.update({
         "data.actionDice": ownerActionDice - dialogOptions.actionDice,
     });
+}
+
+function checkItemResult(targetDefense, successes) {
+    let returnValue = {
+        hit: false,
+        successes: successes,
+    };
+
+    if (successes >= targetDefense) returnValue.hit = true;
+
+    return returnValue;
+}
+
+function checkCondition(actorData, condition) {
+    return actorData.effects.filter((e) => e.label == condition).length > 0;
 }
