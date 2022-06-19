@@ -26,7 +26,7 @@ export default class AnimaPrimeCombat extends Combat {
             let data = token.actor.data.data;
 
             if (token.actor.type == "goal") {
-                if (data.looming) {
+                if (data.loomingTurns > 0) {
                     const newValue = Math.max(data.loomingTurns - 1, 0);
                     await token.actor.update({ "data.loomingTurns": newValue });
                     if (newValue > 0)
