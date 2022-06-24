@@ -26,36 +26,37 @@ export default class AnimaPrimeItem extends Item {
         super._preCreate(data, options, user);
 
         if (!data.img) {
+            let image = "";
             switch (data.type) {
                 case "skill":
-                    img =
+                    image =
                         "icons/skills/trades/academics-study-reading-book.webp";
                     break;
                 case "maneuver":
-                    img = "icons/magic/air/air-smoke-casting.webp";
+                    image = "icons/magic/air/air-smoke-casting.webp";
                     break;
                 case "strike":
-                    img = "icons/weapons/swords/sword-guard-brown.webp";
+                    image = "icons/weapons/swords/sword-guard-brown.webp";
                     break;
                 case "power":
-                    img = "icons/magic/light/projectile-smoke-blue.webp";
+                    image = "icons/magic/light/projectile-smoke-blue.webp";
                     break;
                 case "boost":
-                    img = "icons/skills/movement/arrow-upward-yellow.webp";
+                    image = "icons/skills/movement/arrow-upward-yellow.webp";
                     break;
                 case "reaction":
-                    img =
+                    image =
                         "icons/skills/targeting/target-strike-triple-blue.webp";
                     break;
                 case "extra":
-                    img = "icons/commodities/materials/feather-orange.webp";
+                    image = "icons/commodities/materials/feather-orange.webp";
                     break;
                 case "achievement":
-                    img = "icons/sundries/books/book-red-exclamation.webp";
+                    image = "icons/sundries/books/book-red-exclamation.webp";
                     break;
             }
 
-            this.data.update({ img: img });
+            this.data.update({ img: image });
         }
     }
 

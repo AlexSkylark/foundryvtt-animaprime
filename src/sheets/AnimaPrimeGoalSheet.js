@@ -4,8 +4,8 @@ export default class AnimaPrimeGoalSheet extends AnimaPrimeActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["animaprime", "sheet", "goal"],
-            width: 470,
-            height: 403,
+            width: 480,
+            height: 415,
             resizable: false,
             scale: 0.85,
         });

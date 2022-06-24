@@ -19,11 +19,12 @@
         .header-name {
             
             background-color: variables.$primary-color;
+            padding: 8px;
             align-self: center;
             color: #fff;
             font-size: 24px;
             padding-left: 42px;
-            line-height: 48px;
+            line-height: 30px;
             font-weight: 600;
             width: calc(100% - 165px);
             border-radius: 12px;
@@ -35,7 +36,7 @@
 
         border: 3px solid variables.$primary-color;
         padding: 18px 64px;
-        padding-top: 37px;
+        padding-top: 48px;
         margin: 32px;
         margin-top: -73px;
         border-radius: 16px;
