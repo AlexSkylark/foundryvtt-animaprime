@@ -100,8 +100,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         return array.filter((v) => v === value).length;
     }
 
-    activateListeners(html) {
-        super.activateListeners(html);
+    async activateListeners(html) {
+        await super.activateListeners(html);
 
         html.find(".button-changevalue").click(
             this._onPropertyIncrementValue.bind(this)

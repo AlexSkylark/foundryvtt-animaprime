@@ -1,12 +1,17 @@
 <div class="roll-achievement roll achievement" data-type="achievement">
     <div class="roll item" data-item-id="{{_id}}">        
-        <div class="roll-header flexrow">
-            <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
-            <div class="flexcol">
-                <h4 class="header-title">achievement:</h4>
-                <h4 class="header-name">{{flavor.entityData.name}}</h4>
+        <div class="roll-header">
+            <div class="flexrow">
+                <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
+                <div class="flexcol">
+                    <h4 class="header-title">{{flavor.entityData.type}} roll:</h4>
+                    <h4 class="header-name">{{flavor.entityData.name}}</h4>
+                </div>
             </div>
-        </div>        
+            <div class="item-description">
+                <p>{{flavor.entityData.data.description}}</p>                
+            </div>
+        </div>
         <div class="flexcol">
             <div class="flexrow">
                 <ol class="rolls">

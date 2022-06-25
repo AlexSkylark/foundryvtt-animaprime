@@ -1,12 +1,17 @@
-<div class="roll-power roll {{type}}" data-type="{{flavor.entityData.type}}">
+<div class="roll-power roll {{type}}" data-type="{{type}}">
     <div class="roll item" data-item-id="{{_id}}">        
-        <div class="roll-header flexrow">
-            <img class="roll-img" src="{{img}}" title="{{name}}" />
-            <div class="flexcol">
-                <h4 class="header-title">Cast {{capitalizedType}}:</h4>
-                <h4 class="header-name">{{name}}</h4>
+        <div class="roll-header">
+            <div class="flexrow">
+                <img class="roll-img" src="{{img}}" title="{{name}}" />
+                <div class="flexcol">
+                    <h4 class="header-title">Cast {{capitalizedType}}:</h4>
+                    <h4 class="header-name">{{name}}</h4>
+                </div>
             </div>
-        </div>        
+            <div class="item-description">
+                <p>{{data.description}}</p>                
+            </div>
+        </div>    
         <div class="flexcol">            
             <span class="result-message">{{message}}</span>
         </div>
