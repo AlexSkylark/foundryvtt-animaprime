@@ -8,6 +8,10 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
         checkCondition(item.owner, "empowered") && item.type == "strike";
     const isWeakened =
         checkCondition(item.owner, "weakened") && item.type == "strike";
+    const isHexed = checkCondition(item.owner, "hexed");
+
+    const targetData = item.targets[0].data.data ?? item.targets[0].data;
+    const ownerData = item.owner.data.data ?? item.owner.data;
 
     // validations
     const targetCheck = {
@@ -33,8 +37,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
     }
 
     if (item.data.cost) {
-        const ownerChargeDice = item.owner.data.data.chargeDice;
-        const isHexed = checkCondition(item.owner, "hexed");
+        const ownerChargeDice = ownerData.chargeDice;
         item.capitalizedType =
             item.type.charAt(0).toUpperCase() + item.type.slice(1);
 
@@ -45,9 +48,6 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
             return;
         }
     }
-
-    const targetData = item.targets[0].data.data ?? item.targets[0].data;
-    const ownerData = item.owner.data.data ?? item.owner.data;
 
     // options for item type
     const itemFixedOptions = {
@@ -183,27 +183,27 @@ export async function commitResults(
                 "actorData.data": targetData,
             });
         }
-
-        if (item.data.cost) {
-            const ownerChargeDice = item.owner.data.data.chargeDice;
-            const isHexed = item.owner.checkCondition("hexed");
-            await item.owner.update({
-                "data.chargeDice":
-                    ownerChargeDice - (item.data.cost + (isHexed ? 1 : 0)),
-            });
-        }
     }
 
-    let ownerData = item.owner.data.data ?? item.owner.data;
-
+    const ownerData = item.owner.data.data ?? item.owner.data;
     const ownerStrikeDice = ownerData.strikeDice;
     const ownerActionDice = ownerData.actionDice;
+
     await item.owner.update({
         "data.strikeDice": ownerStrikeDice - dialogOptions.strikeDice,
     });
     await item.owner.update({
         "data.actionDice": ownerActionDice - dialogOptions.actionDice,
     });
+
+    if (item.data.cost) {
+        const ownerChargeDice = ownerData.chargeDice;
+        const isHexed = checkCondition(item.owner, "hexed");
+        await item.owner.update({
+            "data.chargeDice":
+                ownerChargeDice - (item.data.cost + (isHexed ? 1 : 0)),
+        });
+    }
 }
 
 function checkItemResult(targetDefense, successes) {

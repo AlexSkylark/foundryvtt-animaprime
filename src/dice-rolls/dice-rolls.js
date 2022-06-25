@@ -39,8 +39,8 @@ export async function renderRoll(
             itemTargets: itemTargets,
             reroll: false,
             commit: false,
-            tokenId: entityData.owner.token.id,
-            actorId: entityData.owner.id,
+            tokenId: entityData.owner.token ? entityData.owner.token.id : null,
+            actorId: entityData.owner.id ?? entityData.owner._id,
         },
     };
 
@@ -203,6 +203,8 @@ export function checkSkillSuccess(results, disadvantage = false) {
 export function checkForReroll(owner) {
     if (owner.type != "character") return false;
 
-    const traits = owner.data.data.traits;
+    const ownerData = owner.data.data ?? owner.data;
+
+    const traits = ownerData.traits;
     return traits.trait1.marked || traits.trait2.marked || traits.trait3.marked;
 }

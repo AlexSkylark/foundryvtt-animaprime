@@ -22,9 +22,15 @@ Hooks.on("renderChatMessage", (app, [html]) => {
                 return;
             }
 
-            app.data.flags.sourceItem.owner = game.scenes.active.tokens.get(
-                app.data.flags.tokenId
-            ).actor;
+            if (app.data.flags.tokenId) {
+                app.data.flags.sourceItem.owner = game.scenes.active.tokens.get(
+                    app.data.flags.tokenId
+                ).actor;
+            } else {
+                app.data.flags.sourceItem.owner = game.actors.get(
+                    app.data.flags.actorId
+                );
+            }
 
             if ($(event.target).parent().hasClass("reroll")) {
                 try {
