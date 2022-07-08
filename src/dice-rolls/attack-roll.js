@@ -10,7 +10,6 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
         checkCondition(item.owner, "weakened") && item.type == "strike";
     const isHexed = checkCondition(item.owner, "hexed");
 
-    const targetData = item.targets[0].data.data ?? item.targets[0].data;
     const ownerData = item.owner.data.data ?? item.owner.data;
 
     // validations
@@ -35,6 +34,8 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
         );
         return;
     }
+
+    const targetData = item.targets[0].data.data ?? item.targets[0].data;
 
     if (item.data.cost) {
         const ownerChargeDice = ownerData.chargeDice;

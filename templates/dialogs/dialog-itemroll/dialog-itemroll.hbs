@@ -8,8 +8,7 @@
 </script>
 
 <form>
-    <div class="flexrow dialog-container">
-        {{#if (isCharacter owner.type)}}
+    <div class="flexrow dialog-container">        
         <div class=" dialog-field-container flexrow">
             <label>Add Strike Dice?</label>        
             <div class="flexrow dialog-buttons">
@@ -26,6 +25,7 @@
                 </button>
             </div>
         </div>
+        {{#if (isCharacter owner.type)}}
         <div class=" dialog-field-container flexrow">
             <label>Add Action Dice?</label>        
             <div class="flexrow dialog-buttons">
