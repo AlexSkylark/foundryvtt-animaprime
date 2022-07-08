@@ -9,6 +9,7 @@
 
 <form>
     <div class="flexrow dialog-container">        
+        {{#unless (isHazard owner.type)}}
         <div class=" dialog-field-container flexrow">
             <label>Add Strike Dice?</label>        
             <div class="flexrow dialog-buttons">
@@ -43,6 +44,7 @@
             </div>
         </div>
         {{/if}}
+        {{/unless}}
         <div class=" dialog-field-container flexrow">
             <label>Add {{this.variableDiceName}} from target?</label>        
             <div class="flexrow dialog-buttons">

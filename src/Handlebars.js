@@ -67,6 +67,10 @@ export function registerHandlebarsHelpers() {
         return value.toUpperCase() == "CHARACTER";
     });
 
+    Handlebars.registerHelper("isHazard", function (value) {
+        return value.toUpperCase() == "HAZARD";
+    });
+
     Handlebars.registerHelper("isFriendly", function (value) {
         return value.toUpperCase() == "FRIENDLY";
     });
