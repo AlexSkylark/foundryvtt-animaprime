@@ -24,7 +24,9 @@ export async function renderRoll(
             additionalData: additionalData,
             enableReroll: enableReroll,
             isReroll: isReroll,
-            targetNames: entityData.targets.map((i) => i.name),
+            targetNames: entityData.targets
+                ? entityData.targets.map((i) => i.name)
+                : [],
         },
     });
 
