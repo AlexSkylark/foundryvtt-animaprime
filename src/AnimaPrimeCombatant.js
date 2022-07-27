@@ -13,6 +13,18 @@ export default class AnimaPrimeCombatant extends Combatant {
         return this.actor.type == "character" ? "friendly" : "hostile";
     }
 
+    get healthValue() {
+        return (
+            this.actor.data.data.health.value +
+            "/" +
+            this.actor.data.data.health.max
+        );
+    }
+
+    get threatValue() {
+        return this.actor.data.data.threatDice;
+    }
+
     prepareBaseData() {
         super.prepareBaseData();
     }

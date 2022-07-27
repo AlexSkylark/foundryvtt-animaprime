@@ -4,6 +4,13 @@ $friendly-border: #007aaa;
 $hostile-background: #f74e5229;
 $hostile-border: #d30058;
 
+.turnUnitData {
+    font-size: 10px;
+    max-height: 11px;
+    height: 11px;
+    line-height: 10px !important;    
+}
+
 .combat-tracker-tab {
     .encounter-title {
         margin: 0 !important;
@@ -96,7 +103,7 @@ $hostile-border: #d30058;
                 }
             }
         }            
-    }
+    }    
 /*    
         
 

@@ -1731,6 +1731,13 @@ img {
   margin-bottom: 12px;
 }
 
+.turnUnitData {
+  font-size: 10px;
+  max-height: 11px;
+  height: 11px;
+  line-height: 10px !important;
+}
+
 .combat-tracker-tab {
   /*    
 

@@ -29,7 +29,10 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                 t.id
             );
 
+            t.name = comb.actor.name;
             t.faction = comb.faction;
+            t.healthValue = comb.healthValue;
+            t.threatValue = comb.threatValue;
         }
 
         if (this.viewed) {
@@ -108,6 +111,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             return a.id == combatantId;
         });
 
+        console.log(takeTurnComb);
+
         await this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
 
         while (takeTurnComb.id != this.viewed.combatant.id) {
@@ -163,7 +168,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                     return t.isDefeated;
                 }).length == this.viewed.combsOutofQueue.length
             ) {
-                this.viewed.nextTurn();
+                this.viewed.nextRound();
                 return;
             }
         }
@@ -182,7 +187,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             for (let t of this.viewed.turns) {
                 if (
                     t.faction == nextFaction &&
-                    (t.initiative <= 1000 || t.initiative == null)
+                    (t.initiative <= 1000 || t.initiative == null) &&
+                    !t.isDefeated
                 )
                     combsToReset.push(t);
             }
