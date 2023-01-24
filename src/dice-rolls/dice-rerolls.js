@@ -6,9 +6,9 @@ import AnimaPrimeActor from "../AnimaPrimeActor.js";
 Hooks.on("renderChatMessage", (app, [html]) => {
     html.addEventListener("click", async (event) => {
         if ($(event.target).parent().hasClass("button-roll")) {
-            const flags = app.data.flags;
+            const flags = app.flags;
 
-            if (!game.actors.get(app.data.flags.actorId).isOwner) {
+            if (!game.actors.get(app.flags.actorId).isOwner) {
                 ui.notifications.error("You did not perform this roll!");
                 return;
             }
@@ -22,14 +22,12 @@ Hooks.on("renderChatMessage", (app, [html]) => {
                 return;
             }
 
-            if (app.data.flags.tokenId) {
-                app.data.flags.sourceItem.owner = game.scenes.active.tokens.get(
-                    app.data.flags.tokenId
+            if (app.flags.tokenId) {
+                app.flags.sourceItem.owner = game.scenes.active.tokens.get(
+                    app.flags.tokenId
                 ).actor;
             } else {
-                app.data.flags.sourceItem.owner = game.actors.get(
-                    app.data.flags.actorId
-                );
+                app.flags.sourceItem.owner = game.actors.get(app.flags.actorId);
             }
 
             if ($(event.target).parent().hasClass("reroll")) {
@@ -85,6 +83,5 @@ async function performCommit(flags) {
         content: await renderTemplate(
             "systems/animaprime/templates/rolls/commit-roll.hbs"
         ),
-        roll: true,
     });
 }

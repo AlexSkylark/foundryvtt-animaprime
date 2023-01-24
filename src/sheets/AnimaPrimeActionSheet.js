@@ -14,11 +14,10 @@ export default class AnimaPrimeActionSheet extends ItemSheet {
 
     getData() {
         const context = super.getData();
-        const itemData = context.item.data;
+        const itemData = context.item.system;
 
-        // Add the actor's data to context.data for easier access, as well as flags.
-        context.data = itemData.data;
-        context.flags = itemData.flags;
+        // Add the actor's data to context.system for easier access, as well as flags.
+        context.system = itemData;
 
         return context;
     }

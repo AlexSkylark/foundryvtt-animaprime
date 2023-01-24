@@ -1,15 +1,15 @@
 <form class="{{cssClass}} character-sheet" autocomplete="on">
 
-    {{> "systems/animaprime/templates/partials/script-health.hbs" data}}
+    {{> "systems/animaprime/templates/partials/script-health.hbs" system}}
 
     <div class="decorative-square">&nbsp;</div>
     <header class="flexcol">    
         <div class="header-namestrip flexrow flex0">
             <input class="name" name="name" type="text" value="{{actor.name}}" />
-            <input name="data.race" type="text" value="{{data.race}}" placeholder="[race]" />
-            <input name="data.profession" type="text" value="{{data.profession}}" placeholder="[profession]" />
-            <div class="lock-container {{#if data.enableEdit}}lock-off{{else}}lock-on{{/if}}">
-                <div class="lock-button {{#if data.enableEdit}}lock-off{{else}}lock-on{{/if}}">
+            <input name="system.race" type="text" value="{{system.race}}" placeholder="[race]" />
+            <input name="system.profession" type="text" value="{{system.profession}}" placeholder="[profession]" />
+            <div class="lock-container {{#if system.enableEdit}}lock-off{{else}}lock-on{{/if}}">
+                <div class="lock-button {{#if system.enableEdit}}lock-off{{else}}lock-on{{/if}}">
                     <i class="fas fa-lock"></i>
                 </div>
             </div>
@@ -34,10 +34,10 @@
                     <div class="health-defense">
                         <div class="health-bar-frame">
                             <div class="health-bar-frame health-bar"></div>
-                            <span>{{data.health.value}} / {{data.health.max}}</span>
+                            <span>{{system.health.value}} / {{system.health.max}}</span>
                         </div>
                         <div class="attribute-value">
-                            <span>{{data.defense}}</span>
+                            <span>{{system.defense}}</span>
                         </div>
                     </div>                    
                 </div>
@@ -45,14 +45,14 @@
             <div class="container-section flex0">
                 <label class="container-header">Passion</label>
                 <div class="container-wrapper">
-                    <input class="input-text" name="data.passion" type="text" value="{{data.passion}}" placeholder="[passion]" {{#unless editUnlocked}}disabled{{/unless}} />
+                    <input class="input-text" name="system.passion" type="text" value="{{system.passion}}" placeholder="[passion]" {{#unless editUnlocked}}disabled{{/unless}} />
                     
                 </div>
             </div>
             <div class="container-section flex0">
                 <label class="container-header">Background</label>
                 <div class="container-wrapper">
-                    <input class="input-text" name="data.background" type="text" value="{{data.background}}" placeholder="[background]" {{#unless editUnlocked}}disabled{{/unless}} />
+                    <input class="input-text" name="system.background" type="text" value="{{system.background}}" placeholder="[background]" {{#unless editUnlocked}}disabled{{/unless}} />
                 </div>
             </div>
             
@@ -60,7 +60,7 @@
                 <label class="container-header generic-skill-roll">Traits and Abilities</label>
                 <span class="icon button-addskill item-create {{#unless editUnlocked}}edit-hidden{{/unless}}" data-type="skill"><i class="fas fa-plus"></i></span>
                 <div class="container-wrapper skills-container">
-                    {{#each data.skills as |item id|}}
+                    {{#each system.skills as |item id|}}
                     <div class="item icon-container" data-item-id="{{item._id}}">
                         <span class="skill-unit item-roll">{{this.name}}&nbsp;</span>
                         <span class="icon fas fa-edit item-edit {{#unless ../editUnlocked}}edit-hidden{{/unless}}"></span>
@@ -75,16 +75,16 @@
                 <label class="container-header">Personality Traits</label>
                 <div class="container-wrapper">
                     <div class="flexrow">
-                        <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="data.traits.trait1.name" type="text" value="{{data.traits.trait1.name}}" placeholder="[choose a personality trait]" />
-                        <input class="input-text trait-check" name="data.traits.trait1.marked" type="checkbox" {{checked data.traits.trait1.marked}} />
+                        <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait1.name" type="text" value="{{system.traits.trait1.name}}" placeholder="[choose a personality trait]" />
+                        <input class="input-text trait-check" name="system.traits.trait1.marked" type="checkbox" {{checked system.traits.trait1.marked}} />
                     </div>
                     <div class="flexrow">
-                        <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="data.traits.trait2.name" type="text" value="{{data.traits.trait2.name}}" placeholder="[choose a personality trait]" />
-                        <input  class="input-text trait-check" name="data.traits.trait2.marked" type="checkbox" {{checked data.traits.trait2.marked}} />
+                        <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait2.name" type="text" value="{{system.traits.trait2.name}}" placeholder="[choose a personality trait]" />
+                        <input  class="input-text trait-check" name="system.traits.trait2.marked" type="checkbox" {{checked system.traits.trait2.marked}} />
                     </div>
                     <div class="flexrow">
-                        <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="data.traits.trait3.name" type="text" value="{{data.traits.trait3.name}}" placeholder="[choose a personality trait]" />
-                        <input class="input-text trait-check" name="data.traits.trait3.marked" type="checkbox" {{checked data.traits.trait3.marked}} />
+                        <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait3.name" type="text" value="{{system.traits.trait3.name}}" placeholder="[choose a personality trait]" />
+                        <input class="input-text trait-check" name="system.traits.trait3.marked" type="checkbox" {{checked system.traits.trait3.marked}} />
                     </div>                
                 </div>
             </div>
@@ -94,7 +94,7 @@
                     <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}"data-property="actionDice" data-operation="minus"><i class="fas fa-minus"></i></div>
                     <label>Action Dice</label>
                     <div class="attribute-value">
-                        <span>{{data.actionDice}}</span>
+                        <span>{{system.actionDice}}</span>
                     </div>
                     
                 </div>
@@ -103,7 +103,7 @@
                     <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="strikeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
                     <label>Strike Dice</label>
                     <div class="attribute-value">
-                        <span>{{data.strikeDice}}</span>
+                        <span>{{system.strikeDice}}</span>
                     </div>
                 </div>
                 <div class="dice-pool-strip icon-container flex0">
@@ -111,7 +111,7 @@
                     <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="chargeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
                     <label>Charge Dice</label>
                     <div class="attribute-value">
-                        <span>{{data.chargeDice}}</span>
+                        <span>{{system.chargeDice}}</span>
                     </div>
                 </div>
                 <div class="dice-pool-strip icon-container flex0">                    
@@ -119,7 +119,7 @@
                     <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="threatDice" data-operation="minus"><i class="fas fa-minus"></i></div>
                     <label>Threat Dice</label>
                     <div class="attribute-value">
-                        <span>{{data.threatDice}}</span>
+                        <span>{{system.threatDice}}</span>
                     </div>
                 </div>
             </div>
@@ -131,14 +131,14 @@
             <section class="sheet-body">
                 <div class="tab" data-tab="basic" data-group="primary-tabs">
                     <div class="actions-section">                    
-                        {{#each data.basicActions as |item id|}}
+                        {{#each basicActions as |item id|}}
                         {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../editUnlocked}}
                         {{/each}}
                     </div>
                 </div>
                 <div class="tab" data-tab="profession" data-group="primary-tabs">
                     <div class="actions-section">                    
-                        {{#each data.actions as |item id|}}
+                        {{#each actions as |item id|}}
                         {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../editUnlocked}}
                         {{/each}}
                     </div>

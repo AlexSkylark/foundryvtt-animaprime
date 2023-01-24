@@ -129,10 +129,10 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
         // check doomed condition
         if (takeTurnComb.actor.checkCondition("doomed")) {
-            const currentThreatDice = takeTurnComb.actor.data.data.threatDice;
+            const currentThreatDice = takeTurnComb.actor.system.threatDice;
 
             await takeTurnComb.actor.update({
-                "data.threatDice": currentThreatDice + 2,
+                "system.threatDice": currentThreatDice + 2,
             });
         }
 

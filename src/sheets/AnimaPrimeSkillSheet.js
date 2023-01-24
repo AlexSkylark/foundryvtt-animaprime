@@ -12,10 +12,10 @@ export default class AnimaPrimeSkillSheet extends ItemSheet {
 
     getData() {
         const context = super.getData();
-        const itemData = context.item.data;
+        const itemData = context.item.system;
 
-        // Add the actor's data to context.data for easier access, as well as flags.
-        context.data = itemData.data;
+        // Add the actor's data to context.system for easier access, as well as flags.
+        context.system = itemData.system;
         context.img = context.flags = itemData.flags;
 
         return context;

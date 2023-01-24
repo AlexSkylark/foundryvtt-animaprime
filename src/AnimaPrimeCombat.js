@@ -23,12 +23,14 @@ export default class AnimaPrimeCombat extends Combat {
         await this.resetInitiative(this.combsHostile, false);
 
         for (let token of game.scenes.active.tokens) {
-            let data = token.actor.data.data;
+            let data = token.actor.system;
 
             if (token.actor.type == "goal") {
                 if (data.loomingTurns > 0) {
                     const newValue = Math.max(data.loomingTurns - 1, 0);
-                    await token.actor.update({ "data.loomingTurns": newValue });
+                    await token.actor.update({
+                        "system.loomingTurns": newValue,
+                    });
                     if (newValue > 0)
                         ui.notifications.warn(
                             `Looming conflict goal "${

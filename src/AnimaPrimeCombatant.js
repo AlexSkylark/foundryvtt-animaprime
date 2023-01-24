@@ -2,11 +2,11 @@ export default class AnimaPrimeCombatant extends Combatant {
     constructor(data, context) {
         super(data, context);
 
-        this.data.flags = { isOnTurn: false };
+        this.flags = { isOnTurn: false };
     }
 
     get isOnTurn() {
-        return this.data.flags.isOnTurn;
+        return this.flags.isOnTurn;
     }
 
     get faction() {
@@ -15,14 +15,12 @@ export default class AnimaPrimeCombatant extends Combatant {
 
     get healthValue() {
         return (
-            this.actor.data.data.health.value +
-            "/" +
-            this.actor.data.data.health.max
+            this.actor.system.health.value + "/" + this.actor.system.health.max
         );
     }
 
     get threatValue() {
-        return this.actor.data.data.threatDice;
+        return this.actor.system.threatDice;
     }
 
     prepareBaseData() {

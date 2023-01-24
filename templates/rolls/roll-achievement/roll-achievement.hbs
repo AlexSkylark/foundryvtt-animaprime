@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="item-description">
-                <p>{{flavor.entityData.data.description}}</p>                
+                <p>{{flavor.entityData.system.description}}</p>                
             </div>
         </div>
         <div class="flexcol">
@@ -44,7 +44,7 @@
             </div>                        
             <span class="result-message {{#if flavor.resultData.hit}}success{{/if}}">
                 {{#if flavor.resultData.hit}}
-                Goal "{{flavor.entityData.targets.0.data.name}}" COMPLETE!!
+                Goal "{{flavor.entityData.targets.0.system.name}}" COMPLETE!!
                 {{else}}
                     {{#if flavor.resultData.successes}}
                         Some progress! <br /> {{flavor.resultData.successes}} progress {{#if (is1 flavor.resultData.successes)}}die{{else}}dice{{/if}} added.

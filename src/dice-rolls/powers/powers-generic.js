@@ -1,12 +1,12 @@
 export async function UseCatchYourBreath(powerData, ownerData, targetData) {
-    let ownerDiceData = ownerData.data.data;
+    let ownerDiceData = ownerData.system;
 
     const threatDiceToLose =
         ownerDiceData.threatDice - Math.max(ownerDiceData.threatDice - 2, 0);
 
     await ownerData.update({
-        "data.threatDice": ownerDiceData.threatDice - threatDiceToLose,
-        "data.actionDice": ownerDiceData.actionDice + 2,
+        "system.threatDice": ownerDiceData.threatDice - threatDiceToLose,
+        "system.actionDice": ownerDiceData.actionDice + 2,
     });
 
     let threatDiceMessage =

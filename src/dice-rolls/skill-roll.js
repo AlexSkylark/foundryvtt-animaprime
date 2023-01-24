@@ -13,7 +13,9 @@ export async function skillCheck(skill, withHelp = false, difficult = false) {
 
     const rollFormula = dice + "d6";
 
-    const rollResult = await new Roll(rollFormula, skill).roll();
+    const rl = new Roll(rollFormula, skill);
+    const rollResult = await rl.evaluate({ async: true });
+
     const resultData = await DiceRolls.checkSkillSuccess(
         rollResult.dice[0].results,
         disadvantage

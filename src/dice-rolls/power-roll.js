@@ -1,11 +1,11 @@
 export async function powerRoll(power) {
-    const ownerChargeDice = power.owner.data.data.chargeDice;
+    const ownerChargeDice = power.owner.system.chargeDice;
     power.capitalizedType =
         power.type.charAt(0).toUpperCase() + power.type.slice(1);
 
     const isHexed = power.owner.checkCondition("hexed");
-    if (isHexed) power.data.cost += 1;
-    if (ownerChargeDice < power.data.cost) {
+    if (isHexed) power.system.cost += 1;
+    if (ownerChargeDice < power.system.cost) {
         ui.notifications.error(
             `Not enough available charge dice to cast this ${power.capitalizedType}.`
         );
@@ -30,12 +30,12 @@ export async function powerRoll(power) {
 }
 
 async function castPower(power) {
-    var resultMessage = power.data.effect;
+    var resultMessage = power.system.effect;
 
-    if (power.data.cost) {
-        const ownerChargeDice = power.owner.data.data.chargeDice;
+    if (power.system.cost) {
+        const ownerChargeDice = power.owner.system.chargeDice;
         await power.owner.update({
-            "data.chargeDice": ownerChargeDice - power.data.cost,
+            "system.chargeDice": ownerChargeDice - power.system.cost,
         });
     }
 

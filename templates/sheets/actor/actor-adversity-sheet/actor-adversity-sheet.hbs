@@ -1,6 +1,6 @@
 <form class="{{cssClass}} adversity-sheet" autocomplete="on">
 
-    {{> "systems/animaprime/templates/partials/script-health.hbs" data}}
+    {{> "systems/animaprime/templates/partials/script-health.hbs" system}}
 
     <div class="decorative-square">&nbsp;</div>
     <header class="flexcol">    
@@ -24,10 +24,10 @@
                     <div class="health-defense">
                         <div class="health-bar-frame">
                             <div class="health-bar-frame health-bar"></div>
-                            <span>{{data.health.value}} / {{data.health.max}}</span>
+                            <span>{{system.health.value}} / {{system.health.max}}</span>
                         </div>
                         <div class="attribute-value">
-                            <span>{{data.defense}}</span>
+                            <span>{{system.defense}}</span>
                         </div>
                     </div>                    
                 </div>
@@ -39,7 +39,7 @@
                 <div class="icon button-changevalue minus" data-property="strikeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
                 <label>Strike Dice</label>
                 <div class="attribute-value">
-                    <span>{{data.strikeDice}}</span>
+                    <span>{{system.strikeDice}}</span>
                 </div>
             </div>
             <div class="dice-pool-strip icon-container flex0">
@@ -47,7 +47,7 @@
                 <div class="icon button-changevalue minus" data-property="chargeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
                 <label>Charge Dice</label>
                 <div class="attribute-value">
-                    <span>{{data.chargeDice}}</span>
+                    <span>{{system.chargeDice}}</span>
                 </div>
             </div>
             <div class="dice-pool-strip icon-container flex0">                    
@@ -55,7 +55,7 @@
                 <div class="icon button-changevalue minus"data-property="threatDice" data-operation="minus"><i class="fas fa-minus"></i></div>
                 <label>Threat Dice</label>
                 <div class="attribute-value">
-                    <span>{{data.threatDice}}</span>
+                    <span>{{system.threatDice}}</span>
                 </div>
             </div>
         </div>
@@ -68,14 +68,14 @@
     <section class="sheet-body">
         <div class="tab actions-section-container" data-tab="basic" data-group="primary-tabs">
             <div class="actions-section">
-                {{#each data.basicActions as |item id|}}
+                {{#each basicActions as |item id|}}
                 {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=true}}
                 {{/each}}
             </div>
         </div>
         <div class="tab actions-section-container" data-tab="profession" data-group="primary-tabs">
             <div class="actions-section">
-                {{#each data.actions as |item id|}}
+                {{#each actions as |item id|}}
                 {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=true}}
                 {{/each}}
             </div>

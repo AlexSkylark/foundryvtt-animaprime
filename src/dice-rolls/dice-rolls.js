@@ -205,7 +205,7 @@ export function checkSkillSuccess(results, disadvantage = false) {
 export function checkForReroll(owner) {
     if (owner.type != "character") return false;
 
-    const ownerData = owner.data.data ?? owner.data;
+    const ownerData = owner.system;
 
     const traits = ownerData.traits;
     return traits.trait1.marked || traits.trait2.marked || traits.trait3.marked;

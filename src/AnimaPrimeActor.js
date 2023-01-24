@@ -9,8 +9,8 @@ export default class AnimaPrimeActor extends Actor {
      * is queried and has a roll executed directly from it).
      */
     prepareDerivedData() {
-        const actorData = this.data;
-        const data = actorData.data;
+        const actorData = this;
+        const data = actorData;
         const flags = actorData.flags.animaprime || {};
     }
 

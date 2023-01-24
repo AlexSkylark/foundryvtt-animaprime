@@ -18,19 +18,19 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
     }
 
     get template() {
-        return `/systems/animaprime/templates/sheets/actor/actor-${this.actor.data.type}-sheet/actor-${this.actor.data.type}-sheet.hbs`;
+        return `/systems/animaprime/templates/sheets/actor/actor-${this.actor.type}-sheet/actor-${this.actor.type}-sheet.hbs`;
     }
 
     get editUnlocked() {
-        return data.enableEdit || game.user.isGM;
+        return this.actor.system.enableEdit || game.user.isGM;
     }
 
     getData() {
         const context = super.getData();
-        const actorData = context.actor.data;
+        const actorData = context.actor.system;
 
-        // Add the actor's data to context.data for easier access, as well as flags.
-        context.data = actorData.data;
+        // Add the actor's data to context.system for easier access, as well as flags.
+        context.system = actorData;
         context.flags = actorData.flags;
 
         this.prepareItemData(context);
@@ -47,7 +47,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
             // Append to gear.
             if (i.type === "skill") skills.push(i);
             // Append to features.
-            else if (i.data.basic) basicActions.push(i);
+            else if (i.system.basic) basicActions.push(i);
             else actions.push(i);
         }
 
@@ -57,22 +57,22 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
             this.formatManeuverGains(maneuver);
         }
 
-        context.data.skills = skills;
-        context.data.basicActions = basicActions;
-        context.data.actions = actions;
+        context.skills = skills;
+        context.basicActions = basicActions;
+        context.actions = actions;
 
-        context.editUnlocked = context.data.enableEdit || game.user.isGM;
+        context.editUnlocked = context.system.enableEdit || game.user.isGM;
     }
 
     formatManeuverGains(elem) {
         var text = "";
         let gain = [];
-        gain.push(elem.data.gain.r1);
-        gain.push(elem.data.gain.r2);
-        gain.push(elem.data.gain.r3);
-        gain.push(elem.data.gain.r4);
-        gain.push(elem.data.gain.r5);
-        gain.push(elem.data.gain.r6);
+        gain.push(elem.system.gain.r1);
+        gain.push(elem.system.gain.r2);
+        gain.push(elem.system.gain.r3);
+        gain.push(elem.system.gain.r4);
+        gain.push(elem.system.gain.r5);
+        gain.push(elem.system.gain.r6);
 
         for (var i = 0; i <= 2; i++) {
             const times = gain.filter((x) => x == i).length;
@@ -93,7 +93,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         }
 
         text = text.replace(/(^,)|(,$)/g, "");
-        elem.data.gainText = text;
+        elem.system.gainText = text;
     }
 
     countValue(array, value) {
@@ -120,7 +120,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         ev.preventDefault();
 
         await this.actor.update({
-            "data.enableEdit": !this.actor.data.data.enableEdit,
+            "system.enableEdit": !this.actor.system.enableEdit,
         });
     }
 
@@ -139,9 +139,9 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         if (isComplex) {
             resourceName = propertyName.split(".")[0];
             resourceProp = propertyName.split(".")[1];
-            propertyValue = this.actor.data.data[resourceName][resourceProp];
+            propertyValue = this.actor.system[resourceName][resourceProp];
         } else {
-            propertyValue = this.actor.data.data[propertyName];
+            propertyValue = this.actor.system[propertyName];
         }
 
         let operation = ev.currentTarget.dataset.operation;
@@ -149,24 +149,24 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
             operation == "plus" ? propertyValue + 1 : propertyValue - 1;
         newValue = Math.max(newValue, 0);
         if (isValue) {
-            const maxValue = this.actor.data.data[resourceName].max;
+            const maxValue = this.actor.system[resourceName].max;
             newValue = Math.min(newValue, maxValue);
         }
 
-        let updateObject = { data: {} };
+        let updateObject = { system: {} };
         if (isComplex) {
-            updateObject.data[resourceName] = {};
-            updateObject.data[resourceName][resourceProp] = newValue;
+            updateObject.system[resourceName] = {};
+            updateObject.system[resourceName][resourceProp] = newValue;
 
             if (isMax) {
-                if (this.actor.data.data[resourceName].value > newValue)
-                    updateObject.data[resourceName].value = newValue;
+                if (this.actor.system[resourceName].value > newValue)
+                    updateObject.system[resourceName].value = newValue;
                 else if (operation == "plus")
-                    updateObject.data[resourceName].value =
-                        this.actor.data.data[resourceName].value + 1;
+                    updateObject.system[resourceName].value =
+                        this.actor.system[resourceName].value + 1;
             }
         } else {
-            updateObject.data[propertyName] = newValue;
+            updateObject.system[propertyName] = newValue;
         }
 
         await this.actor.update(updateObject);
@@ -183,11 +183,11 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         const itemData = {
             name: name,
             type: type,
-            data: data,
+            system: data,
         };
 
-        delete itemData.data["type"];
-        delete itemData.data["name"];
+        delete itemData.system["type"];
+        delete itemData.system["name"];
 
         return await Item.create(itemData, { parent: this.actor });
     }

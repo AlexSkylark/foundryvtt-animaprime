@@ -4,7 +4,7 @@ export async function maneuverRoll(maneuver, isReroll = false) {
     const messageTemplate =
         "systems/animaprime/templates/rolls/roll-maneuver/roll-maneuver.hbs";
 
-    let maneuverDice = parseInt(maneuver.data.roll.replace("d"));
+    let maneuverDice = parseInt(maneuver.system.roll.replace("d"));
     const isQuickened = maneuver.owner.checkCondition("quickened");
     const isSlowed = maneuver.owner.checkCondition("slowed");
 
@@ -14,9 +14,11 @@ export async function maneuverRoll(maneuver, isReroll = false) {
 
     const rollFormula = maneuverDice + 1 + "d6";
 
-    const rollResult = await new Roll(rollFormula, maneuver).roll();
+    const rl = new Roll(rollFormula, maneuver);
+    const rollResult = await rl.evaluate({ async: true });
+
     const resultData = checkManeuverResult(
-        maneuver.data.gain,
+        maneuver.system.gain,
         rollResult.dice[0].results,
         isSlowed
     );
@@ -77,14 +79,14 @@ function checkManeuverResult(maneuverGain, results, isSlowed) {
 }
 
 export async function commitResults(resultData, item) {
-    const ownerStrikeDice = item.owner.data.data.strikeDice;
-    const ownerChargeDice = item.owner.data.data.chargeDice;
+    const ownerStrikeDice = item.owner.system.strikeDice;
+    const ownerChargeDice = item.owner.system.chargeDice;
 
     await item.owner.update({
-        "data.strikeDice": ownerStrikeDice + resultData.strike,
+        "system.strikeDice": ownerStrikeDice + resultData.strike,
     });
 
     await item.owner.update({
-        "data.chargeDice": ownerChargeDice + resultData.charge,
+        "system.chargeDice": ownerChargeDice + resultData.charge,
     });
 }

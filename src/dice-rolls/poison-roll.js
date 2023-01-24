@@ -6,7 +6,9 @@ export async function poisonRoll(poison, isReroll = false) {
 
     const rollFormula = "1d6";
 
-    const rollResult = await new Roll(rollFormula, poison).roll();
+    const rl = new Roll(rollFormula, poison);
+    const rollResult = await rl.evaluate({ async: true });
+
     const resultData = checkPoisonResult(rollResult.dice[0].results);
 
     await DiceRolls.renderRoll(
@@ -25,8 +27,8 @@ function checkPoisonResult(results) {
     else return false;
 }
 
-export async function commitResults(ownerId, resultData, item) {
-    let owner = game.scenes.active.tokens.get(ownerId);
+export async function commitResults(resultData, poisonData) {
+    let owner = poisonData.owner;
 
     if (resultData == true) {
         const poisonEffect = CONFIG.statusEffects.find(
@@ -36,15 +38,15 @@ export async function commitResults(ownerId, resultData, item) {
     } else {
         let ownerData = {};
         if (owner.isLinked) {
-            ownerData = game.actors.get(owner.actor.id).data.data;
+            ownerData = game.actors.get(owner.actor.id).system;
         } else {
-            ownerData = owner.data.actorData.data ?? owner.actor.data.data;
+            ownerData = owner.actor.system ?? owner.actorData.system;
         }
 
         ownerData.threatDice += 1;
 
         await owner.update({
-            "actorData.data": ownerData,
+            "actorData.system": ownerData,
         });
     }
 }

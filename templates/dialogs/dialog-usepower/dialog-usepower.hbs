@@ -2,8 +2,8 @@
     <img src="{{img}}" />
     <div class="field-container flexcol">        
         <div class="value-field">
-            <span>Use {{type}} <strong>"{{name}}"</strong>, {{#if data.cost}}with a cost of {{data.cost}} charge 
-                {{#if (is1 data.cost)}}die{{else}}dice{{/if}}{{else}}at no cost{{/if}}?</span>
+            <span>Use {{type}} <strong>"{{name}}"</strong>, {{#if system.cost}}with a cost of {{system.cost}} charge 
+                {{#if (is1 system.cost)}}die{{else}}dice{{/if}}{{else}}at no cost{{/if}}?</span>
         </div>
     </div>
 </form>

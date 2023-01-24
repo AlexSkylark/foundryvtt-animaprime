@@ -132,7 +132,7 @@ function configureStatusEffects() {
             icon: "systems/animaprime/assets/icons/shield-echoes.svg",
             changes: [
                 {
-                    key: "data.defense",
+                    key: "system.defense",
                     mode: 2,
                     value: "2",
                 },

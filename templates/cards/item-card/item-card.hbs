@@ -6,48 +6,48 @@
             <i class="icon {{#unless enableEdit}}edit-hidden{{/unless}} item-title fas fa-edit item-edit"></i>
             <i class="icon {{#unless enableEdit}}edit-hidden{{/unless}} item-title fas fa-trash item-delete"></i>
         </div>
-        <span class="item-description">{{data.description}}</span>
-        {{#if data.gainText}}
-        <span class="item-description"><strong>Gain: </strong>{{data.gainText}}</span>
+        <span class="item-description">{{system.description}}</span>
+        {{#if system.gainText}}
+        <span class="item-description"><strong>Gain: </strong>{{system.gainText}}</span>
         {{/if}}
-        {{#if data.trigger}}
-        <span class="item-description"><strong>Trigger: </strong>{{data.trigger}}</span>
+        {{#if system.trigger}}
+        <span class="item-description"><strong>Trigger: </strong>{{system.trigger}}</span>
         {{/if}}
-        {{#if data.effect}}
-        <span class="item-description"><strong>Effect: </strong>{{data.effect}}</span>
+        {{#if system.effect}}
+        <span class="item-description"><strong>Effect: </strong>{{system.effect}}</span>
         {{/if}}
-        {{#if data.damage}}
-        <span class="item-description"><strong>Damage Type: </strong>{{data.damage}}</span>
+        {{#if system.damage}}
+        <span class="item-description"><strong>Damage Type: </strong>{{system.damage}}</span>
         {{/if}}
         <div class="cells">
-            {{#if data.roll}}
+            {{#if system.roll}}
             <div class="roll flexcol flex0">
                 <span class="cell-label">ROLL</span>
-                <span>{{data.roll}}</span>
+                <span>{{system.roll}}</span>
             </div>
             {{/if}}
-            {{#if data.cost includeZero=true}}
+            {{#if system.cost includeZero=true}}
             <div class="cost flexcol flex0">
                 <span class="cell-label">COST</span>
-                <span>{{data.cost}}</span>
+                <span>{{system.cost}}</span>
             </div>
             {{/if}}
-            {{#if data.sdl}}
+            {{#if system.sdl}}
             <div class="cost flexcol flex0">
                 <span class="cell-label">SDL</span>
-                <span>{{data.sdl}}</span>
+                <span>{{system.sdl}}</span>
             </div>
             {{/if}}
-            {{#if data.targets}}
+            {{#if system.targets}}
             <div class="cost flexcol flex0">
                 <span class="cell-label">TGTS</span>
-                <span>{{data.targets}}</span>
+                <span>{{system.targets}}</span>
             </div>
             {{/if}}
-            {{#if data.range}}
+            {{#if system.range}}
             <div class="cost flexcol flex0">
                 <span class="cell-label">RNG</span>
-                <span>{{data.range}}</span>
+                <span>{{system.range}}</span>
             </div>
             {{/if}}            
         </div>

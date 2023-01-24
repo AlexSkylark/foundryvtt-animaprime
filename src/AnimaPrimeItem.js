@@ -12,9 +12,9 @@ export default class AnimaPrimeItem extends Item {
         super.prepareData();
 
         // Get the Item's data
-        const itemData = this.data;
-        const actorData = this.actor ? this.actor.data : {};
-        const data = itemData.data;
+        const itemData = this;
+        const actorData = this.actor ? this.actor : {};
+        const data = itemData;
     }
 
     prepareBaseData() {
@@ -56,7 +56,7 @@ export default class AnimaPrimeItem extends Item {
                     break;
             }
 
-            this.data.update({ img: image });
+            this.update({ img: image });
         }
     }
 
@@ -68,12 +68,12 @@ export default class AnimaPrimeItem extends Item {
         }
 
         let itemData = {
-            ...this.data,
+            ...this,
             owner: this.actor,
             targets: targetActors,
         };
 
-        switch (this.data.type) {
+        switch (this.type) {
             case "skill":
                 SkillDiceRoll.skillCheck(itemData, ctrl, shift);
                 break;
