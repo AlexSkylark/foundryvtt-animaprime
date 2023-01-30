@@ -60,7 +60,7 @@
                 <label class="container-header generic-skill-roll">Traits and Abilities</label>
                 <span class="icon button-addskill item-create {{#unless editUnlocked}}edit-hidden{{/unless}}" data-type="skill"><i class="fas fa-plus"></i></span>
                 <div class="container-wrapper skills-container">
-                    {{#each system.skills as |item id|}}
+                    {{#each skills as |item id|}}
                     <div class="item icon-container" data-item-id="{{item._id}}">
                         <span class="skill-unit item-roll">{{this.name}}&nbsp;</span>
                         <span class="icon fas fa-edit item-edit {{#unless ../editUnlocked}}edit-hidden{{/unless}}"></span>

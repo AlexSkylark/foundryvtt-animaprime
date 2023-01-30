@@ -56,6 +56,7 @@ export default class AnimaPrimeItem extends Item {
                     break;
             }
 
+            this.img = image;
             this.update({ img: image });
         }
     }
