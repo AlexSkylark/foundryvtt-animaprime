@@ -12,7 +12,7 @@ export async function maneuverRoll(maneuver, isReroll = false) {
         maneuverDice += 1;
     }
 
-    const rollFormula = maneuverDice + 1 + "d6";
+    const rollFormula = maneuverDice + "d6";
 
     const rl = new Roll(rollFormula, maneuver);
     const rollResult = await rl.evaluate({ async: true });
