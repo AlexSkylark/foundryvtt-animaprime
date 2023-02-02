@@ -1832,6 +1832,9 @@ img {
   padding: 2px 0px;
   padding-left: 8px;
 }
+.combat-tracker-tab .main-queue .hover {
+  background-color: rgba(255, 255, 255, 0.3137254902) !important;
+}
 .combat-tracker-tab .header-next-turn {
   width: 100;
   text-align: center;
@@ -1861,6 +1864,12 @@ img {
 .combat-tracker-tab .turn-queue-list {
   min-height: calc(50% - 136px);
 }
+.combat-tracker-tab .waiting-line .combatant.on-queue {
+  background-color: rgba(255, 255, 255, 0.5882352941) !important;
+}
+.combat-tracker-tab .waiting-line .combatant.on-queue.hover, .combat-tracker-tab .waiting-line .combatant.on-queue:hover {
+  background-color: rgba(255, 255, 255, 0.5882352941) !important;
+}
 .combat-tracker-tab .waiting-line .combatant.friendly {
   background-color: rgba(0, 140, 255, 0.2);
   border-top: 1px solid #007aaa;
@@ -1874,8 +1883,8 @@ img {
   border: 0 !important;
   border-top: 1px solid #007aaa !important;
 }
-.combat-tracker-tab .waiting-line .combatant.friendly.hover {
-  background: rgba(0, 140, 255, 0.4) !important;
+.combat-tracker-tab .waiting-line .combatant.friendly.hover, .combat-tracker-tab .waiting-line .combatant.friendly:hover {
+  background: rgba(0, 140, 255, 0.4666666667) !important;
 }
 .combat-tracker-tab .waiting-line .combatant.hostile {
   background-color: rgba(247, 78, 82, 0.1607843137);
@@ -1890,8 +1899,8 @@ img {
   border: 0 !important;
   border-top: 1px solid #d30058 !important;
 }
-.combat-tracker-tab .waiting-line .combatant.hostile.hover {
-  background: rgba(247, 78, 82, 0.4) !important;
+.combat-tracker-tab .waiting-line .combatant.hostile.hover, .combat-tracker-tab .waiting-line .combatant.hostile:hover {
+  background: rgba(247, 78, 82, 0.4666666667) !important;
 }
 .combat-tracker-tab button {
   display: block;

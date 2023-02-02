@@ -35,7 +35,7 @@
         </div>
     </header>
 
-    <ol id="combat-tracker" class="directory-list">
+    <ol id="combat-tracker" class="directory-list main-queue">
         {{#each turns}}
             {{#if (isOnQueue this)}}
             <li class="combatant actor directory-item flexrow {{this.css}}" data-combatant-id="{{this.id}}">

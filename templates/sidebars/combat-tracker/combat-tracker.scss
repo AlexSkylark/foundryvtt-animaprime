@@ -1,9 +1,9 @@
 $friendly-background: #008cff33;
-$friendly-background-hover: #008cff66;
+$friendly-background-hover: #008cff77;
 $friendly-border: #007aaa;
 
 $hostile-background: #f74e5229;
-$hostile-background-hover: #f74e5266;
+$hostile-background-hover: #f74e5277;
 $hostile-border: #d30058;
 
 .turnUnitData {
@@ -22,6 +22,12 @@ $hostile-border: #d30058;
         li {
             padding: 2px 0px;
             padding-left: 8px;
+        }
+    }
+
+    .main-queue {            
+        .hover {
+            background-color: #ffffff50 !important;
         }
     }
 
@@ -62,12 +68,20 @@ $hostile-border: #d30058;
     }
 
     .turn-queue-list {
-        min-height: calc(50% - 136px);
+        min-height: calc(50% - 136px);        
     }
 
     .waiting-line {
         
         .combatant {
+
+            &.on-queue {
+                background-color: #ffffff96 !important;
+
+                &.hover, &:hover {
+                    background-color: #ffffff96 !important;
+                }
+            }
             
             &.friendly {
                 background-color: $friendly-background;                
@@ -82,7 +96,7 @@ $hostile-border: #d30058;
                     border-top: 1px solid $friendly-border !important;
                 }
 
-                &.hover {
+                &.hover, &:hover {
                     background: $friendly-background-hover !important;
                 }
             }
@@ -100,7 +114,7 @@ $hostile-border: #d30058;
                     border-top: 1px solid $hostile-border !important;
                 }
 
-                &.hover {
+                &.hover, &:hover {
                     background: $hostile-background-hover !important;
                 }
             }
