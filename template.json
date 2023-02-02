@@ -101,12 +101,12 @@
             "templates": ["base"],
             "roll": "4d",
             "gain": {
-                "r1": "fail",
-                "r2": "fail",
-                "r3": "strike",
-                "r4": "strike",
-                "r5": "strike",
-                "r6": "charge"
+                "r1": "0",
+                "r2": "0",
+                "r3": "1",
+                "r4": "1",
+                "r5": "1",
+                "r6": "2"
             },
             "gainText": ""
         },

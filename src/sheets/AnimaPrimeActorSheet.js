@@ -57,6 +57,12 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
             this.formatManeuverGains(maneuver);
         }
 
+        for (let maneuver of basicActions.filter((ac) => {
+            return ac.type == "maneuver";
+        })) {
+            this.formatManeuverGains(maneuver);
+        }
+
         context.skills = skills;
         context.basicActions = basicActions;
         context.actions = actions;
@@ -67,6 +73,14 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
     formatManeuverGains(elem) {
         var text = "";
         let gain = [];
+
+        if (elem.system.gain.r1 == "fail") elem.system.gain.r1 = "0";
+        if (elem.system.gain.r2 == "fail") elem.system.gain.r2 = "0";
+        if (elem.system.gain.r3 == "fail") elem.system.gain.r3 = "0";
+        if (elem.system.gain.r4 == "fail") elem.system.gain.r4 = "0";
+        if (elem.system.gain.r5 == "fail") elem.system.gain.r5 = "0";
+        if (elem.system.gain.r6 == "fail") elem.system.gain.r6 = "0";
+
         gain.push(elem.system.gain.r1);
         gain.push(elem.system.gain.r2);
         gain.push(elem.system.gain.r3);
@@ -74,6 +88,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         gain.push(elem.system.gain.r5);
         gain.push(elem.system.gain.r6);
 
+        debugger;
         for (var i = 0; i <= 2; i++) {
             const times = gain.filter((x) => x == i).length;
             if (times == 0) continue;
