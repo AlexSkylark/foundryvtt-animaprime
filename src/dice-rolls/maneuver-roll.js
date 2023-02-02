@@ -14,13 +14,19 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions) {
 
     // dialog
     if (!dialogOptions) {
-        let itemForDialog = {
-            ...maneuver,
-            type: maneuver.type,
-        };
+        if (maneuver.owner.type == "character") {
+            let itemForDialog = {
+                ...maneuver,
+                type: maneuver.type,
+            };
 
-        dialogOptions = await DiceRolls.getManeuverRollOptions(itemForDialog);
-        if (dialogOptions.cancelled) return;
+            dialogOptions = await DiceRolls.getManeuverRollOptions(
+                itemForDialog
+            );
+            if (dialogOptions.cancelled) return;
+        } else {
+            dialogOptions = { maneuverStyle: "regular" };
+        }
     }
 
     if (dialogOptions.maneuverStyle == "reckless") {
