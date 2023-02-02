@@ -185,30 +185,32 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
             updateObject.system[propertyName] = newValue;
         }
 
-        const chatMsg =
-            (operation == "plus" ? "added" : "subtracted") +
-            " 1 " +
-            propertyName
-                .replace("Dice", " die")
-                .replace(".value", " point")
-                .replace(".max", " max point") +
-            (operation == "plus" ? " to " : " from ") +
-            this.actor.name;
+        if (propertyValue != newValue) {
+            const chatMsg =
+                (operation == "plus" ? "added" : "subtracted") +
+                " 1 " +
+                propertyName
+                    .replace("Dice", " die")
+                    .replace(".value", " point")
+                    .replace(".max", " max point") +
+                (operation == "plus" ? " to " : " from ") +
+                this.actor.name;
 
-        ChatMessage.create({
-            user: game.user._id,
-            speaker: ChatMessage.getSpeaker({ alias: this.actor.name }),
-            content:
-                '<span class="result-message' +
-                (operation == "plus" ? " success" : " partial") +
-                '">' +
-                chatMsg +
-                "</span>",
-        });
+            ChatMessage.create({
+                user: game.user._id,
+                speaker: ChatMessage.getSpeaker({ alias: this.actor.name }),
+                content:
+                    '<span class="result-message' +
+                    (operation == "plus" ? " success" : " partial") +
+                    '">' +
+                    chatMsg +
+                    "</span>",
+            });
 
-        await this.actor.update(updateObject);
+            await this.actor.update(updateObject);
 
-        setTimeout(() => game.combats.apps[0].render(false), 300);
+            setTimeout(() => game.combats.apps[0].render(false), 300);
+        }
     }
 
     async _onItemCreate(event) {
