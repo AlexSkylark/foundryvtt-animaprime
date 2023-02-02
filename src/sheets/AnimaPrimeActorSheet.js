@@ -76,6 +76,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
 
         for (var i = 0; i <= 2; i++) {
             const times = gain.filter((x) => x == i).length;
+            if (times == 0) continue;
             text += " ";
             if (times < 2) {
                 text += gain.indexOf(i.toString()) + 1;
