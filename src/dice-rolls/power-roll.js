@@ -39,16 +39,17 @@ async function castPower(power) {
         });
     }
 
+    const templateHtml = await renderTemplate(
+        "systems/animaprime/templates/rolls/roll-power/roll-power.hbs",
+        {
+            ...power,
+            message: resultMessage,
+        }
+    );
+
     return ChatMessage.create({
         user: game.user._id,
-        speaker: ChatMessage.getSpeaker(),
-        content: await renderTemplate(
-            "systems/animaprime/templates/rolls/roll-power/roll-power.hbs",
-            {
-                ...power,
-                message: resultMessage,
-            }
-        ),
-        roll: true,
+        speaker: ChatMessage.getSpeaker({ alias: power.owner.name }),
+        content: templateHtml,
     });
 }

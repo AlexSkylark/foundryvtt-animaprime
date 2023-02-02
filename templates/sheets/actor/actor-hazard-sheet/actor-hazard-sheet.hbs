@@ -46,10 +46,10 @@
     </div>
 
     <section class="actions-section">
-        {{#each system.basicActions as |item id|}}
+        {{#each basicActions as |item id|}}
         {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=true}}
         {{/each}}
-        {{#each system.actions as |item id|}}
+        {{#each actions as |item id|}}
         {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=true}}
         {{/each}}
     </section> 

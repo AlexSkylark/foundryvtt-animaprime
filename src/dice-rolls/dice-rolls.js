@@ -17,7 +17,7 @@ export async function renderRoll(
     let renderedRoll = await rollResult.render({
         template: messageTemplate,
         flavor: {
-            speaker: ChatMessage.getSpeaker(),
+            speaker: ChatMessage.getSpeaker({ alias: entityData.owner.name }),
             entityData: entityData,
             rollResults: rollResult,
             resultData: resultData,
@@ -31,7 +31,7 @@ export async function renderRoll(
     });
 
     let messageData = {
-        speaker: ChatMessage.getSpeaker(),
+        speaker: ChatMessage.getSpeaker({ alias: entityData.owner.name }),
         content: renderedRoll,
         flags: {
             sourceItem: entityData,
