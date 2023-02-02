@@ -3,7 +3,7 @@
         <div class="roll-header flexrow">            
             <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
             <div class="flexcol">
-                <h4 class="header-title">Maneuver {{#if flavor.isReroll}}re{{/if}}roll:</h4>
+                <h4 class="header-title">Maneuver {{#if flavor.isReroll}}re{{/if}}roll{{#unless flavor.additionalData.isRegular}} - {{flavor.additionalData.maneuverStyle}}{{/unless}}:</h4>
                 <h4 class="header-name">{{flavor.entityData.name}}</h4>
             </div>
         </div>        
@@ -14,10 +14,17 @@
                     <li class="roll slowed" title="Slowed Condition die"></li>
                     {{/if}}
                     {{#each flavor.rollResults.dice.0.results}}
-                    <li class="roll" title="Maneuver die">{{{this.result}}}</li>
+                    <li class="roll{{#if this.strike}} success strike-success{{/if}}{{#if this.charge}} success charge-success{{/if}}" title="Maneuver die">{{{this.result}}}</li>
                     {{/each}}
+                    {{#if flavor.additionalData.isReckless}}
+                    <li class="roll reckless{{#if flavor.additionalData.recklessDice.0.strike}} success strike-success{{/if}}{{#if flavor.additionalData.recklessDice.0.charge}} success charge-success{{/if}}" title="Reckless die">{{{flavor.additionalData.recklessDice.0.result}}}</li>
+                    <li class="roll reckless{{#if flavor.additionalData.recklessDice.1.strike}} success strike-success{{/if}}{{#if flavor.additionalData.recklessDice.1.charge}} success charge-success{{/if}}" title="Reckless die">{{{flavor.additionalData.recklessDice.1.result}}}</li>
+                    {{/if}}
                     {{#if flavor.additionalData.isQuickened}}
-                    <li class="roll quickened" title="Quickened Condition die">{{{flavor.additionalData.quickenedDie.result}}}</li>
+                    <li class="roll quickened{{#if flavor.additionalData.quickenedDie.strike}} success strike-success{{/if}}{{#if flavor.additionalData.quickenedDie.charge}} success charge-success{{/if}}" title="Quickened Condition die">{{{flavor.additionalData.quickenedDie.result}}}</li>
+                    {{/if}}
+                    {{#if flavor.additionalData.isAggressive}}
+                    <li title="Aggressive Modifier die" class="roll success strike-success">&nbsp;</li>
                     {{/if}}
                 </ol>
                 {{#if flavor.enableReroll}}
@@ -29,12 +36,32 @@
             </div>            
             <span class="result-message">
             {{#if flavor.resultData.strike}}
-            + {{flavor.resultData.strike}} strike
+            + {{flavor.resultData.strike}} strike{{#if (is1 flavor.resultData.strike)}} die{{else}} dice{{/if}}
             {{/if}}
             &nbsp;
             {{#if flavor.resultData.charge}}
-            + {{flavor.resultData.charge}} charge
+            + {{flavor.resultData.charge}} charge{{#if (is1 flavor.resultData.charge)}} die{{else}} dice{{/if}}
             {{/if}}
+
+            {{#if flavor.additionalData.isAggressive}}
+            <br />(+1 bonus strike die)
+            {{/if}}
+            {{#if flavor.additionalData.isCunning}}
+            <br />(+1 threat die to enemy)
+            {{/if}}
+            {{#if flavor.additionalData.isDefensive}}
+            <br />(-1 threat die)
+            {{/if}}
+            {{#if flavor.additionalData.isHeroic}}
+            <br />(+1 bonus progress die to goal)
+            {{/if}}
+            {{#if flavor.additionalData.isReckless}}
+            <br />(+2 bonus dice to roll, +1 threat die)
+            {{/if}}
+            {{#if flavor.additionalData.isSupportive}}
+            <br />(+1 bonus strike die to ally)
+            {{/if}}
+
             </span>        
         </div>
         

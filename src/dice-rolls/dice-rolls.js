@@ -50,6 +50,49 @@ export async function renderRoll(
 
     if (!enableReroll && commitCallback)
         commitCallback(resultData, entityData, dialogOptions, itemTargets);
+
+    setTimeout(() => game.combats.apps[0].render(false), 300);
+}
+
+export async function getManeuverRollOptions(item) {
+    const template =
+        "systems/animaprime/templates/dialogs/dialog-maneuverroll/dialog-maneuverroll.hbs";
+
+    const html = await renderTemplate(template, item);
+
+    return new Promise((resolve) => {
+        const dialogOptions = {
+            width: 400,
+            height: 140,
+        };
+
+        const data = {
+            title:
+                item.type.charAt(0).toUpperCase() +
+                item.type.slice(1) +
+                " Roll",
+            content: html,
+            buttons: {
+                cancel: {
+                    label: "Cancel",
+                    callback: (html) => resolve({ cancelled: true }),
+                },
+                normal: {
+                    label: "Confirm",
+                    callback: (html) =>
+                        resolve({
+                            maneuverStyle:
+                                html[0].querySelector("form").maneuverStyle
+                                    .value,
+                        }),
+                },
+            },
+            default: "normal",
+            close: () => resolve({ cancelled: true }),
+        };
+
+        new Dialog(data, dialogOptions).render(true);
+    });
 }
 
 export async function getItemRollOptions(item) {

@@ -1,0 +1,27 @@
+<script>
+    function modifyDice(diceType, add, maxValue, type) {        
+        if (add && $(".form-" + diceType)[0].value < maxValue)
+            $(".form-" + diceType)[0].value++;
+        else if (!add && $(".form-" + diceType)[0].value > 0)
+            $(".form-" + diceType)[0].value--;
+    }
+</script>
+
+<form>
+    <div class="flexrow dialog-container">
+        <div class="dialog-field-container-maneuver flexrow">
+            <label>What maneuver style?</label>                    
+            <div class="flexrow dialog-buttons">
+                 <select class="gain-select" name="maneuverStyle" data-field="system.gain.r1">
+                        <option value="regular">Regular</option>
+                        <option value="aggressive">Aggressive</option>
+                        <option value="cunning">Cunning</option>
+                        <option value="defensive">Defensive</option>
+                        <option value="heroic">Heroic</option>
+                        <option value="reckless">Reckless</option>
+                        <option value="supportive">Supportive</option>
+                    </select>
+            </div>
+        </div>
+    </div>
+</form>

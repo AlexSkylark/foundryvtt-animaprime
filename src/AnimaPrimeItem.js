@@ -22,8 +22,8 @@ export default class AnimaPrimeItem extends Item {
         // documents or derived data.
     }
 
-    _preCreate(data, options, user) {
-        super._preCreate(data, options, user);
+    async _preCreate(data, options, user) {
+        await super._preCreate(data, options, user);
 
         if (!data.img) {
             let image = "";
@@ -57,7 +57,8 @@ export default class AnimaPrimeItem extends Item {
             }
 
             this.img = image;
-            this.update({ img: image });
+            this._source.img = image;
+            await this.updateSource();
         }
     }
 

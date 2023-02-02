@@ -1,7 +1,9 @@
 $friendly-background: #008cff33;
+$friendly-background-hover: #008cff66;
 $friendly-border: #007aaa;
 
 $hostile-background: #f74e5229;
+$hostile-background-hover: #f74e5266;
 $hostile-border: #d30058;
 
 .turnUnitData {
@@ -80,8 +82,8 @@ $hostile-border: #d30058;
                     border-top: 1px solid $friendly-border !important;
                 }
 
-                &:hover {
-                    background: $friendly-background !important;
+                &.hover {
+                    background: $friendly-background-hover !important;
                 }
             }
 
@@ -98,8 +100,8 @@ $hostile-border: #d30058;
                     border-top: 1px solid $hostile-border !important;
                 }
 
-                &:hover {
-                    background: $hostile-background !important;
+                &.hover {
+                    background: $hostile-background-hover !important;
                 }
             }
         }            

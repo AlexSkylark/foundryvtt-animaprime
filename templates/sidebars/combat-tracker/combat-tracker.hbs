@@ -22,16 +22,7 @@
         </nav>
         {{/if}}
 
-        <div class="encounter-controls flexrow {{#if hasCombat}}combat{{/if}}">
-            {{#if user.isGM}}
-            <a class="combat-button combat-control" data-tooltip="COMBAT.RollAll" data-control="rollAll" {{#unless turns}}disabled{{/unless}}>
-                <i class="fas fa-users"></i>
-            </a>
-            <a class="combat-button combat-control" data-tooltip="COMBAT.RollNPC" data-control="rollNPC" {{#unless turns}}disabled{{/unless}}>
-                <i class="fas fa-users-cog"></i>
-            </a>
-            {{/if}}
-
+        <div class="encounter-controls flexrow {{#if hasCombat}}combat{{/if}}">            
             {{#if combatCount}}
             {{#if combat.round}}
             <h3 class="encounter-title noborder">{{localize 'COMBAT.Round'}} {{combat.round}}</h3>
@@ -40,20 +31,6 @@
             {{/if}}
             {{else}}
             <h3 class="encounter-title noborder">{{localize "COMBAT.None"}}</h3>
-            {{/if}}
-
-            {{#if user.isGM}}
-            <a class="combat-button combat-control" data-tooltip="COMBAT.InitiativeReset" data-control="resetAll"
-                {{#unless hasCombat}}disabled{{/unless}}>
-                <i class="fas fa-undo"></i>
-            </a>
-            <a class="combat-button combat-control" data-tooltip="{{labels.scope}}"
-                data-control="toggleSceneLink" {{#unless hasCombat}}disabled{{/unless}}>
-                <i class="fas fa-{{#unless linked}}un{{/unless}}link"></i>
-            </a>
-            <a class="combat-button combat-settings" data-tooltip="COMBAT.Settings" data-control="trackerSettings">
-                <i class="fas fa-cog"></i>
-            </a>
             {{/if}}
         </div>
     </header>

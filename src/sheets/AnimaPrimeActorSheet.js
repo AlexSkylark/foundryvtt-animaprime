@@ -170,6 +170,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         }
 
         await this.actor.update(updateObject);
+
+        setTimeout(() => game.combats.apps[0].render(false), 300);
     }
 
     async _onItemCreate(event) {

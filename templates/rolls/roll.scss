@@ -87,6 +87,10 @@
             background-image: url(../../systems/animaprime/assets/d6-green.svg);
         }
 
+        &.reckless {
+            background-image: url(../../systems/animaprime/assets/d6-purple.svg);
+        }
+
         &.condition {
             background-image: url(../../systems/animaprime/assets/d6-condition.svg);
         }
@@ -108,7 +112,17 @@
             top: 1px;
             padding-top: 2px;
             border-bottom: 2px solid #45af86 !important;
+
+            &.strike-success {
+                border-bottom: 2px solid #e50089 !important;
+            }
+
+            &.charge-success {
+                border-bottom: 2px solid #00ade1 !important;
+            }
         }
+
+        
 
         &.partial {
             border-bottom: 2px solid rgb(225, 140, 14);

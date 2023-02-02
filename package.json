@@ -4,7 +4,7 @@
     "description": "CSS compiler for the Anima Prime Resurgence system",
     "scripts": {
         "build": "gulp build",
-        "compile": "gulp css",
+        "compile": "gulp sass",
         "watch": "gulp",
         "gulp": "gulp"
     },

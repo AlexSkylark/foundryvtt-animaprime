@@ -1512,6 +1512,9 @@ img {
 .rolls .roll.bonus {
   background-image: url(../../systems/animaprime/assets/d6-green.svg);
 }
+.rolls .roll.reckless {
+  background-image: url(../../systems/animaprime/assets/d6-purple.svg);
+}
 .rolls .roll.condition {
   background-image: url(../../systems/animaprime/assets/d6-condition.svg);
 }
@@ -1529,6 +1532,12 @@ img {
   top: 1px;
   padding-top: 2px;
   border-bottom: 2px solid #45af86 !important;
+}
+.rolls .roll.success.strike-success {
+  border-bottom: 2px solid #e50089 !important;
+}
+.rolls .roll.success.charge-success {
+  border-bottom: 2px solid #00ade1 !important;
 }
 .rolls .roll.partial {
   border-bottom: 2px solid rgb(225, 140, 14);
@@ -1718,6 +1727,63 @@ img {
   margin: 0 !important;
 }
 
+.dialog-container {
+  justify-content: center;
+}
+.dialog-container .dialog-field-container-maneuver {
+  align-items: center;
+  text-align: right;
+  flex: 0 0 95%;
+  border: 1px solid black;
+  margin: 2px !important;
+  padding: 5px !important;
+  padding-top: 10px;
+}
+.dialog-container .dialog-field-container-maneuver label {
+  padding-right: 6px;
+}
+.dialog-container .dialog-field-container-maneuver label.label-resistance {
+  margin-bottom: 8px;
+}
+.dialog-container .dialog-field-container-maneuver input[type=radio] {
+  margin-top: -6px;
+  margin-right: 2px;
+}
+
+.form-dice-field {
+  margin: 4px !important;
+  background-color: #bbb !important;
+  font-size: 16px !important;
+  border: 1px solid #333 !important;
+  max-width: 80px !important;
+  font-weight: 600;
+  text-align: center !important;
+}
+.form-dice-field input[type=text] {
+  width: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #444;
+}
+.form-dice-field span {
+  margin-top: 3px;
+  position: relative;
+  right: 3px;
+}
+
+.dialog-buttons {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  /* justify-content: space-around; */
+  align-items: center;
+}
+
+.form-dialog-plusminus-button {
+  max-width: 30px;
+  margin: 0 !important;
+}
+
 .dialog-usepower {
   margin-bottom: 8px;
 }
@@ -1808,8 +1874,8 @@ img {
   border: 0 !important;
   border-top: 1px solid #007aaa !important;
 }
-.combat-tracker-tab .waiting-line .combatant.friendly:hover {
-  background: rgba(0, 140, 255, 0.2) !important;
+.combat-tracker-tab .waiting-line .combatant.friendly.hover {
+  background: rgba(0, 140, 255, 0.4) !important;
 }
 .combat-tracker-tab .waiting-line .combatant.hostile {
   background-color: rgba(247, 78, 82, 0.1607843137);
@@ -1824,8 +1890,8 @@ img {
   border: 0 !important;
   border-top: 1px solid #d30058 !important;
 }
-.combat-tracker-tab .waiting-line .combatant.hostile:hover {
-  background: rgba(247, 78, 82, 0.1607843137) !important;
+.combat-tracker-tab .waiting-line .combatant.hostile.hover {
+  background: rgba(247, 78, 82, 0.4) !important;
 }
 .combat-tracker-tab button {
   display: block;
