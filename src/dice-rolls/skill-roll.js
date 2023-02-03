@@ -29,11 +29,14 @@ export async function skillCheck(skill, withHelp = false, difficult = false) {
 
     let difficultyText = "regular";
     switch (dialogOptions.difficulty) {
-        case "5":
+        case "4":
             difficultyText = "hard";
             break;
-        case "6":
+        case "5":
             difficultyText = "very hard";
+            break;
+        case "6":
+            difficultyText = "near impossible";
             break;
     }
 
