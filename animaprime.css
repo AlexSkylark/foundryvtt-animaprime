@@ -537,11 +537,11 @@ input:disabled:hover {
 }
 .character-sheet .decorative-square {
   background-color: #efe5f0;
-  height: 736px;
+  height: 765px;
   width: 159px;
   position: absolute;
   top: 62px;
-  left: 42px;
+  left: 53px;
   z-index: -1;
 }
 .character-sheet .generic-skill-roll {
@@ -616,7 +616,7 @@ input:disabled:hover {
   margin: 0px 6px;
 }
 .character-sheet header .header-namestrip input[type=text].name {
-  max-width: calc(100% - 443px);
+  max-width: calc(100% - 470px);
 }
 .character-sheet header .header-namestrip input[type=text]::placeholder {
   color: #ddd;
@@ -660,12 +660,12 @@ input:disabled:hover {
   border-color: #bcf3e4;
 }
 .character-sheet .left-side {
-  flex: 0 0 235px;
+  flex: 0 0 260px;
   margin-left: 4px;
   display: flex;
 }
 .character-sheet .left-side .profile-container {
-  margin-left: 15px;
+  margin-left: 26px;
 }
 .character-sheet .left-side img {
   border: 4px solid #643b68;
@@ -1403,6 +1403,10 @@ img {
   height: 15px;
 }
 
+.name-field {
+  min-width: 60%;
+}
+
 .action-sheet .name {
   flex: 0 0 60%;
 }
@@ -1782,6 +1786,65 @@ img {
   justify-content: flex-start;
   /* justify-content: space-around; */
   align-items: center;
+}
+
+.form-dialog-plusminus-button {
+  max-width: 30px;
+  margin: 0 !important;
+}
+
+.dialog-container {
+  justify-content: center;
+}
+.dialog-container .dialog-field-container-skill {
+  align-items: center;
+  text-align: right;
+  flex: 0 0 95%;
+  border: 1px solid black;
+  margin: 2px !important;
+  padding: 5px !important;
+  padding-top: 10px;
+}
+.dialog-container .dialog-field-container-skill label {
+  padding-right: 6px;
+}
+.dialog-container .dialog-field-container-skill label.label-resistance {
+  margin-bottom: 8px;
+}
+.dialog-container .dialog-field-container-skill input[type=radio] {
+  margin-top: -6px;
+  margin-right: 2px;
+}
+
+.form-dice-field {
+  margin: 4px !important;
+  background-color: #bbb !important;
+  font-size: 16px !important;
+  border: 1px solid #333 !important;
+  max-width: 80px !important;
+  font-weight: 600;
+  text-align: center !important;
+}
+.form-dice-field input[type=text] {
+  width: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #444;
+}
+.form-dice-field span {
+  margin-top: 3px;
+  position: relative;
+  right: 3px;
+}
+
+.dialog-buttons-radio {
+  flex-direction: column !important;
+  flex-wrap: wrap;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+.dialog-buttons-radio div {
+  margin: 5px 0px;
 }
 
 .form-dialog-plusminus-button {

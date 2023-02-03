@@ -4,22 +4,45 @@ export async function skillCheck(skill, withHelp = false, difficult = false) {
     const messageTemplate =
         "systems/animaprime/templates/rolls/roll-skill/roll-skill.hbs";
 
-    let disadvantage = false;
-    let dice = (!skill.generic ? 2 : 1) + withHelp - difficult;
-    if (dice < 1) {
-        disadvantage = true;
-        dice = 2;
-    }
+    // dialog
+    let itemForDialog = {
+        ...skill,
+        type: skill.type,
+    };
+
+    const dialogOptions = await DiceRolls.getSkillRollOptions(itemForDialog);
+    if (dialogOptions.cancelled) return;
+
+    let dice =
+        (!skill.generic ? parseInt(skill.system.rating) : 2) +
+        (withHelp ? 1 : 0);
 
     const rollFormula = dice + "d6";
 
     const rl = new Roll(rollFormula, skill);
     const rollResult = await rl.evaluate({ async: true });
 
-    const resultData = await DiceRolls.checkSkillSuccess(
+    const sux = await DiceRolls.checkSkillSuccess(
         rollResult.dice[0].results,
-        disadvantage
+        dialogOptions.difficulty
     );
+
+    let difficultyText = "regular";
+    switch (dialogOptions.difficulty) {
+        case "5":
+            difficultyText = "hard";
+            break;
+        case "6":
+            difficultyText = "very hard";
+            break;
+    }
+
+    const resultData = {
+        help: withHelp,
+        successes: sux,
+        difficultyText: difficultyText,
+    };
+
     await DiceRolls.renderRoll(rollResult, skill, resultData, messageTemplate, {
         withHelp: withHelp,
     });

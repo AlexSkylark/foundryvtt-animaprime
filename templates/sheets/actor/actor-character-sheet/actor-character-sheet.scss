@@ -7,11 +7,11 @@
 
     .decorative-square {
         background-color: variables.$primary-color-light;
-        height: 736px;
+        height: 765px;
         width: 159px;
         position: absolute;
         top: 62px;
-        left: 42px;
+        left: 53px;
         z-index: -1;
     }
 
@@ -99,7 +99,7 @@
                 margin: 0px 6px;
 
                 &.name {
-                    max-width: calc(100% - 443px);
+                    max-width: calc(100% - 470px);
                 }
 
                 &::placeholder {
@@ -154,12 +154,12 @@
     }
         
     .left-side {        
-        flex: 0 0 235px;
+        flex: 0 0 260px;
         margin-left: 4px;
         display: flex;
 
         .profile-container {
-            margin-left: 15px
+            margin-left: 26px
         }
 
         img {

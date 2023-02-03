@@ -1,0 +1,22 @@
+<script>
+    function modifyDice(diceType, add, maxValue, type) {        
+        if (add && $(".form-" + diceType)[0].value < maxValue)
+            $(".form-" + diceType)[0].value++;
+        else if (!add && $(".form-" + diceType)[0].value > 0)
+            $(".form-" + diceType)[0].value--;
+    }
+</script>
+
+<form>
+    <div class="flexrow dialog-container">
+        <div class=" dialog-field-container-skill flexcol">
+            <label class="label-resistance">Select roll difficulty: </label>        
+            <div class="flexrow dialog-buttons-radio">                        
+                <div><input class="input-text check" name="difficulty" value="4" type="radio" checked>Regular (4)</input></div>
+                <div><input class="input-text check" name="difficulty" value="5" type="radio">Hard (5)</input></div>
+                <div><input class="input-text check" name="difficulty" value="6" type="radio">Very Hard (6)</input></div>
+            </div>
+            </div>
+        </div>
+    </div>
+</form>

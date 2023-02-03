@@ -95,7 +95,8 @@
             }
         },
         "skill": {
-            "name": "New Skill"
+            "name": "New Skill",
+            "rating": 3
         },
         "maneuver": {
             "templates": ["base"],

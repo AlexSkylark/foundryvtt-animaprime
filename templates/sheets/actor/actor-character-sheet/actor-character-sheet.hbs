@@ -62,7 +62,7 @@
                 <div class="container-wrapper skills-container">
                     {{#each skills as |item id|}}
                     <div class="item icon-container" data-item-id="{{item._id}}">
-                        <span class="skill-unit item-roll">{{this.name}}&nbsp;</span>
+                        <span class="skill-unit item-roll">{{this.name}} ({{this.system.rating}})</span>
                         <span class="icon fas fa-edit item-edit {{#unless ../editUnlocked}}edit-hidden{{/unless}}"></span>
                         <span class="icon fas fa-trash item-delete {{#unless ../editUnlocked}}edit-hidden{{/unless}}"></span>
                     </div>                    

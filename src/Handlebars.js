@@ -55,8 +55,8 @@ export function registerHandlebarsHelpers() {
         return value >= 3;
     });
 
-    Handlebars.registerHelper("isGreatSuccess", function (value) {
-        return value >= 5;
+    Handlebars.registerHelper("isSkillSuccess", function (value) {
+        return value >= 2;
     });
 
     Handlebars.registerHelper("isAchievement", function (value) {

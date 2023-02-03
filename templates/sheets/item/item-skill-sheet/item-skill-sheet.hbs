@@ -1,9 +1,15 @@
 <form class="{{cssClass}} item-sheet flexrow">
-    <img src="{{item.img}}" />
-    <div class="field-container flexcol">
+    <img src="icons/skills/trades/academics-study-reading-book.webp" />
+    <div class="field-container flexcol name-field">
         <label for="name">Skill Name</label>
         <div class="value-field">        
             <input type="text" name="name" value="{{item.name}}" />
+        </div>
+    </div>
+    <div class="field-container flexcol">
+        <label for="name">Rating</label>
+        <div class="value-field">        
+            <input type="text" name="system.rating" value="{{item.system.rating}}" />
         </div>
     </div>
 </form>

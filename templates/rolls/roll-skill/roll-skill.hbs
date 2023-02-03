@@ -3,7 +3,7 @@
         <div class="roll-header flexrow">
             <img class="roll-img" src="icons/skills/trades/academics-study-reading-book.webp" title="{{flavor.entityData.name}}" />
             <div class="flexcol">
-                <h4 class="header-title">Skill {{#if flavor.isReroll}}re{{/if}}roll:</h4>
+                <h4 class="header-title">Skill {{#if flavor.isReroll}}re{{/if}}roll ({{flavor.resultData.difficultyText}}):</h4>
                 <h4 class="header-name">{{flavor.entityData.name}}</h4>
             </div>
         </div>        
@@ -11,23 +11,18 @@
             <div class="flexrow">
                 <ol class="rolls">
                     {{#each flavor.rollResults.dice.0.results}}
-                    <li class="roll{{#if (isGreatSuccess this.result)}} success{{/if}}{{#if (isSuccess this.result)}} partial{{/if}}">{{{this.result}}}</li>
+                    <li class="roll{{#if this.success}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}                
-                </ol>
-                {{#if flavor.enableReroll}}
-                <div class="button-reroll-container flex0">
-                    <div class="button-roll reroll"><i class="fas fa-redo"></i></div>
-                </div>
-                {{/if}}
+                </ol>                
             </div>            
-            {{#if (isTotal flavor.resultData)}}
-            <span class="result-message success">Total Success!</span>
+            {{#if (isSkillSuccess flavor.resultData.successes)}}
+            <span class="result-message success">{{flavor.resultData.successes}} successes. Total Success!</span>
             {{/if}}
-            {{#if (isPartial flavor.resultData)}}            
-            <span class="result-message partial">Partial Success!</span>
+            {{#if (is1 flavor.resultData.successes)}}
+            <span class="result-message partial">1 success. Partial Success.</span>
             {{/if}}
-            {{#if (isFailure flavor.resultData)}}            
-            <span class="result-message failure">Failure!</span>
+            {{#if (is0 flavor.resultData.successes)}}
+            <span class="result-message failure">Total Failure!</span>
             {{/if}}
         </div>        
     </div>    

@@ -4,8 +4,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["animaprime", "sheet", "actor"],
-            width: 840,
-            height: 798,
+            width: 890,
+            height: 827,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
@@ -88,7 +88,6 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         gain.push(elem.system.gain.r5);
         gain.push(elem.system.gain.r6);
 
-        debugger;
         for (var i = 0; i <= 2; i++) {
             const times = gain.filter((x) => x == i).length;
             if (times == 0) continue;
@@ -196,16 +195,18 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
                 (operation == "plus" ? " to " : " from ") +
                 this.actor.name;
 
-            ChatMessage.create({
-                user: game.user._id,
-                speaker: ChatMessage.getSpeaker({ alias: this.actor.name }),
-                content:
-                    '<span class="result-message' +
-                    (operation == "plus" ? " success" : " partial") +
-                    '">' +
-                    chatMsg +
-                    "</span>",
-            });
+            if (!game.user.isGM) {
+                ChatMessage.create({
+                    user: game.user._id,
+                    speaker: ChatMessage.getSpeaker({ alias: this.actor.name }),
+                    content:
+                        '<span class="result-message' +
+                        (operation == "plus" ? " success" : " partial") +
+                        '">' +
+                        chatMsg +
+                        "</span>",
+                });
+            }
 
             await this.actor.update(updateObject);
 

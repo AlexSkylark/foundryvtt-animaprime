@@ -95,6 +95,46 @@ export async function getManeuverRollOptions(item) {
     });
 }
 
+export async function getSkillRollOptions(item) {
+    const template =
+        "systems/animaprime/templates/dialogs/dialog-skillroll/dialog-skillroll.hbs";
+
+    const html = await renderTemplate(template, item);
+
+    return new Promise((resolve) => {
+        const dialogOptions = {
+            width: 280,
+            height: 220,
+        };
+
+        const data = {
+            title:
+                item.type.charAt(0).toUpperCase() +
+                item.type.slice(1) +
+                " Roll",
+            content: html,
+            buttons: {
+                cancel: {
+                    label: "Cancel",
+                    callback: (html) => resolve({ cancelled: true }),
+                },
+                normal: {
+                    label: "Confirm",
+                    callback: (html) =>
+                        resolve({
+                            difficulty:
+                                html[0].querySelector("form").difficulty.value,
+                        }),
+                },
+            },
+            default: "normal",
+            close: () => resolve({ cancelled: true }),
+        };
+
+        new Dialog(data, dialogOptions).render(true);
+    });
+}
+
 export async function getItemRollOptions(item) {
     const template =
         "systems/animaprime/templates/dialogs/dialog-itemroll/dialog-itemroll.hbs";
@@ -225,24 +265,17 @@ export function checkSuccess(results, successModifier) {
     return Math.max(successes + successModifier, 0);
 }
 
-export function checkSkillSuccess(results, disadvantage = false) {
-    var total = 0;
-    var partial = 0;
-    var failure;
+export function checkSkillSuccess(results, difficulty) {
+    var sux = 0;
+
     for (let i of results) {
-        if (i.result >= 5) total++;
-        if (i.result >= 3) partial++;
-        if (i.result < 3) failure++;
+        if (i.result >= difficulty) {
+            sux++;
+            i.success = true;
+        }
     }
-    if (!disadvantage) {
-        if (total) return "total";
-        else if (partial) return "partial";
-        else return "failure";
-    } else {
-        if (failure) return "failure";
-        else if (partial) return "partial";
-        else return "total";
-    }
+
+    return sux;
 }
 
 export function checkForReroll(owner) {
