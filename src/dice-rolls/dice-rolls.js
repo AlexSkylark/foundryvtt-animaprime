@@ -104,7 +104,7 @@ export async function getSkillRollOptions(item) {
     return new Promise((resolve) => {
         const dialogOptions = {
             width: 280,
-            height: 220,
+            height: 245,
         };
 
         const data = {
