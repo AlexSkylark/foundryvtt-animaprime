@@ -33,6 +33,10 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions) {
         maneuverDice += 2;
     }
 
+    if (dialogOptions.supportDie) {
+        maneuverDice += 1;
+    }
+
     const rollFormula = maneuverDice + "d6";
 
     const rl = new Roll(rollFormula, maneuver);
@@ -41,8 +45,14 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions) {
     const resultData = checkManeuverResult(
         maneuver.system.gain,
         rollResult.dice[0].results,
-        isSlowed
+        isSlowed,
+        dialogOptions.maneuverStyle == "aggressive"
     );
+
+    let supportDice = [];
+    if (dialogOptions.supportDie) {
+        supportDice.push(rollResult.dice[0].results.pop());
+    }
 
     let quickenedDie = null;
     if (isQuickened) {
@@ -72,9 +82,11 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions) {
             isQuickened: isQuickened,
             quickenedDie: quickenedDie,
             recklessDice: recklessDice,
+            supportDice: supportDice,
             isSlowed: isSlowed,
             slowedDie: slowedDie,
             maneuverStyle: dialogOptions.maneuverStyle,
+            hasSupportDie: dialogOptions.supportDie,
             isRegular: dialogOptions.maneuverStyle == "regular",
             isAggressive: dialogOptions.maneuverStyle == "aggressive",
             isCunning: dialogOptions.maneuverStyle == "cunning",
@@ -89,7 +101,7 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions) {
     );
 }
 
-function checkManeuverResult(maneuverGain, results, isSlowed) {
+function checkManeuverResult(maneuverGain, results, isSlowed, isAggressive) {
     let strikeGain = 0;
     let chargeGain = 0;
     let strikeIndexes = [];
@@ -116,6 +128,8 @@ function checkManeuverResult(maneuverGain, results, isSlowed) {
             }
         }
     }
+
+    if (isAggressive) strikeGain++;
 
     return {
         strike: strikeGain,

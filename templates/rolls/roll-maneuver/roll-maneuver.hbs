@@ -3,7 +3,7 @@
         <div class="roll-header flexrow">            
             <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
             <div class="flexcol">
-                <h4 class="header-title">Maneuver {{#if flavor.isReroll}}re{{/if}}roll{{#unless flavor.additionalData.isRegular}} - {{flavor.additionalData.maneuverStyle}}{{/unless}}:</h4>
+                <h4 class="header-title">Maneuver {{#if flavor.isReroll}}re{{/if}}roll{{#unless flavor.additionalData.isRegular}} - {{flavor.additionalData.maneuverStyle}}{{/unless}} {{#if flavor.additionalData.hasSupportDie}}(with support){{/if}}:</h4>
                 <h4 class="header-name">{{flavor.entityData.name}}</h4>
             </div>
         </div>        
@@ -26,6 +26,9 @@
                     {{#if flavor.additionalData.isAggressive}}
                     <li title="Aggressive Modifier die" class="roll success strike-success">&nbsp;</li>
                     {{/if}}
+                    {{#if flavor.additionalData.hasSupportDie}}
+                    <li class="roll bonus{{#if flavor.additionalData.supportDice.0.strike}} success strike-success{{/if}}{{#if flavor.additionalData.supportDice.0.charge}} success charge-success{{/if}}" title="Support die">{{{flavor.additionalData.supportDice.0.result}}}</li>
+                    {{/if}}
                 </ol>
                 {{#if flavor.enableReroll}}
                 <div class="button-reroll-container flex0">
@@ -43,6 +46,9 @@
             + {{flavor.resultData.charge}} charge{{#if (is1 flavor.resultData.charge)}} die{{else}} dice{{/if}}
             {{/if}}
 
+            {{#if flavor.additionalData.hasSupportDie}}
+            <br />(+1 bonus die to roll)
+            {{/if}}
             {{#if flavor.additionalData.isAggressive}}
             <br />(+1 bonus strike die)
             {{/if}}

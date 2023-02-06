@@ -63,7 +63,7 @@ export async function getManeuverRollOptions(item) {
     return new Promise((resolve) => {
         const dialogOptions = {
             width: 400,
-            height: 140,
+            height: 180,
         };
 
         const data = {
@@ -84,6 +84,9 @@ export async function getManeuverRollOptions(item) {
                             maneuverStyle:
                                 html[0].querySelector("form").maneuverStyle
                                     .value,
+                            supportDie:
+                                html[0].querySelector("form").supportDie
+                                    .checked,
                         }),
                 },
             },
