@@ -150,43 +150,6 @@ export async function commitResults(
     dialogOptions,
     itemTargets
 ) {
-    for (let targetId of itemTargets) {
-        const target = game.scenes.active.tokens.get(targetId);
-
-        let targetData = {};
-        if (target.isLinked) {
-            targetData = game.actors.get(target.actor.id).system;
-        } else {
-            targetData = target.actor.system ?? target.actorData.system;
-        }
-
-        if (item.type == "strike") {
-            if (resultData.hit) {
-                targetData.health.value -= 1;
-                targetData.threatDice = 0;
-            } else {
-                targetData.threatDice =
-                    targetData.threatDice -
-                    dialogOptions.variableDice +
-                    resultData.successes;
-            }
-
-            await target.update({
-                "actorData.system": targetData,
-            });
-        } else if (item.type == "achievement") {
-            if (!resultData.hit) {
-                targetData.progressDice =
-                    targetData.progressDice -
-                    dialogOptions.variableDice +
-                    resultData.successes;
-            }
-            await target.update({
-                "actorData.system": targetData,
-            });
-        }
-    }
-
     const ownerData = item.owner.system;
     const ownerStrikeDice = ownerData.strikeDice;
     const ownerActionDice = ownerData.actionDice;
