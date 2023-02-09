@@ -61,48 +61,54 @@ function registerSheets() {
 }
 
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
-    if (message.type === "roll" && message.flags.mySystem.refreshCombat) {
+    if (message.type === "roll") {
         ui.combat.render();
     }
+
     if (game.user.isGM) {
         const item = message.flags.sourceItem;
         const resultData = message.flags.resultData;
         const dialogOptions = message.flags.dialogOptions;
 
-        for (let target of message.flags.itemTargets) {
-            const token = game.scenes.active.tokens.get(target);
+        if (message.flags && message.flags.itemTargets) {
+            for (let target of message.flags.itemTargets) {
+                const token = game.scenes.active.tokens.get(target);
 
-            let targetData = {};
-            if (token.isLinked) {
-                targetData = game.actors.get(token.actor.id).system;
-            } else {
-                targetData = token.actor.system ?? token.actorData.system;
-            }
-
-            if (item.type == "strike") {
-                if (resultData.hit) {
-                    targetData.health.value -= 1;
-                    targetData.threatDice = 0;
+                let targetEntity = {};
+                if (token.isLinked) {
+                    targetEntity = game.actors.get(token.actor.id);
                 } else {
-                    targetData.threatDice =
-                        targetData.threatDice -
-                        dialogOptions.variableDice +
-                        resultData.successes;
+                    targetEntity = token.actor ?? token.actorData;
                 }
 
-                await token.update({
-                    system: targetData,
-                });
-            } else if (item.type == "achievement") {
-                if (!resultData.hit) {
-                    targetData.progressDice =
-                        targetData.progressDice -
-                        dialogOptions.variableDice +
-                        resultData.successes;
+                let targetData = targetEntity.system;
+
+                if (item.type == "strike") {
+                    if (resultData.hit) {
+                        targetData.health.value -= 1;
+                        targetData.threatDice = 0;
+                    } else {
+                        targetData.threatDice =
+                            targetData.threatDice -
+                            dialogOptions.variableDice +
+                            resultData.successes;
+                    }
+
+                    await targetEntity.update({
+                        system: targetData,
+                    });
+                } else if (item.type == "achievement") {
+                    if (!resultData.hit) {
+                        targetData.progressDice =
+                            targetData.progressDice -
+                            dialogOptions.variableDice +
+                            resultData.successes;
+                    }
+
+                    await targetEntity.update({
+                        system: targetData,
+                    });
                 }
-                await token.update({
-                    system: targetData,
-                });
             }
         }
     }

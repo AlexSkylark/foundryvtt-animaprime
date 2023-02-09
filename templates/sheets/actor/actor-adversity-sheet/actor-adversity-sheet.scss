@@ -13,6 +13,11 @@
         top: 62px;
         left: 27px;
         z-index: -1;
+
+        &.small-square {
+            height: 247px;
+        }
+        
     }
 
     input[type=text] {
@@ -298,10 +303,7 @@
             right: 15px;
         }
     
-        .skills-container {
-            
-            height: 300px;
-            overflow: auto;
+        .skills-container {        
 
             .icon {
                 float: right;
@@ -365,7 +367,7 @@
             margin-right: 27px;
             justify-content: flex-start;
             margin-top: 3px;            
-            bottom: 10px;
+            bottom: 10px;            
 
             .dice-pool-strip {
                 background-color: variables.$primary-color;
@@ -377,6 +379,11 @@
                 margin: 15px 0;
                 margin-right: 11px;
                 border-radius: 8px;
+                
+                &.threat-only {
+                    position: relative;
+                    top: 56px;
+                }
                
                 label {
                     width: calc(100% - 80px);
@@ -407,8 +414,7 @@
     }
 
     .actions-section-container {
-        overflow-y: auto;
-        height: 250px;
+        
         width: calc(100% - 45px);
         border-bottom: 2px solid variables.$primary-color;
         margin-left: 24px;

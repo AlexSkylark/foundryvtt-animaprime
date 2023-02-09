@@ -22,7 +22,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
     }
 
     get editUnlocked() {
-        return this.actor.system.enableEdit || game.user.isGM;
+        return (this.actor && this.actor.system.enableEdit) || game.user.isGM;
     }
 
     getData() {
@@ -210,7 +210,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
 
             await this.actor.update(updateObject);
 
-            setTimeout(() => game.combats.apps[0].render(false), 300);
+            setTimeout(() => ui.combat.render(), 300);
         }
     }
 
