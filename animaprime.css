@@ -1379,7 +1379,7 @@ input:disabled:hover {
   margin-left: 8px;
 }
 
-img {
+.action-sheet img {
   flex: 0 0 48px !important;
   height: 48px;
   margin: 4px;
