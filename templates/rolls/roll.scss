@@ -11,6 +11,8 @@
     border-top: variables.$grooved-border;
     border-bottom: variables.$grooved-border;
 
+    padding-top: 8px;
+
     h4 {
         font-family: "Modesto Condensed";
         font-size: 18px;
@@ -53,6 +55,7 @@
     display: flex;
     flex-wrap: wrap;
     flex: 2;
+    width: 100%;
 
     .roll {
         position: relative;
@@ -121,32 +124,31 @@
                 border-bottom: 2px solid #00ade1 !important;
             }
         }
-
-        
-
+    
         &.partial {
             border-bottom: 2px solid rgb(225, 140, 14);
-        }
-
-        
-    }
+        }                        
+    }    
 }
 
 .button-reroll-container {        
     align-self: center;    
-    display: flex !important;
-    margin-left: 3px;
+    margin: 0px 8px;
+    padding-top: 5px;
+    border-top: 2px groove #eeede0;
+    margin-top: 6px;
             
     .button-roll {
         border: 2px solid;
-        flex: 0;
         padding: 4px;
         padding-bottom: 2px;
         padding-right: 7px;
-        width: 28px;
         background-color: #fff;
         border-radius: 8px;
-        margin-right: 4px;
+        margin: 4px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
         cursor: pointer;
 
         &.reroll {
@@ -164,6 +166,7 @@
     text-align: center;
     border: 1px solid;
     margin: 6px;
+    margin-top: 12px;
     padding: 3px;
     font-weight: bold;
     background-color: #bbb;

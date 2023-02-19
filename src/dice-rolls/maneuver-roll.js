@@ -1,6 +1,11 @@
 import * as DiceRolls from "./dice-rolls.js";
 
-export async function maneuverRoll(maneuver, isReroll = false, dialogOptions) {
+export async function maneuverRoll(
+    maneuver,
+    isReroll = false,
+    dialogOptions,
+    reroll
+) {
     const messageTemplate =
         "systems/animaprime/templates/rolls/roll-maneuver/roll-maneuver.hbs";
 
@@ -39,65 +44,74 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions) {
 
     const rollFormula = maneuverDice + "d6";
 
+    let rollResult = [];
     const rl = new Roll(rollFormula, maneuver);
-    const rollResult = await rl.evaluate({ async: true });
+    rollResult.push(await rl.evaluate({ async: true }));
 
-    const resultData = checkManeuverResult(
-        maneuver.system.gain,
-        rollResult.dice[0].results,
-        isSlowed,
-        dialogOptions.maneuverStyle == "aggressive"
+    let resultData = [];
+    resultData.push(
+        checkManeuverResult(
+            maneuver.system.gain,
+            rollResult[0].dice[0].results,
+            isSlowed,
+            dialogOptions.maneuverStyle == "aggressive"
+        )
     );
 
     let supportDice = [];
     if (dialogOptions.supportDie) {
-        supportDice.push(rollResult.dice[0].results.pop());
+        supportDice.push(rollResult[0].dice[0].results.pop());
     }
 
     let quickenedDie = null;
     if (isQuickened) {
-        quickenedDie = rollResult.dice[0].results.pop();
+        quickenedDie = rollResult[0].dice[0].results.pop();
     }
 
     let recklessDice = [];
     if (dialogOptions.maneuverStyle == "reckless") {
-        recklessDice.push(rollResult.dice[0].results.pop());
-        recklessDice.push(rollResult.dice[0].results.pop());
+        recklessDice.push(rollResult[0].dice[0].results.pop());
+        recklessDice.push(rollResult[0].dice[0].results.pop());
     }
 
     let slowedDie = null;
     if (isSlowed) {
-        slowedDie = rollResult.dice[0].results.splice(
-            resultData.slowedDie,
+        slowedDie = rollResult[0].dice[0].results.splice(
+            resultData[0].slowedDie,
             1
         )[0];
     }
+
+    let additionalData = [];
+    additionalData.push({
+        isQuickened: isQuickened,
+        quickenedDie: quickenedDie,
+        recklessDice: recklessDice,
+        supportDice: supportDice,
+        isSlowed: isSlowed,
+        slowedDie: slowedDie,
+        maneuverStyle: dialogOptions.maneuverStyle,
+        hasSupportDie: dialogOptions.supportDie,
+        isRegular: dialogOptions.maneuverStyle == "regular",
+        isAggressive: dialogOptions.maneuverStyle == "aggressive",
+        isCunning: dialogOptions.maneuverStyle == "cunning",
+        isDefensive: dialogOptions.maneuverStyle == "defensive",
+        isHeroic: dialogOptions.maneuverStyle == "heroic",
+        isReckless: dialogOptions.maneuverStyle == "reckless",
+        isSupportive: dialogOptions.maneuverStyle == "supportive",
+    });
 
     await DiceRolls.renderRoll(
         rollResult,
         maneuver,
         resultData,
         messageTemplate,
-        {
-            isQuickened: isQuickened,
-            quickenedDie: quickenedDie,
-            recklessDice: recklessDice,
-            supportDice: supportDice,
-            isSlowed: isSlowed,
-            slowedDie: slowedDie,
-            maneuverStyle: dialogOptions.maneuverStyle,
-            hasSupportDie: dialogOptions.supportDie,
-            isRegular: dialogOptions.maneuverStyle == "regular",
-            isAggressive: dialogOptions.maneuverStyle == "aggressive",
-            isCunning: dialogOptions.maneuverStyle == "cunning",
-            isDefensive: dialogOptions.maneuverStyle == "defensive",
-            isHeroic: dialogOptions.maneuverStyle == "heroic",
-            isReckless: dialogOptions.maneuverStyle == "reckless",
-            isSupportive: dialogOptions.maneuverStyle == "supportive",
-        },
+        additionalData,
         isReroll,
         this.commitResults,
-        dialogOptions
+        dialogOptions,
+        null,
+        reroll
     );
 }
 
@@ -144,7 +158,7 @@ export async function commitResults(resultData, item, dialogOptions) {
 
     switch (dialogOptions.maneuverStyle) {
         case "aggressive":
-            resultData.strike += 1;
+            resultData[0].strike += 1;
             break;
         case "defensive":
             await item.owner.update({
@@ -162,10 +176,10 @@ export async function commitResults(resultData, item, dialogOptions) {
     }
 
     await item.owner.update({
-        "system.strikeDice": ownerStrikeDice + resultData.strike,
+        "system.strikeDice": ownerStrikeDice + resultData[0].strike,
     });
 
     await item.owner.update({
-        "system.chargeDice": ownerChargeDice + resultData.charge,
+        "system.chargeDice": ownerChargeDice + resultData[0].charge,
     });
 }

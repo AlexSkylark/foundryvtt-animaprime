@@ -7,26 +7,49 @@ export async function renderRoll(
     isReroll,
     commitCallback,
     dialogOptions,
-    itemTargets
+    itemTarget,
+    reroll
 ) {
     let enableReroll = checkForReroll(entityData.owner);
 
     if (entityData.type == "skill" && resultData == "total")
         enableReroll = false;
 
-    let renderedRoll = await rollResult.render({
+    if (enableReroll && !reroll) {
+        reroll = generateIdString();
+    }
+
+    const targetNames = entityData.targets
+        ? entityData.targets.map((x) => x.name)
+        : [];
+
+    let targetData = [];
+
+    /*
+    if (entityData.type == "skill")
+        targetData.push({
+            additionalData: additionalData[0],
+            rollResult: rollResult[0],
+            resultData: resultData[0],
+        });*/
+
+    for (let i = 0; i < rollResult.length; i++) {
+        targetData.push({
+            additionalData: additionalData[i],
+            rollResult: rollResult[i],
+            resultData: resultData[i],
+            targetName: targetNames[i],
+        });
+    }
+
+    let renderedRoll = await rollResult[0].render({
         template: messageTemplate,
         flavor: {
             speaker: ChatMessage.getSpeaker({ alias: entityData.owner.name }),
             entityData: entityData,
-            rollResults: rollResult,
-            resultData: resultData,
-            additionalData: additionalData,
             enableReroll: enableReroll,
             isReroll: isReroll,
-            targetNames: entityData.targets
-                ? entityData.targets.map((i) => i.name)
-                : [],
+            targetData: targetData,
         },
     });
 
@@ -38,20 +61,38 @@ export async function renderRoll(
             resultData: resultData,
             additionalData: additionalData,
             dialogOptions: dialogOptions,
-            itemTargets: itemTargets,
+            itemTarget: itemTarget,
+            enableReroll: enableReroll,
             reroll: false,
             commit: false,
             tokenId: entityData.owner.token ? entityData.owner.token.id : null,
             actorId: entityData.owner.id ?? entityData.owner._id,
+            reroll: reroll,
         },
     };
 
-    await rollResult.toMessage(messageData);
+    await rollResult[0].toMessage(messageData);
 
     if (!enableReroll && commitCallback)
-        commitCallback(resultData, entityData, dialogOptions, itemTargets);
+        commitCallback(resultData, entityData, dialogOptions, itemTarget);
 
     setTimeout(() => game.combats.apps[0].render(false), 300);
+}
+
+function generateIdString() {
+    length = 12;
+    let result = "";
+    const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+        result += characters.charAt(
+            Math.floor(Math.random() * charactersLength)
+        );
+        counter += 1;
+    }
+    return result;
 }
 
 export async function getManeuverRollOptions(item) {
@@ -154,7 +195,8 @@ export async function getItemRollOptions(item) {
             title:
                 item.type.charAt(0).toUpperCase() +
                 item.type.slice(1) +
-                " Roll",
+                " Roll - Target: " +
+                item.targetName,
             content: html,
             buttons: {
                 cancel: {

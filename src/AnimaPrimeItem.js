@@ -63,16 +63,9 @@ export default class AnimaPrimeItem extends Item {
     }
 
     async roll(ctrl, shift, alt) {
-        let targetActors = [];
-
-        for (let tgt of game.user.targets) {
-            targetActors.push(tgt.document.actor);
-        }
-
         let itemData = {
             ...this,
             owner: this.actor,
-            targets: targetActors,
         };
 
         switch (this.type) {
@@ -84,6 +77,13 @@ export default class AnimaPrimeItem extends Item {
                 break;
             case "strike":
             case "achievement":
+                itemData.targets = [];
+                itemData.targetIds = [];
+                await game.user.targets.forEach((element) => {
+                    itemData.targets.push(element.document.actor);
+                    itemData.targetIds.push(element._id ?? element.id);
+                });
+
                 AttackDiceRoll.attackRoll(itemData);
                 break;
             case "power":

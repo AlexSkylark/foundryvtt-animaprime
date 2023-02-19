@@ -1,6 +1,6 @@
 <form class="{{cssClass}} hazard-sheet" autocomplete="on">
 
-    {{> "systems/animaprime/templates/partials/script-health.hbs" system}}
+    {{> "systems/animaprime/templates/partials/script-health.hbs" actor}}
 
     <div class="decorative-square">&nbsp;</div>
     <header class="flexcol">    
@@ -22,7 +22,7 @@
                     <div class="icon button-changevalue plus" data-property="defense" data-operation="plus"><i class="fas fa-plus"></i></div>
                     <div class="icon button-changevalue minus"data-property="defense" data-operation="minus"><i class="fas fa-minus"></i></div>
                     <div class="health-defense">
-                        <div class="health-bar-frame">
+                        <div class="actor-{{actor.id}} health-bar-frame">
                             <div class="health-bar-frame health-bar"></div>
                             <span>{{system.health.value}} / {{system.health.max}}</span>
                         </div>

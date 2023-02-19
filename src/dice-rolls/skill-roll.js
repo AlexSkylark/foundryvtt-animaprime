@@ -19,11 +19,12 @@ export async function skillCheck(skill, withHelp = false, difficult = false) {
 
     const rollFormula = dice + "d6";
 
+    const rollResult = [];
     const rl = new Roll(rollFormula, skill);
-    const rollResult = await rl.evaluate({ async: true });
+    rollResult.push(await rl.evaluate({ async: true }));
 
     const sux = await DiceRolls.checkSkillSuccess(
-        rollResult.dice[0].results,
+        rollResult[0].dice[0].results,
         dialogOptions.difficulty
     );
 
@@ -40,11 +41,12 @@ export async function skillCheck(skill, withHelp = false, difficult = false) {
             break;
     }
 
-    const resultData = {
+    let resultData = [];
+    resultData.push({
         help: withHelp,
         successes: sux,
         difficultyText: difficultyText,
-    };
+    });
 
     await DiceRolls.renderRoll(rollResult, skill, resultData, messageTemplate, {
         withHelp: withHelp,

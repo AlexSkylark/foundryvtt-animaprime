@@ -1,6 +1,11 @@
 import * as DiceRolls from "./dice-rolls.js";
 
-export async function attackRoll(item, isReroll = false, dialogOptions) {
+export async function attackRoll(
+    item,
+    isReroll = false,
+    dialogOptions,
+    previousRolls
+) {
     // HTML template
     const messageTemplate = `systems/animaprime/templates/rolls/roll-${item.type}/roll-${item.type}.hbs`;
 
@@ -12,30 +17,34 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
 
     const ownerData = item.owner.system;
 
+    item.originalItemTargets = duplicate(item.targets);
     // validations
-    const targetCheck = {
-        strike: item.targets.filter((i) => {
+    if (item.type == "strike") {
+        item.targets = item.targets.filter((i) => {
             return (
                 i.type == "character" ||
                 i.type == "adversity" ||
                 i.type == "hazard"
             );
-        }).length,
-        achievement: item.targets.filter((i) => {
+        });
+    } else if (item.type == "achievement") {
+        item.targets = item.targets.filter((i) => {
             return i.type == "goal";
-        }).length,
-    };
+        });
+    }
 
-    if (item.targets.length != 1 || targetCheck[item.type] != 1) {
+    if (
+        !item.targets ||
+        !item.targets.length ||
+        item.targets.length != item.originalItemTargets.length
+    ) {
         ui.notifications.error(
-            `Please select a suitable target to perform a${
+            `Please select suitable targets only to perform a${
                 item.type == "achievement" ? "n" : ""
             } ${item.type}.`
         );
         return;
     }
-
-    const targetData = item.targets[0].system;
 
     if (item.system.cost) {
         const ownerChargeDice = ownerData.chargeDice;
@@ -50,40 +59,65 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
         }
     }
 
-    // options for item type
-    const itemFixedOptions = {
-        strike: {
-            variableDiceName: "Threat Dice",
-            variableDiceValue: targetData.threatDice,
-            defenseAttribute: targetData.defense,
-        },
-        achievement: {
-            variableDiceName: "Progress Dice",
-            variableDiceValue: targetData.progressDice,
-            defenseAttribute: targetData.difficulty,
-        },
-    };
+    let itemFixedOptions = [];
+    for (let i = 0; i < item.targets.length; i++) {
+        let targetData = item.targets[i].system;
+
+        // options for item type
+        itemFixedOptions.push({
+            variableDiceName:
+                item.type == "strike" ? "Threat Dice" : "Progress Dice",
+            variableDiceValue:
+                item.type == "strike"
+                    ? targetData.threatDice
+                    : targetData.progressDice,
+            defenseAttribute:
+                item.type == "strike"
+                    ? targetData.defense
+                    : targetData.difficulty,
+        });
+    }
 
     // dialog
     if (!dialogOptions) {
-        let itemForDialog = {
-            ...item,
-            maxStrikeDice: Math.min(ownerData.strikeDice, item.system.sdl),
-            maxActionDice: Math.min(2, ownerData.actionDice),
-            maxVariableDice: itemFixedOptions[item.type].variableDiceValue,
-            variableDiceName: itemFixedOptions[item.type].variableDiceName,
-            type: item.type,
-        };
+        dialogOptions = [];
+        let dialogPromises = [];
 
-        dialogOptions = await DiceRolls.getItemRollOptions(itemForDialog);
-        if (dialogOptions.cancelled) return;
+        for (let i = 0; i < item.targets.length; i++) {
+            let itemForDialog = {
+                ...item,
+                maxStrikeDice: Math.min(ownerData.strikeDice, item.system.sdl),
+                maxActionDice: Math.min(2, ownerData.actionDice),
+                maxVariableDice: itemFixedOptions[i].variableDiceValue,
+                variableDiceName: itemFixedOptions[i].variableDiceName,
+                type: item.type,
+                targetName: item.targets[i].name,
+                targetId: item.targetIds[i],
+            };
+            dialogOptions.push({});
+            dialogPromises.push(
+                DiceRolls.getItemRollOptions(itemForDialog).then((result) => {
+                    dialogOptions[i] = result;
+                })
+            );
+        }
+
+        await checkDialogs(item.targets.length, dialogPromises);
+
+        if (dialogOptions.some((x) => x.cancelled)) return;
     }
 
-    if (!dialogOptions.weakness) dialogOptions.weakness = 1;
+    await dialogOptions.forEach((options) => {
+        if (options.cancelled) return;
+        if (!options.weakness) options.weakness = 1;
+    });
 
-    const abilityDice = parseInt(
-        item.system.roll.split("d")[0] * dialogOptions.weakness
-    );
+    const abilityDice = [];
+    await dialogOptions.forEach((options) => {
+        abilityDice.push(
+            parseInt(item.system.roll.split("d")[0]) * options.weakness
+        );
+    });
 
     let successModifier = 0;
     if (item.system.roll.indexOf("+") >= 0)
@@ -91,48 +125,54 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
             item.system.roll.split("d")[1].replace("+", "").replace("-", "")
         );
 
-    // roll execution
-    const rollFormula =
-        (
-            abilityDice +
-            dialogOptions.strikeDice +
-            dialogOptions.actionDice +
-            dialogOptions.variableDice +
-            dialogOptions.bonusDice -
-            dialogOptions.resistance +
-            (isEmpowered ? 1 : 0)
-        ).toString() + "d6";
+    let splittedResults = [];
+    let rollResults = [];
+    let resultData = [];
+    for (let i = 0; i < item.targets.length; i++) {
+        // roll execution
+        const rollFormula =
+            (
+                abilityDice[i] +
+                dialogOptions[i].strikeDice +
+                dialogOptions[i].actionDice +
+                dialogOptions[i].variableDice +
+                dialogOptions[i].bonusDice -
+                dialogOptions[i].resistance +
+                (isEmpowered ? 1 : 0)
+            ).toString() + "d6";
 
-    const rl = new Roll(rollFormula, item);
-    const rollResult = await rl.evaluate({ async: true });
+        const rl = new Roll(rollFormula, item);
+        rollResults.push(await rl.evaluate({ async: true }));
 
-    let resultData = checkItemResult(
-        itemFixedOptions[item.type].defenseAttribute,
-        DiceRolls.checkSuccess(
-            rollResult.dice[0].results,
-            successModifier + isWeakened * -1
-        )
-    );
+        resultData.push(
+            checkItemResult(
+                itemFixedOptions[i].defenseAttribute,
+                DiceRolls.checkSuccess(
+                    rollResults[i].dice[0].results,
+                    successModifier + isWeakened * -1
+                )
+            )
+        );
 
-    let splittedResults = DiceRolls.splitRollResult(
-        rollResult.dice[0].results,
-        abilityDice,
-        dialogOptions.strikeDice,
-        dialogOptions.actionDice,
-        dialogOptions.variableDice,
-        dialogOptions.bonusDice,
-        dialogOptions.resistance,
-        successModifier,
-        isEmpowered,
-        isWeakened
-    );
-
-    let targetArray = [];
-    game.user.targets.forEach((t) => targetArray.push(t._id ?? t.id));
+        splittedResults.push(
+            DiceRolls.splitRollResult(
+                rollResults[i].dice[0].results,
+                abilityDice[i],
+                dialogOptions[i].strikeDice,
+                dialogOptions[i].actionDice,
+                dialogOptions[i].variableDice,
+                dialogOptions[i].bonusDice,
+                dialogOptions[i].resistance,
+                successModifier,
+                isEmpowered,
+                isWeakened
+            )
+        );
+    }
 
     // chat message rendering
     await DiceRolls.renderRoll(
-        rollResult,
+        rollResults,
         item,
         resultData,
         messageTemplate,
@@ -140,25 +180,56 @@ export async function attackRoll(item, isReroll = false, dialogOptions) {
         isReroll,
         this.commitResults,
         dialogOptions,
-        duplicate(targetArray)
+        item.targetId,
+        previousRolls
     );
 }
 
-export async function commitResults(
-    resultData,
-    item,
-    dialogOptions,
-    itemTargets
-) {
+export async function checkDialogs(userTargets, options) {
+    let allDone = [];
+    const test = allDone.filter((x) => x == true);
+
+    while (allDone.filter((x) => x == true).length < userTargets) {
+        for (let o = 0; o < options.length; o++)
+            allDone.push(await isDialogResolved(options[0]));
+    }
+    return true;
+}
+
+async function isDialogResolved(promise) {
+    return await Promise.race([
+        checkDialogDelay(200, false),
+        promise.then(
+            () => true,
+            () => false
+        ),
+    ]);
+}
+
+async function checkDialogDelay(milliseconds = 0, returnValue) {
+    return new Promise((done) =>
+        setTimeout(() => done(returnValue), milliseconds)
+    );
+}
+
+export async function commitResults(resultData, item, dialogOptions) {
     const ownerData = item.owner.system;
     const ownerStrikeDice = ownerData.strikeDice;
     const ownerActionDice = ownerData.actionDice;
 
+    let totalStrikeDice = 0;
+    let totalActionDice = 0;
+
+    for (let i = 0; i < dialogOptions.length; i++) {
+        totalStrikeDice += dialogOptions[i].strikeDice;
+        totalActionDice += dialogOptions[i].actionDice;
+    }
+
     await item.owner.update({
-        "system.strikeDice": ownerStrikeDice - dialogOptions.strikeDice,
+        "system.strikeDice": Math.max(ownerStrikeDice - totalStrikeDice, 0),
     });
     await item.owner.update({
-        "system.actionDice": ownerActionDice - dialogOptions.actionDice,
+        "system.actionDice": Math.max(ownerActionDice - totalActionDice, 0),
     });
 
     if (item.system.cost) {

@@ -1,9 +1,42 @@
 <script>
-    function modifyDice(diceType, add, maxValue, type) {        
-        if (add && $(".form-" + diceType)[0].value < maxValue)
-            $(".form-" + diceType)[0].value++;
-        else if (!add && $(".form-" + diceType)[0].value > 0)
-            $(".form-" + diceType)[0].value--;
+
+    $(".target-{{this.targetId}} > .form-strike-dice-max").val({{this.maxStrikeDice}})
+    $(".target-{{this.targetId}} > .form-action-dice-max").val({{this.maxActionDice}})
+    $(".target-{{this.targetId}} > .form-variable-dice-max").val({{this.maxVariableDice}})
+
+    function modifyDice(diceType, add, targetId) {     
+        
+        const inputField = $(".target-" + targetId + " > .form-" + diceType)[0];
+        const maxValue = $(".target-" + targetId + " > .form-"+ diceType + "-max").val() ?? 9999;
+        const otherMaxInputs = $(".form-" + diceType + "-max").not(".target-" + targetId + " > .form-" + diceType + "-max");
+
+        if (add) {            
+            if (inputField.value < maxValue) {
+                inputField.value++
+
+                if (diceType == 'strike-dice' || diceType == 'action-dice')
+                    otherMaxInputs.each(function (index) {
+                        const maxVal = $(this).val()
+                        if (maxVal > 0) 
+                            $(this).val(parseInt($(this).val()) - 1)
+                    })
+            }
+                
+        } else {
+            if (inputField.value > 0) {
+                
+                inputField.value--
+
+                if (diceType == 'strike-dice' || diceType == 'action-dice')
+                    otherMaxInputs.each(function (index) {
+                        const maxVal = $(this).val()
+                        if (maxVal < {{this.maxStrikeDice}}) 
+                            $(this).val(parseInt($(this).val()) + 1)
+                    })
+            }
+                
+
+        }    
     }
 </script>
 
@@ -11,17 +44,17 @@
     <div class="flexrow dialog-container">        
         {{#unless (isHazard owner.type)}}
         <div class=" dialog-field-container flexrow">
-            <label>Add Strike Dice?</label>        
+            <label>Add Strike Dice?</label>
             <div class="flexrow dialog-buttons">
-                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('strike-dice', false)">
+                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('strike-dice', false, '{{this.targetId}}')">
                     <span class="fas fa-minus" />
                 </button>
-                <div class="form-dice-field flexrow">
+                <div class="form-dice-field target-{{this.targetId}} flexrow">
                     <input type="text" class="form-strike-dice" name="strikeDice" disabled value="0" />
                     <span>/</span>
-                    <span>{{this.maxStrikeDice}}</span> 
+                    <input type="text" class="form-strike-dice-max" name="strikeDiceMax" disabled />
                 </div>
-                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('strike-dice', true, {{this.maxStrikeDice}})">
+                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('strike-dice', true, '{{this.targetId}}')">
                     <span class="fas fa-plus" />
                 </button>
             </div>
@@ -30,15 +63,15 @@
         <div class=" dialog-field-container flexrow">
             <label>Add Action Dice?</label>        
             <div class="flexrow dialog-buttons">
-                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('action-dice', false)">
+                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('action-dice', false, '{{this.targetId}}')">
                     <span class="fas fa-minus" />
                 </button>
-                <div class="form-dice-field flexrow">
+                <div class="form-dice-field target-{{this.targetId}} flexrow">
                     <input type="text" class="form-action-dice" name="actionDice" disabled value="0" />
                     <span>/</span>
-                    <span>{{this.maxActionDice}}</span> 
+                    <input type="text" class="form-action-dice-max" name="actionDiceMax" disabled />
                 </div>            
-                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('action-dice', true, {{this.maxActionDice}})">
+                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('action-dice', true, '{{this.targetId}}')">
                     <span class="fas fa-plus" />
                 </button>
             </div>
@@ -48,15 +81,15 @@
         <div class=" dialog-field-container flexrow">
             <label>Add {{this.variableDiceName}} from target?</label>        
             <div class="flexrow dialog-buttons">
-                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('variable-dice', false)">
+                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('variable-dice', false, '{{this.targetId}}')">
                     <span class="fas fa-minus" />
                 </button>
-                <div class="form-dice-field flexrow">
+                <div class="form-dice-field target-{{this.targetId}} flexrow">
                     <input type="text" class="form-variable-dice" name="variableDice" disabled value="0" />
                     <span>/</span>
-                    <span>{{this.maxVariableDice}}</span> 
+                    <input type="text" class="form-variable-dice-max" name="variableDiceMax" disabled />
                 </div>            
-                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('variable-dice', true, {{this.maxVariableDice}})">
+                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('variable-dice', true, '{{this.targetId}}')">
                     <span class="fas fa-plus" />
                 </button>
             </div>
@@ -67,10 +100,10 @@
                 <button class="form-dialog-plusminus-button minus" onclick="modifyDice('bonus-dice', false)">
                     <span class="fas fa-minus" />
                 </button>
-                <div class="form-dice-field flexrow">
+                <div class="form-dice-field target-{{this.targetId}} flexrow">
                     <input type="text" class="form-bonus-dice" name="bonusDice" disabled value="0" />
                 </div>            
-                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('bonus-dice', true, 9999)">
+                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('bonus-dice', true, '{{this.targetId}}')">
                     <span class="fas fa-plus" />
                 </button>
             </div>
@@ -89,10 +122,10 @@
                 <button class="form-dialog-plusminus-button minus" onclick="modifyDice('resistance', false)">
                     <span class="fas fa-minus" />
                 </button>
-                <div class="form-dice-field flexrow">
+                <div class="form-dice-field target-{{this.targetId}} flexrow">
                     <input type="text" class="form-resistance" name="resistance" disabled value="0" />
                 </div>            
-                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('resistance', true, 9999)">
+                <button class="form-dialog-plusminus-button plus" onclick="modifyDice('resistance', true, '{{this.targetId}}')">
                     <span class="fas fa-plus" />
                 </button>
             </div>

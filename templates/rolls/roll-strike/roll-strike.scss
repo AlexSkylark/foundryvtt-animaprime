@@ -17,8 +17,22 @@
             }
         }
     }
-    
-    .result-message {
-        font-size: 14px;
+        
+    .rolls {
+        min-width: 100%;
+    }
+
+    .target-section {
+        border-bottom: 2px groove #eeede0;
+        padding-bottom: 6px;
+
+        .result-message {
+            margin-top: 6px;
+        }
+        
+        &:last-child {
+            padding-bottom: 0;
+            border-bottom: 0;                
+        }
     }
 }

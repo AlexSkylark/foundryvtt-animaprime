@@ -1,18 +1,18 @@
 <form class="{{cssClass}} adversity-sheet" autocomplete="on">
 
-    {{> "systems/animaprime/templates/partials/script-health.hbs" system}}
+    {{> "systems/animaprime/templates/partials/script-health.hbs" actor}}
 
     <div class="decorative-square{{#unless editUnlocked}} small-square{{/unless}}">&nbsp;</div>
     <header class="flexcol">    
         <div class="header-namestrip flexrow flex0">
-            <input class="name" name="name" type="text" value="{{actor.name}}" />            
+            <input class="name" name="name" type="text" value="{{actorName}}" {{#unless editName}}disabled{{/unless}} />
         </div>
     </header>
     <div class="flexrow sheet-columns">
         <div class="left-side flexcol">
             <div class="left-side-container flex0">
                 <div class="image-container">
-                    <img src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />
+                    <img src="{{actor.img}}" title="{{actorName}}" data-edit="img" />
                 </div>
                 <div class="icon-container defense-button">
                     <div class="icon button-changevalue health plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="health.value" data-operation="plus"><i class="fas fa-plus"></i></div>
@@ -22,7 +22,7 @@
                     <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="defense" data-operation="plus"><i class="fas fa-plus"></i></div>
                     <div class="icon button-changevalue minus{{#unless editUnlocked}} edit-hidden{{/unless}}"data-property="defense" data-operation="minus"><i class="fas fa-minus"></i></div>
                     <div class="health-defense">
-                        <div class="health-bar-frame">
+                        <div class="actor-{{actor.id}} health-bar-frame">
                             <div class="health-bar-frame health-bar"></div>
                             <span>{{system.health.value}} / {{system.health.max}}</span>
                         </div>

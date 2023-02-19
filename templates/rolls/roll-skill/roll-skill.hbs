@@ -3,25 +3,25 @@
         <div class="roll-header flexrow">
             <img class="roll-img" src="icons/skills/trades/academics-study-reading-book.webp" title="{{flavor.entityData.name}}" />
             <div class="flexcol">
-                <h4 class="header-title">Skill {{#if flavor.isReroll}}re{{/if}}roll ({{flavor.resultData.difficultyText}}):</h4>
+                <h4 class="header-title">Skill {{#if flavor.isReroll}}re{{/if}}roll ({{flavor.resultData.0.difficultyText}}):</h4>
                 <h4 class="header-name">{{flavor.entityData.name}}</h4>
             </div>
         </div>        
         <div class="flexcol">
             <div class="flexrow">
                 <ol class="rolls">
-                    {{#each flavor.rollResults.dice.0.results}}
+                    {{#each flavor.targetData.0.rollResult.dice.0.results}}
                     <li class="roll{{#if this.success}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}                
                 </ol>                
             </div>            
-            {{#if (isSkillSuccess flavor.resultData.successes)}}
-            <span class="result-message success">{{flavor.resultData.successes}} successes. Total Success!</span>
+            {{#if (isSkillSuccess flavor.targetData.0.resultData.successes)}}
+            <span class="result-message success">{{flavor.targetData.0.resultData.successes}} successes. Total Success!</span>
             {{/if}}
-            {{#if (is1 flavor.resultData.successes)}}
+            {{#if (is1 flavor.targetData.0.resultData.successes)}}
             <span class="result-message partial">1 success. Partial Success.</span>
             {{/if}}
-            {{#if (is0 flavor.resultData.successes)}}
+            {{#if (is0 flavor.targetData.0.resultData.successes)}}
             <span class="result-message failure">Total Failure!</span>
             {{/if}}
         </div>        

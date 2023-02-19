@@ -5,6 +5,13 @@
     
     margin-bottom: 8px;
 
+    img {
+        flex: 0 0 48px !important;
+        height: 48px;
+        margin: 4px;
+        margin-right: 12px;
+    }
+
     .value-field {
         border: 0;
         background: none;

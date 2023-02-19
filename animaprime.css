@@ -1379,7 +1379,7 @@ input:disabled:hover {
   margin-left: 8px;
 }
 
-.action-sheet img {
+.action-sheet img, .skill-sheet img {
   flex: 0 0 48px !important;
   height: 48px;
   margin: 4px;
@@ -1448,6 +1448,7 @@ input:disabled:hover {
 .roll-header {
   border-top: 2px groove #eeede0;
   border-bottom: 2px groove #eeede0;
+  padding-top: 8px;
 }
 .roll-header h4 {
   font-family: "Modesto Condensed";
@@ -1487,6 +1488,7 @@ input:disabled:hover {
   display: flex;
   flex-wrap: wrap;
   flex: 2;
+  width: 100%;
 }
 .rolls .roll {
   position: relative;
@@ -1550,19 +1552,22 @@ input:disabled:hover {
 
 .button-reroll-container {
   align-self: center;
-  display: flex !important;
-  margin-left: 3px;
+  margin: 0px 8px;
+  padding-top: 5px;
+  border-top: 2px groove #eeede0;
+  margin-top: 6px;
 }
 .button-reroll-container .button-roll {
   border: 2px solid;
-  flex: 0;
   padding: 4px;
   padding-bottom: 2px;
   padding-right: 7px;
-  width: 28px;
   background-color: #fff;
   border-radius: 8px;
-  margin-right: 4px;
+  margin: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
   cursor: pointer;
 }
 .button-reroll-container .button-roll.reroll {
@@ -1577,6 +1582,7 @@ input:disabled:hover {
   text-align: center;
   border: 1px solid;
   margin: 6px;
+  margin-top: 12px;
   padding: 3px;
   font-weight: bold;
   background-color: #bbb;
@@ -1627,10 +1633,10 @@ input:disabled:hover {
   background-color: #e995a7;
 }
 
-.roll.slowed {
+.roll-maneuver .roll.slowed {
   background-image: url(../../systems/animaprime/assets/d6-condition-forbidden.svg);
 }
-.roll.quickened {
+.roll-maneuver .roll.quickened {
   background-image: url(../../systems/animaprime/assets/d6-condition.svg);
 }
 
@@ -1645,8 +1651,19 @@ input:disabled:hover {
 .roll-strike .roll-header h4.header-name {
   font-size: 23px;
 }
-.roll-strike .result-message {
-  font-size: 14px;
+.roll-strike .rolls {
+  min-width: 100%;
+}
+.roll-strike .target-section {
+  border-bottom: 2px groove #eeede0;
+  padding-bottom: 6px;
+}
+.roll-strike .target-section .result-message {
+  margin-top: 6px;
+}
+.roll-strike .target-section:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 
 .roll-achievement .roll-header h4 {
@@ -1660,8 +1677,8 @@ input:disabled:hover {
 .roll-achievement .roll-header h4.header-name {
   font-size: 23px;
 }
-.roll-achievement .result-message {
-  font-size: 14px;
+.roll-achievement .rolls {
+  margin-top: 6px;
 }
 
 .roll-power .header-title {
@@ -1855,6 +1872,12 @@ input:disabled:hover {
 
 .dialog-usepower {
   margin-bottom: 8px;
+}
+.dialog-usepower img {
+  flex: 0 0 48px !important;
+  height: 48px;
+  margin: 4px;
+  margin-right: 12px;
 }
 .dialog-usepower .value-field {
   border: 0;

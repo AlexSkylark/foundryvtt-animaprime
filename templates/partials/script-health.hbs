@@ -1,30 +1,30 @@
 <script>
     $(document).ready(() => {
 
-        const currentHealth = {{health.value}}
+        const currentHealth = {{system.health.value}}
 
-        let percent = ({{health.value}} / {{health.max}} * 100)
+        let percent = ({{system.health.value}} / {{system.health.max}} * 100)
         let frameWidthValue = $(".health-bar-frame").width() - 21
         let barValue = frameWidthValue * percent / 100
 
         if (currentHealth == 0) {
-            $(".health-bar").hide();
+            $(".actor-{{id}} > .health-bar").hide();
         } else {
-            $(".damage-curtain").hide()
-            $(".health-bar").show();
-            $(".health-bar").css("width", barValue);
+            $(".actor-{{id}} > .damage-curtain").hide()
+            $(".actor-{{id}} > .health-bar").show();
+            $(".actor-{{id}} > .health-bar").css("width", barValue);
         }
 
         if (percent <= 50) {
-            $(".damage-curtain").show()
-            $(".damage-curtain").css("background-color", "#ffae003b");
-            $(".health-bar").css("background-color", "#c99f04");
+            $(".actor-{{id}} > .damage-curtain").show()
+            $(".actor-{{id}} > .damage-curtain").css("background-color", "#ffae003b");
+            $(".actor-{{id}} > .health-bar").css("background-color", "#c99f04");
         }
             
         if (percent <= 25) {
-            $(".damage-curtain").show()
-            $(".damage-curtain").css("background-color", "#b1000066");
-            $(".health-bar").css("background-color", "#a80014");
+            $(".actor-{{id}} > .damage-curtain").show()
+            $(".actor-{{id}} > .damage-curtain").css("background-color", "#b1000066");
+            $(".actor-{{id}} > .health-bar").css("background-color", "#a80014");
         }
     });
 </script>

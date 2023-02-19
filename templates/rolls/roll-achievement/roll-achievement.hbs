@@ -13,47 +13,46 @@
             </div>
         </div>
         <div class="flexcol">
-            <div class="flexrow">
+            <div class="target-section">
                 <ol class="rolls">
-                    {{#each flavor.additionalData.abilityDice}}
+                    {{#each flavor.targetData.[0].additionalData.abilityDice}}
                     <li class="roll{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
 
-                    {{#each flavor.additionalData.strikeDice}}
+                    {{#each flavor.targetData.[0].additionalData.strikeDice}}
                     <li class="roll strike{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
 
-                    {{#each flavor.additionalData.actionDice}}
+                    {{#each flavor.targetData.[0].additionalData.actionDice}}
                     <li class="roll action{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
 
-                    {{#each flavor.additionalData.variableDice}}
+                    {{#each flavor.targetData.[0].additionalData.variableDice}}
                     <li class="roll progress{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
 
-                    {{#each flavor.additionalData.bonusDice}}
+                    {{#each flavor.targetData.[0].additionalData.bonusDice}}
                     <li class="roll bonus{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
                 </ol>
-                {{#if flavor.enableReroll}}
-                <div class="button-reroll-container flex0">
-                    <div class="button-roll reroll"><i class="fas fa-redo"></i></div>
-                    <div class="button-roll commit"><i class="fas fa-check"></i></div>
-                </div>
-                {{/if}}
-            </div>                        
-            <span class="result-message {{#if flavor.resultData.hit}}success{{/if}}">
-                {{#if flavor.resultData.hit}}
-                Goal "{{flavor.entityData.targets.0.system.name}}" COMPLETE!!
-                {{else}}
-                    {{#if flavor.resultData.successes}}
-                        Some progress! <br /> {{flavor.resultData.successes}} progress {{#if (is1 flavor.resultData.successes)}}die{{else}}dice{{/if}} added.
+                <span class="result-message {{#if flavor.resultData.[0].hit}}success{{/if}}">
+                    {{#if flavor.resultData.hit}}
+                    Goal "{{flavor.entityData.system.name}}" COMPLETE!!
                     {{else}}
-                        No progress.
+                        {{#if flavor.targetData.[0].resultData.successes}}
+                            Some progress! <br /> {{flavor.targetData.[0].resultData.successes}} progress {{#if (is1 flavor.targetData.[0].resultData.successes)}}die{{else}}dice{{/if}} added.
+                        {{else}}
+                            No progress.
+                        {{/if}}
                     {{/if}}
-                {{/if}}            
-            </span>        
+                </span>
+            </div>
         </div>
-        
+        {{#if flavor.enableReroll}}
+        <div class="button-reroll-container flexrow">
+            <div class="button-roll reroll">Reroll <i class="fas fa-redo"></i></div>
+            <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
+        </div>
+        {{/if}}
     </div>    
 </div>

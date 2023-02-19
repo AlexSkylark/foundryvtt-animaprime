@@ -60,19 +60,77 @@ function registerSheets() {
     });
 }
 
+Hooks.on("preCreateToken", async (token, data, options, userId) => {
+    const sceneTokens = game.scenes.active.tokens.contents.filter(
+        (x) => x.actor.name == token.actor.name
+    );
+
+    if (sceneTokens.length == 0) return true;
+
+    if (sceneTokens.length == 1) {
+        await sceneTokens[0].updateSource({ name: token.name + " I" });
+    }
+
+    await token.updateSource({
+        name: token.name + " " + intToRoman(sceneTokens.length + 1),
+    });
+});
+
+Hooks.on("updateActor", async (actor, change, context, userId) => {
+    if (change.name) {
+        if (actor.prototypeToken)
+            await actor.prototypeToken.update({ name: change.name });
+
+        let tokens = game.scenes.active.tokens.filter(
+            (x) => x.actor.name == change.name
+        );
+
+        for (let i = 0; i < tokens.length; i++) {
+            await tokens[i].update({
+                name:
+                    change.name +
+                    (tokens.length == 1 ? "" : " " + intToRoman(i + 1)),
+            });
+        }
+    }
+});
+
+Hooks.on("updateToken", async (token, change, context, userId) => {
+    if (change.name) {
+    }
+});
+
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (message.type === "roll") {
         ui.combat.render();
     }
 
-    if (game.user.isGM) {
-        const item = message.flags.sourceItem;
-        const resultData = message.flags.resultData;
-        const dialogOptions = message.flags.dialogOptions;
+    if (game.user.isGM && message.flags.rerollConfig) {
+        if (message.flags.rerollConfig.charAt(0) == ",")
+            message.flags.rerollConfig = message.flags.rerollConfig.slice(1);
 
-        if (message.flags && message.flags.itemTargets) {
-            for (let target of message.flags.itemTargets) {
-                const token = game.scenes.active.tokens.get(target);
+        await game.settings.set(
+            "animaprime",
+            "commitedRerolls",
+            message.flags.rerollConfig
+        );
+    }
+
+    if (game.user.isGM && !message.flags.enableReroll) {
+        const item = message.flags.sourceItem;
+
+        if (
+            message.flags &&
+            message.flags.sourceItem &&
+            message.flags.sourceItem.targets
+        ) {
+            for (let i = 0; i < message.flags.sourceItem.targets.length; i++) {
+                const resultData = message.flags.resultData[i];
+                const dialogOptions = message.flags.dialogOptions[i];
+
+                const token = game.scenes.active.tokens.get(
+                    message.flags.sourceItem.targetIds[i]
+                );
 
                 let targetEntity = {};
                 if (token.isLinked) {
@@ -131,6 +189,18 @@ Hooks.once("init", () => {
     HandlebarsHelpers.registerHandlebarsHelpers();
     registerSheets();
     configureStatusEffects();
+
+    game.settings.register("animaprime", "commitedRerolls", {
+        name: "Reroll List",
+        hint: "Comma-separated list for reroll control",
+        scope: "world",
+        config: true,
+        type: String,
+        default: "",
+        onChange: (value) => {
+            console.log("reroll added: " + value);
+        },
+    });
 });
 
 function configureStatusEffects() {
@@ -204,3 +274,36 @@ function configureStatusEffects() {
         },
     ];
 }
+
+const intToRoman = (num) => {
+    const map = {
+        M: 1000,
+        CM: 900,
+        D: 500,
+        CD: 400,
+        C: 100,
+        XC: 90,
+        L: 50,
+        XL: 40,
+        X: 10,
+        IX: 9,
+        V: 5,
+        IV: 4,
+        I: 1,
+    };
+    let result = "";
+
+    for (const key in map) {
+        const repeatCounter = Math.floor(num / map[key]);
+
+        if (repeatCounter !== 0) {
+            result += key.repeat(repeatCounter);
+        }
+
+        num %= map[key];
+
+        if (num === 0) return result;
+    }
+
+    return result;
+};

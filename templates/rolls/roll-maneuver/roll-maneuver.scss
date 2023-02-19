@@ -1,12 +1,15 @@
 @use '../../variables';
 @use '../roll.scss';
 
-.roll {
-    &.slowed {    
-        background-image: url(../../systems/animaprime/assets/d6-condition-forbidden.svg);
-    }
+.roll-maneuver {
     
-    &.quickened {
-        background-image: url(../../systems/animaprime/assets/d6-condition.svg);
+    .roll {
+        &.slowed {    
+            background-image: url(../../systems/animaprime/assets/d6-condition-forbidden.svg);
+        }
+        
+        &.quickened {
+            background-image: url(../../systems/animaprime/assets/d6-condition.svg);
+        }
     }
 }
