@@ -33,6 +33,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             t.faction = comb.faction;
             t.healthValue = comb.healthValue;
             t.threatValue = comb.threatValue;
+            t.displayName = comb.displayName;
         }
 
         if (this.viewed) {
