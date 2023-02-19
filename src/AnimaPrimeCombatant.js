@@ -19,6 +19,10 @@ export default class AnimaPrimeCombatant extends Combatant {
         );
     }
 
+    get displayName() {
+        return this.name;
+    }
+
     get threatValue() {
         return this.actor.system.threatDice;
     }
