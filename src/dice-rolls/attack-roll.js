@@ -39,9 +39,16 @@ export async function attackRoll(
         item.targets.length != item.originalItemTargets.length
     ) {
         ui.notifications.error(
-            `Please select suitable targets only to perform a${
-                item.type == "achievement" ? "n" : ""
-            } ${item.type}.`
+            `Please select suitable targets for the <i>"${item.name}"</i> ${item.type} action.`
+        );
+        return;
+    }
+
+    if (item.targets.length > (item.system.targets ?? 1)) {
+        ui.notifications.error(
+            (item.system.targets ?? 1) == 1
+                ? `Too many targets! the <i>"${item.name}"</i> ${item.type} action is single-target.`
+                : `Too many targets! the <i>"${item.name}"</i> ${item.type} action can hit ${item.system.targets} targets at most.`
         );
         return;
     }
