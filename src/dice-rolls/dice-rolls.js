@@ -76,7 +76,7 @@ export async function renderRoll(
     if (!enableReroll && commitCallback)
         commitCallback(resultData, entityData, dialogOptions, itemTarget);
 
-    setTimeout(() => game.combats.apps[0].render(false), 300);
+    setTimeout(() => ui.combat.render(), 500);
 }
 
 function generateIdString() {
