@@ -60,41 +60,6 @@ function registerSheets() {
     });
 }
 
-Hooks.on("preCreateToken", async (token, data, options, userId) => {
-    const sceneTokens = game.scenes.active.tokens.contents.filter(
-        (x) => x.actor.name == token.actor.name
-    );
-
-    if (sceneTokens.length == 0) return true;
-
-    if (sceneTokens.length == 1) {
-        await sceneTokens[0].updateSource({ name: token.name + " I" });
-    }
-
-    await token.updateSource({
-        name: token.name + " " + intToRoman(sceneTokens.length + 1),
-    });
-});
-
-Hooks.on("updateActor", async (actor, change, context, userId) => {
-    if (change.name) {
-        if (actor.prototypeToken)
-            await actor.prototypeToken.update({ name: change.name });
-
-        let tokens = game.scenes.active.tokens.filter(
-            (x) => x.actor.name == change.name
-        );
-
-        for (let i = 0; i < tokens.length; i++) {
-            await tokens[i].update({
-                name:
-                    change.name +
-                    (tokens.length == 1 ? "" : " " + intToRoman(i + 1)),
-            });
-        }
-    }
-});
-
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (message.type === "roll") {
         ui.combat.render();
