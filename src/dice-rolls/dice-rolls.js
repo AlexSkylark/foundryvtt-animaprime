@@ -74,7 +74,7 @@ export async function renderRoll(
     await rollResult[0].toMessage(messageData);
 
     if (!enableReroll && commitCallback)
-        commitCallback(resultData, entityData, dialogOptions, itemTarget);
+        await commitCallback(resultData, entityData, dialogOptions, itemTarget);
 
     setTimeout(() => ui.combat.render(), 500);
 }
