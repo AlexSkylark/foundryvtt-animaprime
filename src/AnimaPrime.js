@@ -60,6 +60,13 @@ function registerSheets() {
     });
 }
 
+Hooks.on("updateActor", async (actor, change, context, userId) => {
+    if (change.name) {
+        if (actor.prototypeToken)
+            await actor.prototypeToken.update({ name: change.name });
+    }
+});
+
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (message.type === "roll") {
         ui.combat.render();
