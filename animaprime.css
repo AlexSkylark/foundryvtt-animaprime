@@ -31,6 +31,16 @@
   font-weight: 700;
   src: url("../../fonts/modesto-condensed/modesto-condensed-bold.woff2") format("woff2");
 }
+:root {
+  --hue: 207;
+  --saturation: 64%;
+  --light: 44%;
+  /* Base color in variable */
+  --primary-color: hsl(var(--hue), var(--saturation), var(--light));
+  /* Base color lighten using calc */
+  --primary-color-light: hsl(var(--hue), var(--saturation), calc(var(--light) + 57.5%));
+}
+
 input[type=text], span {
   background: none;
   border: 0;
@@ -128,7 +138,7 @@ input:disabled:hover {
   z-index: 1;
 }
 .container-section .container-header {
-  background-color: #643b68;
+  background-color: var(--primary-color);
   border-radius: 8px;
   padding: 6px 20px;
   text-align: center;
@@ -141,7 +151,7 @@ input:disabled:hover {
   border-bottom-right-radius: 0px;
 }
 .container-section .container-wrapper {
-  border: 2px solid #643b68;
+  border: 2px solid var(--primary-color);
   overflow: auto;
   border-radius: 8px;
   padding: 16px 8px;
@@ -160,7 +170,7 @@ input:disabled:hover {
   z-index: 0;
 }
 .adversity-sheet .decorative-square {
-  background-color: #efe5f0;
+  background-color: var(--primary-color-light);
   height: 537px;
   width: 159px;
   position: absolute;
@@ -191,7 +201,7 @@ input:disabled:hover {
   color: #777;
 }
 .adversity-sheet .attribute-value {
-  border: 3px solid #643b68;
+  border: 3px solid var(--primary-color);
   border-radius: 31px;
   background-color: #fff;
   width: 66px;
@@ -210,7 +220,7 @@ input:disabled:hover {
   right: 4px;
 }
 .adversity-sheet .icon-container .button-changevalue {
-  border: 2px solid #643b68;
+  border: 2px solid var(--primary-color);
   width: 31px;
   height: 26px;
   border-radius: 20px;
@@ -226,7 +236,7 @@ input:disabled:hover {
   z-index: 1;
 }
 .adversity-sheet .container-section .container-header {
-  background-color: #643b68;
+  background-color: var(--primary-color);
   border-radius: 8px;
   padding: 6px 20px;
   text-align: center;
@@ -239,7 +249,7 @@ input:disabled:hover {
   border-bottom-right-radius: 0px;
 }
 .adversity-sheet .container-section .container-wrapper {
-  border: 2px solid #643b68;
+  border: 2px solid var(--primary-color);
   overflow: auto;
   border-radius: 8px;
   padding: 16px 8px;
@@ -255,7 +265,7 @@ input:disabled:hover {
   padding: 4px;
 }
 .adversity-sheet header .header-namestrip {
-  background: #643b68;
+  background: var(--primary-color);
   border-radius: 8px;
   padding: 12px;
   margin: 8px;
@@ -265,7 +275,7 @@ input:disabled:hover {
   max-width: 21%;
   color: #fff;
   font-size: 24px;
-  border-bottom: 2px solid #efe5f0;
+  border-bottom: 2px solid var(--primary-color-light);
   border-radius: 0;
   margin: 0px 6px;
 }
@@ -284,7 +294,7 @@ input:disabled:hover {
   margin-top: 10px;
 }
 .adversity-sheet .left-side img {
-  border: 4px solid #643b68;
+  border: 4px solid var(--primary-color);
   width: 160px;
   height: 151px;
   border-radius: 32px;
@@ -398,7 +408,7 @@ input:disabled:hover {
   right: -13px;
 }
 .adversity-sheet .left-side .button-addskill {
-  border: 2px solid #643b68;
+  border: 2px solid var(--primary-color);
   border-radius: 17px;
   background-color: #fff;
   padding: 1px 4px;
@@ -434,7 +444,7 @@ input:disabled:hover {
   margin-top: 7px;
 }
 .adversity-sheet .right-side .passion-background label {
-  background-color: #643b68;
+  background-color: var(--primary-color);
   color: white;
   font-weight: 600;
   padding: 7px;
@@ -457,7 +467,7 @@ input:disabled:hover {
   bottom: 10px;
 }
 .adversity-sheet .right-side.dice-pools .dice-pool-strip {
-  background-color: #643b68;
+  background-color: var(--primary-color);
   height: 32px;
   align-items: center;
   justify-content: flex-end;
@@ -492,7 +502,7 @@ input:disabled:hover {
 }
 .adversity-sheet .actions-section-container {
   width: calc(100% - 45px);
-  border-bottom: 2px solid #643b68;
+  border-bottom: 2px solid var(--primary-color);
   margin-left: 24px;
 }
 .adversity-sheet .actions-section {
@@ -505,7 +515,7 @@ input:disabled:hover {
 }
 .adversity-sheet nav.sheet-tabs {
   border-top: 0;
-  border-bottom: 2px solid #643b68;
+  border-bottom: 2px solid var(--primary-color);
   padding: 0;
   margin: 0px 24px;
   margin-top: -63px;
@@ -514,16 +524,16 @@ input:disabled:hover {
   padding: 4px 12px;
   font-weight: 600;
   font-size: 16px;
-  color: #643b68;
+  color: var(--primary-color);
 }
 .adversity-sheet nav.sheet-tabs a:hover {
   text-shadow: none;
 }
 .adversity-sheet nav.sheet-tabs a.active {
-  border-top: 2px solid #643b68;
-  border-left: 2px solid #643b68;
-  border-right: 2px solid #643b68;
-  background-color: #efe5f0;
+  border-top: 2px solid var(--primary-color);
+  border-left: 2px solid var(--primary-color);
+  border-right: 2px solid var(--primary-color);
+  background-color: var(--primary-color-light);
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
@@ -537,7 +547,7 @@ input:disabled:hover {
   z-index: 0;
 }
 .character-sheet .decorative-square {
-  background-color: #efe5f0;
+  background-color: var(--primary-color-light);
   height: 765px;
   width: 159px;
   position: absolute;
@@ -568,7 +578,7 @@ input:disabled:hover {
   color: #777;
 }
 .character-sheet .attribute-value {
-  border: 3px solid #643b68;
+  border: 3px solid var(--primary-color);
   border-radius: 31px;
   background-color: #fff;
   width: 66px;
@@ -587,7 +597,7 @@ input:disabled:hover {
   right: 4px;
 }
 .character-sheet .icon-container .button-changevalue {
-  border: 2px solid #643b68;
+  border: 2px solid var(--primary-color);
   width: 31px;
   height: 26px;
   border-radius: 20px;
@@ -602,7 +612,7 @@ input:disabled:hover {
   padding: 4px;
 }
 .character-sheet header .header-namestrip {
-  background: #643b68;
+  background: var(--primary-color);
   border-radius: 8px;
   padding: 12px;
   margin: 8px;
@@ -612,7 +622,7 @@ input:disabled:hover {
   max-width: 21%;
   color: #fff;
   font-size: 24px;
-  border-bottom: 2px solid #efe5f0;
+  border-bottom: 2px solid var(--primary-color-light);
   border-radius: 0;
   margin: 0px 6px;
 }
@@ -669,7 +679,7 @@ input:disabled:hover {
   margin-left: 26px;
 }
 .character-sheet .left-side img {
-  border: 4px solid #643b68;
+  border: 4px solid var(--primary-color);
   width: 160px;
   height: 151px;
   border-radius: 32px;
@@ -784,7 +794,7 @@ input:disabled:hover {
   right: -13px;
 }
 .character-sheet .left-side .button-addskill {
-  border: 2px solid #643b68;
+  border: 2px solid var(--primary-color);
   border-radius: 17px;
   background-color: #fff;
   padding: 1px 4px;
@@ -824,7 +834,7 @@ input:disabled:hover {
   margin-top: 7px;
 }
 .character-sheet .right-side .passion-background label {
-  background-color: #643b68;
+  background-color: var(--primary-color);
   color: white;
   font-weight: 600;
   padding: 7px;
@@ -846,7 +856,7 @@ input:disabled:hover {
   margin-top: 12px;
 }
 .character-sheet .right-side .dice-pools .dice-pool-strip {
-  background-color: #643b68;
+  background-color: var(--primary-color);
   height: 32px;
   align-items: center;
   justify-content: flex-end;
@@ -891,7 +901,7 @@ input:disabled:hover {
 }
 .character-sheet nav.sheet-tabs {
   border-top: 0;
-  border-bottom: 2px solid #643b68;
+  border-bottom: 2px solid var(--primary-color);
   padding: 0;
   margin: 0px 24px;
   margin-top: 18px;
@@ -900,16 +910,16 @@ input:disabled:hover {
   padding: 4px 36px;
   font-weight: 600;
   font-size: 16px;
-  color: #643b68;
+  color: var(--primary-color);
 }
 .character-sheet nav.sheet-tabs a:hover {
   text-shadow: none;
 }
 .character-sheet nav.sheet-tabs a.active {
-  border-top: 2px solid #643b68;
-  border-left: 2px solid #643b68;
-  border-right: 2px solid #643b68;
-  background-color: #efe5f0;
+  border-top: 2px solid var(--primary-color);
+  border-left: 2px solid var(--primary-color);
+  border-right: 2px solid var(--primary-color);
+  background-color: var(--primary-color-light);
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
@@ -918,7 +928,7 @@ input:disabled:hover {
   display: flex;
 }
 .goal-sheet .header .header-image {
-  border: 4px solid #643b68;
+  border: 4px solid var(--primary-color);
   background-color: #fff;
   padding: 4px;
   width: 120px;
@@ -928,7 +938,7 @@ input:disabled:hover {
   z-index: 1;
 }
 .goal-sheet .header .header-name {
-  background-color: #643b68;
+  background-color: var(--primary-color);
   padding: 8px;
   align-self: center;
   color: #fff;
@@ -941,7 +951,7 @@ input:disabled:hover {
   margin-left: -42px;
 }
 .goal-sheet .main-sheet {
-  border: 3px solid #643b68;
+  border: 3px solid var(--primary-color);
   padding: 18px 64px;
   padding-top: 48px;
   margin: 32px;
@@ -952,8 +962,8 @@ input:disabled:hover {
   align-items: center;
 }
 .goal-sheet .main-sheet .cell label {
-  border: 2px solid #643b68;
-  color: #643b68;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
   font-size: 20px;
   font-weight: 600;
   line-height: 25px;
@@ -967,7 +977,7 @@ input:disabled:hover {
   margin-left: 0px;
 }
 .goal-sheet .main-sheet .property-value {
-  border: 2px solid #643b68;
+  border: 2px solid var(--primary-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -984,7 +994,7 @@ input:disabled:hover {
 }
 .goal-sheet .main-sheet .property-value .button-changevalue {
   position: absolute;
-  border: 2px solid #643b68;
+  border: 2px solid var(--primary-color);
   background-color: #fff;
   padding: 2px 4px;
   border-radius: 15px;
@@ -1010,7 +1020,7 @@ input:disabled:hover {
   z-index: 0;
 }
 .hazard-sheet .decorative-square {
-  background-color: #efe5f0;
+  background-color: var(--primary-color-light);
   height: 426px;
   width: 159px;
   position: absolute;
@@ -1038,7 +1048,7 @@ input:disabled:hover {
   color: #777;
 }
 .hazard-sheet .attribute-value {
-  border: 3px solid #643b68;
+  border: 3px solid var(--primary-color);
   border-radius: 31px;
   background-color: #fff;
   width: 66px;
@@ -1057,7 +1067,7 @@ input:disabled:hover {
   right: 4px;
 }
 .hazard-sheet .icon-container .button-changevalue {
-  border: 2px solid #643b68;
+  border: 2px solid var(--primary-color);
   width: 31px;
   height: 26px;
   border-radius: 20px;
@@ -1073,7 +1083,7 @@ input:disabled:hover {
   z-index: 1;
 }
 .hazard-sheet .container-section .container-header {
-  background-color: #643b68;
+  background-color: var(--primary-color);
   border-radius: 8px;
   padding: 6px 20px;
   text-align: center;
@@ -1086,7 +1096,7 @@ input:disabled:hover {
   border-bottom-right-radius: 0px;
 }
 .hazard-sheet .container-section .container-wrapper {
-  border: 2px solid #643b68;
+  border: 2px solid var(--primary-color);
   overflow: auto;
   border-radius: 8px;
   padding: 16px 8px;
@@ -1102,7 +1112,7 @@ input:disabled:hover {
   padding: 4px;
 }
 .hazard-sheet header .header-namestrip {
-  background: #643b68;
+  background: var(--primary-color);
   border-radius: 8px;
   padding: 12px;
   margin: 8px;
@@ -1112,7 +1122,7 @@ input:disabled:hover {
   max-width: 21%;
   color: #fff;
   font-size: 24px;
-  border-bottom: 2px solid #efe5f0;
+  border-bottom: 2px solid var(--primary-color-light);
   border-radius: 0;
   margin: 0px 6px;
 }
@@ -1128,7 +1138,7 @@ input:disabled:hover {
   display: flex;
 }
 .hazard-sheet .left-side img {
-  border: 4px solid #643b68;
+  border: 4px solid var(--primary-color);
   width: 160px;
   height: 151px;
   border-radius: 32px;
@@ -1242,7 +1252,7 @@ input:disabled:hover {
   right: -13px;
 }
 .hazard-sheet .left-side .button-addskill {
-  border: 2px solid #643b68;
+  border: 2px solid var(--primary-color);
   border-radius: 17px;
   background-color: #fff;
   padding: 1px 4px;
@@ -1282,7 +1292,7 @@ input:disabled:hover {
   margin-top: 7px;
 }
 .hazard-sheet .right-side .passion-background label {
-  background-color: #643b68;
+  background-color: var(--primary-color);
   color: white;
   font-weight: 600;
   padding: 7px;
@@ -1306,7 +1316,7 @@ input:disabled:hover {
   bottom: 10px;
 }
 .hazard-sheet .right-side.dice-pools .dice-pool-strip {
-  background-color: #643b68;
+  background-color: var(--primary-color);
   height: 32px;
   align-items: center;
   justify-content: flex-end;
@@ -1339,7 +1349,7 @@ input:disabled:hover {
   overflow-y: auto;
   height: 250px;
   width: calc(100% - 45px);
-  border-bottom: 2px solid #643b68;
+  border-bottom: 2px solid var(--primary-color);
   margin-left: 24px;
 }
 .hazard-sheet .actions-section {
@@ -1352,7 +1362,7 @@ input:disabled:hover {
 }
 .hazard-sheet nav.sheet-tabs {
   border-top: 0;
-  border-bottom: 2px solid #643b68;
+  border-bottom: 2px solid var(--primary-color);
   padding: 0;
   margin: 0px 24px;
   margin-top: 8px;
@@ -1361,16 +1371,16 @@ input:disabled:hover {
   padding: 4px 12px;
   font-weight: 600;
   font-size: 16px;
-  color: #643b68;
+  color: var(--primary-color);
 }
 .hazard-sheet nav.sheet-tabs a:hover {
   text-shadow: none;
 }
 .hazard-sheet nav.sheet-tabs a.active {
-  border-top: 2px solid #643b68;
-  border-left: 2px solid #643b68;
-  border-right: 2px solid #643b68;
-  background-color: #efe5f0;
+  border-top: 2px solid var(--primary-color);
+  border-left: 2px solid var(--primary-color);
+  border-right: 2px solid var(--primary-color);
+  background-color: var(--primary-color-light);
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
@@ -1887,6 +1897,26 @@ input:disabled:hover {
   font-size: 16px;
   padding: 7px;
   margin-bottom: 12px;
+}
+
+.dialog-confirmdelete {
+  margin-bottom: 8px;
+}
+.dialog-confirmdelete img {
+  flex: 0 0 48px !important;
+  height: 48px;
+  margin: 4px;
+  margin-right: 12px;
+}
+.dialog-confirmdelete .value-field {
+  border: 0;
+  background: none;
+  line-height: 20px;
+  text-align: center;
+  font-size: 16px;
+  padding: 7px;
+  margin-bottom: 12px;
+  line-height: 16px;
 }
 
 .turnUnitData {

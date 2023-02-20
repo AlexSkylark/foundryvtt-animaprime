@@ -39,6 +39,19 @@
 	src: url('../../fonts/modesto-condensed/modesto-condensed-bold.woff2') format('woff2');
 }
 
+:root {
+
+	--hue: 207;
+	--saturation: 64%;
+	--light: 44%;
+	
+	/* Base color in variable */
+	--primary-color: hsl(var(--hue), var(--saturation), var(--light));
+	/* Base color lighten using calc */
+	--primary-color-light: hsl(var(--hue), var(--saturation), calc(var(--light) + 57.5%));
+    
+}
+
 input[type=text], span {
 	background: none;
 	border: 0;

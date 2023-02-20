@@ -95,11 +95,6 @@ Hooks.on("updateActor", async (actor, change, context, userId) => {
     }
 });
 
-Hooks.on("updateToken", async (token, change, context, userId) => {
-    if (change.name) {
-    }
-});
-
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (message.type === "roll") {
         ui.combat.render();
@@ -172,7 +167,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
     }
 });
 
-Hooks.once("init", () => {
+Hooks.once("init", async () => {
     game.animaprime = {
         AnimaPrimeItem,
         AnimaPrimeCombat,
@@ -190,7 +185,7 @@ Hooks.once("init", () => {
     registerSheets();
     configureStatusEffects();
 
-    game.settings.register("animaprime", "commitedRerolls", {
+    await game.settings.register("animaprime", "commitedRerolls", {
         name: "Reroll List",
         hint: "Comma-separated list for reroll control",
         scope: "world",
@@ -201,7 +196,31 @@ Hooks.once("init", () => {
             console.log("reroll added: " + value);
         },
     });
+
+    await game.settings.register("animaprime", "primaryColor", {
+        name: "Primary Color",
+        hint: "Color used on Sheets",
+        scope: "client",
+        config: true,
+        type: String,
+        default: "#643b68",
+        onChange: (value) => {
+            changePrimaryColor(value);
+        },
+    });
+
+    changePrimaryColor(await game.settings.get("animaprime", "primaryColor"));
 });
+
+function changePrimaryColor(color) {
+    const hslValue = hexToHSL(color);
+
+    const r = document.querySelector(":root");
+
+    r.style.setProperty("--hue", hslValue.hue);
+    r.style.setProperty("--saturation", hslValue.saturation);
+    r.style.setProperty("--light", hslValue.light);
+}
 
 function configureStatusEffects() {
     CONFIG.statusEffects = [
@@ -307,3 +326,45 @@ const intToRoman = (num) => {
 
     return result;
 };
+
+function hexToHSL(H) {
+    // Convert hex to RGB first
+    let r = 0,
+        g = 0,
+        b = 0;
+    if (H.length == 4) {
+        r = "0x" + H[1] + H[1];
+        g = "0x" + H[2] + H[2];
+        b = "0x" + H[3] + H[3];
+    } else if (H.length == 7) {
+        r = "0x" + H[1] + H[2];
+        g = "0x" + H[3] + H[4];
+        b = "0x" + H[5] + H[6];
+    }
+    // Then to HSL
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    let cmin = Math.min(r, g, b),
+        cmax = Math.max(r, g, b),
+        delta = cmax - cmin,
+        h = 0,
+        s = 0,
+        l = 0;
+
+    if (delta == 0) h = 0;
+    else if (cmax == r) h = ((g - b) / delta) % 6;
+    else if (cmax == g) h = (b - r) / delta + 2;
+    else h = (r - g) / delta + 4;
+
+    h = Math.round(h * 60);
+
+    if (h < 0) h += 360;
+
+    l = (cmax + cmin) / 2;
+    s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+    s = +(s * 100).toFixed(1);
+    l = +(l * 100).toFixed(1);
+
+    return { hue: h, saturation: s + "%", light: l + "%" };
+}
