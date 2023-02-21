@@ -97,7 +97,7 @@
         <div class=" dialog-field-container flexrow">
             <label>Add Bonus Dice?</label>        
             <div class="flexrow dialog-buttons">
-                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('bonus-dice', false)">
+                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('bonus-dice', false, '{{this.targetId}}')">
                     <span class="fas fa-minus" />
                 </button>
                 <div class="form-dice-field target-{{this.targetId}} flexrow">
@@ -119,7 +119,7 @@
         <div class=" dialog-field-container flexrow">
             <label>Target has resistance?</label>        
             <div class="flexrow dialog-buttons">
-                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('resistance', false)">
+                <button class="form-dialog-plusminus-button minus" onclick="modifyDice('resistance', false, '{{this.targetId}}')">
                     <span class="fas fa-minus" />
                 </button>
                 <div class="form-dice-field target-{{this.targetId}} flexrow">

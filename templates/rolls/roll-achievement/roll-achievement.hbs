@@ -5,7 +5,7 @@
                 <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
                 <div class="flexcol">
                     <h4 class="header-title">{{flavor.entityData.type}} roll:</h4>
-                    <h4 class="header-name">{{flavor.entityData.name}}</h4>
+                    <h4 class="header-name">{{flavor.entityData.name}} - {{flavor.targetData.[0].targetName}}</h4>
                 </div>
             </div>
             <div class="item-description">
@@ -35,9 +35,9 @@
                     <li class="roll bonus{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
                 </ol>
-                <span class="result-message {{#if flavor.resultData.[0].hit}}success{{/if}}">
-                    {{#if flavor.resultData.hit}}
-                    Goal "{{flavor.entityData.system.name}}" COMPLETE!!
+                <span class="result-message {{#if flavor.targetData.[0].resultData.hit}}success{{/if}}">
+                    {{#if flavor.targetData.[0].resultData.hit}}
+                    Goal COMPLETE!!!
                     {{else}}
                         {{#if flavor.targetData.[0].resultData.successes}}
                             Some progress! <br /> {{flavor.targetData.[0].resultData.successes}} progress {{#if (is1 flavor.targetData.[0].resultData.successes)}}die{{else}}dice{{/if}} added.

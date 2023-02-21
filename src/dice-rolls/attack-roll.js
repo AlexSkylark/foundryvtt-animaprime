@@ -194,11 +194,11 @@ export async function attackRoll(
 
 export async function checkDialogs(userTargets, options) {
     let allDone = [];
-    const test = allDone.filter((x) => x == true);
 
     while (allDone.filter((x) => x == true).length < userTargets) {
+        allDone = [];
         for (let o = 0; o < options.length; o++)
-            allDone.push(await isDialogResolved(options[0]));
+            allDone.push(await isDialogResolved(options[o]));
     }
     return true;
 }
