@@ -133,6 +133,22 @@ export default class AnimaPrimeCombat extends Combat {
         });
     }
 
+    getCurrentActor() {
+        const currentComb = this.getCurrentCombatant();
+        if (!currentComb) return null;
+        const token = game.scenes.active.tokens.get(currentComb.token.id);
+        if (token.isLinked) {
+            return game.actors.get(token.actor.id);
+        } else {
+            return token.actor ?? token.actorData;
+        }
+    }
+
+    getCurrentCombatant() {
+        if (this.combsOnQueue.length == 0) return null;
+        return this.getMinObject(this.combsOnQueue, "initiative");
+    }
+
     getMinObject(array, attrib) {
         return (
             (array.length &&

@@ -12,6 +12,7 @@ import AnimaPrimeCombat from "../src/AnimaPrimeCombat.js";
 import AnimaPrimeActor from "../src/AnimaPrimeActor.js";
 
 import * as HandlebarsHelpers from "./Handlebars.js";
+import * as DiceRolls from "./dice-rolls/dice-rolls.js";
 
 async function preloadTemplates() {
     const templatePaths = [
@@ -60,17 +61,70 @@ function registerSheets() {
     });
 }
 
-Hooks.on("updateActor", async (actor, change, context, userId) => {
+Hooks.on("preUpdateActor", async (actor, change, context, userId) => {
     if (change.name) {
+        let tokens = game.scenes.active.tokens.filter(
+            (x) => x.actorId == actor.id ?? actor._id
+        );
+
+        tokens.forEach(async (token) => {
+            token.namePreffix = token.name.split(actor.name)[0];
+            token.nameSuffix = token.name.split(actor.name)[1];
+
+            await token.update({
+                name: token.namePreffix + change.name + token.nameSuffix,
+            });
+        });
+
         if (actor.prototypeToken)
             await actor.prototypeToken.update({ name: change.name });
     }
 });
 
+// refresh combat tracker
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
-    if (message.type === "roll") {
-        ui.combat.render();
+    if (game.dice3d && message.type == 5)
+        await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+
+    if (message.flags.sourceItem)
+        setTimeout(() => {
+            ui.combat.render();
+        });
+});
+
+// display "confirm end turn" dialog for the owner if unit has the current turn
+Hooks.on("createChatMessage", async (message, data, options, userId) => {
+    if (game.dice3d && message.type == 5)
+        await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+
+    if (message.flags.sourceItem) {
+        const item = message.flags.sourceItem;
+        const actorOwner = game.actors.get(message.speaker.actor);
+        const currentCombatantActor = game.combats.active.getCurrentActor();
+        if (
+            currentCombatantActor &&
+            currentCombatantActor.id == message.speaker.actor
+        ) {
+            if (!message.flags.enableReroll && actorOwner.isOwner) {
+                if (game.user.isGM) {
+                    if (
+                        actorOwner.type == "adversity" ||
+                        actorOwner.type == "hazard"
+                    ) {
+                        await DiceRolls.getConfirmEndOfTurn(item.owner);
+                    }
+                } else {
+                    await DiceRolls.getConfirmEndOfTurn(item.owner);
+                }
+            }
+        }
     }
+});
+
+// set roll as comitted when comitting rolls
+Hooks.on("createChatMessage", async (message, data, options, userId) => {
+    if (game.dice3d && message.type == 5)
+        await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
     if (game.user.isGM && message.flags.rerollConfig) {
         if (message.flags.rerollConfig.charAt(0) == ",")
@@ -82,8 +136,65 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
             message.flags.rerollConfig
         );
     }
+});
 
-    if (game.user.isGM && !message.flags.enableReroll) {
+// GM proxy for action commits on targets the player doesn't own
+Hooks.on("createChatMessage", async (message, data, options, userId) => {
+    if (game.dice3d && message.type == 5)
+        await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+
+    if (
+        game.user.isGM &&
+        message.flags.sourceItem &&
+        !message.flags.enableReroll
+    ) {
+        const item = message.flags.sourceItem;
+        const dialogOptions = message.flags.dialogOptions;
+
+        if (dialogOptions && dialogOptions.maneuverStyle) {
+            if (
+                dialogOptions.maneuverStyle == "cunning" ||
+                dialogOptions.maneuverStyle == "heroic" ||
+                dialogOptions.maneuverStyle == "supportive"
+            ) {
+                const token = game.scenes.active.tokens.get(
+                    message.flags.sourceItem.targetIds[0]
+                );
+
+                let targetEntity = {};
+                if (token.isLinked) {
+                    targetEntity = game.actors.get(token.actor.id);
+                } else {
+                    targetEntity = token.actor ?? token.actorData;
+                }
+
+                let targetData = targetEntity.system;
+
+                if (dialogOptions.maneuverStyle == "cunning") {
+                    targetData.threatDice += 1;
+                } else if (dialogOptions.maneuverStyle == "heroic") {
+                    targetData.progressDice += 1;
+                } else if (dialogOptions.maneuverStyle == "supportive") {
+                    targetData.strikeDice += 1;
+                }
+
+                await targetEntity.update({
+                    system: targetData,
+                });
+            }
+        }
+    }
+});
+
+Hooks.on("createChatMessage", async (message, data, options, userId) => {
+    if (game.dice3d && message.type == 5)
+        await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+
+    if (
+        game.user.isGM &&
+        message.flags.sourceItem &&
+        !message.flags.enableReroll
+    ) {
         const item = message.flags.sourceItem;
 
         if (

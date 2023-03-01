@@ -34,6 +34,15 @@ export async function maneuverRoll(
         }
     }
 
+    maneuver.targets = [];
+    maneuver.targetIds = [];
+    await game.user.targets.forEach((element) => {
+        maneuver.targets.push(element.document.actor);
+        maneuver.targetIds.push(element._id ?? element.id);
+    });
+
+    if (!checkManeuverTarget(maneuver, dialogOptions.maneuverStyle)) return;
+
     if (dialogOptions.maneuverStyle == "reckless") {
         maneuverDice += 2;
     }
@@ -113,6 +122,45 @@ export async function maneuverRoll(
         null,
         reroll
     );
+}
+
+function checkManeuverTarget(maneuver, maneuverStyle) {
+    if (
+        maneuverStyle == "cunning" ||
+        maneuverStyle == "heroic" ||
+        maneuverStyle == "supportive"
+    ) {
+        const originalTargets = duplicate(maneuver.targets);
+        if (maneuverStyle == "cunning") {
+            maneuver.targets = maneuver.targets.filter((i) => {
+                return i.type == "adversity" || i.type == "hazard";
+            });
+        } else if (maneuverStyle == "heroic") {
+            maneuver.targets = maneuver.targets.filter((i) => {
+                return i.type == "goal";
+            });
+        } else if (maneuverStyle == "supportive") {
+            maneuver.targets = maneuver.targets.filter((i) => {
+                return i.type == "character";
+            });
+        }
+
+        if (
+            !maneuver.targets ||
+            !maneuver.targets.length ||
+            maneuver.targets.length != originalTargets.length
+        ) {
+            ui.notifications.error(
+                `Please select a suitable target when using the <i>"${
+                    maneuverStyle.charAt(0).toUpperCase() +
+                    maneuverStyle.slice(1)
+                }"</i> maneuver style.`
+            );
+            return false;
+        }
+    }
+
+    return true;
 }
 
 function checkManeuverResult(maneuverGain, results, isSlowed, isAggressive) {

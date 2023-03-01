@@ -38,11 +38,11 @@
     <ol id="combat-tracker" class="directory-list main-queue">
         {{#each turns}}
             {{#if (isOnQueue this)}}
-            <li class="combatant actor directory-item flexrow {{this.css}}" data-combatant-id="{{this.id}}">
+            <li class="combatant actor directory-item flexrow{{#if this.isOnTurn}} active{{/if}}" data-combatant-id="{{this.id}}">
                 <img class="token-image" data-src="{{this.img}}" title="{{this.name}}"/>
                 <div class="token-name flexcol">
                     <h4>{{this.displayName}}</h4>
-                    {{#unless this.defeated}}<h4 class="turnUnitData">HP:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>{{/unless}}
+                    {{#unless this.v}}<h4 class="turnUnitData">HP:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>{{/unless}}
                     <div class="combatant-controls flexrow">
                         {{#if ../user.isGM}}
                         <a class="combatant-control {{#if this.defeated}}active{{/if}}" title="{{localize 'COMBAT.ToggleDead'}}" data-control="toggleDefeated">
@@ -84,10 +84,12 @@
                 </div>
 
                 <div class="token-initiative">
-                    {{#if (and (canTakeTurn this.initiative) (or owner ../user.isGM))}}
-                        {{#unless this.defeated}}
-                            <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
-                        {{/unless}}
+                    {{#if ../combat.round}}
+                        {{#if (and (canTakeTurn this.initiative) (or owner ../user.isGM))}}
+                            {{#unless this.defeated}}
+                                <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
+                            {{/unless}}
+                        {{/if}}
                     {{/if}}
                 </div>
             </li>
@@ -118,11 +120,13 @@
                     </div>
                 </div>
 
-                <div class="token-initiative">                
-                    {{#if (and (canTakeTurn this.initiative) (or isControlling ../user.isGM))}}
-                    {{#unless this.defeated}}
-                        <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
-                    {{/unless}}
+                <div class="token-initiative">
+                    {{#if ../combat.round}}
+                        {{#if (and (canTakeTurn this.initiative) (or isControlling ../user.isGM))}}
+                        {{#unless this.defeated}}
+                            <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
+                        {{/unless}}
+                        {{/if}}
                     {{/if}}
                 </div>
             </li>
@@ -133,18 +137,18 @@
     <nav id="combat-controls" class="directory-footer flexrow">    
         {{#if user.isGM}}
             {{#if round}}
-                <a class="combat-control" title="{{localize 'COMBAT.RoundPrev'}}" data-control="previousRound"><i class="fas fa-step-backward"></i></a>
-                <a class="combat-control" title="{{localize 'COMBAT.TurnPrev'}}" data-control="previousTurn"><i class="fas fa-arrow-left"></i></a>
+                <a class="combat-control" title="{{localize 'COMBAT.RoundPrev'}}" data-control="previousRound"><i class="fas fa-step-backward"></i></a>                
+                <a class="combat-custom-control" title="{{localize 'COMBAT.TurnPrev'}}" data-control="cancelTurn"><i class="fas fa-arrow-left"></i></a>                                        
                 <a class="combat-control center" title="{{localize 'COMBAT.End'}}" data-control="endCombat">{{localize 'COMBAT.End'}}</a>            
-                <a class="combat-custom-control" title="{{localize 'COMBAT.TurnNext'}}" data-control="nextTurn"><i class="fas fa-arrow-down"></i></a>
-                <a class="combat-control" title="{{localize 'COMBAT.TurnNext'}}" data-control="nextTurn"><i class="fas fa-arrow-right"></i></a>
+                <a class="combat-custom-control" title="{{localize 'COMBAT.TurnNext'}}" data-control="endTurn"><i class="fas fa-check"></i></a>                
                 <a class="combat-control" title="{{localize 'COMBAT.RoundNext'}}" data-control="nextRound"><i class="fas fa-step-forward"></i></a>
             {{else}}
                 <a class="combat-control center" title="{{localize 'COMBAT.Begin'}}" data-control="startCombat">{{localize 'COMBAT.Begin'}}</a>
             {{/if}}
         {{else if control}}
             {{#unless this.combat.combsWaitingTurn.length}}
-                <a class="combat-custom-control center" title="{{localize 'COMBAT.TurnEnd'}}" data-control="nextTurn">{{localize 'COMBAT.TurnEnd'}}</a>
+                <a class="combat-custom-control center" title="Cancel Turn" data-control="cancelTurn">Cancel <i class="fas fa-cancel"></i></a>
+                <a class="combat-custom-control center" title="End Turn" data-control="endTurn">End <i class="fas fa-check"></i></a>
             {{/unless}}
         {{/if}}
     </nav>    

@@ -51,5 +51,8 @@ async function castPower(power) {
         user: game.user._id,
         speaker: ChatMessage.getSpeaker({ alias: power.owner.name }),
         content: templateHtml,
+        flags: {
+            sourceItem: power,
+        },
     });
 }

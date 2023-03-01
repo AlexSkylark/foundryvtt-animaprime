@@ -6,7 +6,14 @@ export default class AnimaPrimeCombatant extends Combatant {
     }
 
     get isOnTurn() {
-        return this.flags.isOnTurn;
+        const combat = game.combats.active;
+
+        if (!combat || !combat.getCurrentCombatant()) return false;
+
+        return (
+            combat.getCurrentCombatant().id == this.id &&
+            combat.combsWaitingTurn.length == 0
+        );
     }
 
     get faction() {

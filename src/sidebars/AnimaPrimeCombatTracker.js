@@ -9,6 +9,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                 await this.performTakeTurn(argument.id);
             } else if (argument.operation == "endTurn") {
                 await this.performEndTurn();
+            } else if (argument.operation == "cancelTurn") {
+                await this.performCancelTurn();
             }
         });
     }
@@ -34,6 +36,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             t.healthValue = comb.healthValue;
             t.threatValue = comb.threatValue;
             t.displayName = comb.displayName;
+            t.isOnTurn = comb.isOnTurn;
         }
 
         if (this.viewed) {
@@ -82,12 +85,21 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
         const combatantId = this.viewed.combatant.id;
 
-        if (game.user.isGM) this.performEndTurn();
-        else
-            game.socket.emit("system.animaprime", {
-                operation: "endTurn",
-                id: combatantId,
-            });
+        if (ev.currentTarget.dataset.control == "cancelTurn") {
+            if (game.user.isGM) this.performCancelTurn();
+            else
+                game.socket.emit("system.animaprime", {
+                    operation: "cancelTurn",
+                    id: combatantId,
+                });
+        } else if (ev.currentTarget.dataset.control == "endTurn") {
+            if (game.user.isGM) this.performEndTurn();
+            else
+                game.socket.emit("system.animaprime", {
+                    operation: "endTurn",
+                    id: combatantId,
+                });
+        }
     }
 
     async performTakeTurn(combatantId) {
@@ -149,14 +161,59 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         }
     }
 
-    async performEndTurn() {
+    async performCancelTurn() {
         if (!game.user.isGM) {
             ui.notifications.error("only a GM user can issue that command");
             return;
         }
 
+        if (this.viewed.combsOnQueue.length == 0) {
+            return;
+        }
+
+        const lastComb = await this.viewed.getMinObject(
+            this.viewed.combsOnQueue,
+            "initiative"
+        );
+
+        let combsToReset = [];
+        if (this.viewed.combsWaitingTurn.length == 0) {
+            combsToReset.push(lastComb);
+            combsToReset = combsToReset.concat(
+                this.viewed.combsOutofQueue.filter(
+                    (x) => x.faction == lastComb.faction && !x.isDefeated
+                )
+            );
+            this.viewed.resetInitiative(combsToReset, true);
+        } else {
+            const nextFaction = lastComb
+                ? this.getInverseFaction(lastComb.faction)
+                : "friendly";
+            combsToReset = combsToReset.concat(
+                this.viewed.combsOutofQueue.filter(
+                    (x) => x.faction == nextFaction && !x.isDefeated
+                )
+            );
+            this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
+        }
+
+        if (
+            this.viewed.combsOnQueue.length > 1 &&
+            this.viewed.combsWaitingTurn == 0 &&
+            this.viewed.getCurrentCombatant().id ==
+                this.viewed.current.combatantId
+        ) {
+            this.viewed.previousTurn();
+        }
+    }
+
+    async performEndTurn() {
+        if (!game.user.isGM) {
+            return;
+        }
+
         if (this.viewed.combsWaitingTurn.length > 0) {
-            ui.notifications.error("A token needs to take this turn.");
+            ui.notifications.error("A unit needs to take this turn.");
             return;
         }
 
@@ -200,5 +257,12 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
     getInverseFaction(faction) {
         return faction == "friendly" ? "hostile" : "friendly";
+    }
+
+    getCurrentTurnToken() {
+        return ui.combat.viewed.getEmbeddedDocument(
+            "Combatant",
+            ui.combat.viewed.current.combatantId
+        ).token;
     }
 }

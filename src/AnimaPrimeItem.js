@@ -63,6 +63,29 @@ export default class AnimaPrimeItem extends Item {
     }
 
     async roll(ctrl, shift, alt) {
+        // validations
+        if (this.type != "skill") {
+            if (!game.combats.active) {
+                ui.notifications.error("There is no active combat.");
+                return;
+            } else {
+                if (game.combats.active.combsWaitingTurn.length > 0) {
+                    ui.notifications.error("A unit needs to take this turn.");
+                    return;
+                }
+                const currentCombatActor =
+                    game.combats.active.getCurrentActor();
+
+                if (
+                    this.type != "reaction" &&
+                    currentCombatActor.id != this.actor.id
+                ) {
+                    ui.notifications.error("It's somebody else's turn now!");
+                    return;
+                }
+            }
+        }
+
         let itemData = {
             ...this,
             owner: this.actor,

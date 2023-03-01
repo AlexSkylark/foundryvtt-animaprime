@@ -25,14 +25,6 @@ export async function renderRoll(
 
     let targetData = [];
 
-    /*
-    if (entityData.type == "skill")
-        targetData.push({
-            additionalData: additionalData[0],
-            rollResult: rollResult[0],
-            resultData: resultData[0],
-        });*/
-
     for (let i = 0; i < rollResult.length; i++) {
         targetData.push({
             additionalData: additionalData[i],
@@ -71,10 +63,14 @@ export async function renderRoll(
         },
     };
 
-    await rollResult[0].toMessage(messageData);
+    const chatMessage = await rollResult[0].toMessage(messageData);
 
-    if (!enableReroll && commitCallback)
+    if (!enableReroll && commitCallback) {
+        if (game.dice3d)
+            await game.dice3d.waitFor3DAnimationByMessageID(chatMessage.id);
+
         await commitCallback(resultData, entityData, dialogOptions, itemTarget);
+    }
 
     setTimeout(() => ui.combat.render(), 500);
 }
@@ -209,6 +205,55 @@ export async function getItemRollOptions(item) {
                         resolve(
                             processRollOptions(html[0].querySelector("form"))
                         ),
+                },
+            },
+            default: "normal",
+            close: () => resolve({ cancelled: true }),
+        };
+
+        new Dialog(data, dialogOptions).render(true);
+    });
+}
+
+export async function getConfirmEndOfTurn(actor) {
+    if (ui.combat.getCurrentTurnToken().actorId == (actor.id ?? actor._id)) {
+        const endTurnDialogResult = await confirmEndTurnDialog();
+        if (endTurnDialogResult.confirmed) {
+            if (game.user.isGM) {
+                ui.combat.performEndTurn();
+            } else {
+                game.socket.emit("system.animaprime", {
+                    operation: "endTurn",
+                    id: game.combats.active.getCurrentCombatant().id,
+                });
+            }
+        }
+    }
+}
+
+async function confirmEndTurnDialog() {
+    const template =
+        "systems/animaprime/templates/dialogs/dialog-endturn/dialog-endturn.hbs";
+
+    const html = await renderTemplate(template);
+
+    return new Promise((resolve) => {
+        const dialogOptions = {
+            width: 250,
+            height: 130,
+        };
+
+        const data = {
+            title: "Confirm End Turn",
+            content: html,
+            buttons: {
+                cancel: {
+                    label: "Cancel",
+                    callback: (html) => resolve({ cancelled: true }),
+                },
+                normal: {
+                    label: "Confirm",
+                    callback: (html) => resolve({ confirmed: true }),
                 },
             },
             default: "normal",
