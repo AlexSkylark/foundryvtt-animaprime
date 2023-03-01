@@ -15,7 +15,7 @@ export default class AnimaPrimeCombat extends Combat {
         this.turns.forEach(async (combatant) => {
             let actorData = combatant.actor.system;
 
-            actorData.actionDice = 2;
+            if ((combatant.actor.type = "character")) actorData.actionDice = 2;
             actorData.chargeDice = 0;
             actorData.strikeDice = 0;
             actorData.threatDice = 0;
