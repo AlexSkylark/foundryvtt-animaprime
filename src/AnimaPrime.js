@@ -63,16 +63,18 @@ function registerSheets() {
 
 Hooks.on("preUpdateActor", async (actor, change, context, userId) => {
     if (change.name) {
-        let tokens = game.scenes.active.tokens.filter(
-            (x) => x.actorId == actor.id ?? actor._id
-        );
+        game.scenes.forEach(async (scene) => {
+            let tokens = scene.tokens.filter(
+                (x) => x.actorId == actor.id ?? actor._id
+            );
 
-        tokens.forEach(async (token) => {
-            token.namePreffix = token.name.split(actor.name)[0];
-            token.nameSuffix = token.name.split(actor.name)[1];
+            tokens.forEach(async (token) => {
+                token.namePreffix = token.name.split(actor.name)[0];
+                token.nameSuffix = token.name.split(actor.name)[1];
 
-            await token.update({
-                name: token.namePreffix + change.name + token.nameSuffix,
+                await token.update({
+                    name: token.namePreffix + change.name + token.nameSuffix,
+                });
             });
         });
 
