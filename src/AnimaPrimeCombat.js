@@ -12,6 +12,18 @@ export default class AnimaPrimeCombat extends Combat {
 
         await super.update({ sheet: "open" });
 
+        this.turns.forEach(async (combatant) => {
+            let actorData = combatant.actor.system;
+
+            actorData.actionDice = 2;
+            actorData.chargeDice = 0;
+            actorData.strikeDice = 0;
+            actorData.threatDice = 0;
+            actorData.health.value = actorData.health.max;
+
+            await combatant.actor.update({ system: actorData });
+        });
+
         await this.resetInitiative(this.combsFriendly, true);
         await this.resetInitiative(this.combsHostile, false);
     }
@@ -46,6 +58,23 @@ export default class AnimaPrimeCombat extends Combat {
                 }
             }
         }
+    }
+
+    async endCombat() {
+        const end = await super.endCombat();
+
+        if (end)
+            this.turns.forEach(async (combatant) => {
+                let actorData = combatant.actor.system;
+
+                actorData.actionDice = 2;
+                actorData.chargeDice = 0;
+                actorData.strikeDice = 0;
+                actorData.threatDice = 0;
+                actorData.health.value = actorData.health.max;
+
+                await combatant.actor.update({ system: actorData });
+            });
     }
 
     async _onCreateEmbeddedDocuments(
