@@ -2,7 +2,7 @@
     "id": "animaprime",
     "title": "Anima Prime: Resurgence",
     "description": "Unofficial Foundry VTT Extension for Anima Prime: Resurgence",
-    "version": "0.1.6.2",
+    "version": "0.1.6.3",
     "authors": [
         {
             "name": "AlexionStar",
@@ -23,5 +23,14 @@
     "compatibility": {
         "minimum": "0.10.0",
         "verified": "10"
-    }
+    },
+    "packs": [
+        {
+            "name": "basic-actions",
+            "label": "Basic Actions",
+            "system": "animaprime",
+            "path": "./packs/basic-actions.db",
+            "type": "Item"
+        }
+    ]
 }

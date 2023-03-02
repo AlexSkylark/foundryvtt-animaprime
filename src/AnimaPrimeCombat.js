@@ -13,9 +13,10 @@ export default class AnimaPrimeCombat extends Combat {
         await super.update({ sheet: "open" });
 
         this.turns.forEach(async (combatant) => {
+            console.log("passei começo");
             let actorData = combatant.actor.system;
 
-            if ((combatant.actor.type = "character")) actorData.actionDice = 2;
+            if (combatant.actor.type == "character") actorData.actionDice = 2;
             actorData.chargeDice = 0;
             actorData.strikeDice = 0;
             actorData.threatDice = 0;
@@ -65,6 +66,7 @@ export default class AnimaPrimeCombat extends Combat {
 
         if (end)
             this.turns.forEach(async (combatant) => {
+                console.log("passei");
                 let actorData = combatant.actor.system;
 
                 actorData.actionDice = 2;

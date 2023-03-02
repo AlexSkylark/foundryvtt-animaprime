@@ -61,6 +61,16 @@ function registerSheets() {
     });
 }
 
+Hooks.on("createActor", async (actor, data, context, userId) => {
+    if (actor.type == "character" || actor.type == "adversity") {
+        let items = await game.packs
+            .get("animaprime.basic-actions")
+            .getDocuments();
+        items = items.sort((a, b) => a.name.localeCompare(b.name));
+        await actor.createEmbeddedDocuments("Item", items);
+    }
+});
+
 Hooks.on("preUpdateActor", async (actor, change, context, userId) => {
     if (change.name) {
         game.scenes.forEach(async (scene) => {

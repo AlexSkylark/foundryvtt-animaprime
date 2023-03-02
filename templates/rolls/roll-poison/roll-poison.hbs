@@ -9,12 +9,12 @@
         <div class="flexcol">
             <div class="flexrow">
                 <ol class="rolls">
-                    {{#each flavor.rollResults.dice.0.results}}
+                    {{#each flavor.targetData.[0].rollResult.dice.0.results}}
                     <li class="roll{{#if (is1 this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}                
                 </ol>                
             </div>            
-            {{#if (is1 flavor.resultData)}}
+            {{#if (is1 flavor.targetData.[0].rollResult.dice.0.results.0.result)}}
                 <span class="result-message success">Poison cleansed!</span>
             {{else}}
                 <span class="result-message failure">Not cleansed! +1 Threat die</span>

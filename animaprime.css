@@ -1704,7 +1704,9 @@ input:disabled:hover {
 }
 
 .roll-poison .roll-header h4.header-name {
-  margin-top: 10px !important;
+  margin-top: 6px !important;
+  margin-bottom: 16px !important;
+  margin-left: 10px !important;
 }
 
 .dialog-container {
