@@ -129,19 +129,34 @@
                 <a data-tab="basic">Basic Actions</a>
             </nav>            
             <section class="sheet-body">
-                <div class="tab" data-tab="basic" data-group="primary-tabs">
-                    <div class="actions-section">                    
-                        {{#each basicActions as |item id|}}
-                        {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../editUnlocked}}
-                        {{/each}}
+                <div class="tab" data-tab="basic" data-group="primary-tabs">                    
+                    <div class="actions-section-container">
+                        <div class="actions-column">
+                            {{#each basicActions1 as |item id|}}
+                            {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../editUnlocked}}
+                            {{/each}}
+                        </div>
+                        <div class="actions-column">
+                            {{#each basicActions2 as |item id|}}
+                            {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../editUnlocked}}
+                            {{/each}}
+                        </div>
                     </div>
                 </div>
                 <div class="tab" data-tab="profession" data-group="primary-tabs">
-                    <div class="actions-section">                    
-                        {{#each actions as |item id|}}
-                        {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../editUnlocked}}
-                        {{/each}}
+                    <div class="actions-section-container">
+                        <div class="actions-column">
+                            {{#each actions1 as |item id|}}
+                            {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../editUnlocked}}
+                            {{/each}}
+                        </div>
+                        <div class="actions-column">
+                            {{#each actions2 as |item id|}}
+                            {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../editUnlocked}}
+                            {{/each}}
+                        </div>
                     </div>
+                    
                 </div>
             </section>            
         </div>

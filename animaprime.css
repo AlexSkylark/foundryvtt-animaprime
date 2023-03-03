@@ -671,7 +671,7 @@ input:disabled:hover {
   border-color: #bcf3e4;
 }
 .character-sheet .left-side {
-  flex: 0 0 260px;
+  flex: 0 0 240px;
   margin-left: 4px;
   display: flex;
 }
@@ -803,7 +803,7 @@ input:disabled:hover {
   right: 15px;
 }
 .character-sheet .left-side .skills-container {
-  height: 236px;
+  height: 266px;
   overflow: auto;
 }
 .character-sheet .left-side .skills-container .icon {
@@ -888,23 +888,31 @@ input:disabled:hover {
 }
 .character-sheet .right-side .actions-section-container {
   overflow-y: auto;
-  height: 460px;
-}
-.character-sheet .right-side .actions-section {
+  height: 370px;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  margin-left: 18px;
-  margin-bottom: 18px;
-  padding-top: 6px;
-  max-height: 850px;
+  border-bottom: 2px solid var(--primary-color);
+}
+.character-sheet .right-side .actions-column {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding-top: 8px;
+}
+.character-sheet .right-side .actions-column:first-child {
+  margin-left: 8px;
+}
+.character-sheet .right-side .actions-column:last-child {
+  margin-right: 8px;
 }
 .character-sheet nav.sheet-tabs {
   border-top: 0;
   border-bottom: 2px solid var(--primary-color);
   padding: 0;
-  margin: 0px 24px;
+  margin-left: 24px;
+  margin-right: 24px;
   margin-top: 18px;
+  margin-bottom: 0px;
 }
 .character-sheet nav.sheet-tabs a {
   padding: 4px 36px;
@@ -922,6 +930,9 @@ input:disabled:hover {
   background-color: var(--primary-color-light);
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+}
+.character-sheet .tab {
+  margin: 0px 24px;
 }
 
 .goal-sheet .header {
@@ -2094,8 +2105,8 @@ input:disabled:hover {
   color: #bddcfb;
 }
 
-.item-card-container {
-  width: 49%;
+.item-card-container:last-child {
+  padding-bottom: 18px;
 }
 .item-card-container img {
   margin: 0;
@@ -2236,6 +2247,8 @@ input:disabled:hover {
   display: flex;
   flex-direction: column;
   border-top-right-radius: 24px;
+  position: relative;
+  z-index: -100;
 }
 .item-card .item-header {
   display: flex;
@@ -2260,18 +2273,24 @@ input:disabled:hover {
   padding: 2px;
   padding-left: 8px;
 }
-.item-card .item-description {
+.item-card .item-description-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 46px;
+  margin-top: 24px;
+}
+.item-card .item-description-container .item-description {
   margin-bottom: 8px;
   font-size: 12px;
   padding: 0px 9px;
   padding-bottom: 0;
 }
-.item-card .item-description:first-of-type {
-  margin-top: 24px;
-}
 .item-card .cells {
   display: flex;
   flex-direction: row;
+  position: absolute;
+  bottom: 0;
 }
 .item-card .cells div {
   background-color: #fff;

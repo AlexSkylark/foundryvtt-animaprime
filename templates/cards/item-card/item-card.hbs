@@ -6,19 +6,21 @@
             <i class="icon {{#unless enableEdit}}edit-hidden{{/unless}} item-title fas fa-edit item-edit"></i>
             <i class="icon {{#unless enableEdit}}edit-hidden{{/unless}} item-title fas fa-trash item-delete"></i>
         </div>
-        <span class="item-description">{{system.description}}</span>
-        {{#if system.gainText}}
-        <span class="item-description"><strong>Gain: </strong>{{system.gainText}}</span>
-        {{/if}}
-        {{#if system.trigger}}
-        <span class="item-description"><strong>Trigger: </strong>{{system.trigger}}</span>
-        {{/if}}
-        {{#if system.effect}}
-        <span class="item-description"><strong>Effect: </strong>{{system.effect}}</span>
-        {{/if}}
-        {{#if system.damage}}
-        <span class="item-description"><strong>Damage Type: </strong>{{system.damage}}</span>
-        {{/if}}
+        <div class="item-description-container">
+            <span class="item-description">{{system.description}}</span>
+            {{#if system.gainText}}
+            <span class="item-description"><strong>Gain: </strong>{{system.gainText}}</span>
+            {{/if}}
+            {{#if system.trigger}}
+            <span class="item-description"><strong>Trigger: </strong>{{system.trigger}}</span>
+            {{/if}}
+            {{#if system.effect}}
+            <span class="item-description"><strong>Effect: </strong>{{system.effect}}</span>
+            {{/if}}
+            {{#if system.damage}}
+            <span class="item-description"><strong>Damage Type: </strong>{{system.damage}}</span>
+            {{/if}}
+        </div>        
         <div class="cells">
             {{#if system.roll}}
             <div class="roll flexcol flex0">

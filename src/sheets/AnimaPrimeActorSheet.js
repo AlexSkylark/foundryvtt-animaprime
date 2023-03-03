@@ -64,7 +64,23 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         }
 
         context.skills = skills;
-        context.basicActions = basicActions;
+
+        context.basicActions1 = [];
+        context.basicActions2 = [];
+        context.actions1 = [];
+        context.actions2 = [];
+
+        for (let i = 0; i < basicActions.length; i++) {
+            if (i % 2 != 0 || i == 6)
+                context.basicActions2.push(basicActions[i]);
+            else context.basicActions1.push(basicActions[i]);
+        }
+
+        for (let i = 0; i < actions.length; i++) {
+            if (i % 2 != 0) context.actions2.push(actions[i]);
+            else context.actions1.push(actions[i]);
+        }
+
         context.actions = actions;
 
         context.editUnlocked = context.system.enableEdit || game.user.isGM;

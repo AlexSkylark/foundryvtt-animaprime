@@ -31,7 +31,10 @@ $maneuver-background: #e5e6f3   ;
 }
 
 .item-card-container {
-    width: 49%;
+
+    &:last-child {
+        padding-bottom: 18px;
+    }
 
     img {
         margin: 0;
@@ -42,7 +45,7 @@ $maneuver-background: #e5e6f3   ;
         height: 64px;
         margin-bottom: -58px;
         margin-left: calc(100% - 71px);
-        position: relative;
+        position: relative;        
     }
 
     &.maneuver {
@@ -82,6 +85,9 @@ $maneuver-background: #e5e6f3   ;
     display: flex;
     flex-direction: column;
     border-top-right-radius: 24px;
+    //height: calc(100% - 18px);
+    position: relative;
+    z-index: -100;
 
     .item-header {
 
@@ -112,22 +118,28 @@ $maneuver-background: #e5e6f3   ;
         }        
     }
 
-    .item-description {
-        
-        &:first-of-type {
-            margin-top: 24px;
-        }
+    .item-description-container {
 
-        margin-bottom: 8px;
-        font-size: 12px;
-        padding: 0px 9px;
-        padding-bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 46px;
+        margin-top: 24px;
+
+        .item-description {
+            margin-bottom: 8px;
+            font-size: 12px;
+            padding: 0px 9px;
+            padding-bottom: 0;
+        }   
     }
-
+    
     .cells {
         
         display: flex;
-        flex-direction: row;        
+        flex-direction: row;
+        position: absolute;
+        bottom: 0;   
 
         div {
             background-color: #fff;
