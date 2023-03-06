@@ -1037,7 +1037,7 @@ input:disabled:hover {
   position: absolute;
   top: 62px;
   left: 27px;
-  z-index: -1;
+  z-index: -110;
 }
 .hazard-sheet input[type=text] {
   font-family: "Caveat", cursive;
@@ -2118,6 +2118,7 @@ input:disabled:hover {
   margin-bottom: -58px;
   margin-left: calc(100% - 71px);
   position: relative;
+  z-index: 10;
 }
 .item-card-container.maneuver img {
   border-color: #212cce;
@@ -2248,7 +2249,7 @@ input:disabled:hover {
   flex-direction: column;
   border-top-right-radius: 24px;
   position: relative;
-  z-index: -100;
+  z-index: 0;
 }
 .item-card .item-header {
   display: flex;

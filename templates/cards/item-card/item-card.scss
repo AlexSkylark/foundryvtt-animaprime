@@ -46,6 +46,7 @@ $maneuver-background: #e5e6f3   ;
         margin-bottom: -58px;
         margin-left: calc(100% - 71px);
         position: relative;        
+        z-index: 10;
     }
 
     &.maneuver {
@@ -87,9 +88,9 @@ $maneuver-background: #e5e6f3   ;
     border-top-right-radius: 24px;
     //height: calc(100% - 18px);
     position: relative;
-    z-index: -100;
+    z-index: 0;
 
-    .item-header {
+    .item-header {        
 
         display: flex;
         flex-direction: row;

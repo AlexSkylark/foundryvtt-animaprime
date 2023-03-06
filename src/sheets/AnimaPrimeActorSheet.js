@@ -142,6 +142,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         html.find(".button-changevalue").click(
             this._onPropertyIncrementValue.bind(this)
         );
+
         html.find(".item-create").click(this._onItemCreate.bind(this));
         html.find(".item-edit").click(this._onItemEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
@@ -289,6 +290,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
     }
 
     async _onItemRoll(ev) {
+        debugger;
         ev.preventDefault();
         const item = this.actor.getEmbeddedDocument(
             "Item",
