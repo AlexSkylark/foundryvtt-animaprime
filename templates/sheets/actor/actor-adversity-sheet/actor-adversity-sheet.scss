@@ -12,13 +12,13 @@
         position: absolute;
         top: 62px;
         left: 27px;
-        z-index: -1;
+        z-index: -110;
 
         &.small-square {
             height: 247px;
         }
         
-    }
+    }    
 
     input[type=text] {
         font-family: 'Caveat', cursive;

@@ -176,7 +176,7 @@ input:disabled:hover {
   position: absolute;
   top: 62px;
   left: 27px;
-  z-index: -1;
+  z-index: -110;
 }
 .adversity-sheet .decorative-square.small-square {
   height: 247px;

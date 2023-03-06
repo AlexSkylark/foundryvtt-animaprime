@@ -82,6 +82,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         }
 
         context.actions = actions;
+        context.basicActions = basicActions;
 
         context.editUnlocked = context.system.enableEdit || game.user.isGM;
         context.editName = context.options.token == null;
