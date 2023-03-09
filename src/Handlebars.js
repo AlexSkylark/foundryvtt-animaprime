@@ -11,10 +11,6 @@ export function registerHandlebarsHelpers() {
         return value == "2";
     });
 
-    Handlebars.registerHelper("isOutOfQueue", function (value) {
-        return value <= 1000;
-    });
-
     Handlebars.registerHelper("canTakeTurn", function (value) {
         return value <= 1000 && value > 0;
     });

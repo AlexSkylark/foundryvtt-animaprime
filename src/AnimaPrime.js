@@ -85,6 +85,17 @@ Hooks.on("preUpdateActor", async (actor, change, context, userId) => {
                 await token.update({
                     name: token.namePreffix + change.name + token.nameSuffix,
                 });
+
+                let combatants = game.combats.active.turns.filter(
+                    (x) => x.tokenId == token.id ?? token._id
+                );
+
+                combatants.forEach(async (combatant) => {
+                    await combatant.update({
+                        name:
+                            token.namePreffix + change.name + token.nameSuffix,
+                    });
+                });
             });
         });
 

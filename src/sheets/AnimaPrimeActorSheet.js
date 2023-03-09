@@ -290,7 +290,6 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
     }
 
     async _onItemRoll(ev) {
-        debugger;
         ev.preventDefault();
         const item = this.actor.getEmbeddedDocument(
             "Item",
