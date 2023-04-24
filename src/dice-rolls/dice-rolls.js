@@ -349,7 +349,7 @@ export function checkSuccess(results, successModifier) {
     let successes = 0;
 
     for (let i of results) {
-        if (i.result >= 3) successes++;
+        if (i.result >= 4) successes++;
     }
 
     return Math.max(successes + successModifier, 0);
