@@ -4,5 +4,3 @@ This system is an unofficial implementation of the Anima Prime: Resurgence RPG s
 
 ## TODO
 - Add Localization
-- Add setting for changing the main color of sheets
-- Streamline the process for area and multiple target strikes
