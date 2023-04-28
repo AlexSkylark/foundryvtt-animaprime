@@ -548,7 +548,7 @@ input:disabled:hover {
 }
 .character-sheet .decorative-square {
   background-color: var(--primary-color-light);
-  height: 765px;
+  height: 815px;
   width: 159px;
   position: absolute;
   top: 62px;
@@ -557,6 +557,14 @@ input:disabled:hover {
 }
 .character-sheet .generic-skill-roll {
   cursor: pointer;
+  width: 100%;
+  text-align: center;
+  display: block;
+  border: 2px solid var(--primary-color);
+  padding: 6px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  font-weight: bold;
 }
 .character-sheet input[type=text] {
   font-family: "Caveat", cursive;
@@ -803,7 +811,7 @@ input:disabled:hover {
   right: 15px;
 }
 .character-sheet .left-side .skills-container {
-  height: 266px;
+  height: 316px;
   overflow: auto;
 }
 .character-sheet .left-side .skills-container .icon {
@@ -888,7 +896,7 @@ input:disabled:hover {
 }
 .character-sheet .right-side .actions-section-container {
   overflow-y: auto;
-  height: 370px;
+  height: 415px;
   display: flex;
   flex-direction: row;
   border-bottom: 2px solid var(--primary-color);

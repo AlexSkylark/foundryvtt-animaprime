@@ -48,7 +48,7 @@ export function registerHandlebarsHelpers() {
     });
 
     Handlebars.registerHelper("isSuccess", function (value) {
-        return value >= 3;
+        return value >= 4;
     });
 
     Handlebars.registerHelper("isSkillSuccess", function (value) {

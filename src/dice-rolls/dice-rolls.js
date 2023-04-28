@@ -312,7 +312,7 @@ export function splitRollResult(
         if (
             isWeakened &&
             !weakenedFlag &&
-            results[i - resistance].result >= 3
+            results[i - resistance].result >= 4
         ) {
             returnArray.weakenedDice.push(results[0]);
             weakenedFlag = true;

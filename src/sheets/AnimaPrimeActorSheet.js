@@ -5,7 +5,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["animaprime", "sheet", "actor"],
             width: 890,
-            height: 827,
+            height: 877,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
