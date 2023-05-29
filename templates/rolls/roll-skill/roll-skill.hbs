@@ -11,10 +11,13 @@
             <div class="flexrow">
                 <ol class="rolls">
                     {{#each flavor.targetData.0.rollResult.dice.0.results}}
-                    <li class="roll{{#if this.success}} success{{/if}}">{{{this.result}}}</li>
+                    <li class="roll roll-dice-skill{{#if this.success}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}                
                 </ol>                
-            </div>            
+            </div>
+            {{#if (isSkillCriticalSuccess flavor.targetData.0.resultData.successes)}}
+            <span class="result-message critical">{{flavor.targetData.0.resultData.successes}} successes. CRITICAL SUCCESS!</span>
+            {{/if}}
             {{#if (isSkillSuccess flavor.targetData.0.resultData.successes)}}
             <span class="result-message success">{{flavor.targetData.0.resultData.successes}} successes. Total Success!</span>
             {{/if}}

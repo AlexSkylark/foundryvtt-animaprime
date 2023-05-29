@@ -52,7 +52,11 @@ export function registerHandlebarsHelpers() {
     });
 
     Handlebars.registerHelper("isSkillSuccess", function (value) {
-        return value >= 2;
+        return value == 2 || value == 3;
+    });
+
+    Handlebars.registerHelper("isSkillCriticalSuccess", function (value) {
+        return value >= 4;
     });
 
     Handlebars.registerHelper("isAchievement", function (value) {

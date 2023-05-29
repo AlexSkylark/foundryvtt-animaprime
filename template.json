@@ -1,6 +1,6 @@
 {
     "Actor": {
-        "types": ["character", "adversity", "hazard", "goal"],
+        "types": ["character", "adversity", "ally", "hazard", "goal"],
         "templates": {
             "base": {
                 "health": {
@@ -27,6 +27,14 @@
             }
         },
         "adversity": {
+            "templates": ["base"],
+            "strikeDice": 0,
+            "chargeDice": 0,
+            "threatDice": 0,
+            "strikes": [],
+            "powers": []
+        },
+        "ally": {
             "templates": ["base"],
             "strikeDice": 0,
             "chargeDice": 0,

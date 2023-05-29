@@ -127,7 +127,7 @@
     
         &.partial {
             border-bottom: 2px solid rgb(225, 140, 14);
-        }                        
+        }                      
     }    
 }
 
@@ -172,6 +172,12 @@
     background-color: #bbb;
     width: calc(100% - 12px);
     display: block;
+
+    &.critical {
+        border-color: variables.$critical-foreground;
+        color: variables.$critical-foreground;
+        background-color: variables.$critical-background;
+    }
 
     &.success {
         border-color: variables.$success-foreground;

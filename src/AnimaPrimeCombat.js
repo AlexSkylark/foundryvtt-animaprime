@@ -158,6 +158,16 @@ export default class AnimaPrimeCombat extends Combat {
         });
     }
 
+    get combsFriendlyWaitingTurn() {
+        const friendlies = this.turns.filter((i) => {
+            return i.faction == "friendly" && i.actor.type != "ally";
+        });
+
+        return friendlies.filter((i) => {
+            return i.initiative <= 1000 && i.initiative > 0;
+        });
+    }
+
     get combsHostile() {
         return this.turns.filter((i) => {
             return i.faction == "hostile";

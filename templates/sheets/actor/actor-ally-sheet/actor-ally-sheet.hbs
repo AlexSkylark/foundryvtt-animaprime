@@ -1,0 +1,88 @@
+<form class="{{cssClass}} ally-sheet" autocomplete="on">
+
+    {{> "systems/animaprime/templates/partials/script-health.hbs" actor}}
+
+    <div class="decorative-square{{#unless editUnlocked}} small-square{{/unless}}">&nbsp;</div>
+    <header class="flexcol">    
+        <div class="header-namestrip flexrow flex0">
+            <input class="name" name="name" type="text" value="{{actorName}}" {{#unless editName}}disabled{{/unless}} />
+        </div>
+    </header>
+    <div class="flexrow sheet-columns">
+        <div class="left-side flexcol">
+            <div class="left-side-container flex0">
+                <div class="image-container">
+                    <img src="{{actor.img}}" title="{{actorName}}" data-edit="img" />
+                </div>
+                <div class="icon-container defense-button">
+                    <div class="icon button-changevalue health plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="health.value" data-operation="plus"><i class="fas fa-plus"></i></div>
+                    <div class="icon button-changevalue health minus{{#unless editUnlocked}} edit-hidden{{/unless}}"data-property="health.value" data-operation="minus"><i class="fas fa-minus"></i></div>
+                    <div class="icon button-changevalue healthmax plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="health.max" data-operation="plus"><i class="fas fa-plus"></i></div>
+                    <div class="icon button-changevalue healthmax minus{{#unless editUnlocked}} edit-hidden{{/unless}}"data-property="health.max" data-operation="minus"><i class="fas fa-minus"></i></div>
+                    <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="defense" data-operation="plus"><i class="fas fa-plus"></i></div>
+                    <div class="icon button-changevalue minus{{#unless editUnlocked}} edit-hidden{{/unless}}"data-property="defense" data-operation="minus"><i class="fas fa-minus"></i></div>
+                    <div class="health-defense">
+                        <div class="actor-{{actor.id}} health-bar-frame">
+                            <div class="health-bar-frame health-bar"></div>
+                            <span>{{system.health.value}} / {{system.health.max}}</span>
+                        </div>
+                        <div class="attribute-value">
+                            <span>{{system.defense}}</span>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="right-side flexcol dice-pools">                        
+            
+            <div class="dice-pool-strip icon-container flex0">
+                <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="strikeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
+                <div class="icon button-changevalue minus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="strikeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
+                <label>Strike Dice</label>
+                <div class="attribute-value">
+                    <span>{{system.strikeDice}}</span>
+                </div>
+            </div>
+            <div class="dice-pool-strip icon-container flex0">
+                <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="chargeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
+                <div class="icon button-changevalue minus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="chargeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
+                <label>Charge Dice</label>
+                <div class="attribute-value">
+                    <span>{{system.chargeDice}}</span>
+                </div>
+            </div>
+            
+            <div class="dice-pool-strip icon-container flex0">
+                <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="threatDice" data-operation="plus"><i class="fas fa-plus"></i></div>
+                <div class="icon button-changevalue minus{{#unless editUnlocked}} edit-hidden{{/unless}}"data-property="threatDice" data-operation="minus"><i class="fas fa-minus"></i></div>
+                <label>Threat Dice</label>
+                <div class="attribute-value">
+                    <span>{{system.threatDice}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {{#if editUnlocked}}
+    <nav class="sheet-tabs tabs" data-group="primary-tabs">                
+        <a data-tab="profession">Ally Actions</a>
+        <a data-tab="basic">Basic Actions</a>
+    </nav>            
+    <section class="sheet-body">
+        <div class="tab actions-section-container" data-tab="basic" data-group="primary-tabs">
+            <div class="actions-section">
+                {{#each basicActions as |item id|}}
+                {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=true}}
+                {{/each}}
+            </div>
+        </div>
+        <div class="tab actions-section-container" data-tab="profession" data-group="primary-tabs">
+            <div class="actions-section">
+                {{#each actions as |item id|}}
+                {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=true}}
+                {{/each}}
+            </div>
+        </div>
+    </section>
+    {{/if}}
+</form>

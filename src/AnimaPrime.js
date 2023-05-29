@@ -1,6 +1,7 @@
 import AnimaPrimeActorSheet from "../src/sheets/AnimaPrimeActorSheet.js";
 import AnimaPrimeAdversitySheet from "../src/sheets/AnimaPrimeAdversitySheet.js";
 import AnimaPrimeHazardSheet from "../src/sheets/AnimaPrimeHazardSheet.js";
+import AnimaPrimeAllySheet from "../src/sheets/AnimaPrimeAllySheet.js";
 
 import AnimaPrimeSkillSheet from "../src/sheets/AnimaPrimeSkillSheet.js";
 import AnimaPrimeActionSheet from "../src/sheets/AnimaPrimeActionSheet.js";
@@ -37,6 +38,10 @@ function registerSheets() {
         makedefault: true,
         types: ["adversity"],
     });
+    Actors.registerSheet("animaprime", AnimaPrimeAllySheet, {
+        makedefault: true,
+        types: ["ally"],
+    });
     Actors.registerSheet("animaprime", AnimaPrimeHazardSheet, {
         makedefault: true,
         types: ["hazard"],
@@ -62,7 +67,11 @@ function registerSheets() {
 }
 
 Hooks.on("createActor", async (actor, data, context, userId) => {
-    if (actor.type == "character" || actor.type == "adversity") {
+    if (
+        actor.type == "character" ||
+        actor.type == "adversity" ||
+        actor.type == "ally"
+    ) {
         let items = await game.packs
             .get("animaprime.basic-actions")
             .getDocuments();

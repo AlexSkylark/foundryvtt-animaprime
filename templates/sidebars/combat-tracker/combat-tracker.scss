@@ -2,6 +2,10 @@ $friendly-background: #008cff33;
 $friendly-background-hover: #008cff77;
 $friendly-border: #007aaa;
 
+$ally-background: #00ff9d33;
+$ally-background-hover: #01ca8e77;
+$ally-border: #00aa33;
+
 $hostile-background: #f74e5229;
 $hostile-background-hover: #f74e5277;
 $hostile-border: #d30058;
@@ -40,7 +44,11 @@ $hostile-border: #d30058;
 
     .active-faction-friendly {
         .friendly-section {
-            background-color: $friendly-background;
+            background-color: $friendly-background;            
+        }
+
+        .ally-section {
+            background-color: $ally-background;
         }
     }
 
@@ -60,6 +68,10 @@ $hostile-border: #d30058;
 
         &.friendly-section {
             border-color: $friendly-border;
+        }
+
+        &.ally-section {
+            border-color: $ally-border;
         }
 
         &.hostile-section {
@@ -98,6 +110,24 @@ $hostile-border: #d30058;
 
                 &.hover, &:hover {
                     background: $friendly-background-hover !important;
+                }
+            }
+            
+            &.ally {
+                background-color: $ally-background;                
+                border-top: 1px solid $ally-border;
+                border-bottom: none;
+                &:last-child {
+                    border-bottom: 1px solid $ally-border
+                }
+                &.active {                    
+                    background: $ally-background !important;
+                    border: 0 !important;
+                    border-top: 1px solid $ally-border !important;
+                }
+
+                &.hover, &:hover {
+                    background: $ally-background-hover !important;
                 }
             }
 

@@ -16,8 +16,14 @@ export default class AnimaPrimeCombatant extends Combatant {
         );
     }
 
+    get isAlly() {
+        return this.actor.type == "ally";
+    }
+
     get faction() {
-        return this.actor.type == "character" ? "friendly" : "hostile";
+        return this.actor.type == "character" || this.actor.type == "ally"
+            ? "friendly"
+            : "hostile";
     }
 
     get healthValue() {

@@ -125,6 +125,7 @@ input:disabled:hover {
 
 .adversity-sheet,
 .character-sheet,
+.ally-sheet,
 .goal-sheet,
 .hazard-sheet {
   background: #fff;
@@ -538,6 +539,383 @@ input:disabled:hover {
   border-top-right-radius: 12px;
 }
 .adversity-sheet .item-card-container {
+  width: 93%;
+  margin-left: 8px;
+}
+
+.ally-sheet {
+  background: #fff;
+  z-index: 0;
+}
+.ally-sheet .decorative-square {
+  background-color: var(--primary-color-light);
+  height: 527px;
+  width: 159px;
+  position: absolute;
+  top: 62px;
+  left: 27px;
+  z-index: -110;
+}
+.ally-sheet .decorative-square.small-square {
+  height: 290px;
+}
+.ally-sheet input[type=text] {
+  font-family: "Caveat", cursive;
+}
+.ally-sheet .sheet-columns {
+  flex-direction: row;
+}
+.ally-sheet .input-text {
+  color: #555;
+  font-size: 24px;
+  border-bottom: 2px solid #333;
+  border-radius: 0;
+  margin: 1px 12px;
+}
+.ally-sheet .input-text.name {
+  max-width: 50%;
+}
+.ally-sheet .input-text::placeholder {
+  color: #777;
+}
+.ally-sheet .attribute-value {
+  border: 3px solid var(--primary-color);
+  border-radius: 31px;
+  background-color: #fff;
+  width: 66px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ally-sheet .attribute-value span {
+  font-size: 42px;
+  font-weight: 400;
+  font-family: "Caveat", cursive;
+  color: #555;
+  position: relative;
+  bottom: 2px;
+  right: 4px;
+}
+.ally-sheet .icon-container .button-changevalue {
+  border: 2px solid var(--primary-color);
+  width: 31px;
+  height: 26px;
+  border-radius: 20px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9;
+  position: relative;
+}
+.ally-sheet .container-section {
+  margin-top: 24px;
+  z-index: 1;
+}
+.ally-sheet .container-section .container-header {
+  background-color: var(--primary-color);
+  border-radius: 8px;
+  padding: 6px 20px;
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+  margin-left: 22px;
+  position: relative;
+  bottom: 4px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.ally-sheet .container-section .container-wrapper {
+  border: 2px solid var(--primary-color);
+  overflow: auto;
+  border-radius: 8px;
+  padding: 16px 8px;
+  margin-left: 13px;
+  background-color: #fff;
+  width: calc(100% - 22px);
+}
+.ally-sheet .container-section .container-wrapper .input-text {
+  font-size: 20px;
+  width: calc(100% - 26px);
+}
+.ally-sheet header {
+  padding: 4px;
+}
+.ally-sheet header .header-namestrip {
+  background: var(--primary-color);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px;
+  color: #fff;
+}
+.ally-sheet header .header-namestrip input[type=text] {
+  max-width: 21%;
+  color: #fff;
+  font-size: 24px;
+  border-bottom: 2px solid var(--primary-color-light);
+  border-radius: 0;
+  margin: 0px 6px;
+}
+.ally-sheet header .header-namestrip input[type=text].name {
+  max-width: 70%;
+}
+.ally-sheet header .header-namestrip input[type=text]::placeholder {
+  color: #ddd;
+}
+.ally-sheet .left-side {
+  flex: 0 0 200px;
+  margin-left: 4px;
+  display: flex;
+}
+.ally-sheet .left-side .left-side-container {
+  margin-top: 10px;
+}
+.ally-sheet .left-side img {
+  border: 4px solid var(--primary-color);
+  width: 160px;
+  height: 151px;
+  border-radius: 32px;
+  padding: 4px;
+  margin: 0 21px;
+  background-color: #fff;
+}
+.ally-sheet .left-side .image-container {
+  position: relative;
+}
+.ally-sheet .left-side .damage-curtain {
+  width: 144px;
+  height: 135px;
+  border-radius: 23px;
+  padding: 4px;
+  margin: 0 29px;
+  margin-top: 28px;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+.ally-sheet .left-side .defense-button {
+  float: left;
+  height: 6px;
+  position: relative;
+}
+.ally-sheet .left-side .defense-button .button-changevalue {
+  width: 26px;
+}
+.ally-sheet .left-side .defense-button .button-changevalue.health {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+}
+.ally-sheet .left-side .defense-button .button-changevalue.health.plus {
+  top: -23px;
+  left: 58px;
+}
+.ally-sheet .left-side .defense-button .button-changevalue.health.minus {
+  top: -8px;
+  left: 58px;
+}
+.ally-sheet .left-side .defense-button .button-changevalue.healthmax {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+}
+.ally-sheet .left-side .defense-button .button-changevalue.healthmax.plus {
+  top: -23px;
+  left: 120px;
+}
+.ally-sheet .left-side .defense-button .button-changevalue.healthmax.minus {
+  top: -8px;
+  left: 120px;
+}
+.ally-sheet .left-side .defense-button .button-changevalue.plus {
+  left: calc(100% + 2px);
+  bottom: 40px;
+}
+.ally-sheet .left-side .defense-button .button-changevalue.minus {
+  left: calc(100% + 2px);
+  top: -28px;
+}
+.ally-sheet .left-side .health-defense {
+  margin-top: -33px;
+  margin-left: 1px;
+  width: calc(100% + 5px);
+}
+.ally-sheet .left-side .health-defense div.health-bar-frame {
+  width: 120px;
+  background-color: #444;
+  border: 2px solid #000;
+  border-radius: 8px;
+  float: left;
+  text-align: center;
+  position: relative;
+  top: -37px;
+  left: 43px;
+  height: 20px;
+}
+.ally-sheet .left-side .health-defense div.health-bar-frame.health-bar {
+  background-color: #18885d;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 0;
+  border: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  height: 16px;
+}
+.ally-sheet .left-side .health-defense div.health-bar-frame span {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  position: absolute;
+  top: -1px;
+  left: -7px;
+  width: 100%;
+}
+.ally-sheet .left-side .health-defense div:last-child {
+  float: right;
+  position: relative;
+  top: -53px;
+  width: 56px;
+  right: -13px;
+}
+.ally-sheet .left-side .button-addskill {
+  border: 2px solid var(--primary-color);
+  border-radius: 17px;
+  background-color: #fff;
+  padding: 1px 4px;
+  position: relative;
+  bottom: 18px;
+  right: 15px;
+}
+.ally-sheet .left-side .skills-container .icon {
+  float: right;
+  position: relative;
+  bottom: 17px;
+  left: 8px;
+}
+.ally-sheet .left-side .skills-container .icon.item-edit {
+  left: -24px;
+}
+.ally-sheet .left-side .skills-container .skill-unit {
+  border-bottom: 2px solid #333;
+  display: block;
+  font-family: "Caveat", cursive;
+  font-size: 20px;
+  line-height: 17px;
+  padding-left: 6px;
+  padding-top: 6px;
+}
+.ally-sheet .right-side {
+  margin: 0px 12px;
+  margin-top: -14px;
+  margin-left: -4px;
+}
+.ally-sheet .right-side .passion-background {
+  margin-left: 20px;
+  margin-top: 7px;
+}
+.ally-sheet .right-side .passion-background label {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  padding: 7px;
+  min-width: 105px;
+  margin-bottom: 9px;
+  border-radius: 8px;
+}
+.ally-sheet .right-side .trait-value {
+  flex: 0 0 92%;
+  margin-right: -10px;
+}
+.ally-sheet .right-side .trait-check {
+  margin-top: 7px;
+}
+.ally-sheet .right-side.dice-pools {
+  align-items: center;
+  margin-right: 27px;
+  justify-content: flex-start;
+  margin-top: 3px;
+  bottom: 10px;
+}
+.ally-sheet .right-side.dice-pools .dice-pool-strip {
+  background-color: var(--primary-color);
+  height: 32px;
+  align-items: center;
+  justify-content: flex-end;
+  width: 86%;
+  display: flex;
+  margin: 15px 0;
+  margin-right: 11px;
+  border-radius: 8px;
+}
+.ally-sheet .right-side.dice-pools .dice-pool-strip.threat-only {
+  position: relative;
+  top: 56px;
+}
+.ally-sheet .right-side.dice-pools .dice-pool-strip label {
+  width: calc(100% - 80px);
+  text-align: end;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+.ally-sheet .right-side.dice-pools .dice-pool-strip .attribute-value {
+  position: relative;
+  left: 16px;
+}
+.ally-sheet .right-side.dice-pools .dice-pool-strip .button-changevalue {
+  left: 100%;
+  bottom: 18px;
+}
+.ally-sheet .right-side.dice-pools .dice-pool-strip .button-changevalue.minus {
+  top: 18px;
+  left: calc(100% - 25px);
+}
+.ally-sheet .actions-section-container {
+  width: calc(100% - 45px);
+  border-bottom: 2px solid var(--primary-color);
+  margin-left: 24px;
+}
+.ally-sheet .actions-section {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin-left: 24px;
+  margin-bottom: 18px;
+  padding-top: 6px;
+}
+.ally-sheet nav.sheet-tabs {
+  border-top: 0;
+  border-bottom: 2px solid var(--primary-color);
+  padding: 0;
+  margin: 0px 24px;
+  margin-top: -63px;
+}
+.ally-sheet nav.sheet-tabs a {
+  padding: 4px 12px;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--primary-color);
+}
+.ally-sheet nav.sheet-tabs a:hover {
+  text-shadow: none;
+}
+.ally-sheet nav.sheet-tabs a.active {
+  border-top: 2px solid var(--primary-color);
+  border-left: 2px solid var(--primary-color);
+  border-right: 2px solid var(--primary-color);
+  background-color: var(--primary-color-light);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.ally-sheet .item-card-container {
   width: 93%;
   margin-left: 8px;
 }
@@ -1618,6 +1996,11 @@ input:disabled:hover {
   width: calc(100% - 12px);
   display: block;
 }
+.result-message.critical {
+  border-color: #045888;
+  color: #045888;
+  background-color: #51d1f1;
+}
 .result-message.success {
   border-color: #286856;
   color: #286856;
@@ -1638,6 +2021,9 @@ input:disabled:hover {
   font-size: 23px;
   color: #666;
   margin-top: 9px;
+}
+.roll-skill .roll-dice-skill.success {
+  background-image: url(../../systems/animaprime/assets/d6-green.svg);
 }
 .roll-skill .result-message {
   font-size: 16px;
@@ -2043,6 +2429,9 @@ input:disabled:hover {
 .combat-tracker-tab .active-faction-friendly .friendly-section {
   background-color: rgba(0, 140, 255, 0.2);
 }
+.combat-tracker-tab .active-faction-friendly .ally-section {
+  background-color: rgba(0, 255, 157, 0.2);
+}
 .combat-tracker-tab .active-faction-hostile .hostile-section {
   background-color: rgba(247, 78, 82, 0.1607843137);
 }
@@ -2056,6 +2445,9 @@ input:disabled:hover {
 }
 .combat-tracker-tab .combat-section-title.friendly-section {
   border-color: #007aaa;
+}
+.combat-tracker-tab .combat-section-title.ally-section {
+  border-color: #00aa33;
 }
 .combat-tracker-tab .combat-section-title.hostile-section {
   border-color: #d30058;
@@ -2084,6 +2476,22 @@ input:disabled:hover {
 }
 .combat-tracker-tab .waiting-line .combatant.friendly.hover, .combat-tracker-tab .waiting-line .combatant.friendly:hover {
   background: rgba(0, 140, 255, 0.4666666667) !important;
+}
+.combat-tracker-tab .waiting-line .combatant.ally {
+  background-color: rgba(0, 255, 157, 0.2);
+  border-top: 1px solid #00aa33;
+  border-bottom: none;
+}
+.combat-tracker-tab .waiting-line .combatant.ally:last-child {
+  border-bottom: 1px solid #00aa33;
+}
+.combat-tracker-tab .waiting-line .combatant.ally.active {
+  background: rgba(0, 255, 157, 0.2) !important;
+  border: 0 !important;
+  border-top: 1px solid #00aa33 !important;
+}
+.combat-tracker-tab .waiting-line .combatant.ally.hover, .combat-tracker-tab .waiting-line .combatant.ally:hover {
+  background: rgba(1, 202, 142, 0.4666666667) !important;
 }
 .combat-tracker-tab .waiting-line .combatant.hostile {
   background-color: rgba(247, 78, 82, 0.1607843137);

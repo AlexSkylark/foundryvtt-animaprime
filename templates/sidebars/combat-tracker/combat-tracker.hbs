@@ -65,7 +65,8 @@
     <ol id="combat-tracker" class="directory-list waiting-line">
         {{#each turns}}
             {{#if (and (isOutOfQueue this.initiative) (isFriendly this.faction)) }}
-            <li class="combatant actor directory-item flexrow {{this.css}} {{this.faction}}" data-combatant-id="{{this.id}}">
+            {{#unless this.isAlly}}
+            <li class="combatant actor directory-item flexrow {{this.css}} {{this.faction}} {{#if this.isAlly}} ally{{/if}}" data-combatant-id="{{this.id}}">
                 <img class="token-image" src="{{this.img}}" title="{{this.name}}"/>
                 <div class="token-name flexcol">
                     <h4>{{this.displayName}}</h4>
@@ -92,7 +93,44 @@
                         {{/if}}
                     {{/if}}
                 </div>
+            </li>            
+            {{/unless}}            
+            {{/if}}
+        {{/each}}
+        {{#each turns}}
+            {{#if (and (isOutOfQueue this.initiative) (isFriendly this.faction)) }}
+            {{#if this.isAlly}}
+            <li class="combatant actor directory-item flexrow {{this.css}} {{this.faction}} ally" data-combatant-id="{{this.id}}">
+                <img class="token-image" src="{{this.img}}" title="{{this.name}}"/>
+                <div class="token-name flexcol">
+                    <h4>{{this.displayName}}</h4>
+                    {{#unless this.defeated}}<h4 class="turnUnitData">HP:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>{{/unless}}
+                    <div class="combatant-controls flexrow">
+                        {{#if ../user.isGM}}
+                        <a class="combatant-control {{#if this.defeated}}active{{/if}}" title="{{localize 'COMBAT.ToggleDead'}}" data-control="toggleDefeated">
+                            <i class="fas fa-skull"></i></a>
+                        {{/if}}
+                        <div class="token-effects">
+                            {{#each this.effects}}
+                            <img class="token-effect" src="{{this}}"/>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-initiative">
+                    {{#if ../combat.round}}
+                        {{#if (and (canTakeTurn this.initiative) (or owner ../user.isGM))}}
+                            {{#unless ../combat.combsFriendlyWaitingTurn}}
+                                {{#unless this.defeated}}
+                                    <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
+                                {{/unless}}
+                            {{/unless}}
+                        {{/if}}
+                    {{/if}}
+                </div>
             </li>
+            {{/if}}
             {{/if}}
         {{/each}}
     </ol>
