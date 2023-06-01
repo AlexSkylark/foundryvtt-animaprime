@@ -78,6 +78,12 @@ Hooks.on("createActor", async (actor, data, context, userId) => {
         items = items.sort((a, b) => a.name.localeCompare(b.name));
         await actor.createEmbeddedDocuments("Item", items);
     }
+
+    if (
+        (actor.type == "character" || actor.type == "ally") &&
+        actor.prototypeToken
+    )
+        await actor.prototypeToken.update({ actorLink: true });
 });
 
 Hooks.on("preUpdateActor", async (actor, change, context, userId) => {

@@ -18,7 +18,63 @@
             height: 247px;
         }
         
-    }    
+    }
+
+    .skill-button-container {
+        
+        display: flex;
+        margin: 0px auto;
+        width: 90%;
+
+        .skill-button {
+            cursor: pointer;
+            width: 50%;
+            margin: 12px 5px;
+            background-color: #fff;
+            text-align: center;
+            display: inline-block;
+            border: 2px solid var(--primary-color);
+            padding: 6px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+    }
+
+    .skills-container {    
+        
+        margin-bottom: 24px;
+        display: flex;
+        flex-wrap: wrap;
+
+        .icon {
+            float: right;
+            position: relative;
+            bottom: 17px;
+            left: 8px;
+
+            &.item-edit {
+                left: -24px
+            }
+        }
+
+        .skill-line {
+            flex: 0 0 50%;
+            
+        }
+
+        .skill-unit {
+            border-bottom: 1px solid variables.$input-line-color;
+            display: block;
+            font-family: "Caveat", cursive;
+            font-size: 20px;
+            line-height: 17px;
+            padding-left: 6px;
+            padding-top: 6px;
+            margin: 0px 10px;
+        }
+    }
+
+    
 
     input[type=text] {
         font-family: 'Caveat', cursive;
@@ -418,14 +474,16 @@
         width: calc(100% - 45px);
         border-bottom: 2px solid var(--primary-color);
         margin-left: 24px;
+        height: 250px;
+        overflow-y: auto;        
     }
+
     .actions-section {            
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
         margin-left: 24px;
-        margin-bottom: 18px;
-        
+        margin-bottom: 18px;        
         padding-top: 6px;
     }
 

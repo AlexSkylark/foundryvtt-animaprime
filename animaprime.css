@@ -182,6 +182,50 @@ input:disabled:hover {
 .adversity-sheet .decorative-square.small-square {
   height: 247px;
 }
+.adversity-sheet .skill-button-container {
+  display: flex;
+  margin: 0px auto;
+  width: 90%;
+}
+.adversity-sheet .skill-button-container .skill-button {
+  cursor: pointer;
+  width: 50%;
+  margin: 12px 5px;
+  background-color: #fff;
+  text-align: center;
+  display: inline-block;
+  border: 2px solid var(--primary-color);
+  padding: 6px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+.adversity-sheet .skills-container {
+  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.adversity-sheet .skills-container .icon {
+  float: right;
+  position: relative;
+  bottom: 17px;
+  left: 8px;
+}
+.adversity-sheet .skills-container .icon.item-edit {
+  left: -24px;
+}
+.adversity-sheet .skills-container .skill-line {
+  flex: 0 0 50%;
+}
+.adversity-sheet .skills-container .skill-unit {
+  border-bottom: 1px solid #333;
+  display: block;
+  font-family: "Caveat", cursive;
+  font-size: 20px;
+  line-height: 17px;
+  padding-left: 6px;
+  padding-top: 6px;
+  margin: 0px 10px;
+}
 .adversity-sheet input[type=text] {
   font-family: "Caveat", cursive;
 }
@@ -505,6 +549,8 @@ input:disabled:hover {
   width: calc(100% - 45px);
   border-bottom: 2px solid var(--primary-color);
   margin-left: 24px;
+  height: 250px;
+  overflow-y: auto;
 }
 .adversity-sheet .actions-section {
   display: flex;
@@ -549,7 +595,7 @@ input:disabled:hover {
 }
 .ally-sheet .decorative-square {
   background-color: var(--primary-color-light);
-  height: 670px;
+  height: 537px;
   width: 159px;
   position: absolute;
   top: 62px;
@@ -557,7 +603,51 @@ input:disabled:hover {
   z-index: -110;
 }
 .ally-sheet .decorative-square.small-square {
-  height: 290px;
+  height: 247px;
+}
+.ally-sheet .skill-button-container {
+  display: flex;
+  margin: 0px auto;
+  width: 90%;
+}
+.ally-sheet .skill-button-container .skill-button {
+  cursor: pointer;
+  width: 50%;
+  margin: 12px 5px;
+  background-color: #fff;
+  text-align: center;
+  display: inline-block;
+  border: 2px solid var(--primary-color);
+  padding: 6px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+.ally-sheet .skills-container {
+  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.ally-sheet .skills-container .icon {
+  float: right;
+  position: relative;
+  bottom: 17px;
+  left: 8px;
+}
+.ally-sheet .skills-container .icon.item-edit {
+  left: -24px;
+}
+.ally-sheet .skills-container .skill-line {
+  flex: 0 0 50%;
+}
+.ally-sheet .skills-container .skill-unit {
+  border-bottom: 1px solid #333;
+  display: block;
+  font-family: "Caveat", cursive;
+  font-size: 20px;
+  line-height: 17px;
+  padding-left: 6px;
+  padding-top: 6px;
+  margin: 0px 10px;
 }
 .ally-sheet input[type=text] {
   font-family: "Caveat", cursive;
@@ -667,6 +757,7 @@ input:disabled:hover {
   flex: 0 0 200px;
   margin-left: 4px;
   display: flex;
+  max-height: 200px;
 }
 .ally-sheet .left-side .left-side-container {
   margin-top: 10px;
@@ -816,6 +907,7 @@ input:disabled:hover {
   margin: 0px 12px;
   margin-top: -14px;
   margin-left: -4px;
+  max-height: 200px;
 }
 .ally-sheet .right-side .passion-background {
   margin-left: 20px;
@@ -882,6 +974,8 @@ input:disabled:hover {
   width: calc(100% - 45px);
   border-bottom: 2px solid var(--primary-color);
   margin-left: 24px;
+  height: 250px;
+  overflow-y: auto;
 }
 .ally-sheet .actions-section {
   display: flex;

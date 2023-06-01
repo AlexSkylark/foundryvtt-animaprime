@@ -24,10 +24,10 @@
                     <div class="health-defense">
                         <div class="actor-{{actor.id}} health-bar-frame">
                             <div class="health-bar-frame health-bar"></div>
-                            <span>{{system.health.value}} / {{system.health.max}}</span>
+                            <span class="{{#unless editUnlocked}} edit-hidden{{/unless}}">{{system.health.value}} / {{system.health.max}}</span>
                         </div>
                         <div class="attribute-value">
-                            <span>{{system.defense}}</span>
+                            <span class="{{#unless editUnlocked}} edit-hidden{{/unless}}">{{system.defense}}</span>
                         </div>
                     </div>                    
                 </div>
@@ -65,10 +65,26 @@
     
     {{#if editUnlocked}}
     <nav class="sheet-tabs tabs" data-group="primary-tabs">                
-        <a data-tab="profession">Adversity Actions</a>
+        <a data-tab="skills">Skills</a>
+        <a data-tab="profession">Main Actions</a>
         <a data-tab="basic">Basic Actions</a>
     </nav>            
     <section class="sheet-body">
+        <div class="tab actions-section-container" data-tab="skills" data-group="primary-tabs">            
+            <div class="skill-button-container">
+                <span class="skill-button generic-skill-roll">Generic Roll</span>
+                <span class="skill-button item-create {{#unless editUnlocked}}edit-hidden{{/unless}}" data-type="skill">Add Skill</span>
+            </div>
+            <div class="skills-container">
+                {{#each skills as |item id|}}
+                <div class="item icon-container skill-line" data-item-id="{{item._id}}">
+                    <span class="skill-unit item-roll">{{this.name}} ({{this.system.rating}})</span>
+                    <span class="icon fas fa-edit item-edit {{#unless ../editUnlocked}}edit-hidden{{/unless}}"></span>
+                    <span class="icon fas fa-trash item-delete {{#unless ../editUnlocked}}edit-hidden{{/unless}}"></span>
+                </div>
+                {{/each}}
+            </div>
+        </div>
         <div class="tab actions-section-container" data-tab="basic" data-group="primary-tabs">
             <div class="actions-section">
                 {{#each basicActions as |item id|}}
