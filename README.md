@@ -27,6 +27,8 @@ As some people are getting the link and might be interested in trying out the sy
 
 - The *goals* mechanic for now are working as a simplified version of the ones found in the *Resurgence* system as they don't have 2 sides. I expect to revamp and modify the goal system as playtest revealed the current one to be lacking in engagement for VTT groups.
 
+- (CURRENTLY PLAYTESTING) - A new type of character - ALLIES. These are characters that are controlled by the GM but they fight as the friendly team. They can only take a turn after all player characters had taken a turn, and they work as adversities (can't do style maneuvers)
+
 ## TODO / Roadmap
 - More playtesting, MUCH MORE PLAYTESTING
 - Add Localization
