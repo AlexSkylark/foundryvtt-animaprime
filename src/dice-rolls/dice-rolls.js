@@ -101,6 +101,7 @@ export async function getManeuverRollOptions(item) {
         const dialogOptions = {
             width: 400,
             height: 180,
+            classes: ["window-dialog"],
         };
 
         const data = {
@@ -136,30 +137,33 @@ export async function getManeuverRollOptions(item) {
 }
 
 export async function getSkillRollOptions(item) {
-    const template =
-        "systems/animaprime/templates/dialogs/dialog-skillroll/dialog-skillroll.hbs";
-
-    const html = await renderTemplate(template, item);
-
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
         const dialogOptions = {
             width: 280,
-            height: 245,
+            height: 287,
+            classes: ["window-dialog"],
         };
 
         const data = {
             title:
                 item.type.charAt(0).toUpperCase() +
                 item.type.slice(1) +
-                " Roll",
-            content: html,
+                " Roll - " +
+                item.name,
+            content: await renderTemplate(
+                "systems/animaprime/templates/dialogs/dialog-skillroll/dialog-skillroll.hbs",
+                item
+            ),
+            options: {
+                classes: ["window-content-white"],
+            },
             buttons: {
                 cancel: {
                     label: "Cancel",
                     callback: (html) => resolve({ cancelled: true }),
                 },
                 normal: {
-                    label: "Confirm",
+                    label: 'Confirm <i class="fas fa-check"></i>',
                     callback: (html) =>
                         resolve({
                             difficulty:
@@ -184,7 +188,8 @@ export async function getItemRollOptions(item) {
     return new Promise((resolve) => {
         const dialogOptions = {
             width: 600,
-            height: 255,
+            height: item.type == "achievement" ? 190 : 255,
+            classes: ["window-dialog"],
         };
 
         const data = {

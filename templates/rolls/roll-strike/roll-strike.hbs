@@ -33,15 +33,15 @@
                     {{/each}}
 
                     {{#each this.additionalData.actionDice}}
-                    <li title="Action die"class="roll action{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    <li title="Action die" class="roll action{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
 
                     {{#each this.additionalData.variableDice}}
-                    <li title="Threat / Progress die"class="roll threat{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    <li title="Threat die" class="roll threat{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
 
                     {{#each this.additionalData.bonusDice}}
-                    <li title="Bonus die"class="roll bonus{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    <li title="Bonus die" class="roll bonus{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
 
                     {{#each this.additionalData.empoweredDice}}
@@ -68,7 +68,7 @@
         </div>
         {{#if flavor.enableReroll}}
         <div class="button-reroll-container flexrow">
-            <div class="button-roll reroll">Reroll <i class="fas fa-redo"></i></div>
+            <div class="button-roll reroll">Reroll <i class="fas fa-x"></i></div>
             <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
         </div>
         {{/if}}            

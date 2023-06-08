@@ -142,3 +142,13 @@ input {
 .edit-hidden {
 	visibility: hidden !important;
 }
+
+button {
+	&:focus {
+        box-shadow: 0 0 0;
+    }
+
+    &:hover {
+        box-shadow: 0 0 5px var(--primary-color);
+    }
+}

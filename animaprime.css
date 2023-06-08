@@ -123,6 +123,13 @@ input:disabled:hover {
   visibility: hidden !important;
 }
 
+button:focus {
+  box-shadow: 0 0 0;
+}
+button:hover {
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
 .adversity-sheet,
 .character-sheet,
 .ally-sheet,
@@ -757,7 +764,6 @@ input:disabled:hover {
   flex: 0 0 200px;
   margin-left: 4px;
   display: flex;
-  max-height: 200px;
 }
 .ally-sheet .left-side .left-side-container {
   margin-top: 10px;
@@ -969,6 +975,10 @@ input:disabled:hover {
 .ally-sheet .right-side.dice-pools .dice-pool-strip .button-changevalue.minus {
   top: 18px;
   left: calc(100% - 25px);
+}
+.ally-sheet .tabs-unlocked {
+  position: relative;
+  top: 60px;
 }
 .ally-sheet .actions-section-container {
   width: calc(100% - 45px);
@@ -1441,6 +1451,24 @@ input:disabled:hover {
   border-radius: 12px;
   margin-left: -42px;
 }
+.goal-sheet .select-goal-type select {
+  background-color: #fff;
+  border: 2px solid var(--primary-color);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 25px;
+  border-radius: 20px;
+  height: 38px;
+  color: var(--primary-color);
+  margin: 12px 0px;
+  padding-left: 16px;
+}
+.goal-sheet .select-goal-type select option {
+  background-color: white;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 15px;
+}
 .goal-sheet .main-sheet {
   border: 3px solid var(--primary-color);
   padding: 18px 64px;
@@ -1466,6 +1494,7 @@ input:disabled:hover {
 }
 .goal-sheet .main-sheet .cell .value-container {
   margin-left: 0px;
+  color: var(--primary-color);
 }
 .goal-sheet .main-sheet .property-value {
   border: 2px solid var(--primary-color);
@@ -1483,6 +1512,9 @@ input:disabled:hover {
   z-index: 1;
   background-color: #fff;
 }
+.goal-sheet .main-sheet .property-value span {
+  color: var(--primary-color);
+}
 .goal-sheet .main-sheet .property-value .button-changevalue {
   position: absolute;
   border: 2px solid var(--primary-color);
@@ -1492,6 +1524,7 @@ input:disabled:hover {
   font-size: 13px;
   line-height: 16px;
   visibility: hidden;
+  color: var(--primary-color);
   cursor: pointer;
 }
 .goal-sheet .main-sheet .property-value .button-changevalue.show-button {
@@ -2208,8 +2241,49 @@ input:disabled:hover {
   margin-left: 10px !important;
 }
 
+.window-dialog {
+  border: 4px solid var(--primary-color);
+  border-radius: 16px;
+  background-color: #fff;
+  box-shadow: -1px -1px 8px #000;
+  filter: drop-shadow(10px 10px 4px rgba(0, 0, 0, 0.5333333333));
+}
+.window-dialog .window-header {
+  background-color: var(--primary-color);
+}
+.window-dialog .window-content {
+  background: #fffbfa;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+.window-dialog .dialog-buttons {
+  display: flex;
+  margin: 4px 0px;
+}
+.window-dialog .dialog-buttons .dialog-button {
+  background-color: #fffbfa;
+  border: 2px solid;
+  border-radius: 15px;
+  font-family: "Montserrat";
+  font-weight: 600;
+}
+.window-dialog .dialog-buttons .dialog-button.cancel {
+  border-color: #990f38;
+  color: #990f38;
+  margin-left: 8px;
+  margin-right: 4px;
+}
+.window-dialog .dialog-buttons .dialog-button.normal {
+  border-color: #0f9986;
+  color: #0f9986;
+  margin-right: 8px;
+  margin-left: 4px;
+}
+
 .dialog-container {
+  align-content: center;
   justify-content: center;
+  align-content: flex-start;
 }
 .dialog-container .dialog-field-container {
   align-items: center;
@@ -2252,12 +2326,8 @@ input:disabled:hover {
   right: 3px;
 }
 
-.dialog-buttons {
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  /* justify-content: space-around; */
-  align-items: center;
+.dialog-content {
+  align-items: baseline;
 }
 
 .form-dialog-plusminus-button {
@@ -2309,76 +2379,57 @@ input:disabled:hover {
   right: 3px;
 }
 
-.dialog-buttons {
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  /* justify-content: space-around; */
-  align-items: center;
-}
-
 .form-dialog-plusminus-button {
   max-width: 30px;
   margin: 0 !important;
 }
 
-.dialog-container {
-  justify-content: center;
-}
-.dialog-container .dialog-field-container-skill {
-  align-items: center;
-  text-align: right;
-  flex: 0 0 95%;
-  border: 1px solid black;
-  margin: 2px !important;
-  padding: 5px !important;
+.dialog-field-container-skill {
+  margin: 8px;
+  border: 3px solid var(--primary-color);
+  border-radius: 16px;
+  height: 100%;
+  display: flex;
   padding-top: 10px;
 }
-.dialog-container .dialog-field-container-skill label {
-  padding-right: 6px;
+.dialog-field-container-skill .dialog-img-skill {
+  border: 3px solid var(--primary-color);
+  border-radius: 32px;
+  width: 64px;
+  position: absolute;
+  right: 8px;
+  top: 38px;
+  padding: 2px;
+  background-color: #fff;
 }
-.dialog-container .dialog-field-container-skill label.label-resistance {
-  margin-bottom: 8px;
-}
-.dialog-container .dialog-field-container-skill input[type=radio] {
-  margin-top: -6px;
-  margin-right: 2px;
-}
-
-.form-dice-field {
-  margin: 4px !important;
-  background-color: #bbb !important;
-  font-size: 16px !important;
-  border: 1px solid #333 !important;
-  max-width: 80px !important;
+.dialog-field-container-skill label {
+  background-color: var(--primary-color);
+  color: #fff;
   font-weight: 600;
-  text-align: center !important;
+  padding: 2px;
+  padding-left: 8px;
+  width: 100%;
+  font-family: "Montserrat";
+  font-size: 15px;
 }
-.form-dice-field input[type=text] {
-  width: 20px;
-  font-weight: 600;
+.dialog-field-container-skill .dialog-buttons-radio {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  padding: 16px;
+  padding-top: 12px;
+}
+.dialog-field-container-skill .dialog-buttons-radio div {
+  font-family: "Montserrat";
   font-size: 16px;
-  color: #444;
+  color: var(--primary-color);
+  padding: 4px 0px;
 }
-.form-dice-field span {
-  margin-top: 3px;
-  position: relative;
-  right: 3px;
-}
-
-.dialog-buttons-radio {
-  flex-direction: column !important;
-  flex-wrap: wrap;
-  justify-content: flex-start !important;
-  align-items: flex-start !important;
-}
-.dialog-buttons-radio div {
-  margin: 5px 0px;
-}
-
-.form-dialog-plusminus-button {
-  max-width: 30px;
-  margin: 0 !important;
+.dialog-field-container-skill .dialog-buttons-radio div .input-text {
+  top: 1px;
+  margin-right: 8px;
+  accent-color: var(--primary-color);
+  filter: saturate(1.25);
 }
 
 .dialog-usepower {
@@ -2461,14 +2512,6 @@ input:disabled:hover {
   margin-top: 3px;
   position: relative;
   right: 3px;
-}
-
-.dialog-buttons {
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  /* justify-content: space-around; */
-  align-items: center;
 }
 
 .form-dialog-plusminus-button {

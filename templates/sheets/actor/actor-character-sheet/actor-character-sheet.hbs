@@ -5,10 +5,10 @@
     <div class="decorative-square">&nbsp;</div>
     <header class="flexcol">    
         <div class="header-namestrip flexrow flex0">
-            <input class="name" name="name" type="text" value="{{actor.name}}" />
-            <input name="system.race" type="text" value="{{system.race}}" placeholder="[race]" />
-            <input name="system.profession" type="text" value="{{system.profession}}" placeholder="[profession]" />
-            <div class="lock-container {{#if system.enableEdit}}lock-off{{else}}lock-on{{/if}}">
+            <input {{#unless editUnlocked}}disabled{{/unless}} class="name" name="name" type="text" value="{{actor.name}}" />
+            <input {{#unless editUnlocked}}disabled{{/unless}} name="system.race" type="text" value="{{system.race}}" placeholder="[race]" />
+            <input {{#unless editUnlocked}}disabled{{/unless}} name="system.profession" type="text" value="{{system.profession}}" placeholder="[profession]" />            
+            <div {{#unless game.user.isGM}}disabled="true"{{/unless}} class="lock-container {{#if system.enableEdit}}lock-off{{else}}lock-on{{/if}}">
                 <div class="lock-button {{#if system.enableEdit}}lock-off{{else}}lock-on{{/if}}">
                     <i class="fas fa-lock"></i>
                 </div>

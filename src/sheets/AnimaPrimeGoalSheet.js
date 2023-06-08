@@ -5,7 +5,7 @@ export default class AnimaPrimeGoalSheet extends AnimaPrimeActorSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["animaprime", "sheet", "goal"],
             width: 480,
-            height: 415,
+            height: 476,
             resizable: false,
             scale: 0.85,
         });
@@ -26,6 +26,15 @@ export default class AnimaPrimeGoalSheet extends AnimaPrimeActorSheet {
                 await this.actor.update({ name: div.innerText });
                 div.focus();
             }
+        });
+
+        html.find(".type-select").change(async (ev) => {
+            ev.preventDefault();
+
+            let elem = ev.currentTarget;
+            let field = elem.dataset.field;
+
+            return await this.document.update({ [field]: elem.value });
         });
     }
 }

@@ -205,7 +205,6 @@
         flex: 0 0 200px;
         margin-left: 4px;
         display: flex;
-        max-height: 200px;
 
         .left-side-container {
             margin-top: 10px;
@@ -440,7 +439,7 @@
                 
                 &.threat-only {
                     position: relative;
-                    top: 56px;
+                    top: 56px;                   
                 }
                
                 label {
@@ -469,6 +468,11 @@
             }
         }
        
+    }
+
+    .tabs-unlocked {
+        position: relative;
+        top: 60px;
     }
 
     .actions-section-container {

@@ -150,7 +150,12 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         html.find(".generic-skill-roll").click(
             this._onGenericSkillRoll.bind(this)
         );
-        html.find(".lock-container").click(this._onToggleEditable.bind(this));
+
+        if (game.user.isGM) {
+            html.find(".lock-container").click(
+                this._onToggleEditable.bind(this)
+            );
+        }
     }
 
     async _onToggleEditable(ev) {
@@ -305,7 +310,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         let skill = {
             type: "skill",
             img: "icons/skills/trades/academics-study-reading-book.webp",
-            name: "Generic attempt",
+            name: "Generic Roll",
             owner: this.actor,
             generic: true,
         };

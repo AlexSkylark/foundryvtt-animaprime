@@ -16,33 +16,37 @@
             <div class="target-section">
                 <ol class="rolls">
                     {{#each flavor.targetData.[0].additionalData.abilityDice}}
-                    <li class="roll{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    <li title="Ability die" class="roll{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
 
                     {{#each flavor.targetData.[0].additionalData.strikeDice}}
-                    <li class="roll strike{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    <li title="Strike die" class="roll strike{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
 
                     {{#each flavor.targetData.[0].additionalData.actionDice}}
-                    <li class="roll action{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    <li title="Action die" class="roll action{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
 
                     {{#each flavor.targetData.[0].additionalData.variableDice}}
-                    <li class="roll progress{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    <li title="Progress die" class="roll progress{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
 
                     {{#each flavor.targetData.[0].additionalData.bonusDice}}
-                    <li class="roll bonus{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    <li title="Bonus die" class="roll bonus{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
                     {{/each}}
                 </ol>
                 <span class="result-message {{#if flavor.targetData.[0].resultData.hit}}success{{/if}}">
                     {{#if flavor.targetData.[0].resultData.hit}}
                     Goal COMPLETE!!!
                     {{else}}
-                        {{#if flavor.targetData.[0].resultData.successes}}
-                            Some progress! <br /> {{flavor.targetData.[0].resultData.successes}} progress {{#if (is1 flavor.targetData.[0].resultData.successes)}}die{{else}}dice{{/if}} added.
+                        {{#if (isPositiveGoal flavor.entityData.targetIds.[0] flavor.entityData.owner.type) }}
+                            {{#if flavor.targetData.[0].resultData.successes}}
+                                Some progress! <br /> {{flavor.targetData.[0].resultData.successes}} progress {{#if (is1 flavor.targetData.[0].resultData.successes)}}die{{else}}dice{{/if}} added.
+                            {{else}}
+                                No progress.
+                            {{/if}}
                         {{else}}
-                            No progress.
+                            Progress sabotaged! <br /> up to {{flavor.targetData.[0].resultData.successes}} progress {{#if (is1 flavor.targetData.[0].resultData.successes)}}die{{else}}dice{{/if}} taken.
                         {{/if}}
                     {{/if}}
                 </span>

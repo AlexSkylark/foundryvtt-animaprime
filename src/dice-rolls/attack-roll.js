@@ -24,6 +24,7 @@ export async function attackRoll(
             return (
                 i.type == "character" ||
                 i.type == "adversity" ||
+                i.type == "ally" ||
                 i.type == "hazard"
             );
         });
@@ -151,13 +152,26 @@ export async function attackRoll(
         const rl = new Roll(rollFormula, item);
         rollResults.push(await rl.evaluate({ async: true }));
 
+        let forceNoHit = false;
+        debugger;
+        if (item.type == "achievement") {
+            const targetType = item.targets[i].system.type;
+            const ownerType =
+                item.owner.type == "character" || item.owner.type == "ally"
+                    ? 0
+                    : 1;
+
+            forceNoHit = targetType != ownerType;
+        }
+
         resultData.push(
             checkItemResult(
                 itemFixedOptions[i].defenseAttribute,
                 DiceRolls.checkSuccess(
                     rollResults[i].dice[0].results,
                     successModifier + isWeakened * -1
-                )
+                ),
+                forceNoHit
             )
         );
 
@@ -249,13 +263,13 @@ export async function commitResults(resultData, item, dialogOptions) {
     }
 }
 
-function checkItemResult(targetDefense, successes) {
+function checkItemResult(targetDefense, successes, forceNoHit = false) {
     let returnValue = {
         hit: false,
         successes: successes,
     };
 
-    if (successes >= targetDefense) returnValue.hit = true;
+    if (!forceNoHit && successes >= targetDefense) returnValue.hit = true;
 
     return returnValue;
 }

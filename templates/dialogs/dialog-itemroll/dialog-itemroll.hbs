@@ -78,6 +78,7 @@
         </div>
         {{/if}}
         {{/unless}}
+        {{#if (isPositiveGoal targetId owner.type) }}
         <div class=" dialog-field-container flexrow">
             <label>Add {{this.variableDiceName}} from target?</label>        
             <div class="flexrow dialog-buttons">
@@ -94,6 +95,7 @@
                 </button>
             </div>
         </div>
+        {{/if}}
         <div class=" dialog-field-container flexrow">
             <label>Add Bonus Dice?</label>        
             <div class="flexrow dialog-buttons">

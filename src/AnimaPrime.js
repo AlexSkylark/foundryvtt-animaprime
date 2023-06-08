@@ -137,6 +137,15 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
     if (message.flags.sourceItem) {
         const item = message.flags.sourceItem;
+
+        if (
+            item.type == "boost" ||
+            item.type == "reaction" ||
+            item.type == "skill"
+        ) {
+            return;
+        }
+
         const actorOwner = game.actors.get(message.speaker.actor);
         const currentCombatantActor = game.combats.active.getCurrentActor();
         if (
@@ -173,6 +182,20 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
             "commitedRerolls",
             message.flags.rerollConfig
         );
+    }
+});
+
+Hooks.on("createChatMessage", async (message, data, options, userId) => {
+    if (
+        (game.user.isGM &&
+            message.content.includes("added") &&
+            message.content.includes(" die ")) ||
+        (message.content.includes("subtracted") &&
+            message.content.includes(" die "))
+    ) {
+        setTimeout(() => {
+            message.delete();
+        }, 5000);
     }
 });
 
@@ -272,11 +295,21 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                         system: targetData,
                     });
                 } else if (item.type == "achievement") {
+                    let ownerType = 0;
+                    if (
+                        item.owner.type == "adversity" ||
+                        item.owner.type == "hazard"
+                    )
+                        ownerType = 1;
+
                     if (!resultData.hit) {
-                        targetData.progressDice =
+                        targetData.progressDice = Math.max(
                             targetData.progressDice -
-                            dialogOptions.variableDice +
-                            resultData.successes;
+                                dialogOptions.variableDice +
+                                resultData.successes *
+                                    (ownerType == targetData.type ? 1 : -1),
+                            0
+                        );
                     }
 
                     await targetEntity.update({

@@ -1,5 +1,10 @@
+@use '../dialog.scss';
+
 .dialog-container {
+    
+    align-content: center;
     justify-content: center;
+    align-content: flex-start;
 
     .dialog-field-container {
     
@@ -48,13 +53,8 @@
     }
 }
 
-.dialog-buttons {
-    
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    /* justify-content: space-around; */
-    align-items: center;    
+.dialog-content {
+    align-items: baseline;
 }
 
 .form-dialog-plusminus-button {
