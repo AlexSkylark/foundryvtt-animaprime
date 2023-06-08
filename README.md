@@ -25,7 +25,7 @@ As some people are getting the link and might be interested in trying out the sy
 
 - (CURRENTLY PLAYTESTING) - Successes in strike/achievement rolls are achieved with rolling 4 or higher, up from 3 at the *Resurgence* system.
 
-- (CURRENTLY PLAYTESTING) - A new type of character - ALLIES. These are characters that are controlled by the GM but they fight as the friendly team. They can only take a turn after all player characters had taken a turn, and they work as adversities (can't do style maneuvers)
+- (CURRENTLY PLAYTESTING) - A new type of combat unit - ALLIES. These are characters that are controlled by the GM but they fight for the friendly team. They can only take a turn after all player characters had taken a turn, and they work as adversities (can't do style maneuvers)
 
 - (CURRENTLY PLAYTESTING) - GOALS REWORK. Instead of having two "sides", goals now are attributed a type: **FRIENDLY** or **HOSTILE**. same as units, who can also be either Friendly (Characters and Allies) or Hostile (Adversities and Hazards). When attempting goals, anyone can attempt an achievement action on any goal. When trying to advance a goal of your own type, rolls will function normally. When rolling an achievement on a goal of the opposite type, however, that represents you are HAMPERING progress on that goal, trying to keep the other side from completing it. Offer a description of what are you doing to sabotage the goal or make it more difficult for your opponents to achieve. Mechanically, this means:
   - You can't augment your roll with progress dice currently at the goal.
