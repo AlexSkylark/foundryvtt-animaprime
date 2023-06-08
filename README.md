@@ -29,7 +29,7 @@ As some people are getting the link and might be interested in trying out the sy
 
 - (CURRENTLY PLAYTESTING) - GOALS REWORK. Instead of having two "sides", goals now are attributed a type: **FRIENDLY** or **HOSTILE**. same as units, who can also be either Friendly (Characters and Allies) or Hostile (Adversities and Hazards). When attempting goals, anyone can attempt an achievement action on any goal. When trying to advance a goal of your own type, rolls will function normally. When rolling an achievement on a goal of the opposite type, however, that represents you are HAMPERING progress on that goal, trying to keep the other side from completing it. Offer a description of what are you doing to sabotage the goal or make it more difficult for your opponents to achieve. Mechanically, this means:
   - You can't augment your roll with progress dice currently at the goal.
-  - instead of adding progress and/or completing the objective, successes in that roll will SUBTRACT progress from the goal, to a minimum of 0.
+  - instead of adding progress and/or completing the goal, successes in that roll will SUBTRACT progress from the goal, to a minimum of 0.
 
 ## TODO / Roadmap
 - More playtesting, MUCH MORE PLAYTESTING
