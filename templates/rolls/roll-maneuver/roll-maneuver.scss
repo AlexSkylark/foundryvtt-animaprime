@@ -4,6 +4,21 @@
 .roll-maneuver {
     
     .roll {
+
+        &.strike-success {
+            .roll-dice {
+                box-shadow: 0 0 6px #f13f92;
+                filter: drop-shadow(3px 3px 1px #a73158);
+            }
+        }
+
+        &.charge-success {
+            .roll-dice {
+                box-shadow: 0 0 6px #51ceff;
+                filter: drop-shadow(3px 3px 1px #22769c);
+            }
+        }
+
         &.slowed {    
             background-image: url(../../systems/animaprime/assets/d6-condition-forbidden.svg);
         }

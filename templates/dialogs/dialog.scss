@@ -43,3 +43,53 @@
         }     
     }    
 }
+
+.dialog-container {
+    margin: 8px;
+    border: 3px solid var(--primary-color);
+    border-radius: 16px;
+    height: 100%;
+    display: flex;
+    padding-top: 10px;
+    
+    span {
+        color: var(--primary-color);
+    }    
+
+    .dialog-img {
+        border: 3px solid var(--primary-color);
+        border-radius: 32px;
+        width: 64px;
+        position: absolute;
+        right: 8px;
+        top: 38px;
+        padding: 2px;
+        background-color: #fff;
+    }
+
+    label {
+        background-color: var(--primary-color);
+        color: #fff;
+        font-weight: 600;
+        padding: 2px;
+        padding-left: 8px;
+        width: 100%;
+        font-family: 'Montserrat';
+        font-size: 15px;
+    }
+
+    .dialog-elements {
+        
+        width: 100%;
+        padding: 16px 32px;
+        padding-bottom: 8px;
+        align-items: center;
+        
+        div {
+            font-family: 'Montserrat';
+            font-size: 16px;
+            color: var(--primary-color);
+            padding: 4px 0px;
+        }
+    }
+}

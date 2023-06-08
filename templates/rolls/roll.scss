@@ -1,37 +1,82 @@
 @use 'variables';
 
-.roll-img {
-    flex: 0 0 40px !important;
-    width: 40px;
-    height: 40px;
-    margin-right: 0;
+.chat-message-message {
+    .message-content {
+        border: 0 !important;
+    }
+}
+
+.chat-message {
+    background: #fff;
+
+    header {
+        font-family: 'Montserrat';
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .message-sender {
+        font-size: 16px;
+    }
+
+    .message-content {
+        border: 2px solid var(--primary-color);
+        border-radius: 11px;
+        border-top-left-radius: 20px;
+        margin: 7px;
+        margin-top: 16px;
+        background-color: #fffbfa;
+    }
+
+    .roll-header {
+        display: grid;
+        margin-bottom: -8px;
+
+        .roll-img {
+            border: 3px solid var(--primary-color);
+            border-radius: 48px;
+            height: 68px;
+            padding: 2px;
+            background-color: #fff;    
+            grid-column: 1;
+            grid-row: 1;
+            z-index: 10;
+            position: relative;
+            bottom: 8px;
+            right: 12px;
+        }
+
+        .header-label {
+            background-color: var(--primary-color);
+            color: #fff;
+            width: 100%;
+            grid-column: 1;
+            grid-row: 1;
+            font-family: 'Montserrat';
+            height: 42px;
+            padding-left: 60px;
+            margin-top: 10px;
+
+            h4 {                
+                margin: 0;
+                color: #fff;
+                &.header-title {
+                    padding-top: 3px;
+                    font-size: 10px;                    
+                }
+        
+                &.header-name {
+                    padding-bottom: 3px;
+                    font-size: 18px;
+                }
+            }
+
+        }
+
+    }
 }
 
 .roll-header {
-    border-top: variables.$grooved-border;
-    border-bottom: variables.$grooved-border;
-
-    padding-top: 8px;
-
-    h4 {
-        font-family: "Modesto Condensed";
-        font-size: 18px;
-        color: #666;
-        margin-top: 0px;
-        margin-left: 8px;
-
-        &.header-title {
-            margin-top: 2px !important;
-            font-size: 16px !important;
-            margin-bottom: 0 !important;
-        }
-
-        &.header-name {
-            font-size: 23px !important;
-            margin-bottom: 3px !important;
-            margin-top: 0 !important;   
-        }
-    }
 
     .item-description {
         margin: 2px 4px;
@@ -49,85 +94,83 @@
 
 .rolls {
     list-style: none;
-    margin: 5px 0;
-    padding: 1px;
+    margin: 0;
+    padding: 8px;
+    padding-top: 6px;
+    padding-bottom: 12px;
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
     flex: 2;
     width: 100%;
-
-    .roll {
-        position: relative;
-        width: 24px;
-        line-height: 24px;
-        float: left;
-        margin: 0px 3px;
-        padding-top: 3px;
-        background-image: url(../../icons/svg/d6-grey.svg);
-        background-repeat: no-repeat;
-        background-size: 24px 24px;
-        font-size: var(--font-size-16);
-        color: rgba(0, 0, 0, 0.65);
-        font-weight: bold;
-        text-align: center;
-        background-position-x: center;
-        background-position-y: center;
-
-        &.strike {
-            background-image: url(../../systems/animaprime/assets/d6-blue.svg);
-        }
-        
-        &.action {
-            background-image: url(../../systems/animaprime/assets/d6-purple.svg);
-        }
-
-        &.threat, &.progress {
-            background-image: url(../../systems/animaprime/assets/d6-yellow.svg);
-        }
-
-        &.bonus {
-            background-image: url(../../systems/animaprime/assets/d6-green.svg);
-        }
-
-        &.reckless {
-            background-image: url(../../systems/animaprime/assets/d6-purple.svg);
-        }
-
-        &.condition {
-            background-image: url(../../systems/animaprime/assets/d6-condition.svg);
-        }
-
-        &.resistance {
-            background-image: url(../../systems/animaprime/assets/d6-red-forbidden.svg);
-        }
-
-        &.weaken {
-            background-image: url(../../systems/animaprime/assets/d6-condition-forbidden.svg);
-        }
-
-        &.successdice {
-            background-image: url(../../systems/animaprime/assets/d6-green-successmodifier.svg);
-        }
-
-        &.success {
-            position: relative;
-            top: 1px;
-            padding-top: 2px;
-            border-bottom: 2px solid #45af86 !important;
-
-            &.strike-success {
-                border-bottom: 2px solid #e50089 !important;
-            }
-
-            &.charge-success {
-                border-bottom: 2px solid #00ade1 !important;
-            }
-        }
+    justify-content: center;
+    align-items: center;
     
-        &.partial {
-            border-bottom: 2px solid rgb(225, 140, 14);
-        }                      
+    .roll {       
+    
+        .roll-dice {
+            position: relative;
+            width: 26px;
+            line-height: 22px;
+            float: left;
+            margin: 6px 6px;
+            padding-top: 3px;        
+            background-repeat: no-repeat;
+            background-size: 24px 24px;
+            font-size: var(--font-size-16);
+            color: #000000a6;
+            font-weight: bold;
+            text-align: center;
+            background-position-x: center;
+            background-color: #bbb;
+            border-radius: 8px;
+            background-position-y: center;
+            filter: drop-shadow(2px 2px 1px #000000bb);            
+
+            &.strike {
+                background-image: url(../../systems/animaprime/assets/d6-blue.svg);
+            }
+            
+            &.action {
+                background-image: url(../../systems/animaprime/assets/d6-purple.svg);
+            }
+    
+            &.threat, &.progress {
+                background-image: url(../../systems/animaprime/assets/d6-yellow.svg);
+            }
+    
+            &.bonus {
+                background-image: url(../../systems/animaprime/assets/d6-green.svg);
+            }
+    
+            &.reckless {
+                background-color: #cfa8f9;
+                color: #670fc7;
+            }
+    
+            &.condition {
+                background-image: url(../../systems/animaprime/assets/d6-condition.svg);
+            }
+    
+            &.resistance {
+                background-image: url(../../systems/animaprime/assets/d6-red-forbidden.svg);
+            }
+    
+            &.weaken {
+                background-image: url(../../systems/animaprime/assets/d6-condition-forbidden.svg);
+            }
+    
+            &.successdice {
+                background-image: url(../../systems/animaprime/assets/d6-green-successmodifier.svg);
+            }
+        }    
+        
+        &.success {
+            .roll-dice {
+                box-shadow: 0 0 6px #17b6a1;
+                filter: drop-shadow(3px 3px 1px #017955);
+            }
+        }
     }    
 }
 
@@ -162,16 +205,20 @@
 }
 
 .result-message {
-    font-size: 16px;
-    text-align: center;
-    border: 1px solid;
-    margin: 6px;
-    margin-top: 12px;
+    font-size: 13px;
+    text-align: center;    
     padding: 3px;
-    font-weight: bold;
+    padding-bottom: 6px;
+    font-weight: 800;
     background-color: #bbb;
-    width: calc(100% - 12px);
+    width: 100%;
     display: block;
+    border-bottom-left-radius: 9px;
+    border-bottom-right-radius: 9px;
+    border: 0px;
+    border-top: 2px solid #555;
+    
+    font-family: 'Montserrat';    
 
     &.critical {
         border-color: variables.$critical-foreground;

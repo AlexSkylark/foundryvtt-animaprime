@@ -1,54 +1,17 @@
 @use '../dialog.scss';
 
-.dialog-field-container-skill {
-    margin: 8px;
-    border: 3px solid var(--primary-color);
-    border-radius: 16px;
-    height: 100%;
-    display: flex;
-    padding-top: 10px;
-
-    .dialog-img-skill {
-        border: 3px solid var(--primary-color);
-        border-radius: 32px;
-        width: 64px;
-        position: absolute;
-        right: 8px;
-        top: 38px;
-        padding: 2px;
-        background-color: #fff;
-    }
-
-    label {
-        background-color: var(--primary-color);
-        color: #fff;
-        font-weight: 600;
-        padding: 2px;
-        padding-left: 8px;
-        width: 100%;
-        font-family: 'Montserrat';
-        font-size: 15px;
-    }    
+.dialog-skill {
     
-    .dialog-buttons-radio {
-        display: flex;
-        flex-flow: column;
-        width: 100%;
-        padding: 16px;
-        padding-top: 12px;
+    .dialog-elements {        
         
-        div {
-            font-family: 'Montserrat';
-            font-size: 16px;
-            color: var(--primary-color);
-            padding: 4px 0px;
+        padding-bottom: 16px;
+        align-items: flex-start;
 
-            .input-text {                
-                top: 1px;
-                margin-right: 8px;
-                accent-color: var(--primary-color);                
-                filter: saturate(1.25);
-            }
-        }
+        .input-text {                
+            top: 1px;
+            margin-right: 8px;
+            accent-color: var(--primary-color);
+            filter: saturate(1.25);
+        }        
     }
 }

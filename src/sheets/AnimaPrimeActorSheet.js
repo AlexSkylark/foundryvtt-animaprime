@@ -3,7 +3,7 @@ import * as SkillsRoll from "../dice-rolls/skill-roll.js";
 export default class AnimaPrimeActorSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            classes: ["animaprime", "sheet", "actor"],
+            classes: ["animaprime", "sheet", "actor", "actor-sheet-layout"],
             width: 890,
             height: 877,
             tabs: [

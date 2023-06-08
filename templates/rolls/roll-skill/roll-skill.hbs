@@ -1,17 +1,19 @@
 <div class="roll-skill roll {{flavor.entityData.type}}" data-type="{{flavor.entityData.type}}">
     <div class="roll item" data-item-id="{{_id}}">        
-        <div class="roll-header flexrow">
+        <div class="roll-header">
             <img class="roll-img" src="icons/skills/trades/academics-study-reading-book.webp" title="{{flavor.entityData.name}}" />
-            <div class="flexcol">
-                <h4 class="header-title">Trait/Ability {{#if flavor.isReroll}}re{{/if}}roll ({{flavor.targetData.0.resultData.difficultyText}}):</h4>
+            <div class="header-label flexcol">
+                <h4 class="header-title">Trait/Ability {{#if flavor.isReroll}}re{{/if}}roll ({{flavor.targetData.0.resultData.difficultyText}})</h4>
                 <h4 class="header-name">{{flavor.entityData.name}}</h4>
             </div>
-        </div>        
+        </div>
         <div class="flexcol">
             <div class="flexrow">
                 <ol class="rolls">
                     {{#each flavor.targetData.0.rollResult.dice.0.results}}
-                    <li class="roll roll-dice-skill{{#if this.success}} success{{/if}}">{{{this.result}}}</li>
+                    <li class="roll {{#if this.success}}success{{/if}}">
+                        <div class="roll-dice">{{{this.result}}}</div>
+                    </li>
                     {{/each}}                
                 </ol>                
             </div>

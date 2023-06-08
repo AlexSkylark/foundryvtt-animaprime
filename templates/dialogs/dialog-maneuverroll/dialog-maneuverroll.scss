@@ -1,54 +1,32 @@
-.dialog-container {
-    justify-content: center;
+@use '../dialog.scss';
 
-    .dialog-field-container-maneuver {
+.dialog-maneuver {    
     
-        align-items: center;
-        text-align: right;
-        flex: 0 0 95%;
-        border: 1px solid black;
-        margin: 2px !important;
-        padding: 5px !important;
-        padding-top: 10px;
-    
-        label {            
-            padding-right: 6px;
-
-            &.label-resistance {
-                margin-bottom: 8px;
-            }
-        }
-
-        input[type=radio] {
-            margin-top: -6px;
-            margin-right: 2px;
-        }
-    }
-}
-
-.form-dice-field {
-    margin: 4px !important;
-    background-color: #bbb !important;
-    font-size: 16px !important;
-    border: 1px solid #333 !important;
-    max-width: 80px !important;
-    font-weight: 600;
-    text-align: center !important;
-
-    input[type=text] {
-        width: 20px;
+    select {
+        background-color: #fff;
+        border: 2px solid var(--primary-color);
+        font-size: 20px;
         font-weight: 600;
-        font-size: 16px;
-        color: #444;
-    }
-    span {
-        margin-top: 3px;
-        position: relative;
-        right: 3px;
-    }
-}
+        line-height: 25px;
+        border-radius: 20px;
+        height: 38px;
+        color: var(--primary-color);
+        margin: 12px 0px;
+        padding-left: 16px;
+        width: 100%;
 
-.form-dialog-plusminus-button {
-    max-width: 30px;
-    margin: 0 !important;
+        option {
+            background-color: white;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 15px;
+        }
+    }
+    
+    input[type="checkbox"] {
+        position: relative;
+        bottom: 3px;
+        accent-color: var(--primary-color);
+        filter: saturate(1.25);
+    }
 }

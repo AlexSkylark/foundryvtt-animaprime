@@ -8,25 +8,22 @@
 </script>
 
 <form>
-    <div class="flexrow dialog-container">
-        <div class="dialog-field-container-maneuver flexrow">
-            <label>What maneuver style?</label>                    
-            <div class="flexrow dialog-buttons">
-                 <select class="gain-select" name="maneuverStyle" data-field="system.gain.r1">
-                        <option value="regular">Regular</option>
-                        <option value="aggressive">Aggressive</option>
-                        <option value="cunning">Cunning</option>
-                        <option value="defensive">Defensive</option>
-                        <option value="heroic">Heroic</option>
-                        <option value="reckless">Reckless</option>
-                        <option value="supportive">Supportive</option>
-                    </select>
-            </div>
-        </div>
-        <div class="dialog-field-container-maneuver flexrow">
-            <label>Support Bonus Die</label>                    
-            <div class="flexrow dialog-buttons">
-                 <input type="checkbox" name="supportDie" data-dtype="Boolean" />
+    <div class="dialog-container dialog-maneuver flexcol">
+        <img class="dialog-img" src="{{img}}" />
+        <label>{{name}}</label>
+        <div class="dialog-elements flexcol">
+            <select class="gain-select" name="maneuverStyle" data-field="system.gain.r1">
+                <option value="regular">No style</option>
+                <option value="aggressive">Style: aggressive</option>
+                <option value="cunning">Style: cunning</option>
+                <option value="defensive">Style: defensive</option>
+                <option value="heroic">Style: heroic</option>
+                <option value="reckless">Style: reckless</option>
+                <option value="supportive">Style: supportive</option>
+            </select>
+            <div class="flexrow maneuver-support-die">
+                <span>Additional <i>Support</i> action die?</span>
+                <input type="checkbox" name="supportDie" data-dtype="Boolean" />
             </div>
         </div>
     </div>

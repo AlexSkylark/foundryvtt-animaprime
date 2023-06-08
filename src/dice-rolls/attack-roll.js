@@ -153,7 +153,6 @@ export async function attackRoll(
         rollResults.push(await rl.evaluate({ async: true }));
 
         let forceNoHit = false;
-        debugger;
         if (item.type == "achievement") {
             const targetType = item.targets[i].system.type;
             const ownerType =

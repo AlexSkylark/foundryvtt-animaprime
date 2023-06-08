@@ -2,27 +2,8 @@
 @use '../roll.scss';
 
 .roll-skill {
-    
-    .roll-header {        
-        h4 {
-            font-size: 23px;
-            color: #666;
-            margin-top: 9px;
-        }
-    }
-
-    .roll-dice-skill {
-        &.success {            
-            background-image: url(../../systems/animaprime/assets/d6-green.svg);            
-        }
-    }        
-
+        
     .result-message {
-        font-size: 16px;
-        text-align: center;
-        border: 1px solid;
-        margin: 6px;
-        font-weight: bold;
 
         &.success {
             border-color: variables.$success-foreground;

@@ -100,7 +100,7 @@ export async function getManeuverRollOptions(item) {
     return new Promise((resolve) => {
         const dialogOptions = {
             width: 400,
-            height: 180,
+            height: 268,
             classes: ["window-dialog"],
         };
 
@@ -139,8 +139,8 @@ export async function getManeuverRollOptions(item) {
 export async function getSkillRollOptions(item) {
     return new Promise(async (resolve) => {
         const dialogOptions = {
-            width: 280,
-            height: 287,
+            width: 320,
+            height: 291,
             classes: ["window-dialog"],
         };
 
@@ -148,8 +148,7 @@ export async function getSkillRollOptions(item) {
             title:
                 item.type.charAt(0).toUpperCase() +
                 item.type.slice(1) +
-                " Roll - " +
-                item.name,
+                " Roll",
             content: await renderTemplate(
                 "systems/animaprime/templates/dialogs/dialog-skillroll/dialog-skillroll.hbs",
                 item
