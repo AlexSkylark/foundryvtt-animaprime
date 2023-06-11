@@ -28,7 +28,13 @@ export default class AnimaPrimeCombatant extends Combatant {
 
     get healthValue() {
         return (
-            this.actor.system.health.value + "/" + this.actor.system.health.max
+            " " +
+            (Math.round(
+                (this.actor.system.health.value /
+                    this.actor.system.health.max) *
+                    100
+            ) +
+                "%")
         );
     }
 
