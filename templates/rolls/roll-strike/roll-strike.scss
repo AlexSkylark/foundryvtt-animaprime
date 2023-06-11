@@ -3,6 +3,23 @@
 
 .roll-strike {
     
+    border-color: #b80523;
+    background-color: #f9e0e8;
+    .roll-header {        
+        .roll-img {
+            border-color: #b80523;
+        }
+        .header-label {
+            background-color: #b80523;
+        }    
+    }
+
+    .result-message {
+        border-color: #b80523;
+        background-color: #ffb5cc;
+        color: #680011;
+    }
+
     .roll {        
         
         .roll-dice {

@@ -148,6 +148,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         if (
             item.type == "boost" ||
             item.type == "reaction" ||
+            item.type == "extra" ||
             item.type == "skill"
         ) {
             return;

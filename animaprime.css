@@ -2230,6 +2230,10 @@ select:focus {
   width: calc(100% - 20px);
 }
 
+.roll-skill .result-message {
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+}
 .roll-skill .result-message.success {
   border-color: #286856;
   color: #286856;
@@ -2246,6 +2250,21 @@ select:focus {
   background-color: #e995a7;
 }
 
+.roll-maneuver {
+  border-color: #212cce;
+  background-color: #e5e6f3;
+}
+.roll-maneuver .roll-header .roll-img {
+  border-color: #212cce;
+}
+.roll-maneuver .roll-header .header-label {
+  background-color: #212cce;
+}
+.roll-maneuver .result-message {
+  border-color: #212cce;
+  background-color: #b8bdfc;
+  color: #0b126b;
+}
 .roll-maneuver .roll .roll-dice.slowed, .roll-maneuver .roll .roll-dice.quickened {
   background-color: #ffef82;
   width: 29px;
@@ -2262,6 +2281,21 @@ select:focus {
   filter: drop-shadow(3px 3px 1px #22769c);
 }
 
+.roll-strike {
+  border-color: #b80523;
+  background-color: #f9e0e8;
+}
+.roll-strike .roll-header .roll-img {
+  border-color: #b80523;
+}
+.roll-strike .roll-header .header-label {
+  background-color: #b80523;
+}
+.roll-strike .result-message {
+  border-color: #b80523;
+  background-color: #ffb5cc;
+  color: #680011;
+}
 .roll-strike .roll .roll-dice.weakened {
   background-color: #ffef82;
   width: 29px;
@@ -2306,8 +2340,64 @@ select:focus {
   margin-top: 6px;
 }
 
+.roll-power.power {
+  border-color: #6105b8;
+  background-color: #f0eafc;
+}
+.roll-power.power .roll-header .roll-img {
+  border-color: #6105b8;
+}
+.roll-power.power .roll-header .header-label {
+  background-color: #6105b8;
+}
+.roll-power.power .result-message {
+  border-color: #6105b8;
+  background-color: #d5beeb;
+  color: #370863;
+}
+.roll-power.boost {
+  border-color: #d36702;
+  background-color: #faecd8;
+}
+.roll-power.boost .roll-header .roll-img {
+  border-color: #d36702;
+}
+.roll-power.boost .roll-header .header-label {
+  background-color: #d36702;
+}
+.roll-power.boost .result-message {
+  border-color: #d36702;
+  background-color: #ebc798;
+  color: #643000;
+}
+.roll-power.reaction {
+  border-color: #0490a8;
+  background-color: #ecf5f8;
+}
+.roll-power.reaction .roll-header .roll-img {
+  border-color: #0490a8;
+}
+.roll-power.reaction .roll-header .header-label {
+  background-color: #0490a8;
+}
+.roll-power.reaction .result-message {
+  border-color: #0490a8;
+  background-color: #a6d8ed;
+  color: #015261;
+}
+.roll-power.extra {
+  border-color: #6b6b6b;
+  background-color: #f3f0f0;
+}
+.roll-power.extra .roll-header .roll-img {
+  border-color: #6b6b6b;
+}
+.roll-power.extra .roll-header .header-label {
+  background-color: #6b6b6b;
+}
 .roll-power .roll-header .item-description {
   margin-bottom: 24px;
+  margin-top: 10px;
 }
 .roll-power .result-message {
   border-bottom-left-radius: 9px;

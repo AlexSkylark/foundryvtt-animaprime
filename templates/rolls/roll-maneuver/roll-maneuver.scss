@@ -3,6 +3,23 @@
 
 .roll-maneuver {
     
+    border-color: #212cce;
+    background-color: #e5e6f3;
+    .roll-header {        
+        .roll-img {
+            border-color: #212cce;
+        }
+        .header-label {
+            background-color: #212cce;
+        }    
+    }
+
+    .result-message {
+        border-color: #212cce;
+        background-color: #b8bdfc;
+        color: #0b126b;
+    }
+
     .roll {        
         .roll-dice {
             &.slowed, &.quickened {    

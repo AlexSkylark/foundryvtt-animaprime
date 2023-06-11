@@ -3,9 +3,80 @@
 
 .roll-power {
 
+    &.power {
+        border-color: #6105b8;
+        background-color: #f0eafc;
+        .roll-header {        
+            .roll-img {
+                border-color: #6105b8;
+            }
+            .header-label {
+                background-color: #6105b8;
+            }    
+        }
+
+        .result-message {
+            border-color: #6105b8;
+            background-color: #d5beeb;
+            color: #370863;
+        }
+    }
+
+    &.boost {
+        border-color: #d36702;
+        background-color: #faecd8;
+        .roll-header {        
+            .roll-img {
+                border-color: #d36702;
+            }
+            .header-label {
+                background-color: #d36702;
+            }    
+        }
+
+        .result-message {
+            border-color: #d36702;
+            background-color: #ebc798;
+            color: #643000;
+        }
+    }
+
+    &.reaction {
+        border-color: #0490a8;
+        background-color: #ecf5f8;
+        .roll-header {        
+            .roll-img {
+                border-color: #0490a8;
+            }
+            .header-label {
+                background-color: #0490a8;
+            }    
+        }
+
+        .result-message {
+            border-color: #0490a8;
+            background-color: #a6d8ed;
+            color: #015261;
+        }
+    }
+
+    &.extra {
+        border-color: #6b6b6b;
+        background-color: #f3f0f0;
+        .roll-header {        
+            .roll-img {
+                border-color: #6b6b6b;
+            }
+            .header-label {
+                background-color: #6b6b6b;
+            }    
+        }
+    }
+
     .roll-header {
         .item-description {
             margin-bottom: 24px;
+            margin-top: 10px;
         }
     }
 
