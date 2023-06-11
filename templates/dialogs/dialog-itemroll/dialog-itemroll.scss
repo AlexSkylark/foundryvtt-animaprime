@@ -1,63 +1,180 @@
 @use '../dialog.scss';
 
-.dialog-container {
-    
-    align-content: center;
-    justify-content: center;
-    align-content: flex-start;
+.dialog-container-itemroll {
+
+    .strike {
+        background-color: #fcf3f5;
+    }
+
+    .action {
+        background-color: #fdf5ff;
+    }
+
+    .variable {
+        background-color: #fdf8f3;
+    }
+
+    .bonus {
+        background-color: #f8fdfb;
+    }
+
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Montserrat';
+
+    .dialog-fields-container {
+        border: 3px solid var(--primary-color);
+        border-radius: 16px;
+        padding: 8px 0px;
+        width: 100%;
+    }
 
     .dialog-field-container {
-    
-        align-items: center;
-        text-align: right;
-        flex: 0 0 45%;
-        border: 1px solid black;
-        margin: 2px !important;
-        padding: 5px !important;
-        padding-top: 10px;
-    
-        label {            
-            padding-right: 6px;
+        
+        width: 90%;
+        margin-left: 42px;
+        margin-bottom: 8px;
 
-            &.label-resistance {
-                margin-bottom: 8px;
-            }
+        .dialog-buttons {
+            max-width: 84px;
+            position: relative;
+            right: 42px;
+            display: grid;        
         }
 
-        input[type=radio] {
-            margin-top: -6px;
-            margin-right: 2px;
+        label {            
+            color: var(--primary-color);
+            line-height: 16px;
+            border: 2px solid var(--primary-color);
+            height: 44px;
+            font-weight: 600;
+            border-radius: 24px;
+            padding: 11px;
+            text-align: right;
+            padding-right: 52px;
+            border-right: 0;
+            margin-top: 8px;                       
+        }
+
+        input[type=checkbox] {
+            -ms-transform: scale(1.25);
+            -moz-transform: scale(1.25);
+            -webkit-transform: scale(1.25);
+            -o-transform: scale(1.25);
+            transform: scale(1.25);
+            margin-top: 4px;
+            accent-color: var(--primary-color);
+            filter: saturate(1.25);
+        }
+
+        input[type=text] {
+            &:hover {
+                border: 0;
+                border-bottom: 0;
+            }
         }
     }
 }
 
 .form-dice-field {
-    margin: 4px !important;
-    background-color: #bbb !important;
-    font-size: 16px !important;
-    border: 1px solid #333 !important;
-    max-width: 80px !important;
-    font-weight: 600;
-    text-align: center !important;
+    
+    justify-content: center;
+    border: 2px solid var(--primary-color);
+    border-radius: 34px;
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;    
+    background-color: #fff;
+    padding: 6px;
+    height: 44px;
+    padding-top: 6px;
+    margin-top: 4px;
+    min-width: 84px;
+    grid-column: 1;
+    grid-row: 1;
+    text-align: center;
 
-    input[type=text] {
-        width: 20px;
+    .form-dice-value {
+
         font-weight: 600;
-        font-size: 16px;
+        font-size: 28px;
+        font-family: "Caveat", cursive;
         color: #444;
+        position: relative;
+        bottom: 5px;
+        text-align: center;
+        display: inline-block;
+        min-width: 18px;
+        position: relative;
+        right: 2px;
+
+        &.form-single-value {
+            text-align: center;
+            font-size: 42px;
+            margin-right: 10px;
+        }
     }
     span {
-        margin-top: 3px;
+        font-weight: 600;
+        text-align: center;
+        font-size: 28px;
         position: relative;
-        right: 3px;
+        bottom: 3px;
     }
 }
 
-.dialog-content {
-    align-items: baseline;
+.dialog-advanced-buttons-container {
+
+    padding: 16px 5%;
+    border: 3px solid var(--primary-color);
+    border-radius: 16px;
+    margin: 16px 0px;
+    width: 100%;
+    margin-bottom: 3px;
+
+    .dialog-button-advanced {
+        background-color: #eee;
+        color: #555;
+        border: 2px solid;
+        border-radius: 15px;
+        font-family: "Montserrat";
+        font-weight: 600;
+        margin: 0px 10px;
+        padding: 0px 7px;
+
+        &.hide-bonus, &.hide-weakresist {
+            background-color: #bbb;
+            color: #444;
+        }
+    }
 }
 
 .form-dialog-plusminus-button {
-    max-width: 30px;
-    margin: 0 !important;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 0px;
+    background-color: #fff;
+    grid-column: 1;
+    grid-row: 1;
+    
+
+    span {
+        position: relative;
+        bottom: 3px;
+    }
+
+    &.minus {
+        left: -8px;
+        top: 30px;
+    }
+
+    &.plus {
+        left: -8px;
+        top: -2px;    
+    }
 }

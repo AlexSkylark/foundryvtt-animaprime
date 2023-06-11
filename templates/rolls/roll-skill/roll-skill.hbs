@@ -8,8 +8,8 @@
             </div>
         </div>
         <div class="flexcol">
-            <div class="flexrow">
-                <ol class="rolls">
+            <div class="flexrow">               
+                <ol class="rolls rolls-{{flavor.rollsId}}">
                     {{#each flavor.targetData.0.rollResult.dice.0.results}}
                     <li class="roll {{#if this.success}}success{{/if}}">
                         <div class="roll-dice">{{{this.result}}}</div>

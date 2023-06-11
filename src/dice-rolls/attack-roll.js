@@ -168,8 +168,9 @@ export async function attackRoll(
                 itemFixedOptions[i].defenseAttribute,
                 DiceRolls.checkSuccess(
                     rollResults[i].dice[0].results,
-                    successModifier + isWeakened * -1
+                    isWeakened * -1
                 ),
+                successModifier,
                 forceNoHit
             )
         );
@@ -262,17 +263,27 @@ export async function commitResults(resultData, item, dialogOptions) {
     }
 }
 
-function checkItemResult(targetDefense, successes, forceNoHit = false) {
+function checkItemResult(
+    targetDefense,
+    successes,
+    successModifier,
+    forceNoHit = false
+) {
     let returnValue = {
         hit: false,
         successes: successes,
     };
 
-    if (!forceNoHit && successes >= targetDefense) returnValue.hit = true;
+    if (!forceNoHit && successes + successModifier > targetDefense)
+        returnValue.hit = true;
 
     return returnValue;
 }
 
 function checkCondition(actorData, condition) {
-    return actorData.effects.filter((e) => e.label == condition).length > 0;
+    return (
+        actorData.effects.filter(
+            (e) => e.label.toUpperCase() == condition.toUpperCase()
+        ).length > 0
+    );
 }

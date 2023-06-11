@@ -34,9 +34,12 @@ export async function renderRoll(
         });
     }
 
+    var chatMessageUniqueId = generateIdString();
+
     let renderedRoll = await rollResult[0].render({
         template: messageTemplate,
         flavor: {
+            rollsId: chatMessageUniqueId,
             speaker: ChatMessage.getSpeaker({ alias: entityData.owner.name }),
             entityData: entityData,
             enableReroll: enableReroll,
@@ -45,10 +48,14 @@ export async function renderRoll(
         },
     });
 
+    // sort dice rolls;
+    renderedRoll = sortDiceRolls(renderedRoll, chatMessageUniqueId);
+
     let messageData = {
         speaker: ChatMessage.getSpeaker({ alias: entityData.owner.name }),
         content: renderedRoll,
         flags: {
+            rollsId: chatMessageUniqueId,
             sourceItem: entityData,
             resultData: resultData,
             additionalData: additionalData,
@@ -73,6 +80,33 @@ export async function renderRoll(
     }
 
     setTimeout(() => ui.combat.render(), 500);
+}
+
+function sortDiceRolls(renderedRoll, chatMessageUniqueId) {
+    var elems = $(".rolls-" + chatMessageUniqueId + " li", renderedRoll)
+        .not(".successdice")
+        .detach()
+        .sort(function (a, b) {
+            return $(a).find(".roll-dice").html() <
+                $(b).find(".roll-dice").html()
+                ? 1
+                : $(a).find(".roll-dice").html() >
+                  $(b).find(".roll-dice").html()
+                ? -1
+                : 0;
+        });
+
+    var htmlToModify = $("<div>" + renderedRoll + "</div>");
+    htmlToModify
+        .find(".rolls-" + chatMessageUniqueId + " li")
+        .not(".successdice")
+        .not(":last")
+        .replaceWith("");
+    htmlToModify
+        .find(".rolls-" + chatMessageUniqueId + " li")
+        .not(".successdice")
+        .replaceWith(elems);
+    return htmlToModify.html();
 }
 
 function generateIdString() {
@@ -186,9 +220,9 @@ export async function getItemRollOptions(item) {
 
     return new Promise((resolve) => {
         const dialogOptions = {
-            width: 600,
-            height: item.type == "achievement" ? 190 : 255,
-            classes: ["window-dialog"],
+            width: 440,
+            height: item.maxVariableDice == 0 ? 368 : 425,
+            classes: ["window-dialog", "window-dialog-itemroll"],
         };
 
         const data = {

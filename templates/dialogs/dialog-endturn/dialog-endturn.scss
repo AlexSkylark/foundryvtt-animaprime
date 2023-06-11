@@ -24,30 +24,3 @@
         }
     }
 }
-
-.form-dice-field {
-    margin: 4px !important;
-    background-color: #bbb !important;
-    font-size: 16px !important;
-    border: 1px solid #333 !important;
-    max-width: 80px !important;
-    font-weight: 600;
-    text-align: center !important;
-
-    input[type=text] {
-        width: 20px;
-        font-weight: 600;
-        font-size: 16px;
-        color: #444;
-    }
-    span {
-        margin-top: 3px;
-        position: relative;
-        right: 3px;
-    }
-}
-
-.form-dialog-plusminus-button {
-    max-width: 30px;
-    margin: 0 !important;
-}

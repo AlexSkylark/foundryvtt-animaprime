@@ -15,18 +15,23 @@
         font-weight: 600;
     }
 
-    .message-sender {
+    .message-sender {    
         font-size: 16px;
     }
+}
 
-    .message-content {
-        border: 2px solid var(--primary-color);
-        border-radius: 11px;
-        border-top-left-radius: 20px;
-        margin: 7px;
-        margin-top: 16px;
-        background-color: #fffbfa;
-    }
+.roll-message-container {
+
+    border: 2px solid var(--primary-color);
+    border-radius: 11px;
+    border-top-left-radius: 20px;
+    margin: 7px;
+    margin-top: 16px;
+    background-color: #fffbfa;
+
+    
+
+    
 
     .roll-header {
         display: grid;
@@ -79,7 +84,7 @@
 .roll-header {
 
     .item-description {
-        margin: 2px 4px;
+        margin: 2px 8px;
         color: #555;
         border: 2px solid #aaa;
         border-radius: 9px;
@@ -109,10 +114,11 @@
     .roll {       
     
         .roll-dice {
+            
             position: relative;
-            width: 26px;
-            line-height: 22px;
             float: left;
+            width: 25px;
+            line-height: 21px;
             margin: 6px 6px;
             padding-top: 3px;        
             background-repeat: no-repeat;
@@ -128,28 +134,28 @@
             filter: drop-shadow(2px 2px 1px #000000bb);            
 
             &.strike {
-                background-image: url(../../systems/animaprime/assets/d6-blue.svg);
+                background-color: #549fce;
             }
             
             &.action {
-                background-image: url(../../systems/animaprime/assets/d6-purple.svg);
+                background-color: #bf7de5;
             }
     
-            &.threat, &.progress {
-                background-image: url(../../systems/animaprime/assets/d6-yellow.svg);
+            &.variable {
+                background-color: #e7a067;
             }
     
             &.bonus {
-                background-image: url(../../systems/animaprime/assets/d6-green.svg);
+                background-color: #4fd3ae;
+            }
+
+            &.empowered {
+                background-color: #ffef82;
             }
     
             &.reckless {
                 background-color: #cfa8f9;
                 color: #670fc7;
-            }
-    
-            &.condition {
-                background-image: url(../../systems/animaprime/assets/d6-condition.svg);
             }
     
             &.resistance {
@@ -169,6 +175,10 @@
             .roll-dice {
                 box-shadow: 0 0 6px #17b6a1;
                 filter: drop-shadow(3px 3px 1px #017955);
+                width: 29px;
+                line-height: 25px;
+                margin: 6px 6px;
+    
             }
         }
     }    
@@ -177,9 +187,6 @@
 .button-reroll-container {        
     align-self: center;    
     margin: 0px 8px;
-    padding-top: 5px;
-    border-top: 2px groove #eeede0;
-    margin-top: 6px;
             
     .button-roll {
         border: 2px solid;
@@ -243,4 +250,12 @@
         color: rgb(104, 69, 23);
         background-color: rgb(230, 187, 132);
     }
+}
+
+.result-message-commit {
+    border: 2px solid #555;
+    border-radius: 11px;
+    padding-top: 5px;
+    margin: 5px 10px;
+    width: calc(100% - 20px);
 }

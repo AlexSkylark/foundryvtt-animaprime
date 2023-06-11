@@ -194,11 +194,12 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (
-        (game.user.isGM &&
+        !message.flags.sourceItem &&
+        ((game.user.isGM &&
             message.content.includes("added") &&
             message.content.includes(" die ")) ||
-        (message.content.includes("subtracted") &&
-            message.content.includes(" die "))
+            (message.content.includes("subtracted") &&
+                message.content.includes(" die ")))
     ) {
         setTimeout(() => {
             message.delete();
@@ -341,6 +342,8 @@ Hooks.once("init", async () => {
     CONFIG.Combatant.documentClass = AnimaPrimeCombatant;
     CONFIG.ui.combat = AnimaPrimeCombatTracker;
 
+    CONFIG.dialogWindows = [];
+
     preloadTemplates();
     HandlebarsHelpers.registerHandlebarsHelpers();
     registerSheets();
@@ -350,7 +353,7 @@ Hooks.once("init", async () => {
         name: "Reroll List",
         hint: "Comma-separated list for reroll control",
         scope: "world",
-        config: true,
+        config: false,
         type: String,
         default: "",
         onChange: (value) => {

@@ -2014,7 +2014,8 @@ select:focus {
 .chat-message .message-sender {
   font-size: 16px;
 }
-.chat-message .message-content {
+
+.roll-message-container {
   border: 2px solid var(--primary-color);
   border-radius: 11px;
   border-top-left-radius: 20px;
@@ -2022,11 +2023,11 @@ select:focus {
   margin-top: 16px;
   background-color: #fffbfa;
 }
-.chat-message .roll-header {
+.roll-message-container .roll-header {
   display: grid;
   margin-bottom: -8px;
 }
-.chat-message .roll-header .roll-img {
+.roll-message-container .roll-header .roll-img {
   border: 3px solid var(--primary-color);
   border-radius: 48px;
   height: 68px;
@@ -2039,7 +2040,7 @@ select:focus {
   bottom: 8px;
   right: 12px;
 }
-.chat-message .roll-header .header-label {
+.roll-message-container .roll-header .header-label {
   background-color: var(--primary-color);
   color: #fff;
   width: 100%;
@@ -2050,21 +2051,21 @@ select:focus {
   padding-left: 60px;
   margin-top: 10px;
 }
-.chat-message .roll-header .header-label h4 {
+.roll-message-container .roll-header .header-label h4 {
   margin: 0;
   color: #fff;
 }
-.chat-message .roll-header .header-label h4.header-title {
+.roll-message-container .roll-header .header-label h4.header-title {
   padding-top: 3px;
   font-size: 10px;
 }
-.chat-message .roll-header .header-label h4.header-name {
+.roll-message-container .roll-header .header-label h4.header-name {
   padding-bottom: 3px;
   font-size: 18px;
 }
 
 .roll-header .item-description {
-  margin: 2px 4px;
+  margin: 2px 8px;
   color: #555;
   border: 2px solid #aaa;
   border-radius: 9px;
@@ -2092,9 +2093,9 @@ select:focus {
 }
 .rolls .roll .roll-dice {
   position: relative;
-  width: 26px;
-  line-height: 22px;
   float: left;
+  width: 25px;
+  line-height: 21px;
   margin: 6px 6px;
   padding-top: 3px;
   background-repeat: no-repeat;
@@ -2110,23 +2111,23 @@ select:focus {
   filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.7333333333));
 }
 .rolls .roll .roll-dice.strike {
-  background-image: url(../../systems/animaprime/assets/d6-blue.svg);
+  background-color: #549fce;
 }
 .rolls .roll .roll-dice.action {
-  background-image: url(../../systems/animaprime/assets/d6-purple.svg);
+  background-color: #bf7de5;
 }
-.rolls .roll .roll-dice.threat, .rolls .roll .roll-dice.progress {
-  background-image: url(../../systems/animaprime/assets/d6-yellow.svg);
+.rolls .roll .roll-dice.variable {
+  background-color: #e7a067;
 }
 .rolls .roll .roll-dice.bonus {
-  background-image: url(../../systems/animaprime/assets/d6-green.svg);
+  background-color: #4fd3ae;
+}
+.rolls .roll .roll-dice.empowered {
+  background-color: #ffef82;
 }
 .rolls .roll .roll-dice.reckless {
   background-color: #cfa8f9;
   color: #670fc7;
-}
-.rolls .roll .roll-dice.condition {
-  background-image: url(../../systems/animaprime/assets/d6-condition.svg);
 }
 .rolls .roll .roll-dice.resistance {
   background-image: url(../../systems/animaprime/assets/d6-red-forbidden.svg);
@@ -2140,14 +2141,14 @@ select:focus {
 .rolls .roll.success .roll-dice {
   box-shadow: 0 0 6px #17b6a1;
   filter: drop-shadow(3px 3px 1px #017955);
+  width: 29px;
+  line-height: 25px;
+  margin: 6px 6px;
 }
 
 .button-reroll-container {
   align-self: center;
   margin: 0px 8px;
-  padding-top: 5px;
-  border-top: 2px groove #eeede0;
-  margin-top: 6px;
 }
 .button-reroll-container .button-roll {
   border: 2px solid;
@@ -2203,6 +2204,14 @@ select:focus {
   border-color: rgb(104, 69, 23);
   color: rgb(104, 69, 23);
   background-color: rgb(230, 187, 132);
+}
+
+.result-message-commit {
+  border: 2px solid #555;
+  border-radius: 11px;
+  padding-top: 5px;
+  margin: 5px 10px;
+  width: calc(100% - 20px);
 }
 
 .roll-skill .result-message.success {
@@ -2355,7 +2364,7 @@ select:focus {
   padding: 2px;
   background-color: #fff;
 }
-.dialog-container label {
+.dialog-container label.header-label {
   background-color: var(--primary-color);
   color: #fff;
   font-weight: 600;
@@ -2378,59 +2387,158 @@ select:focus {
   padding: 4px 0px;
 }
 
-.dialog-container {
-  align-content: center;
-  justify-content: center;
-  align-content: flex-start;
-}
-.dialog-container .dialog-field-container {
+.dialog-container-itemroll {
+  border: 0;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  text-align: right;
-  flex: 0 0 45%;
-  border: 1px solid black;
-  margin: 2px !important;
-  padding: 5px !important;
-  padding-top: 10px;
+  font-family: "Montserrat";
 }
-.dialog-container .dialog-field-container label {
-  padding-right: 6px;
+.dialog-container-itemroll .strike {
+  background-color: #fcf3f5;
 }
-.dialog-container .dialog-field-container label.label-resistance {
+.dialog-container-itemroll .action {
+  background-color: #fdf5ff;
+}
+.dialog-container-itemroll .variable {
+  background-color: #fdf8f3;
+}
+.dialog-container-itemroll .bonus {
+  background-color: #f8fdfb;
+}
+.dialog-container-itemroll .dialog-fields-container {
+  border: 3px solid var(--primary-color);
+  border-radius: 16px;
+  padding: 8px 0px;
+  width: 100%;
+}
+.dialog-container-itemroll .dialog-field-container {
+  width: 90%;
+  margin-left: 42px;
   margin-bottom: 8px;
 }
-.dialog-container .dialog-field-container input[type=radio] {
-  margin-top: -6px;
-  margin-right: 2px;
+.dialog-container-itemroll .dialog-field-container .dialog-buttons {
+  max-width: 84px;
+  position: relative;
+  right: 42px;
+  display: grid;
+}
+.dialog-container-itemroll .dialog-field-container label {
+  color: var(--primary-color);
+  line-height: 16px;
+  border: 2px solid var(--primary-color);
+  height: 44px;
+  font-weight: 600;
+  border-radius: 24px;
+  padding: 11px;
+  text-align: right;
+  padding-right: 52px;
+  border-right: 0;
+  margin-top: 8px;
+}
+.dialog-container-itemroll .dialog-field-container input[type=checkbox] {
+  -ms-transform: scale(1.25);
+  -moz-transform: scale(1.25);
+  -webkit-transform: scale(1.25);
+  -o-transform: scale(1.25);
+  transform: scale(1.25);
+  margin-top: 4px;
+  accent-color: var(--primary-color);
+  filter: saturate(1.25);
+}
+.dialog-container-itemroll .dialog-field-container input[type=text]:hover {
+  border: 0;
+  border-bottom: 0;
 }
 
 .form-dice-field {
-  margin: 4px !important;
-  background-color: #bbb !important;
-  font-size: 16px !important;
-  border: 1px solid #333 !important;
-  max-width: 80px !important;
-  font-weight: 600;
-  text-align: center !important;
+  justify-content: center;
+  border: 2px solid var(--primary-color);
+  border-radius: 34px;
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: #fff;
+  padding: 6px;
+  height: 44px;
+  padding-top: 6px;
+  margin-top: 4px;
+  min-width: 84px;
+  grid-column: 1;
+  grid-row: 1;
+  text-align: center;
 }
-.form-dice-field input[type=text] {
-  width: 20px;
+.form-dice-field .form-dice-value {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 28px;
+  font-family: "Caveat", cursive;
   color: #444;
+  position: relative;
+  bottom: 5px;
+  text-align: center;
+  display: inline-block;
+  min-width: 18px;
+  position: relative;
+  right: 2px;
+}
+.form-dice-field .form-dice-value.form-single-value {
+  text-align: center;
+  font-size: 42px;
+  margin-right: 10px;
 }
 .form-dice-field span {
-  margin-top: 3px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 28px;
   position: relative;
-  right: 3px;
+  bottom: 3px;
 }
 
-.dialog-content {
-  align-items: baseline;
+.dialog-advanced-buttons-container {
+  padding: 16px 5%;
+  border: 3px solid var(--primary-color);
+  border-radius: 16px;
+  margin: 16px 0px;
+  width: 100%;
+  margin-bottom: 3px;
+}
+.dialog-advanced-buttons-container .dialog-button-advanced {
+  background-color: #eee;
+  color: #555;
+  border: 2px solid;
+  border-radius: 15px;
+  font-family: "Montserrat";
+  font-weight: 600;
+  margin: 0px 10px;
+  padding: 0px 7px;
+}
+.dialog-advanced-buttons-container .dialog-button-advanced.hide-bonus, .dialog-advanced-buttons-container .dialog-button-advanced.hide-weakresist {
+  background-color: #bbb;
+  color: #444;
 }
 
 .form-dialog-plusminus-button {
-  max-width: 30px;
-  margin: 0 !important;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--primary-color);
+  border-radius: 12px;
+  padding: 0px;
+  background-color: #fff;
+  grid-column: 1;
+  grid-row: 1;
+}
+.form-dialog-plusminus-button span {
+  position: relative;
+  bottom: 3px;
+}
+.form-dialog-plusminus-button.minus {
+  left: -8px;
+  top: 30px;
+}
+.form-dialog-plusminus-button.plus {
+  left: -8px;
+  top: -2px;
 }
 
 .dialog-maneuver select {
@@ -2529,32 +2637,6 @@ select:focus {
 .dialog-container .dialog-field-container-endturn input[type=radio] {
   margin-top: -6px;
   margin-right: 2px;
-}
-
-.form-dice-field {
-  margin: 4px !important;
-  background-color: #bbb !important;
-  font-size: 16px !important;
-  border: 1px solid #333 !important;
-  max-width: 80px !important;
-  font-weight: 600;
-  text-align: center !important;
-}
-.form-dice-field input[type=text] {
-  width: 20px;
-  font-weight: 600;
-  font-size: 16px;
-  color: #444;
-}
-.form-dice-field span {
-  margin-top: 3px;
-  position: relative;
-  right: 3px;
-}
-
-.form-dialog-plusminus-button {
-  max-width: 30px;
-  margin: 0 !important;
 }
 
 .turnUnitData {

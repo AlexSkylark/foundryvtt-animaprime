@@ -1,62 +1,70 @@
-<div class="roll-achievement roll achievement" data-type="achievement">
+<div class="roll-achievement roll-message-container" data-type="achievement">
     <div class="roll item" data-item-id="{{_id}}">        
+        
         <div class="roll-header">
-            <div class="flexrow">
-                <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
-                <div class="flexcol">
-                    <h4 class="header-title">{{flavor.entityData.type}} roll:</h4>
-                    <h4 class="header-name">{{flavor.entityData.name}} - {{flavor.targetData.[0].targetName}}</h4>
-                </div>
+            <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
+            <div class="header-label flexcol">
+                <h4 class="header-title">Achievement {{#if flavor.isReroll}}re{{/if}}roll</h4>
+                <h4 class="header-name">{{flavor.entityData.name}}</h4>
             </div>
             <div class="item-description">
-                <p>{{flavor.entityData.system.description}}</p>                
+                <p>{{flavor.entityData.system.description}}</p>
             </div>
         </div>
+                
         <div class="flexcol">
-            <div class="target-section">
-                <ol class="rolls">
-                    {{#each flavor.targetData.[0].additionalData.abilityDice}}
-                    <li title="Ability die" class="roll{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+            {{#each flavor.targetData}}
+            <div class="target-section">                
+                <ol class="rolls rolls-{{../flavor.rollsId}}">
+                    {{#unless (is0 this.additionalData.successDice.length)}}({{/unless}}
+                    {{#each this.additionalData.successDice}}
+                    <li title="Ability Modifier die" class="roll successdice success"><div class="roll-dice success-die">*</div></li>
+                    {{/each}}
+                    {{#unless (is0 this.additionalData.successDice.length)}}){{/unless}}
+
+                    {{#each this.additionalData.abilityDice}}
+                    <li title="Ability die" class="roll{{#if (isSuccess this.result)}} success{{/if}}"><div class="roll-dice">{{{this.result}}}</div></li>
                     {{/each}}
 
-                    {{#each flavor.targetData.[0].additionalData.strikeDice}}
-                    <li title="Strike die" class="roll strike{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{#each this.additionalData.strikeDice}}
+                    <li title="Strike die" class="roll strike{{#if (isSuccess this.result)}} success{{/if}}"><div class="roll-dice strike">{{{this.result}}}</div></li>
                     {{/each}}
 
-                    {{#each flavor.targetData.[0].additionalData.actionDice}}
-                    <li title="Action die" class="roll action{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{#each this.additionalData.actionDice}}
+                    <li title="Action die" class="roll action{{#if (isSuccess this.result)}} success{{/if}}"><div class="roll-dice action">{{{this.result}}}</div></li>
                     {{/each}}
 
-                    {{#each flavor.targetData.[0].additionalData.variableDice}}
-                    <li title="Progress die" class="roll progress{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{#each this.additionalData.variableDice}}
+                    <li title="Threat die" class="roll threat{{#if (isSuccess this.result)}} success{{/if}}"><div class="roll-dice variable">{{{this.result}}}</div></li>
                     {{/each}}
 
-                    {{#each flavor.targetData.[0].additionalData.bonusDice}}
-                    <li title="Bonus die" class="roll bonus{{#if (isSuccess this.result)}} success{{/if}}">{{{this.result}}}</li>
+                    {{#each this.additionalData.bonusDice}}
+                    <li title="Bonus die" class="roll bonus{{#if (isSuccess this.result)}} success{{/if}}"><div class="roll-dice bonus">{{{this.result}}}</div></li>
                     {{/each}}
                 </ol>
-                <span class="result-message {{#if flavor.targetData.[0].resultData.hit}}success{{/if}}">
-                    {{#if flavor.targetData.[0].resultData.hit}}
+                <span class="result-message {{#if ../flavor.targetData.[0].resultData.hit}}success{{/if}}">
+                    {{#if ../flavor.targetData.[0].resultData.hit}}
                     Goal COMPLETE!!!
                     {{else}}
-                        {{#if (isPositiveGoal flavor.entityData.targetIds.[0] flavor.entityData.owner.type) }}
-                            {{#if flavor.targetData.[0].resultData.successes}}
-                                Some progress! <br /> {{flavor.targetData.[0].resultData.successes}} progress {{#if (is1 flavor.targetData.[0].resultData.successes)}}die{{else}}dice{{/if}} added.
+                        {{#if (isPositiveGoal ../flavor.entityData.targetIds.[0] ../flavor.entityData.owner.type) }}
+                            {{#if ../flavor.targetData.[0].resultData.successes}}
+                                Some progress! <br /> {{../flavor.targetData.[0].resultData.successes}} progress {{#if (is1 ../flavor.targetData.[0].resultData.successes)}}die{{else}}dice{{/if}} added.
                             {{else}}
                                 No progress.
                             {{/if}}
                         {{else}}
-                            Progress sabotaged! <br /> up to {{flavor.targetData.[0].resultData.successes}} progress {{#if (is1 flavor.targetData.[0].resultData.successes)}}die{{else}}dice{{/if}} taken.
+                            Progress sabotaged! <br /> up to {{../flavor.targetData.[0].resultData.successes}} progress {{#if (is1 ../flavor.targetData.[0].resultData.successes)}}die{{else}}dice{{/if}} taken.
                         {{/if}}
                     {{/if}}
                 </span>
             </div>
-        </div>
-        {{#if flavor.enableReroll}}
-        <div class="button-reroll-container flexrow">
-            <div class="button-roll reroll">Reroll <i class="fas fa-redo"></i></div>
-            <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
-        </div>
-        {{/if}}
+            {{/each}}
+        </div>        
     </div>    
 </div>
+{{#if flavor.enableReroll}}
+    <div class="button-reroll-container flexrow">
+        <div class="button-roll reroll">Reroll <i class="fas fa-redo"></i></div>
+        <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
+    </div>
+    {{/if}}

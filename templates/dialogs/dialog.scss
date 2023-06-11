@@ -68,14 +68,17 @@
     }
 
     label {
-        background-color: var(--primary-color);
-        color: #fff;
-        font-weight: 600;
-        padding: 2px;
-        padding-left: 8px;
-        width: 100%;
-        font-family: 'Montserrat';
-        font-size: 15px;
+        
+        &.header-label {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-weight: 600;
+            padding: 2px;
+            padding-left: 8px;
+            width: 100%;
+            font-family: 'Montserrat';
+            font-size: 15px;
+        }
     }
 
     .dialog-elements {
