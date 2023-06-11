@@ -3,6 +3,19 @@
 
 .roll-strike {
     
+    .roll {        
+        
+        .roll-dice {
+            &.weakened {    
+                background-color: #ffef82;
+                width: 29px;
+                line-height: 25px;
+                grid-row: 1;
+                grid-column: 1;
+            }
+        }
+    }
+
     .roll-header {        
         h4 {            
             color: #666;
@@ -23,16 +36,15 @@
     }
 
     .target-section {
-        border-bottom: 2px groove #eeede0;
-        padding-bottom: 6px;
-
+            
+        
         .result-message {
-            margin-top: 6px;
+            margin-top: 6px;            
         }
         
         &:last-child {
             padding-bottom: 0;
-            border-bottom: 0;                
+            border-bottom: 0;            
         }
     }
 }

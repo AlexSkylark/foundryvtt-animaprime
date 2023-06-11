@@ -1,12 +1,3 @@
-<script>
-    function modifyDice(diceType, add, maxValue, type) {        
-        if (add && $(".form-" + diceType)[0].value < maxValue)
-            $(".form-" + diceType)[0].value++;
-        else if (!add && $(".form-" + diceType)[0].value > 0)
-            $(".form-" + diceType)[0].value--;
-    }
-</script>
-
 <form>
     <div class="dialog-container dialog-maneuver flexcol">
         <img class="dialog-img" src="{{img}}" />

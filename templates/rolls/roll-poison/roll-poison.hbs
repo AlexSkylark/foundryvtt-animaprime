@@ -1,24 +1,24 @@
-<div class="roll-poison roll {{flavor.entityData.type}}" data-type="{{flavor.entityData.type}}">
-    <div class="roll item" data-item-id="{{_id}}">        
-        <div class="roll-header flexrow">
+<div class="roll-poison {{flavor.entityData.type}} roll-message-container" data-type="{{flavor.entityData.type}}">
+    <div class="item" data-item-id="{{_id}}">        
+        <div class="roll-header">
             <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
-            <div class="flexcol">               
+            <div class="header-label flexcol">
                 <h4 class="header-name">Poison {{#if flavor.isReroll}}re{{/if}}roll</h4>
             </div>
-        </div>        
-        <div class="flexcol">
-            <div class="flexrow">
-                <ol class="rolls">
-                    {{#each flavor.targetData.[0].rollResult.dice.0.results}}
-                    <li class="roll{{#if (is1 this.result)}} success{{/if}}">{{{this.result}}}</li>
-                    {{/each}}                
-                </ol>                
-            </div>            
-            {{#if (is1 flavor.targetData.[0].rollResult.dice.0.results.0.result)}}
-                <span class="result-message success">Poison cleansed!</span>
-            {{else}}
-                <span class="result-message failure">Not cleansed! +1 Threat die</span>
-            {{/if}}
-        </div>        
+            <div class="flexcol">
+                <div class="target-section">
+                    <ol class="rolls">
+                        {{#each flavor.targetData.[0].rollResult.dice.0.results}}
+                        <li class="roll{{#if (is1 this.result)}} success{{/if}}" title="Poison die"><div class="roll-dice">{{{this.result}}}</div></li>
+                        {{/each}}                
+                    </ol>                
+                </div>            
+                {{#if (is1 flavor.targetData.[0].rollResult.dice.0.results.0.result)}}
+                    <span class="result-message success">Poison cleansed!</span>
+                {{else}}
+                    <span class="result-message failure">Not cleansed! +1 Threat die</span>
+                {{/if}}
+            </div>
+        </div>    
     </div>    
 </div>

@@ -2,13 +2,16 @@
 @use '../roll.scss';
 
 .roll-poison {
-    .roll-header {
-        h4 {
-            &.header-name {
-                margin-top: 6px !important;
-                margin-bottom: 16px !important;
-                margin-left: 10px !important;                
-            }  
+
+    ol {
+        &.rolls {
+            margin-top: -20px;
         }
-    } 
+    }
+
+    .header-label {
+        height: 28px !important;
+        margin-top: 14px !important;
+        padding-top: 3px !important;
+    }
 }

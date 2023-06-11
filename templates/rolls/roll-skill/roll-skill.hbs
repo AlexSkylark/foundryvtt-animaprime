@@ -1,4 +1,4 @@
-<div class="roll-skill roll {{flavor.entityData.type}}" data-type="{{flavor.entityData.type}}">
+<div class="roll-skill roll {{flavor.entityData.type}} roll-message-container" data-type="{{flavor.entityData.type}}">
     <div class="roll item" data-item-id="{{_id}}">        
         <div class="roll-header">
             <img class="roll-img" src="icons/skills/trades/academics-study-reading-book.webp" title="{{flavor.entityData.name}}" />
@@ -9,7 +9,7 @@
         </div>
         <div class="flexcol">
             <div class="flexrow">               
-                <ol class="rolls rolls-{{flavor.rollsId}}">
+                <ol class="rolls rolls-{{flavor.targetData.0.rollsId}}">
                     {{#each flavor.targetData.0.rollResult.dice.0.results}}
                     <li class="roll {{#if this.success}}success{{/if}}">
                         <div class="roll-dice">{{{this.result}}}</div>

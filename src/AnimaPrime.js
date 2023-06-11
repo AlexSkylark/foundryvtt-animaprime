@@ -160,16 +160,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
             currentCombatantActor.id == message.speaker.actor
         ) {
             if (!message.flags.enableReroll && actorOwner.isOwner) {
-                if (game.user.isGM) {
-                    if (
-                        actorOwner.type == "adversity" ||
-                        actorOwner.type == "hazard"
-                    ) {
-                        await DiceRolls.getConfirmEndOfTurn(item.owner);
-                    }
-                } else {
-                    await DiceRolls.getConfirmEndOfTurn(item.owner);
-                }
+                await DiceRolls.getConfirmEndOfTurn(item.owner);
             }
         }
     }

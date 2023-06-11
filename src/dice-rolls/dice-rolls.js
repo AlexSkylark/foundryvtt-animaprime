@@ -27,6 +27,7 @@ export async function renderRoll(
 
     for (let i = 0; i < rollResult.length; i++) {
         targetData.push({
+            rollsId: generateIdString(),
             additionalData: additionalData[i],
             rollResult: rollResult[i],
             resultData: resultData[i],
@@ -49,7 +50,9 @@ export async function renderRoll(
     });
 
     // sort dice rolls;
-    renderedRoll = sortDiceRolls(renderedRoll, chatMessageUniqueId);
+    await targetData.forEach((target) => {
+        renderedRoll = sortDiceRolls(renderedRoll, target.rollsId);
+    });
 
     let messageData = {
         speaker: ChatMessage.getSpeaker({ alias: entityData.owner.name }),
@@ -84,7 +87,7 @@ export async function renderRoll(
 
 function sortDiceRolls(renderedRoll, chatMessageUniqueId) {
     var elems = $(".rolls-" + chatMessageUniqueId + " li", renderedRoll)
-        .not(".successdice")
+        .not(".outside-dice")
         .detach()
         .sort(function (a, b) {
             return $(a).find(".roll-dice").html() <
@@ -99,12 +102,12 @@ function sortDiceRolls(renderedRoll, chatMessageUniqueId) {
     var htmlToModify = $("<div>" + renderedRoll + "</div>");
     htmlToModify
         .find(".rolls-" + chatMessageUniqueId + " li")
-        .not(".successdice")
+        .not(".outside-dice")
         .not(":last")
         .replaceWith("");
     htmlToModify
         .find(".rolls-" + chatMessageUniqueId + " li")
-        .not(".successdice")
+        .not(".outside-dice")
         .replaceWith(elems);
     return htmlToModify.html();
 }
@@ -146,11 +149,11 @@ export async function getManeuverRollOptions(item) {
             content: html,
             buttons: {
                 cancel: {
-                    label: "Cancel",
+                    label: '<i class="fas fa-x"></i> Cancel',
                     callback: (html) => resolve({ cancelled: true }),
                 },
                 normal: {
-                    label: "Confirm",
+                    label: '<i class="fas fa-check"></i> Confirm',
                     callback: (html) =>
                         resolve({
                             maneuverStyle:
@@ -192,11 +195,11 @@ export async function getSkillRollOptions(item) {
             },
             buttons: {
                 cancel: {
-                    label: "Cancel",
+                    label: '<i class="fas fa-x"></i> Cancel',
                     callback: (html) => resolve({ cancelled: true }),
                 },
                 normal: {
-                    label: 'Confirm <i class="fas fa-check"></i>',
+                    label: '<i class="fas fa-check"></i> Confirm',
                     callback: (html) =>
                         resolve({
                             difficulty:
@@ -234,11 +237,11 @@ export async function getItemRollOptions(item) {
             content: html,
             buttons: {
                 cancel: {
-                    label: "Cancel",
+                    label: '<i class="fas fa-x"></i> Cancel',
                     callback: (html) => resolve({ cancelled: true }),
                 },
                 normal: {
-                    label: "Confirm",
+                    label: '<i class="fas fa-check"></i> Confirm',
                     callback: (html) =>
                         resolve(
                             processRollOptions(html[0].querySelector("form"))
@@ -277,8 +280,9 @@ async function confirmEndTurnDialog() {
 
     return new Promise((resolve) => {
         const dialogOptions = {
-            width: 250,
-            height: 130,
+            width: 310,
+            height: 167,
+            classes: ["window-dialog"],
         };
 
         const data = {
@@ -286,11 +290,11 @@ async function confirmEndTurnDialog() {
             content: html,
             buttons: {
                 cancel: {
-                    label: "Cancel",
+                    label: '<i class="fas fa-x"></i> Cancel',
                     callback: (html) => resolve({ cancelled: true }),
                 },
                 normal: {
-                    label: "Confirm",
+                    label: '<i class="fas fa-check"></i> Confirm',
                     callback: (html) => resolve({ confirmed: true }),
                 },
             },

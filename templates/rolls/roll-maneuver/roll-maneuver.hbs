@@ -1,4 +1,4 @@
-<div class="roll-maneuver roll maneuver" data-type="maneuver">
+<div class="roll-maneuver roll maneuver roll-message-container" data-type="maneuver">
     <div class="roll item" data-item-id="{{_id}}">        
         <div class="roll-header">
             <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
@@ -9,9 +9,9 @@
         </div>
         <div class="flexcol">
             <div class="target-section">
-                <ol class="rolls">
+                <ol class="rolls rolls-{{flavor.targetData.[0].rollsId}}">
                     {{#if flavor.targetData.[0].additionalData.isSlowed}}
-                    <li class="roll slowed" title="Slowed Condition die"></li>
+                    <li class="roll roll-slowed outside-dice" title="Slowed Condition die: {{flavor.targetData.[0].additionalData.slowedDie.result}}"><img src="../../systems/animaprime/assets/d6-forbidden.svg" /><div class="roll-dice slowed">{{flavor.targetData.[0].additionalData.slowedDie.result}}</div></li>
                     {{/if}}
                     {{#each flavor.targetData.[0].rollResult.dice.0.results}}
                     <li class="roll {{#if this.strike}}success strike-success{{/if}} {{#if this.charge}}success charge-success{{/if}}" title="Maneuver die"><div class="roll-dice">{{{this.result}}}</div></li>
@@ -24,7 +24,7 @@
                     <li class="roll quickened{{#if flavor.targetData.[0].additionalData.quickenedDie.strike}} success strike-success{{/if}}{{#if flavor.additionalData.quickenedDie.charge}} success charge-success{{/if}}" title="Quickened Condition die"><div class="roll-dice">{{flavor.targetData.[0].additionalData.quickenedDie.result}}</div></li>
                     {{/if}}
                     {{#if flavor.targetData.[0].additionalData.isAggressive}}
-                    <li title="Aggressive Modifier die" class="roll success strike-success"><div class="roll-dice">&nbsp;</div></li>
+                    <li title="Aggressive Modifier die" class="roll success strike-success"><div class="roll-dice">*</div></li>
                     {{/if}}
                     {{#if flavor.targetData.[0].additionalData.hasSupportDie}}
                     <li class="roll bonus{{#if flavor.targetData.[0].additionalData.supportDice.0.strike}} success strike-success{{/if}}{{#if flavor.additionalData.supportDice.0.charge}} success charge-success{{/if}}" title="Support die"><div class="roll-dice">{{flavor.targetData.[0].additionalData.supportDice.0.result}}</div></li>
@@ -62,12 +62,12 @@
                     {{/if}}
                 </span>               
             </div>                   
-        </div>
-        {{#if flavor.enableReroll}}
-        <div class="button-reroll-container flexrow">
-            <div class="button-roll reroll">Reroll <i class="fas fa-redo"></i></div>
-            <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
-        </div>
-        {{/if}}       
+        </div>        
     </div>    
 </div>
+{{#if flavor.enableReroll}}
+<div class="button-reroll-container flexrow">
+    <div class="button-roll reroll">Reroll <i class="fas fa-redo"></i></div>
+    <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
+</div>
+{{/if}}

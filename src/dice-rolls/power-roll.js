@@ -23,7 +23,8 @@ export async function powerRoll(power) {
         },
         options: {
             width: 320,
-            height: 150,
+            height: 252,
+            classes: ["window-dialog", "window-dialog-usepower"],
         },
         defaultYes: false,
     });

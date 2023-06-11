@@ -288,7 +288,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
             },
             options: {
                 width: 320,
-                height: 150,
+                height: 220,
+                classes: ["window-dialog"],
             },
             defaultYes: false,
         });

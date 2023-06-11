@@ -29,13 +29,8 @@
     margin-top: 16px;
     background-color: #fffbfa;
 
-    
-
-    
-
     .roll-header {
         display: grid;
-        margin-bottom: -8px;
 
         .roll-img {
             border: 3px solid var(--primary-color);
@@ -113,6 +108,21 @@
     
     .roll {       
     
+        &.outside-dice {
+            
+            display: grid;
+            img {
+                grid-row: 1;
+                grid-column: 1;
+                width: 36px;
+                border: 0;
+                z-index: 1;
+                position: relative;
+                left: 2px;
+                top: 2px;
+            }
+        }
+
         .roll-dice {
             
             position: relative;
@@ -160,11 +170,7 @@
     
             &.resistance {
                 background-image: url(../../systems/animaprime/assets/d6-red-forbidden.svg);
-            }
-    
-            &.weaken {
-                background-image: url(../../systems/animaprime/assets/d6-condition-forbidden.svg);
-            }
+            }            
     
             &.successdice {
                 background-image: url(../../systems/animaprime/assets/d6-green-successmodifier.svg);
@@ -211,6 +217,8 @@
     }
 }
 
+
+
 .result-message {
     font-size: 13px;
     text-align: center;    
@@ -219,13 +227,10 @@
     font-weight: 800;
     background-color: #bbb;
     width: 100%;
-    display: block;
-    border-bottom-left-radius: 9px;
-    border-bottom-right-radius: 9px;
+    display: block;    
     border: 0px;
-    border-top: 2px solid #555;
-    
-    font-family: 'Montserrat';    
+    border-top: 2px solid #555;    
+    font-family: 'Montserrat';
 
     &.critical {
         border-color: variables.$critical-foreground;
@@ -249,6 +254,22 @@
         border-color: rgb(104, 69, 23);
         color: rgb(104, 69, 23);
         background-color: rgb(230, 187, 132);
+    }
+}
+
+.target-section {    
+    &:last-of-type {
+        .result-message {
+            border-bottom-left-radius: 9px;
+            border-bottom-right-radius: 9px;
+        }
+    }
+
+    &:not(:last-of-type) {
+        .result-message {
+            border-bottom: 2px solid;
+            margin-bottom: 8px;
+        }
     }
 }
 

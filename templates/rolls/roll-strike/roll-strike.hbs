@@ -1,5 +1,5 @@
-<div class="roll-strike roll strike" data-type="strike">
-    <div class="roll item" data-item-id="{{id}}">                
+<div class="roll-strike roll strike roll-message-container" data-type="strike">
+    <div class="item" data-item-id="{{id}}">                
         <div class="roll-header">
             <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
             <div class="header-label flexcol">
@@ -13,9 +13,9 @@
         <div class="flexcol">
             {{#each flavor.targetData}}
             <div class="flexrow target-section">
-                <ol class="rolls rolls-{{../flavor.rollsId}}">
+                <ol class="rolls rolls-{{this.rollsId}}">
                     {{#each this.additionalData.weakenedDice}}
-                    <li class="roll weaken"><div class="roll-dice weakened-die">X</div></li>
+                    <li class="roll roll-weaken outside-dice" title="Weakened Condition die: {{this.result}}"><img src="../../systems/animaprime/assets/d6-forbidden.svg" /><div class="roll-dice weakened">{{this.result}}</div></li>                    
                     {{/each}}
             
                     {{#each this.additionalData.resistanceDice}}
@@ -24,7 +24,7 @@
 
                     {{#unless (is0 this.additionalData.successDice.length)}}({{/unless}}
                     {{#each this.additionalData.successDice}}
-                    <li title="Ability Modifier die" class="roll successdice success"><div class="roll-dice success-die">*</div></li>
+                    <li title="Ability Modifier die" class="roll outside-dice success"><div class="roll-dice success-die">*</div></li>
                     {{/each}}
                     {{#unless (is0 this.additionalData.successDice.length)}}){{/unless}}
 
@@ -66,11 +66,11 @@
             </div>
             {{/each}}
         </div>                   
-    </div>    
-    {{#if flavor.enableReroll}}
-    <div class="button-reroll-container flexrow">
-        <div class="button-roll reroll">Reroll <i class="fas fa-x"></i></div>
-        <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
-    </div>
-    {{/if}}
+    </div>        
 </div>
+{{#if flavor.enableReroll}}
+<div class="button-reroll-container flexrow">
+    <div class="button-roll reroll">Reroll <i class="fas fa-x"></i></div>
+    <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
+</div>
+{{/if}}

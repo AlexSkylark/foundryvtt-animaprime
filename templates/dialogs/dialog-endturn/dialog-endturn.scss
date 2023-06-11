@@ -1,26 +1,39 @@
-.dialog-container {
-    justify-content: center;
 
-    .dialog-field-container-endturn {
-    
-        align-items: center;
-        text-align: center;
-        flex: 0 0 95%;    
-        margin: 2px !important;
-        padding: 10px 5px !important;    
-        font-size: 20px;
-            
-        label {            
-            padding-right: 6px;
+.dialog-curtain {
+    background-color: #0000007d;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: -1;
+}
 
-            &.label-resistance {
-                margin-bottom: 8px;
+.dialog-endturn {
+
+    .dialog-container {
+        
+        justify-content: center;
+        position: relative;
+        
+        .dialog-field-container-endturn {
+        
+            align-items: center;
+            text-align: center;
+            flex: 0 0 95%;    
+            margin: 2px !important;
+            padding: 10px 5px !important;    
+            font-size: 20px;
+            padding-top: 0px !important;
+                
+            label {            
+                padding-right: 6px;
+                font-family: 'Montserrat';
+
+                &.label-resistance {
+                    margin-bottom: 8px;
+                }
             }
-        }
-
-        input[type=radio] {
-            margin-top: -6px;
-            margin-right: 2px;
         }
     }
 }

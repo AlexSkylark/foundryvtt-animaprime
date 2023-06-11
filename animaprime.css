@@ -2025,7 +2025,6 @@ select:focus {
 }
 .roll-message-container .roll-header {
   display: grid;
-  margin-bottom: -8px;
 }
 .roll-message-container .roll-header .roll-img {
   border: 3px solid var(--primary-color);
@@ -2091,6 +2090,19 @@ select:focus {
   justify-content: center;
   align-items: center;
 }
+.rolls .roll.outside-dice {
+  display: grid;
+}
+.rolls .roll.outside-dice img {
+  grid-row: 1;
+  grid-column: 1;
+  width: 36px;
+  border: 0;
+  z-index: 1;
+  position: relative;
+  left: 2px;
+  top: 2px;
+}
 .rolls .roll .roll-dice {
   position: relative;
   float: left;
@@ -2131,9 +2143,6 @@ select:focus {
 }
 .rolls .roll .roll-dice.resistance {
   background-image: url(../../systems/animaprime/assets/d6-red-forbidden.svg);
-}
-.rolls .roll .roll-dice.weaken {
-  background-image: url(../../systems/animaprime/assets/d6-condition-forbidden.svg);
 }
 .rolls .roll .roll-dice.successdice {
   background-image: url(../../systems/animaprime/assets/d6-green-successmodifier.svg);
@@ -2179,8 +2188,6 @@ select:focus {
   background-color: #bbb;
   width: 100%;
   display: block;
-  border-bottom-left-radius: 9px;
-  border-bottom-right-radius: 9px;
   border: 0px;
   border-top: 2px solid #555;
   font-family: "Montserrat";
@@ -2204,6 +2211,15 @@ select:focus {
   border-color: rgb(104, 69, 23);
   color: rgb(104, 69, 23);
   background-color: rgb(230, 187, 132);
+}
+
+.target-section:last-of-type .result-message {
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+}
+.target-section:not(:last-of-type) .result-message {
+  border-bottom: 2px solid;
+  margin-bottom: 8px;
 }
 
 .result-message-commit {
@@ -2230,6 +2246,13 @@ select:focus {
   background-color: #e995a7;
 }
 
+.roll-maneuver .roll .roll-dice.slowed, .roll-maneuver .roll .roll-dice.quickened {
+  background-color: #ffef82;
+  width: 29px;
+  line-height: 25px;
+  grid-row: 1;
+  grid-column: 1;
+}
 .roll-maneuver .roll.strike-success .roll-dice {
   box-shadow: 0 0 6px #f13f92;
   filter: drop-shadow(3px 3px 1px #a73158);
@@ -2238,13 +2261,14 @@ select:focus {
   box-shadow: 0 0 6px #51ceff;
   filter: drop-shadow(3px 3px 1px #22769c);
 }
-.roll-maneuver .roll.slowed {
-  background-image: url(../../systems/animaprime/assets/d6-condition-forbidden.svg);
-}
-.roll-maneuver .roll.quickened {
-  background-image: url(../../systems/animaprime/assets/d6-condition.svg);
-}
 
+.roll-strike .roll .roll-dice.weakened {
+  background-color: #ffef82;
+  width: 29px;
+  line-height: 25px;
+  grid-row: 1;
+  grid-column: 1;
+}
 .roll-strike .roll-header h4 {
   color: #666;
 }
@@ -2258,10 +2282,6 @@ select:focus {
 }
 .roll-strike .rolls {
   min-width: 100%;
-}
-.roll-strike .target-section {
-  border-bottom: 2px groove #eeede0;
-  padding-bottom: 6px;
 }
 .roll-strike .target-section .result-message {
   margin-top: 6px;
@@ -2286,22 +2306,21 @@ select:focus {
   margin-top: 6px;
 }
 
-.roll-power .header-title {
-  margin-top: 2px;
-  font-size: 16px;
-  margin-bottom: 0;
-}
-.roll-power .header-name {
-  font-size: 23px;
+.roll-power .roll-header .item-description {
+  margin-bottom: 24px;
 }
 .roll-power .result-message {
-  font-size: 14px;
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
 }
 
-.roll-poison .roll-header h4.header-name {
-  margin-top: 6px !important;
-  margin-bottom: 16px !important;
-  margin-left: 10px !important;
+.roll-poison ol.rolls {
+  margin-top: -20px;
+}
+.roll-poison .header-label {
+  height: 28px !important;
+  margin-top: 14px !important;
+  padding-top: 3px !important;
 }
 
 .window-dialog {
@@ -2310,9 +2329,12 @@ select:focus {
   background-color: #fff;
   box-shadow: -1px -1px 8px #000;
   filter: drop-shadow(10px 10px 4px rgba(0, 0, 0, 0.5333333333));
+  z-index: 1;
 }
 .window-dialog .window-header {
   background-color: var(--primary-color);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .window-dialog .window-content {
   background: #fffbfa;
@@ -2321,7 +2343,7 @@ select:focus {
 }
 .window-dialog .dialog-buttons {
   display: flex;
-  margin: 4px 0px;
+  margin: 4px 4px;
 }
 .window-dialog .dialog-buttons .dialog-button {
   background-color: #fffbfa;
@@ -2330,13 +2352,13 @@ select:focus {
   font-family: "Montserrat";
   font-weight: 600;
 }
-.window-dialog .dialog-buttons .dialog-button.cancel {
+.window-dialog .dialog-buttons .dialog-button.cancel, .window-dialog .dialog-buttons .dialog-button.no {
   border-color: #990f38;
   color: #990f38;
   margin-left: 8px;
   margin-right: 4px;
 }
-.window-dialog .dialog-buttons .dialog-button.normal {
+.window-dialog .dialog-buttons .dialog-button.normal, .window-dialog .dialog-buttons .dialog-button.yes {
   border-color: #0f9986;
   color: #0f9986;
   margin-right: 8px;
@@ -2578,65 +2600,47 @@ select:focus {
   filter: saturate(1.25);
 }
 
-.dialog-usepower {
-  margin-bottom: 8px;
-}
-.dialog-usepower img {
-  flex: 0 0 48px !important;
-  height: 48px;
-  margin: 4px;
-  margin-right: 12px;
-}
-.dialog-usepower .value-field {
-  border: 0;
-  background: none;
-  line-height: 20px;
-  text-align: center;
-  font-size: 16px;
-  padding: 7px;
-  margin-bottom: 12px;
+.dialog-usepower .dialog-elements {
+  align-items: flex-start;
+  font-family: "Montserrat";
+  padding: 32px 16px;
 }
 
-.dialog-confirmdelete {
-  margin-bottom: 8px;
-}
-.dialog-confirmdelete img {
-  flex: 0 0 48px !important;
-  height: 48px;
-  margin: 4px;
-  margin-right: 12px;
-}
-.dialog-confirmdelete .value-field {
-  border: 0;
-  background: none;
-  line-height: 20px;
-  text-align: center;
-  font-size: 16px;
-  padding: 7px;
-  margin-bottom: 12px;
-  line-height: 16px;
+.dialog-elements {
+  align-items: flex-start;
+  font-family: "Montserrat";
+  padding: 32px 16px;
 }
 
-.dialog-container {
+.dialog-curtain {
+  background-color: rgba(0, 0, 0, 0.4901960784);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: -1;
+}
+
+.dialog-endturn .dialog-container {
   justify-content: center;
+  position: relative;
 }
-.dialog-container .dialog-field-container-endturn {
+.dialog-endturn .dialog-container .dialog-field-container-endturn {
   align-items: center;
   text-align: center;
   flex: 0 0 95%;
   margin: 2px !important;
   padding: 10px 5px !important;
   font-size: 20px;
+  padding-top: 0px !important;
 }
-.dialog-container .dialog-field-container-endturn label {
+.dialog-endturn .dialog-container .dialog-field-container-endturn label {
   padding-right: 6px;
+  font-family: "Montserrat";
 }
-.dialog-container .dialog-field-container-endturn label.label-resistance {
+.dialog-endturn .dialog-container .dialog-field-container-endturn label.label-resistance {
   margin-bottom: 8px;
-}
-.dialog-container .dialog-field-container-endturn input[type=radio] {
-  margin-top: -6px;
-  margin-right: 2px;
 }
 
 .turnUnitData {

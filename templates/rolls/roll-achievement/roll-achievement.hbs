@@ -18,7 +18,7 @@
                 <ol class="rolls rolls-{{../flavor.rollsId}}">
                     {{#unless (is0 this.additionalData.successDice.length)}}({{/unless}}
                     {{#each this.additionalData.successDice}}
-                    <li title="Ability Modifier die" class="roll successdice success"><div class="roll-dice success-die">*</div></li>
+                    <li title="Ability Modifier die" class="roll outside-dice success"><div class="roll-dice success-die">*</div></li>
                     {{/each}}
                     {{#unless (is0 this.additionalData.successDice.length)}}){{/unless}}
 
@@ -63,8 +63,8 @@
     </div>    
 </div>
 {{#if flavor.enableReroll}}
-    <div class="button-reroll-container flexrow">
-        <div class="button-roll reroll">Reroll <i class="fas fa-redo"></i></div>
-        <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
-    </div>
-    {{/if}}
+<div class="button-reroll-container flexrow">
+    <div class="button-roll reroll">Reroll <i class="fas fa-redo"></i></div>
+    <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
+</div>
+{{/if}}

@@ -1,8 +1,9 @@
 <form class="{{cssClass}} dialog-usepower flexrow">
-    <img src="{{img}}" />
-    <div class="field-container flexcol">        
-        <div class="value-field">
-            <span>Use {{type}} <strong>"{{name}}"</strong>, {{#if system.cost}}with a cost of {{system.cost}} charge 
+    <div class="dialog-container dialog-skill flexcol">
+        <img class="dialog-img" src="{{img}}" />
+        <label class="header-label">{{name}}</label>
+        <div class="dialog-elements flexcol">
+            <span>Use this <strong>{{type}}</strong> action, {{#if system.cost}}with a cost of {{system.cost}} charge 
                 {{#if (is1 system.cost)}}die{{else}}dice{{/if}}{{else}}at no cost{{/if}}?</span>
         </div>
     </div>

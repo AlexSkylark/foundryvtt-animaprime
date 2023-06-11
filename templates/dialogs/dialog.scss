@@ -5,9 +5,12 @@
     background-color: #fff;
     box-shadow: -1px -1px 8px #000;
     filter: drop-shadow(10px 10px 4px #00000088);
+    z-index: 1;
 
     .window-header {
         background-color: var(--primary-color);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
 
     .window-content {
@@ -18,7 +21,7 @@
 
     .dialog-buttons {
         display: flex;
-        margin: 4px 0px;
+        margin: 4px 4px;
 
         .dialog-button {
             background-color: #fffbfa;
@@ -27,14 +30,14 @@
             font-family: 'Montserrat';
             font-weight: 600;    
         
-            &.cancel {
+            &.cancel, &.no {
                 border-color: #990f38;
                 color: #990f38;
                 margin-left: 8px;
                 margin-right: 4px;
             }
         
-            &.normal {
+            &.normal, &.yes {
                 border-color: #0f9986;
                 color: #0f9986;
                 margin-right: 8px;

@@ -85,10 +85,8 @@ export async function maneuverRoll(
 
     let slowedDie = null;
     if (isSlowed) {
-        slowedDie = rollResult[0].dice[0].results.splice(
-            resultData[0].slowedDie,
-            1
-        )[0];
+        rollResult[0].dice[0].results.splice(resultData[0].slowedIndex, 1);
+        slowedDie = resultData[0].slowedDie;
     }
 
     let additionalData = [];
@@ -166,15 +164,15 @@ function checkManeuverTarget(maneuver, maneuverStyle) {
 function checkManeuverResult(maneuverGain, results, isSlowed, isAggressive) {
     let strikeGain = 0;
     let chargeGain = 0;
-    let strikeIndexes = [];
-    let chargeIndexes = [];
+    let slowedIndex = null;
 
     let slowedFlag = false;
-    let slowedDie = 0;
+    let slowedDie = null;
     for (let i = 0; i < results.length; i++) {
         if (maneuverGain["r" + results[i].result] == 1) {
             if (isSlowed && !slowedFlag) {
-                slowedDie = i;
+                slowedDie = results[i];
+                slowedIndex = i;
                 slowedFlag = true;
             } else {
                 strikeGain++;
@@ -182,7 +180,8 @@ function checkManeuverResult(maneuverGain, results, isSlowed, isAggressive) {
             }
         } else if (maneuverGain["r" + results[i].result] == 2) {
             if (isSlowed && !slowedFlag) {
-                slowedDie = i;
+                slowedDie = results[i];
+                slowedIndex = i;
                 slowedFlag = true;
             } else {
                 chargeGain++;
@@ -197,6 +196,7 @@ function checkManeuverResult(maneuverGain, results, isSlowed, isAggressive) {
         strike: strikeGain,
         charge: chargeGain,
         slowedDie: slowedDie,
+        slowedIndex: slowedIndex,
     };
 }
 
