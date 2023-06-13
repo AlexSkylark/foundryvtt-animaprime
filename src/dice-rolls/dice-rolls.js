@@ -354,7 +354,7 @@ export function splitRollResult(
         if (
             isWeakened &&
             !weakenedFlag &&
-            results[i - resistance].result >= 4
+            results[i - resistance].result >= 3
         ) {
             returnArray.weakenedDice.push(results[0]);
             weakenedFlag = true;
@@ -391,7 +391,7 @@ export function checkSuccess(results, successModifier) {
     let successes = 0;
 
     for (let i of results) {
-        if (i.result >= 4) successes++;
+        if (i.result >= 3) successes++;
     }
 
     return Math.max(successes + successModifier, 0);
