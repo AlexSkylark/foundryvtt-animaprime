@@ -62,7 +62,6 @@ export async function maneuverRoll(
         checkManeuverResult(
             maneuver.system.gain,
             rollResult[0].dice[0].results,
-            isSlowed,
             dialogOptions.maneuverStyle == "aggressive"
         )
     );
@@ -83,10 +82,39 @@ export async function maneuverRoll(
         recklessDice.push(rollResult[0].dice[0].results.pop());
     }
 
+    let diceResults = rollResult[0].dice[0].results;
+
+    // take out slowed die
     let slowedDie = null;
     if (isSlowed) {
-        rollResult[0].dice[0].results.splice(resultData[0].slowedIndex, 1);
-        slowedDie = resultData[0].slowedDie;
+        let indexSlowedCharge = diceResults.findIndex((x) => x.charge);
+        let indexSlowedStrike = diceResults.findIndex((x) => x.strike);
+
+        if (indexSlowedCharge > -1) {
+            diceResults[indexSlowedCharge].charge = false;
+            diceResults[indexSlowedCharge].invisible = true;
+            slowedDie = diceResults[indexSlowedCharge];
+            resultData[0].charge -= 1;
+        } else if (indexSlowedStrike > -1) {
+            diceResults[indexSlowedStrike].strike = false;
+            diceResults[indexSlowedStrike].invisible = true;
+            slowedDie = diceResults[indexSlowedStrike];
+            resultData[0].strike -= 1;
+        }
+    }
+
+    rollResult[0].dice[0].results = diceResults;
+
+    // take out defensive die
+    let defensiveDie = null;
+    if (dialogOptions.maneuverStyle == "defensive") {
+        let indexDefensive = diceResults.findIndex((x) => x.strike);
+        if (indexDefensive > -1) {
+            diceResults[indexDefensive].strike = false;
+            diceResults[indexDefensive].invisible = true;
+            defensiveDie = diceResults[indexDefensive];
+            resultData[0].strike -= 1;
+        }
     }
 
     let additionalData = [];
@@ -97,6 +125,7 @@ export async function maneuverRoll(
         supportDice: supportDice,
         isSlowed: isSlowed,
         slowedDie: slowedDie,
+        defensiveDie: defensiveDie,
         maneuverStyle: dialogOptions.maneuverStyle,
         hasSupportDie: dialogOptions.supportDie,
         isRegular: dialogOptions.maneuverStyle == "regular",
@@ -161,32 +190,21 @@ function checkManeuverTarget(maneuver, maneuverStyle) {
     return true;
 }
 
-function checkManeuverResult(maneuverGain, results, isSlowed, isAggressive) {
+function checkManeuverResult(maneuverGain, results, isAggressive) {
     let strikeGain = 0;
     let chargeGain = 0;
-    let slowedIndex = null;
 
-    let slowedFlag = false;
-    let slowedDie = null;
+    let defensiveFlag = false;
+    let defensiveIndex = null;
+    let defensiveDie = null;
+
     for (let i = 0; i < results.length; i++) {
-        if (maneuverGain["r" + results[i].result] == 1) {
-            if (isSlowed && !slowedFlag) {
-                slowedDie = results[i];
-                slowedIndex = i;
-                slowedFlag = true;
-            } else {
-                strikeGain++;
-                results[i].strike = true;
-            }
-        } else if (maneuverGain["r" + results[i].result] == 2) {
-            if (isSlowed && !slowedFlag) {
-                slowedDie = results[i];
-                slowedIndex = i;
-                slowedFlag = true;
-            } else {
-                chargeGain++;
-                results[i].charge = true;
-            }
+        if (maneuverGain["r" + results[i].result] == 2) {
+            chargeGain++;
+            results[i].charge = true;
+        } else if (maneuverGain["r" + results[i].result] == 1) {
+            strikeGain++;
+            results[i].strike = true;
         }
     }
 
@@ -195,8 +213,6 @@ function checkManeuverResult(maneuverGain, results, isSlowed, isAggressive) {
     return {
         strike: strikeGain,
         charge: chargeGain,
-        slowedDie: slowedDie,
-        slowedIndex: slowedIndex,
     };
 }
 

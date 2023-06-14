@@ -22,12 +22,17 @@
 
     .roll {        
         .roll-dice {
-            &.slowed, &.quickened {    
+            &.slowed, &.quickened, &.defensive {    
                 background-color: #ffef82;
                 width: 29px;
                 line-height: 25px;
                 grid-row: 1;
-                grid-column: 1;
+                grid-column: 1;                
+            }
+
+            &.defensive {
+                background-color: #cfa8f9;
+                color: #4c0b92;
             }
         }
 

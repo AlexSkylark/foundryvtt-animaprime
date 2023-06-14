@@ -54,12 +54,16 @@
                 </ol>                
                 <span class="result-message{{#if this.resultData.hit}} success{{/if}} {{#unless this.resultData.successes}} failure{{/unless}}">
                 {{#if this.resultData.hit}}
-                MAJOR WOUND! {{this.targetName}} takes a point of damage!
+                CRITICAL HIT! {{this.targetName}} loses a Health point!
                 {{else}}
                     {{#if this.resultData.successes}}
-                        Minor wound! {{this.targetName}} gained {{this.resultData.successes}} threat {{#if (is1 flavor.resultData.successes)}}die{{else}}dice{{/if}}.
+                        {{#if this.resultData.variableGain}}                        
+                            Hit! {{this.targetName}} gained {{this.resultData.variableGain}} threat {{#if (is1 this.resultData.variableGain)}}die{{else}}dice{{/if}}.
+                        {{else}}
+                            Parry! the strike was mitigated by {{this.targetName}}.
+                        {{/if}}
                     {{else}}
-                        Complete miss on {{this.targetName}}!
+                        The strike missed {{this.targetName}} completely!
                     {{/if}}
                 {{/if}}
                 </span>

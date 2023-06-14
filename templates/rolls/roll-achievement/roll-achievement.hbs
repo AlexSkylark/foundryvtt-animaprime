@@ -48,12 +48,12 @@
                     {{else}}
                         {{#if (isPositiveGoal ../flavor.entityData.targetIds.[0] ../flavor.entityData.owner.type) }}
                             {{#if ../flavor.targetData.[0].resultData.successes}}
-                                Some progress! <br /> {{../flavor.targetData.[0].resultData.successes}} progress {{#if (is1 ../flavor.targetData.[0].resultData.successes)}}die{{else}}dice{{/if}} added.
+                                Some progress! <br /> {{../flavor.targetData.[0].resultData.variableGain}} progress {{#if (is1 ../flavor.targetData.[0].resultData.variableGain)}}die{{else}}dice{{/if}} added.
                             {{else}}
                                 No progress.
                             {{/if}}
                         {{else}}
-                            Progress sabotaged! <br /> up to {{../flavor.targetData.[0].resultData.successes}} progress {{#if (is1 ../flavor.targetData.[0].resultData.successes)}}die{{else}}dice{{/if}} taken.
+                            Progress sabotaged! <br /> up to {{../flavor.targetData.[0].resultData.variableGain}} progress {{#if (is1 ../flavor.targetData.[0].resultData.variableGain)}}die{{else}}dice{{/if}} taken.
                         {{/if}}
                     {{/if}}
                 </span>

@@ -2106,8 +2106,8 @@ select:focus {
 .rolls .roll .roll-dice {
   position: relative;
   float: left;
-  width: 25px;
-  line-height: 21px;
+  width: 23px;
+  line-height: 19px;
   margin: 6px 6px;
   padding-top: 3px;
   background-repeat: no-repeat;
@@ -2115,6 +2115,7 @@ select:focus {
   font-size: var(--font-size-16);
   color: rgba(0, 0, 0, 0.6509803922);
   font-weight: bold;
+  padding-left: 2px;
   text-align: center;
   background-position-x: center;
   background-color: #bbb;
@@ -2151,8 +2152,10 @@ select:focus {
   box-shadow: 0 0 6px #17b6a1;
   filter: drop-shadow(3px 3px 1px #017955);
   width: 29px;
-  line-height: 25px;
+  line-height: 26px;
   margin: 6px 6px;
+  font-size: 20px;
+  padding-top: 1px;
 }
 
 .button-reroll-container {
@@ -2265,12 +2268,16 @@ select:focus {
   background-color: #b8bdfc;
   color: #0b126b;
 }
-.roll-maneuver .roll .roll-dice.slowed, .roll-maneuver .roll .roll-dice.quickened {
+.roll-maneuver .roll .roll-dice.slowed, .roll-maneuver .roll .roll-dice.quickened, .roll-maneuver .roll .roll-dice.defensive {
   background-color: #ffef82;
   width: 29px;
   line-height: 25px;
   grid-row: 1;
   grid-column: 1;
+}
+.roll-maneuver .roll .roll-dice.defensive {
+  background-color: #cfa8f9;
+  color: #4c0b92;
 }
 .roll-maneuver .roll.strike-success .roll-dice {
   box-shadow: 0 0 6px #f13f92;

@@ -5,9 +5,6 @@
     
     $(".target-{{this.targetId}} > .form-action-dice-max").val({{this.maxActionDice}});
     $(".target-{{this.targetId}} > .form-action-value-max").html({{this.maxActionDice}});
-
-    $(".target-{{this.targetId}} > .form-variable-dice-max").val({{this.maxVariableDice}});
-    $(".target-{{this.targetId}} > .form-variable-value-max").html({{this.maxVariableDice}});
     
     var windowRoot{{this.targetId}} = $(".target-{{this.targetId}}").parent().parent().parent().parent().parent().parent().parent().parent();
     
@@ -15,11 +12,6 @@
     windowRoot{{this.targetId}}.find(".dialog-weakresist").hide();
     windowRoot{{this.targetId}}.find(".hide-bonus").hide();
     windowRoot{{this.targetId}}.find(".hide-weakresist").hide();
-
-    if ({{this.maxVariableDice}} == 0) {
-        windowRoot{{this.targetId}}.find(".dialog-variable").hide();
-        windowRoot{{this.targetId}}.height(windowRoot{{this.targetId}}.height() - 56);
-    }
     
     function toggleBonus{{this.targetId}}(factor) {
         windowRoot{{this.targetId}}.height(windowRoot{{this.targetId}}.height() + (64 * factor));
@@ -56,7 +48,7 @@
         const inputSpan = $(".target-" + targetId + " > .form-" + valueType)[0];
 
         if (add) {            
-            if (inputField.value < maxValue) {
+            if (parseInt(inputField.value) < parseInt(maxValue)) {
                 
                 inputField.value++
                 inputSpan.innerHTML = inputField.value
@@ -71,7 +63,7 @@
                     })
             }                
         } else {
-            if (inputField.value > 0) {
+            if (parseInt(inputField.value) > 0) {
                 
                 inputField.value--
                 inputSpan.innerHTML = inputField.value
@@ -131,27 +123,7 @@
                 </div>
             </div>
             {{/if}}
-            {{/unless}}
-            {{#if (isPositiveGoal targetId owner.type) }}
-            <div class=" dialog-field-container flexrow dialog-variable">
-                <label class="variable">Add target's {{this.variableDiceName}}?</label>        
-                <div class="flexrow dialog-buttons">                    
-                    <button class="form-dialog-plusminus-button minus" onclick="modifyDice('variable-dice', false, '{{this.targetId}}')">
-                        <span class="fas fa-minus" />
-                    </button>                    
-                    <button class="form-dialog-plusminus-button plus" onclick="modifyDice('variable-dice', true, '{{this.targetId}}')">
-                        <span class="fas fa-plus" />
-                    </button>
-                    <div class="form-dice-field variable target-{{this.targetId}}">
-                        <input type="hidden" class="form-variable-dice" name="variableDice" value="0" />
-                        <input type="hidden" class="form-variable-dice-max" name="variableDiceMax" />
-                        <span class="form-dice-value form-variable-value">0</span>
-                        <span>/</span>
-                        <span class="form-dice-value form-variable-value-max">0</span>                        
-                    </div>                            
-                </div>
-            </div>
-            {{/if}}
+            {{/unless}}            
             <div class=" dialog-field-container flexrow dialog-bonus">
                 <label class="bonus">Add Bonus Dice?</label>        
                 <div class="flexrow dialog-buttons">                    

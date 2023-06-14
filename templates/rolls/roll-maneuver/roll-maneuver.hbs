@@ -10,11 +10,16 @@
         <div class="flexcol">
             <div class="target-section">
                 <ol class="rolls rolls-{{flavor.targetData.[0].rollsId}}">
-                    {{#if flavor.targetData.[0].additionalData.isSlowed}}
+                    {{#if flavor.targetData.[0].additionalData.slowedDie}}
                     <li class="roll roll-slowed outside-dice" title="Slowed Condition die: {{flavor.targetData.[0].additionalData.slowedDie.result}}"><img src="../../systems/animaprime/assets/d6-forbidden.svg" /><div class="roll-dice slowed">{{flavor.targetData.[0].additionalData.slowedDie.result}}</div></li>
                     {{/if}}
+                    {{#if flavor.targetData.[0].additionalData.defensiveDie}}
+                    <li class="roll roll-defensive outside-dice" title="Defensive Maneuver die: {{flavor.targetData.[0].additionalData.defensiveDie.result}}"><img src="../../systems/animaprime/assets/d6-forbidden.svg" /><div class="roll-dice defensive">{{flavor.targetData.[0].additionalData.defensiveDie.result}}</div></li>
+                    {{/if}}
                     {{#each flavor.targetData.[0].rollResult.dice.0.results}}
+                    {{#unless this.invisible}}
                     <li class="roll {{#if this.strike}}success strike-success{{/if}} {{#if this.charge}}success charge-success{{/if}}" title="Maneuver die"><div class="roll-dice">{{{this.result}}}</div></li>
+                    {{/unless}}
                     {{/each}}
                     {{#if flavor.targetData.[0].additionalData.isReckless}}
                     <li class="roll {{#if flavor.targetData.[0].additionalData.recklessDice.0.strike}} success strike-success{{/if}}{{#if flavor.targetData.[0].additionalData.recklessDice.0.charge}} success charge-success{{/if}}" title="Reckless die"><div class="roll-dice reckless">{{flavor.targetData.[0].additionalData.recklessDice.0.result}}</div></li>
@@ -49,7 +54,7 @@
                     <br />(+1 threat die to enemy)
                     {{/if}}
                     {{#if flavor.targetData.[0].additionalData.isDefensive}}
-                    <br />(-1 threat die)
+                    <br />(-1 strike success, -1 threat die)
                     {{/if}}
                     {{#if flavor.targetData.[0].additionalData.isHeroic}}
                     <br />(+1 bonus progress die to goal)

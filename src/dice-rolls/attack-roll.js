@@ -163,32 +163,32 @@ export async function attackRoll(
             forceNoHit = targetType != ownerType;
         }
 
-        resultData.push(
-            checkItemResult(
-                itemFixedOptions[i].defenseAttribute,
-                DiceRolls.checkSuccess(
-                    rollResults[i].dice[0].results,
-                    isWeakened * -1
-                ),
-                successModifier,
-                forceNoHit
-            )
+        const splitRes = DiceRolls.splitRollResult(
+            rollResults[i].dice[0].results,
+            abilityDice[i],
+            dialogOptions[i].strikeDice,
+            dialogOptions[i].actionDice,
+            dialogOptions[i].variableDice,
+            dialogOptions[i].bonusDice,
+            dialogOptions[i].resistance,
+            successModifier,
+            isEmpowered,
+            isWeakened
         );
 
-        splittedResults.push(
-            DiceRolls.splitRollResult(
+        const itemRes = checkItemResult(
+            itemFixedOptions[i].defenseAttribute,
+            DiceRolls.checkSuccess(
                 rollResults[i].dice[0].results,
-                abilityDice[i],
-                dialogOptions[i].strikeDice,
-                dialogOptions[i].actionDice,
-                dialogOptions[i].variableDice,
-                dialogOptions[i].bonusDice,
-                dialogOptions[i].resistance,
-                successModifier,
-                isEmpowered,
-                isWeakened
-            )
+                isWeakened * -1
+            ),
+            DiceRolls.checkVariableGain(splitRes),
+            successModifier,
+            forceNoHit
         );
+
+        splittedResults.push(splitRes);
+        resultData.push(itemRes);
     }
 
     // chat message rendering
@@ -266,12 +266,14 @@ export async function commitResults(resultData, item, dialogOptions) {
 function checkItemResult(
     targetDefense,
     successes,
+    variableGain,
     successModifier,
     forceNoHit = false
 ) {
     let returnValue = {
         hit: false,
         successes: successes,
+        variableGain: variableGain,
     };
 
     if (!forceNoHit && successes + successModifier > targetDefense)

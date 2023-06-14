@@ -154,14 +154,16 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
             return;
         }
 
-        const actorOwner = game.actors.get(message.speaker.actor);
-        const currentCombatantActor = game.combats.active.getCurrentActor();
-        if (
-            currentCombatantActor &&
-            currentCombatantActor.id == message.speaker.actor
-        ) {
-            if (!message.flags.enableReroll && actorOwner.isOwner) {
-                await DiceRolls.getConfirmEndOfTurn(item.owner);
+        if (!game.user.isGM) {
+            const actorOwner = game.actors.get(message.speaker.actor);
+            const currentCombatantActor = game.combats.active.getCurrentActor();
+            if (
+                currentCombatantActor &&
+                currentCombatantActor.id == message.speaker.actor
+            ) {
+                if (!message.flags.enableReroll && actorOwner.isOwner) {
+                    await DiceRolls.getConfirmEndOfTurn(item.owner);
+                }
             }
         }
     }
@@ -184,6 +186,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
     }
 });
 
+// auto-delete player-created update messages
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (
         !message.flags.sourceItem &&
@@ -199,7 +202,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
     }
 });
 
-// GM proxy for action commits on targets the player doesn't own
+// GM proxy for maneuver commits on targets the player doesn't own
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (game.dice3d && message.type == 5)
         await game.dice3d.waitFor3DAnimationByMessageID(message.id);
@@ -247,6 +250,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
     }
 });
 
+// GM proxy for strike/achievement commits on targets the player doesn't own
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (game.dice3d && message.type == 5)
         await game.dice3d.waitFor3DAnimationByMessageID(message.id);
@@ -285,10 +289,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                         targetData.health.value -= 1;
                         targetData.threatDice = 0;
                     } else {
-                        targetData.threatDice =
-                            targetData.threatDice -
-                            dialogOptions.variableDice +
-                            resultData.successes;
+                        targetData.threatDice += resultData.variableGain;
                     }
 
                     await targetEntity.update({
@@ -304,10 +305,8 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
                     if (!resultData.hit) {
                         targetData.progressDice = Math.max(
-                            targetData.progressDice -
-                                dialogOptions.variableDice +
-                                resultData.successes *
-                                    (ownerType == targetData.type ? 1 : -1),
+                            resultData.variableGain *
+                                (ownerType == targetData.type ? 1 : -1),
                             0
                         );
                     }

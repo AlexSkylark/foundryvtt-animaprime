@@ -224,7 +224,7 @@ export async function getItemRollOptions(item) {
     return new Promise((resolve) => {
         const dialogOptions = {
             width: 440,
-            height: item.maxVariableDice == 0 ? 368 : 425,
+            height: 368,
             classes: ["window-dialog", "window-dialog-itemroll"],
         };
 
@@ -244,7 +244,10 @@ export async function getItemRollOptions(item) {
                     label: '<i class="fas fa-check"></i> Confirm',
                     callback: (html) =>
                         resolve(
-                            processRollOptions(html[0].querySelector("form"))
+                            processRollOptions(
+                                html[0].querySelector("form"),
+                                item.maxVariableDice
+                            )
                         ),
                 },
             },
@@ -306,11 +309,11 @@ async function confirmEndTurnDialog() {
     });
 }
 
-export function processRollOptions(form) {
+export function processRollOptions(form, variableMax) {
     return {
         strikeDice: parseInt(form.strikeDice?.value ?? 0),
         actionDice: parseInt(form.actionDice?.value ?? 0),
-        variableDice: parseInt(form.variableDice?.value ?? 0),
+        variableDice: variableMax,
         bonusDice: parseInt(form.bonusDice?.value ?? 0),
         weakness: parseInt(form.weakness?.value ?? 0),
         resistance: parseInt(form.resistance?.value ?? 0),
@@ -395,6 +398,24 @@ export function checkSuccess(results, successModifier) {
     }
 
     return Math.max(successes + successModifier, 0);
+}
+
+export function checkVariableGain(splitResults) {
+    let variableGain = 0;
+
+    for (let i of splitResults.abilityDice) {
+        if (i.result >= 3) variableGain++;
+    }
+
+    for (let i of splitResults.strikeDice) {
+        if (i.result >= 3) variableGain++;
+    }
+
+    for (let i of splitResults.actionDice) {
+        if (i.result >= 3) variableGain++;
+    }
+
+    return Math.min(variableGain, splitResults.abilityDice.length + 1);
 }
 
 export function checkSkillSuccess(results, difficulty) {
