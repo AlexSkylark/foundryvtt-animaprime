@@ -11,6 +11,7 @@
                 "enableEdit": false
             },
             "dice": {
+                "actionDiceMax": 2,
                 "actionDice": 0,
                 "strikeDice": 0,
                 "chargeDice": 0,

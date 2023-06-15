@@ -1391,6 +1391,17 @@ select:focus {
   font-size: 16px;
   font-weight: 600;
 }
+.character-sheet .right-side .dice-pools .dice-pool-strip label.label-action {
+  margin-top: -4px;
+}
+.character-sheet .right-side .dice-pools .dice-pool-strip label .input-action-max {
+  width: 24px;
+  color: #fff;
+  text-align: center;
+  font-size: 25px;
+  padding-right: 7px;
+  position: relative;
+}
 .character-sheet .right-side .dice-pools .dice-pool-strip .attribute-value {
   position: relative;
   left: 16px;

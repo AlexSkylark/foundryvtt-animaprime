@@ -406,12 +406,25 @@
                     color: #fff;
                     font-size: 16px;
                     font-weight: 600;
+
+                    &.label-action {
+                        margin-top: -4px;
+                    }
+
+                    .input-action-max {
+                        width: 24px;
+                        color: #fff;
+                        text-align: center;
+                        font-size: 25px;
+                        padding-right: 7px;
+                        position: relative;
+                    }
                 }
 
                 .attribute-value {
                     position: relative;
-                    left: 16px;
-                }
+                    left: 16px;                
+                }                
 
                 .button-changevalue {
                     
