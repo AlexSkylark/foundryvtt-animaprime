@@ -2153,9 +2153,6 @@ select:focus {
   background-color: #cfa8f9;
   color: #670fc7;
 }
-.rolls .roll .roll-dice.resistance {
-  background-image: url(../../systems/animaprime/assets/d6-red-forbidden.svg);
-}
 .rolls .roll .roll-dice.successdice {
   background-image: url(../../systems/animaprime/assets/d6-green-successmodifier.svg);
 }
@@ -2314,12 +2311,15 @@ select:focus {
   background-color: #ffb5cc;
   color: #680011;
 }
-.roll-strike .roll .roll-dice.weakened {
+.roll-strike .roll .roll-dice.weakened, .roll-strike .roll .roll-dice.resistance {
   background-color: #ffef82;
   width: 29px;
   line-height: 25px;
   grid-row: 1;
   grid-column: 1;
+}
+.roll-strike .roll .roll-dice.resistance {
+  background-color: #fca7bc;
 }
 .roll-strike .roll-header h4 {
   color: #666;

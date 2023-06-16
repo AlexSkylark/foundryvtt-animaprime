@@ -315,7 +315,7 @@ export function processRollOptions(form, variableMax) {
         actionDice: parseInt(form.actionDice?.value ?? 0),
         variableDice: variableMax,
         bonusDice: parseInt(form.bonusDice?.value ?? 0),
-        weakness: parseInt(form.weakness?.value ?? 0),
+        weakness: parseInt(form.weakness?.checked ? 2 : 1) ?? 1,
         resistance: parseInt(form.resistance?.value ?? 0),
     };
 }
@@ -379,7 +379,7 @@ export function splitRollResult(
             returnArray.weakenedDice.push(results[i - resistance]);
     }
 
-    for (let i = 0; i < resistance; i++) {
+    for (let i = 0; i < Math.min(resistance, results.length); i++) {
         returnArray.resistanceDice.push(results[0]);
     }
 

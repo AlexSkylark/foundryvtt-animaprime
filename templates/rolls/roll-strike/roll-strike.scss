@@ -22,13 +22,17 @@
 
     .roll {        
         
-        .roll-dice {
-            &.weakened {    
+        .roll-dice {            
+            &.weakened, &.resistance {    
                 background-color: #ffef82;
                 width: 29px;
                 line-height: 25px;
                 grid-row: 1;
                 grid-column: 1;
+            }
+
+            &.resistance {
+                background-color: #fca7bc;
             }
         }
     }
