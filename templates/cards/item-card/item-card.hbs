@@ -43,7 +43,7 @@
             {{#if system.targets}}
             <div class="cost flexcol flex0">
                 <span class="cell-label">TGTS</span>
-                <span>{{system.targets}}</span>
+                <span>{{#if (eq system.targets 99)}}All{{else}}{{system.targets}}{{/if}}</span>
             </div>
             {{/if}}
             {{#if system.range}}
