@@ -14,8 +14,8 @@
                 
         <div class="flexcol">
             {{#each flavor.targetData}}
-            <div class="target-section">                
-                <ol class="rolls rolls-{{../flavor.rollsId}}">
+            <div class="target-section">
+                <ol class="rolls rolls-{{this.rollsId}}">
                     {{#unless (is0 this.additionalData.successDice.length)}}({{/unless}}
                     {{#each this.additionalData.successDice}}
                     <li title="Ability Modifier die" class="roll outside-dice success"><div class="roll-dice success-die">*</div></li>
@@ -47,13 +47,17 @@
                     Goal COMPLETE!!!
                     {{else}}
                         {{#if (isPositiveGoal ../flavor.entityData.targetIds.[0] ../flavor.entityData.owner.type) }}
-                            {{#if ../flavor.targetData.[0].resultData.successes}}
-                                Some progress! <br /> {{../flavor.targetData.[0].resultData.variableGain}} progress {{#if (is1 ../flavor.targetData.[0].resultData.variableGain)}}die{{else}}dice{{/if}} added.
-                            {{else}}
+                            {{#if (is0 ../flavor.targetData.[0].resultData.variableGain)}}
                                 No progress.
+                            {{else}}
+                                Some progress! <br /> {{../flavor.targetData.[0].resultData.variableGain}} progress {{#if (is1 ../flavor.targetData.[0].resultData.variableGain)}}die{{else}}dice{{/if}} added.
                             {{/if}}
                         {{else}}
-                            Progress sabotaged! <br /> up to {{../flavor.targetData.[0].resultData.variableGain}} progress {{#if (is1 ../flavor.targetData.[0].resultData.variableGain)}}die{{else}}dice{{/if}} taken.
+                            {{#if (is0 ../flavor.targetData.[0].resultData.variableGain)}}
+                                Couldn't sabotage progress! <br /> no progress dice taken.
+                            {{else}}
+                                Progress sabotaged! <br /> up to {{../flavor.targetData.[0].resultData.variableGain}} progress {{#if (is1 ../flavor.targetData.[0].resultData.variableGain)}}die{{else}}dice{{/if}} taken.
+                            {{/if}}
                         {{/if}}
                     {{/if}}
                 </span>

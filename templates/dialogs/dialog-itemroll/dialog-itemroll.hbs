@@ -13,6 +13,19 @@
     windowRoot{{this.targetId}}.find(".hide-bonus").hide();
     windowRoot{{this.targetId}}.find(".hide-weakresist").hide();
     
+    {{#if (isAchievement type)}}
+        windowRoot{{this.targetId}}.find(".show-weakresist").hide();
+        windowRoot{{this.targetId}}.find(".show-bonus").css("max-width", "50%");
+        windowRoot{{this.targetId}}.find(".show-bonus").css("margin", "0px auto");
+
+        {{#unless (isPositiveGoal this.targetId owner.type)}}
+            windowRoot{{this.targetId}}.find(".dialog-advanced-buttons-container").hide();            
+            setTimeout(() => {
+                windowRoot{{this.targetId}}.height(windowRoot{{this.targetId}}.height() - 96);
+            })            
+        {{/unless}}
+    {{/if}}
+    
     function toggleBonus{{this.targetId}}(factor) {
         windowRoot{{this.targetId}}.height(windowRoot{{this.targetId}}.height() + (64 * factor));
         windowRoot{{this.targetId}}.find(".dialog-bonus").toggle()

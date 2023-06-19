@@ -224,7 +224,7 @@ export async function getItemRollOptions(item) {
     return new Promise((resolve) => {
         const dialogOptions = {
             width: 440,
-            height: 368,
+            height: item.owner.type == "character" ? 368 : 304,
             classes: ["window-dialog", "window-dialog-itemroll"],
         };
 
@@ -330,7 +330,8 @@ export function splitRollResult(
     resistance = 0,
     successModifier = 0,
     isEmpowered = false,
-    isWeakened = false
+    isWeakened = false,
+    positiveGoal = true
 ) {
     let diceTypeArray = [];
     let returnArray = {
@@ -348,35 +349,34 @@ export function splitRollResult(
     for (let i = 0; i < regular; i++) diceTypeArray.push("abilityDice");
     for (let i = 0; i < strike; i++) diceTypeArray.push("strikeDice");
     for (let i = 0; i < action; i++) diceTypeArray.push("actionDice");
-    for (let i = 0; i < variable; i++) diceTypeArray.push("variableDice");
-    for (let i = 0; i < bonus; i++) diceTypeArray.push("bonusDice");
-    if (isEmpowered) diceTypeArray.push("empoweredDice");
+    if (positiveGoal) {
+        for (let i = 0; i < variable; i++) diceTypeArray.push("variableDice");
+        for (let i = 0; i < bonus; i++) diceTypeArray.push("bonusDice");
+        if (isEmpowered) diceTypeArray.push("empoweredDice");
+    }
 
-    let weakenedFlag = false;
-    for (let i = resistance; i < diceTypeArray.length; i++) {
-        if (
-            isWeakened &&
-            !weakenedFlag &&
-            results[i - resistance].result >= 3
-        ) {
-            returnArray.weakenedDice.push(results[0]);
-            weakenedFlag = true;
-            continue;
+    if (isWeakened)
+        for (let w = diceTypeArray.length - 1 - resistance; w > -1; w--) {
+            if (results[w].result >= 3) {
+                returnArray.weakenedDice.push(results[w]);
+                diceTypeArray.splice(w, 1);
+                break;
+            }
         }
+
+    for (let i = 0; i < diceTypeArray.length - resistance; i++) {
         if (diceTypeArray[i] == "abilityDice")
-            returnArray.abilityDice.push(results[i - resistance]);
+            returnArray.abilityDice.push(results[i]);
         if (diceTypeArray[i] == "strikeDice")
-            returnArray.strikeDice.push(results[i - resistance]);
+            returnArray.strikeDice.push(results[i]);
         if (diceTypeArray[i] == "actionDice")
-            returnArray.actionDice.push(results[i - resistance]);
+            returnArray.actionDice.push(results[i]);
         if (diceTypeArray[i] == "variableDice")
-            returnArray.variableDice.push(results[i - resistance]);
+            returnArray.variableDice.push(results[i]);
         if (diceTypeArray[i] == "bonusDice")
-            returnArray.bonusDice.push(results[i - resistance]);
+            returnArray.bonusDice.push(results[i]);
         if (diceTypeArray[i] == "empoweredDice")
-            returnArray.empoweredDice.push(results[i - resistance]);
-        if (diceTypeArray[i] == "weakenedDice")
-            returnArray.weakenedDice.push(results[i - resistance]);
+            returnArray.empoweredDice.push(results[i]);
     }
 
     for (let i = 0; i < Math.min(resistance, results.length); i++) {

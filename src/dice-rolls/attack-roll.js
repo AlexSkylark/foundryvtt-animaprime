@@ -99,6 +99,8 @@ export async function attackRoll(
                 maxVariableDice: itemFixedOptions[i].variableDiceValue,
                 variableDiceName: itemFixedOptions[i].variableDiceName,
                 type: item.type,
+                goalType: item.system.type,
+                targetType: item.targets[i].type,
                 targetName: item.targets[i].name,
                 targetId: item.targetIds[i],
             };
@@ -153,14 +155,35 @@ export async function attackRoll(
         rollResults.push(await rl.evaluate({ async: true }));
 
         let forceNoHit = false;
+        let positiveGoal = true;
         if (item.type == "achievement") {
-            const targetType = item.targets[i].system.type;
-            const ownerType =
-                item.owner.type == "character" || item.owner.type == "ally"
-                    ? 0
-                    : 1;
+            // if sabotaging goal
+            positiveGoal = isPositiveGoal(
+                item.targets[i].system.type,
+                item.owner.type
+            );
+            if (!positiveGoal) {
+                forceNoHit = true;
 
-            forceNoHit = targetType != ownerType;
+                const naturalDice =
+                    abilityDice[i] +
+                    dialogOptions[i].strikeDice +
+                    dialogOptions[i].actionDice;
+
+                let resultsCopy = JSON.parse(
+                    JSON.stringify(rollResults[i].dice[0].results)
+                );
+                for (
+                    let d = naturalDice;
+                    d < rollResults[i].dice[0].results.length;
+                    d++
+                ) {
+                    resultsCopy.pop();
+                }
+                rollResults[i].dice[0].results = JSON.parse(
+                    JSON.stringify(resultsCopy)
+                );
+            }
         }
 
         const splitRes = DiceRolls.splitRollResult(
@@ -173,11 +196,13 @@ export async function attackRoll(
             dialogOptions[i].resistance,
             successModifier,
             isEmpowered,
-            isWeakened
+            isWeakened,
+            positiveGoal
         );
 
         const itemRes = checkItemResult(
-            itemFixedOptions[i].defenseAttribute,
+            itemFixedOptions[i].defenseAttribute -
+                (item.type == "achievement" ? 1 : 0),
             DiceRolls.checkSuccess(
                 rollResults[i].dice[0].results,
                 isWeakened * -1
@@ -204,6 +229,14 @@ export async function attackRoll(
         item.targetId,
         previousRolls
     );
+}
+
+function isPositiveGoal(goalType, ownerType) {
+    const targetType =
+        ownerType == "character" || item.owner.type == "ally" ? 0 : 1;
+
+    if (goalType == targetType) return true;
+    else return false;
 }
 
 export async function checkDialogs(userTargets, options) {

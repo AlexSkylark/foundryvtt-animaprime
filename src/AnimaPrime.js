@@ -305,8 +305,9 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
                     if (!resultData.hit) {
                         targetData.progressDice = Math.max(
-                            resultData.variableGain *
-                                (ownerType == targetData.type ? 1 : -1),
+                            targetData.progressDice +
+                                resultData.variableGain *
+                                    (ownerType == targetData.type ? 1 : -1),
                             0
                         );
                     }
