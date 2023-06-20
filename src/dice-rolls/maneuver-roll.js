@@ -47,7 +47,9 @@ export async function maneuverRoll(
         maneuverDice += 2;
     }
 
-    if (dialogOptions.supportDie) {
+    const isSupported = maneuver.owner.checkCondition("supported");
+
+    if (isSupported) {
         maneuverDice += 1;
     }
 
@@ -66,21 +68,25 @@ export async function maneuverRoll(
         )
     );
 
+    let resultsCopy = JSON.parse(JSON.stringify(rollResult[0].dice[0].results));
+
     let supportDice = [];
-    if (dialogOptions.supportDie) {
-        supportDice.push(rollResult[0].dice[0].results.pop());
+    if (isSupported) {
+        supportDice.push(resultsCopy.pop());
     }
 
     let quickenedDie = null;
     if (isQuickened) {
-        quickenedDie = rollResult[0].dice[0].results.pop();
+        quickenedDie = resultsCopy.pop();
     }
 
     let recklessDice = [];
     if (dialogOptions.maneuverStyle == "reckless") {
-        recklessDice.push(rollResult[0].dice[0].results.pop());
-        recklessDice.push(rollResult[0].dice[0].results.pop());
+        recklessDice.push(resultsCopy.pop());
+        recklessDice.push(resultsCopy.pop());
     }
+
+    rollResult[0].dice[0].results = JSON.parse(JSON.stringify(resultsCopy));
 
     let diceResults = rollResult[0].dice[0].results;
 
@@ -117,6 +123,16 @@ export async function maneuverRoll(
         }
     }
 
+    // turn off supported condition
+    if (isSupported) {
+        const supportedEffect = CONFIG.statusEffects.find(
+            (e) => e.id == "supported"
+        );
+
+        const token = maneuver.owner.getActiveTokens()[0];
+        token.toggleEffect(supportedEffect, false);
+    }
+
     let additionalData = [];
     additionalData.push({
         isQuickened: isQuickened,
@@ -127,7 +143,7 @@ export async function maneuverRoll(
         slowedDie: slowedDie,
         defensiveDie: defensiveDie,
         maneuverStyle: dialogOptions.maneuverStyle,
-        hasSupportDie: dialogOptions.supportDie,
+        hasSupportDie: isSupported,
         isRegular: dialogOptions.maneuverStyle == "regular",
         isAggressive: dialogOptions.maneuverStyle == "aggressive",
         isCunning: dialogOptions.maneuverStyle == "cunning",
@@ -168,7 +184,7 @@ function checkManeuverTarget(maneuver, maneuverStyle) {
             });
         } else if (maneuverStyle == "supportive") {
             maneuver.targets = maneuver.targets.filter((i) => {
-                return i.type == "character";
+                return i.type == "character" || i.type == "ally";
             });
         }
 

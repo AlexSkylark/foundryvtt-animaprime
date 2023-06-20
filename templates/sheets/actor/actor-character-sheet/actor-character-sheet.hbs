@@ -1,10 +1,13 @@
 <form class="{{cssClass}} character-sheet" autocomplete="on">
 
     {{> "systems/animaprime/templates/partials/script-health.hbs" actor}}
-
+    
+    {{#if editUnlocked}}
+        {{> "systems/animaprime/templates/partials/script-reformbasics.hbs" actor}}
+    {{/if}}
     <div class="decorative-square">&nbsp;</div>
     <header class="flexcol">    
-        <div class="header-namestrip flexrow flex0">
+        <div class="header-namestrip flexrow flex0">            
             <input {{#unless editUnlocked}}disabled{{/unless}} class="name" name="name" type="text" value="{{actor.name}}" />
             <input {{#unless editUnlocked}}disabled{{/unless}} name="system.race" type="text" value="{{system.race}}" placeholder="[race]" />
             <input {{#unless editUnlocked}}disabled{{/unless}} name="system.profession" type="text" value="{{system.profession}}" placeholder="[profession]" />            
@@ -123,12 +126,13 @@
                 </div>
             </div>
             
-            <nav class="sheet-tabs tabs" data-group="primary-tabs">                                
+            <nav class="sheet-tabs tabs" data-group="primary-tabs">                                                
                 <a data-tab="profession">Character Actions</a>
-                <a data-tab="basic">Basic Actions</a>
+                <a data-tab="basic" class="basic">Basic Actions</a>                
             </nav>            
             <section class="sheet-body">
                 <div class="tab" data-tab="basic" data-group="primary-tabs">                    
+                    <button class="button-reform-basicactions">Refresh Basic Actions</button>
                     <div class="actions-section-container">
                         <div class="actions-column">
                             {{#each basicActions1 as |item id|}}

@@ -200,6 +200,23 @@ select:focus {
   color: #222;
 }
 
+.button-reform-basicactions {
+  border: 3px solid var(--primary-color);
+  border-radius: 12px;
+  display: none;
+  width: 50%;
+  margin: 0px auto;
+  margin-top: 12px;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-weight: 600;
+  background-color: var(--primary-color-light);
+  color: var(--primary-color);
+}
+.button-reform-basicactions.show-reform-button {
+  display: block;
+}
+
 .adversity-sheet {
   background: #fff;
   z-index: 0;
@@ -1507,18 +1524,19 @@ select:focus {
   font-weight: 600;
   font-size: 15px;
 }
-.goal-sheet .main-sheet {
+.goal-sheet .goal-sheet {
   border: 3px solid var(--primary-color);
   padding: 18px 64px;
   padding-top: 48px;
+  padding-bottom: 28px;
   margin: 32px;
   margin-top: -73px;
   border-radius: 16px;
 }
-.goal-sheet .main-sheet .cell {
+.goal-sheet .goal-sheet .cell {
   align-items: center;
 }
-.goal-sheet .main-sheet .cell label {
+.goal-sheet .goal-sheet .cell label {
   border: 2px solid var(--primary-color);
   color: var(--primary-color);
   font-size: 20px;
@@ -1530,11 +1548,14 @@ select:focus {
   margin-right: -22px;
   margin-top: 7px;
 }
-.goal-sheet .main-sheet .cell .value-container {
+.goal-sheet .goal-sheet .cell .value-container {
   margin-left: 0px;
   color: var(--primary-color);
 }
-.goal-sheet .main-sheet .property-value {
+.goal-sheet .goal-sheet .cell .value-container.value-container-hostile {
+  max-width: 100px;
+}
+.goal-sheet .goal-sheet .property-value {
   border: 2px solid var(--primary-color);
   display: flex;
   justify-content: center;
@@ -1550,10 +1571,10 @@ select:focus {
   z-index: 1;
   background-color: #fff;
 }
-.goal-sheet .main-sheet .property-value span {
+.goal-sheet .goal-sheet .property-value span {
   color: var(--primary-color);
 }
-.goal-sheet .main-sheet .property-value .button-changevalue {
+.goal-sheet .goal-sheet .property-value .button-changevalue {
   position: absolute;
   border: 2px solid var(--primary-color);
   background-color: #fff;
@@ -1565,14 +1586,14 @@ select:focus {
   color: var(--primary-color);
   cursor: pointer;
 }
-.goal-sheet .main-sheet .property-value .button-changevalue.show-button {
+.goal-sheet .goal-sheet .property-value .button-changevalue.show-button {
   visibility: visible;
 }
-.goal-sheet .main-sheet .property-value .button-changevalue.plus {
+.goal-sheet .goal-sheet .property-value .button-changevalue.plus {
   top: 36px;
   left: 40px;
 }
-.goal-sheet .main-sheet .property-value .button-changevalue.minus {
+.goal-sheet .goal-sheet .property-value .button-changevalue.minus {
   top: 36px;
   left: -8px;
 }
@@ -2276,12 +2297,15 @@ select:focus {
   background-color: #b8bdfc;
   color: #0b126b;
 }
-.roll-maneuver .roll .roll-dice.slowed, .roll-maneuver .roll .roll-dice.quickened, .roll-maneuver .roll .roll-dice.defensive {
+.roll-maneuver .roll .roll-dice.slowed, .roll-maneuver .roll .roll-dice.defensive {
   background-color: #ffef82;
   width: 29px;
   line-height: 25px;
   grid-row: 1;
   grid-column: 1;
+}
+.roll-maneuver .roll .roll-dice.quickened, .roll-maneuver .roll .roll-dice.supported {
+  background-color: #ffef82;
 }
 .roll-maneuver .roll .roll-dice.defensive {
   background-color: #cfa8f9;

@@ -26,13 +26,13 @@
                     <li class="roll {{#if flavor.targetData.[0].additionalData.recklessDice.1.strike}} success strike-success{{/if}}{{#if flavor.targetData.[0].additionalData.recklessDice.1.charge}} success charge-success{{/if}}" title="Reckless die"><div class="roll-dice reckless">{{flavor.targetData.[0].additionalData.recklessDice.1.result}}</div></li>
                     {{/if}}
                     {{#if flavor.targetData.[0].additionalData.isQuickened}}
-                    <li class="roll quickened{{#if flavor.targetData.[0].additionalData.quickenedDie.strike}} success strike-success{{/if}}{{#if flavor.additionalData.quickenedDie.charge}} success charge-success{{/if}}" title="Quickened Condition die"><div class="roll-dice">{{flavor.targetData.[0].additionalData.quickenedDie.result}}</div></li>
+                    <li class="roll quickened{{#if flavor.targetData.[0].additionalData.quickenedDie.strike}} success strike-success{{/if}}{{#if flavor.targetData.[0].additionalData.quickenedDie.charge}} success charge-success{{/if}}" title="Quickened Condition die"><div class="roll-dice quickened">{{flavor.targetData.[0].additionalData.quickenedDie.result}}</div></li>
                     {{/if}}
                     {{#if flavor.targetData.[0].additionalData.isAggressive}}
                     <li title="Aggressive Modifier die" class="roll success strike-success"><div class="roll-dice">*</div></li>
                     {{/if}}
                     {{#if flavor.targetData.[0].additionalData.hasSupportDie}}
-                    <li class="roll bonus{{#if flavor.targetData.[0].additionalData.supportDice.0.strike}} success strike-success{{/if}}{{#if flavor.additionalData.supportDice.0.charge}} success charge-success{{/if}}" title="Support die"><div class="roll-dice">{{flavor.targetData.[0].additionalData.supportDice.0.result}}</div></li>
+                    <li class="roll quickened{{#if flavor.targetData.[0].additionalData.supportDice.0.strike}} success strike-success{{/if}}{{#if flavor.targetData.[0].additionalData.supportDice.0.charge}} success charge-success{{/if}}" title="Supported Condition die"><div class="roll-dice supported">{{flavor.targetData.[0].additionalData.supportDice.0.result}}</div></li>
                     {{/if}}
                 </ol>
                 <span class="result-message">

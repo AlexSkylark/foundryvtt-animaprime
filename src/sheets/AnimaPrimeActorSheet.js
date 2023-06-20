@@ -35,6 +35,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
 
         this.prepareItemData(context);
 
+        context.isGM = game.user.isGM;
+
         return context;
     }
 
@@ -156,6 +158,10 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
                 this._onToggleEditable.bind(this)
             );
         }
+
+        html.find(".button-reform-basicactions").click(
+            this._onReformBasicActions.bind(this)
+        );
     }
 
     async _onToggleEditable(ev) {
@@ -280,6 +286,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
     async _onItemDelete(ev) {
         ev.preventDefault();
         ev.stopPropagation();
+
         const li = $(ev.currentTarget).parents(".item");
         const item = this.actor.getEmbeddedDocument("Item", li.data("itemId"));
 
@@ -304,6 +311,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
 
     async _onItemRoll(ev) {
         ev.preventDefault();
+        ev.stopPropagation();
+
         const item = this.actor.getEmbeddedDocument(
             "Item",
             $(ev.currentTarget).closest(".item").data("itemId")
@@ -314,6 +323,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
 
     async _onGenericSkillRoll(ev) {
         ev.preventDefault();
+        ev.stopPropagation();
 
         let skill = {
             type: "skill",
@@ -324,5 +334,32 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         };
 
         await SkillsRoll.skillCheck(skill, ev.ctrlKey, ev.shiftKey);
+    }
+
+    async _onReformBasicActions(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        let basicActions = [];
+        for (const item of this.actor.getEmbeddedCollection("Item").values()) {
+            if (item.system.basic) {
+                basicActions.push(item.id);
+            }
+        }
+
+        this.actor.deleteEmbeddedDocuments("Item", basicActions);
+
+        let items = await game.packs
+            .get("animaprime.basic-actions")
+            .getDocuments();
+        items = items.sort((a, b) => a.name.localeCompare(b.name));
+
+        const BasicManeuver = items[1];
+        const BasicStrike = items[0];
+
+        items[0] = BasicManeuver;
+        items[1] = BasicStrike;
+
+        await this.actor.createEmbeddedDocuments("Item", items);
     }
 }

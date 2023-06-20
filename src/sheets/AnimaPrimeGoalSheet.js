@@ -2,12 +2,13 @@ import AnimaPrimeActorSheet from "./AnimaPrimeActorSheet.js";
 
 export default class AnimaPrimeGoalSheet extends AnimaPrimeActorSheet {
     static get defaultOptions() {
+        let windowHeight = 487;
+
         return mergeObject(super.defaultOptions, {
             classes: ["animaprime", "sheet", "goal"],
             width: 480,
-            height: 476,
+            height: windowHeight,
             resizable: false,
-            scale: 0.85,
         });
     }
 
@@ -17,6 +18,25 @@ export default class AnimaPrimeGoalSheet extends AnimaPrimeActorSheet {
 
     async activateListeners(html) {
         await super.activateListeners(html);
+
+        var windowRoot = html
+            .find(".goal-sheet-" + this.actor.id)
+            .parents("#" + this.id)[0];
+
+        if (!game.user.isGM) {
+            let newHeight = 487;
+            if (this.actor.system.type == "1") {
+                newHeight -= 200;
+            } else {
+                newHeight -= 132;
+            }
+
+            if (this.actor.system.loomingTurns) {
+                newHeight += 69;
+            }
+
+            windowRoot.style.height = newHeight + "px";
+        }
 
         html.find(".header-name").on("focusout", async (ev) => {
             ev.preventDefault();

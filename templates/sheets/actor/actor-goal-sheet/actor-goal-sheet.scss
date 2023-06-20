@@ -54,11 +54,12 @@
         }
     }
 
-    .main-sheet {
+    .goal-sheet {
 
         border: 3px solid var(--primary-color);
         padding: 18px 64px;
         padding-top: 48px;
+        padding-bottom: 28px;
         margin: 32px;
         margin-top: -73px;
         border-radius: 16px;
@@ -81,6 +82,10 @@
             .value-container {
                 margin-left: 0px;
                 color: var(--primary-color);
+
+                &.value-container-hostile {
+                    max-width: 100px;
+                }
             }
         }
     

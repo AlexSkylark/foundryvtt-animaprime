@@ -19,6 +19,7 @@ async function preloadTemplates() {
     const templatePaths = [
         "systems/animaprime/templates/cards/item-card/item-card.hbs",
         "systems/animaprime/templates/partials/script-health.hbs",
+        "systems/animaprime/templates/partials/script-reformbasics.hbs",
     ];
 
     return loadTemplates(templatePaths);
@@ -76,7 +77,16 @@ Hooks.on("createActor", async (actor, data, context, userId) => {
             .get("animaprime.basic-actions")
             .getDocuments();
         items = items.sort((a, b) => a.name.localeCompare(b.name));
+
+        const BasicManeuver = items[1];
+        const BasicStrike = items[0];
+
+        items[0] = BasicManeuver;
+        items[1] = BasicStrike;
+
         await actor.createEmbeddedDocuments("Item", items);
+    } else if (actor.type == "goal") {
+        actor.ownership.default = 2;
     }
 
     if (
@@ -441,6 +451,11 @@ function configureStatusEffects() {
             id: "slowed",
             label: "Slowed",
             icon: "systems/animaprime/assets/icons/turtle.svg",
+        },
+        {
+            id: "supported",
+            label: "Supported",
+            icon: "systems/animaprime/assets/icons/wing.svg",
         },
         {
             id: "weakened",

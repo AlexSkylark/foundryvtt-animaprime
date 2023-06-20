@@ -47,3 +47,23 @@
 		}
 	}
 }
+
+
+
+.button-reform-basicactions {
+	border: 3px solid var(--primary-color);
+    border-radius: 12px;
+    display: none;
+    width: 50%;
+    margin: 0px auto;
+    margin-top: 12px;
+    font-family: 'Montserrat';
+    font-size: 18px;
+    font-weight: 600;
+    background-color: var(--primary-color-light);
+    color: var(--primary-color);
+
+	&.show-reform-button {
+		display: block;
+	}
+}

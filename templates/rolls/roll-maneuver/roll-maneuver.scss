@@ -22,7 +22,7 @@
 
     .roll {        
         .roll-dice {
-            &.slowed, &.quickened, &.defensive {    
+            &.slowed, &.defensive {    
                 background-color: #ffef82;
                 width: 29px;
                 line-height: 25px;
@@ -30,6 +30,10 @@
                 grid-column: 1;                
             }
 
+            &.quickened, &.supported {
+                background-color: #ffef82;
+            }
+            
             &.defensive {
                 background-color: #cfa8f9;
                 color: #4c0b92;

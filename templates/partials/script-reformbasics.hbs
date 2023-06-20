@@ -1,0 +1,22 @@
+<script>
+        
+    $(document).ready(() => {
+        $(document).keydown(function(e){
+            if(e.ctrlKey && e.shiftKey && e.altKey ){            
+                if (!$(".button-reform-basicactions").hasClass("show-reform-button")) {
+                    $(".button-reform-basicactions").addClass("show-reform-button")
+                    let thisWindow = $(".button-reform-basicactions").parents("#AnimaPrimeActorSheet-Actor-{{id}}");
+                    thisWindow.height(thisWindow.height() + 55);
+                }
+            }
+        });
+
+        $(document).keyup(function(e){
+            if ($(".button-reform-basicactions").hasClass("show-reform-button")) {
+                $(".button-reform-basicactions").removeClass("show-reform-button")
+                let thisWindow = $(".button-reform-basicactions").parents("#AnimaPrimeActorSheet-Actor-{{id}}");
+                thisWindow.height(thisWindow.height() - 55);
+            }                
+        });        
+    });
+</script>
