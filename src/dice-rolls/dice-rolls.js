@@ -1,27 +1,13 @@
-export async function renderRoll(
-    rollResult,
-    entityData,
-    resultData,
-    messageTemplate,
-    additionalData,
-    isReroll,
-    commitCallback,
-    dialogOptions,
-    itemTarget,
-    reroll
-) {
+export async function renderRoll(rollResult, entityData, resultData, messageTemplate, additionalData, isReroll, commitCallback, dialogOptions, itemTarget, reroll) {
     let enableReroll = checkForReroll(entityData.owner);
 
-    if (entityData.type == "skill" && resultData == "total")
-        enableReroll = false;
+    if (entityData.type == "skill" && resultData == "total") enableReroll = false;
 
     if (enableReroll && !reroll) {
         reroll = generateIdString();
     }
 
-    const targetNames = entityData.targets
-        ? entityData.targets.map((x) => x.name)
-        : [];
+    const targetNames = entityData.targets ? entityData.targets.map((x) => x.name) : [];
 
     let targetData = [];
 
@@ -76,8 +62,7 @@ export async function renderRoll(
     const chatMessage = await rollResult[0].toMessage(messageData);
 
     if (!enableReroll && commitCallback) {
-        if (game.dice3d)
-            await game.dice3d.waitFor3DAnimationByMessageID(chatMessage.id);
+        if (game.dice3d) await game.dice3d.waitFor3DAnimationByMessageID(chatMessage.id);
 
         await commitCallback(resultData, entityData, dialogOptions, itemTarget);
     }
@@ -90,13 +75,7 @@ function sortDiceRolls(renderedRoll, chatMessageUniqueId) {
         .not(".outside-dice")
         .detach()
         .sort(function (a, b) {
-            return $(a).find(".roll-dice").html() <
-                $(b).find(".roll-dice").html()
-                ? 1
-                : $(a).find(".roll-dice").html() >
-                  $(b).find(".roll-dice").html()
-                ? -1
-                : 0;
+            return $(a).find(".roll-dice").html() < $(b).find(".roll-dice").html() ? 1 : $(a).find(".roll-dice").html() > $(b).find(".roll-dice").html() ? -1 : 0;
         });
 
     var htmlToModify = $("<div>" + renderedRoll + "</div>");
@@ -115,22 +94,18 @@ function sortDiceRolls(renderedRoll, chatMessageUniqueId) {
 function generateIdString() {
     length = 12;
     let result = "";
-    const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     const charactersLength = characters.length;
     let counter = 0;
     while (counter < length) {
-        result += characters.charAt(
-            Math.floor(Math.random() * charactersLength)
-        );
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
         counter += 1;
     }
     return result;
 }
 
 export async function getManeuverRollOptions(item) {
-    const template =
-        "systems/animaprime/templates/dialogs/dialog-maneuverroll/dialog-maneuverroll.hbs";
+    const template = "systems/animaprime/templates/dialogs/dialog-maneuverroll/dialog-maneuverroll.hbs";
 
     const html = await renderTemplate(template, item);
 
@@ -142,10 +117,7 @@ export async function getManeuverRollOptions(item) {
         };
 
         const data = {
-            title:
-                item.type.charAt(0).toUpperCase() +
-                item.type.slice(1) +
-                " Roll",
+            title: item.type.charAt(0).toUpperCase() + item.type.slice(1) + " Roll",
             content: html,
             buttons: {
                 cancel: {
@@ -156,12 +128,8 @@ export async function getManeuverRollOptions(item) {
                     label: '<i class="fas fa-check"></i> Confirm',
                     callback: (html) =>
                         resolve({
-                            maneuverStyle:
-                                html[0].querySelector("form").maneuverStyle
-                                    .value,
-                            supportDie:
-                                html[0].querySelector("form").supportDie
-                                    .checked,
+                            maneuverStyle: html[0].querySelector("form").maneuverStyle.value,
+                            supportDie: html[0].querySelector("form").supportDie.checked,
                         }),
                 },
             },
@@ -182,14 +150,8 @@ export async function getSkillRollOptions(item) {
         };
 
         const data = {
-            title:
-                item.type.charAt(0).toUpperCase() +
-                item.type.slice(1) +
-                " Roll",
-            content: await renderTemplate(
-                "systems/animaprime/templates/dialogs/dialog-skillroll/dialog-skillroll.hbs",
-                item
-            ),
+            title: item.type.charAt(0).toUpperCase() + item.type.slice(1) + " Roll",
+            content: await renderTemplate("systems/animaprime/templates/dialogs/dialog-skillroll/dialog-skillroll.hbs", item),
             options: {
                 classes: ["window-content-white"],
             },
@@ -202,8 +164,7 @@ export async function getSkillRollOptions(item) {
                     label: '<i class="fas fa-check"></i> Confirm',
                     callback: (html) =>
                         resolve({
-                            difficulty:
-                                html[0].querySelector("form").difficulty.value,
+                            difficulty: html[0].querySelector("form").difficulty.value,
                         }),
                 },
             },
@@ -216,8 +177,7 @@ export async function getSkillRollOptions(item) {
 }
 
 export async function getItemRollOptions(item) {
-    const template =
-        "systems/animaprime/templates/dialogs/dialog-itemroll/dialog-itemroll.hbs";
+    const template = "systems/animaprime/templates/dialogs/dialog-itemroll/dialog-itemroll.hbs";
 
     const html = await renderTemplate(template, item);
 
@@ -229,11 +189,7 @@ export async function getItemRollOptions(item) {
         };
 
         const data = {
-            title:
-                item.type.charAt(0).toUpperCase() +
-                item.type.slice(1) +
-                " Roll - Target: " +
-                item.targetName,
+            title: item.type.charAt(0).toUpperCase() + item.type.slice(1) + " Roll - Target: " + item.targetName,
             content: html,
             buttons: {
                 cancel: {
@@ -242,13 +198,7 @@ export async function getItemRollOptions(item) {
                 },
                 normal: {
                     label: '<i class="fas fa-check"></i> Confirm',
-                    callback: (html) =>
-                        resolve(
-                            processRollOptions(
-                                html[0].querySelector("form"),
-                                item.maxVariableDice
-                            )
-                        ),
+                    callback: (html) => resolve(processRollOptions(html[0].querySelector("form"), item.maxVariableDice)),
                 },
             },
             default: "normal",
@@ -276,8 +226,7 @@ export async function getConfirmEndOfTurn(actor) {
 }
 
 async function confirmEndTurnDialog() {
-    const template =
-        "systems/animaprime/templates/dialogs/dialog-endturn/dialog-endturn.hbs";
+    const template = "systems/animaprime/templates/dialogs/dialog-endturn/dialog-endturn.hbs";
 
     const html = await renderTemplate(template);
 
@@ -316,23 +265,11 @@ export function processRollOptions(form, variableMax) {
         variableDice: variableMax,
         bonusDice: parseInt(form.bonusDice?.value ?? 0),
         weakness: parseInt(form.weakness?.checked ? 2 : 1) ?? 1,
-        resistance: parseInt(form.resistance?.value ?? 0),
+        damageType: form.damageType?.value ?? "physical",
     };
 }
 
-export function splitRollResult(
-    results,
-    regular,
-    strike = 0,
-    action = 0,
-    variable = 0,
-    bonus = 0,
-    resistance = 0,
-    successModifier = 0,
-    isEmpowered = false,
-    isWeakened = false,
-    positiveGoal = true
-) {
+export function splitRollResult(results, regular, strike = 0, action = 0, variable = 0, bonus = 0, resistance = 0, successModifier = 0, isEmpowered = false, isWeakened = false, positiveGoal = true) {
     let diceTypeArray = [];
     let returnArray = {
         abilityDice: [],
@@ -365,18 +302,12 @@ export function splitRollResult(
         }
 
     for (let i = 0; i < diceTypeArray.length - resistance; i++) {
-        if (diceTypeArray[i] == "abilityDice")
-            returnArray.abilityDice.push(results[i]);
-        if (diceTypeArray[i] == "strikeDice")
-            returnArray.strikeDice.push(results[i]);
-        if (diceTypeArray[i] == "actionDice")
-            returnArray.actionDice.push(results[i]);
-        if (diceTypeArray[i] == "variableDice")
-            returnArray.variableDice.push(results[i]);
-        if (diceTypeArray[i] == "bonusDice")
-            returnArray.bonusDice.push(results[i]);
-        if (diceTypeArray[i] == "empoweredDice")
-            returnArray.empoweredDice.push(results[i]);
+        if (diceTypeArray[i] == "abilityDice") returnArray.abilityDice.push(results[i]);
+        if (diceTypeArray[i] == "strikeDice") returnArray.strikeDice.push(results[i]);
+        if (diceTypeArray[i] == "actionDice") returnArray.actionDice.push(results[i]);
+        if (diceTypeArray[i] == "variableDice") returnArray.variableDice.push(results[i]);
+        if (diceTypeArray[i] == "bonusDice") returnArray.bonusDice.push(results[i]);
+        if (diceTypeArray[i] == "empoweredDice") returnArray.empoweredDice.push(results[i]);
     }
 
     for (let i = 0; i < Math.min(resistance, results.length); i++) {
@@ -434,8 +365,5 @@ export function checkSkillSuccess(results, difficulty) {
 export function checkForReroll(owner) {
     if (owner.type != "character") return false;
 
-    const ownerData = owner.system;
-
-    const traits = ownerData.traits;
-    return traits.trait1.marked || traits.trait2.marked || traits.trait3.marked;
+    return owner.system.reroll > 0;
 }

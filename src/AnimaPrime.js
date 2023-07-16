@@ -4,6 +4,8 @@ import AnimaPrimeHazardSheet from "../src/sheets/AnimaPrimeHazardSheet.js";
 import AnimaPrimeAllySheet from "../src/sheets/AnimaPrimeAllySheet.js";
 
 import AnimaPrimeSkillSheet from "../src/sheets/AnimaPrimeSkillSheet.js";
+import AnimaPrimeResistanceSheet from "../src/sheets/AnimaPrimeResistanceSheet.js";
+
 import AnimaPrimeActionSheet from "../src/sheets/AnimaPrimeActionSheet.js";
 import AnimaPrimeGoalSheet from "../src/sheets/AnimaPrimeGoalSheet.js";
 import AnimaPrimeItem from "../src/AnimaPrimeItem.js";
@@ -16,11 +18,7 @@ import * as HandlebarsHelpers from "./Handlebars.js";
 import * as DiceRolls from "./dice-rolls/dice-rolls.js";
 
 async function preloadTemplates() {
-    const templatePaths = [
-        "systems/animaprime/templates/cards/item-card/item-card.hbs",
-        "systems/animaprime/templates/partials/script-health.hbs",
-        "systems/animaprime/templates/partials/script-reformbasics.hbs",
-    ];
+    const templatePaths = ["systems/animaprime/templates/cards/item-card/item-card.hbs", "systems/animaprime/templates/partials/script-health.hbs", "systems/animaprime/templates/partials/script-reformbasics.hbs"];
 
     return loadTemplates(templatePaths);
 }
@@ -49,33 +47,26 @@ function registerSheets() {
     });
 
     Items.unregisterSheet("core", ItemSheet);
+
     Items.registerSheet("animaprime", AnimaPrimeSkillSheet, {
         makedefault: true,
         types: ["skill"],
     });
+
+    Items.registerSheet("animaprime", AnimaPrimeResistanceSheet, {
+        makedefault: true,
+        types: ["resistance"],
+    });
+
     Items.registerSheet("animaprime", AnimaPrimeActionSheet, {
         makedefault: true,
-        types: [
-            "maneuver",
-            "strike",
-            "power",
-            "boost",
-            "reaction",
-            "extra",
-            "achievement",
-        ],
+        types: ["maneuver", "strike", "power", "boost", "reaction", "extra", "achievement"],
     });
 }
 
 Hooks.on("createActor", async (actor, data, context, userId) => {
-    if (
-        actor.type == "character" ||
-        actor.type == "adversity" ||
-        actor.type == "ally"
-    ) {
-        let items = await game.packs
-            .get("animaprime.basic-actions")
-            .getDocuments();
+    if (actor.type == "character" || actor.type == "adversity" || actor.type == "ally") {
+        let items = await game.packs.get("animaprime.basic-actions").getDocuments();
         items = items.sort((a, b) => a.name.localeCompare(b.name));
 
         const BasicManeuver = items[1];
@@ -89,19 +80,13 @@ Hooks.on("createActor", async (actor, data, context, userId) => {
         actor.ownership.default = 2;
     }
 
-    if (
-        (actor.type == "character" || actor.type == "ally") &&
-        actor.prototypeToken
-    )
-        await actor.prototypeToken.update({ actorLink: true });
+    if ((actor.type == "character" || actor.type == "ally") && actor.prototypeToken) await actor.prototypeToken.update({ actorLink: true });
 });
 
 Hooks.on("preUpdateActor", async (actor, change, context, userId) => {
     if (change.name) {
         game.scenes.forEach(async (scene) => {
-            let tokens = scene.tokens.filter(
-                (x) => x.actorId == actor.id ?? actor._id
-            );
+            let tokens = scene.tokens.filter((x) => x.actorId == actor.id ?? actor._id);
 
             tokens.forEach(async (token) => {
                 token.namePreffix = token.name.split(actor.name)[0];
@@ -111,28 +96,23 @@ Hooks.on("preUpdateActor", async (actor, change, context, userId) => {
                     name: token.namePreffix + change.name + token.nameSuffix,
                 });
 
-                let combatants = game.combats.active.turns.filter(
-                    (x) => x.tokenId == token.id ?? token._id
-                );
+                let combatants = game.combats.active.turns.filter((x) => x.tokenId == token.id ?? token._id);
 
                 combatants.forEach(async (combatant) => {
                     await combatant.update({
-                        name:
-                            token.namePreffix + change.name + token.nameSuffix,
+                        name: token.namePreffix + change.name + token.nameSuffix,
                     });
                 });
             });
         });
 
-        if (actor.prototypeToken)
-            await actor.prototypeToken.update({ name: change.name });
+        if (actor.prototypeToken) await actor.prototypeToken.update({ name: change.name });
     }
 });
 
 // refresh combat tracker
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
-    if (game.dice3d && message.type == 5)
-        await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+    if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
     if (message.flags.sourceItem) {
         setTimeout(() => {
@@ -140,37 +120,26 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         });
     } else {
         setTimeout(() => {
-            $("li[data-message-id='" + message.id + "']").addClass(
-                "chat-message-message"
-            );
+            $("li[data-message-id='" + message.id + "']").addClass("chat-message-message");
         });
     }
 });
 
 // display "confirm end turn" dialog for the owner if unit has the current turn
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
-    if (game.dice3d && message.type == 5)
-        await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+    if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
     if (message.flags.sourceItem) {
         const item = message.flags.sourceItem;
 
-        if (
-            item.type == "boost" ||
-            item.type == "reaction" ||
-            item.type == "extra" ||
-            item.type == "skill"
-        ) {
+        if (item.type == "boost" || item.type == "reaction" || item.type == "extra" || item.type == "skill") {
             return;
         }
 
         if (!game.user.isGM) {
             const actorOwner = game.actors.get(message.speaker.actor);
             const currentCombatantActor = game.combats.active.getCurrentActor();
-            if (
-                currentCombatantActor &&
-                currentCombatantActor.id == message.speaker.actor
-            ) {
+            if (currentCombatantActor && currentCombatantActor.id == message.speaker.actor) {
                 if (!message.flags.enableReroll && actorOwner.isOwner) {
                     await DiceRolls.getConfirmEndOfTurn(item.owner);
                 }
@@ -181,31 +150,18 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
 // set roll as comitted when comitting rolls
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
-    if (game.dice3d && message.type == 5)
-        await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+    if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
     if (game.user.isGM && message.flags.rerollConfig) {
-        if (message.flags.rerollConfig.charAt(0) == ",")
-            message.flags.rerollConfig = message.flags.rerollConfig.slice(1);
+        if (message.flags.rerollConfig.charAt(0) == ",") message.flags.rerollConfig = message.flags.rerollConfig.slice(1);
 
-        await game.settings.set(
-            "animaprime",
-            "commitedRerolls",
-            message.flags.rerollConfig
-        );
+        await game.settings.set("animaprime", "commitedRerolls", message.flags.rerollConfig);
     }
 });
 
 // auto-delete player-created update messages
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
-    if (
-        !message.flags.sourceItem &&
-        ((game.user.isGM &&
-            message.content.includes("added") &&
-            message.content.includes(" die ")) ||
-            (message.content.includes("subtracted") &&
-                message.content.includes(" die ")))
-    ) {
+    if (!message.flags.sourceItem && ((game.user.isGM && message.content.includes("added") && message.content.includes(" die ")) || (message.content.includes("subtracted") && message.content.includes(" die ")))) {
         setTimeout(() => {
             message.delete();
         }, 5000);
@@ -214,26 +170,15 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
 // GM proxy for maneuver commits on targets the player doesn't own
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
-    if (game.dice3d && message.type == 5)
-        await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+    if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
-    if (
-        game.user.isGM &&
-        message.flags.sourceItem &&
-        !message.flags.enableReroll
-    ) {
+    if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
         const item = message.flags.sourceItem;
         const dialogOptions = message.flags.dialogOptions;
 
         if (dialogOptions && dialogOptions.maneuverStyle) {
-            if (
-                dialogOptions.maneuverStyle == "cunning" ||
-                dialogOptions.maneuverStyle == "heroic" ||
-                dialogOptions.maneuverStyle == "supportive"
-            ) {
-                const token = game.scenes.active.tokens.get(
-                    message.flags.sourceItem.targetIds[0]
-                );
+            if (dialogOptions.maneuverStyle == "cunning" || dialogOptions.maneuverStyle == "heroic" || dialogOptions.maneuverStyle == "supportive") {
+                const token = game.scenes.active.tokens.get(message.flags.sourceItem.targetIds[0]);
 
                 let targetEntity = {};
                 if (token.isLinked) {
@@ -262,28 +207,17 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
 // GM proxy for strike/achievement commits on targets the player doesn't own
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
-    if (game.dice3d && message.type == 5)
-        await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+    if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
-    if (
-        game.user.isGM &&
-        message.flags.sourceItem &&
-        !message.flags.enableReroll
-    ) {
+    if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
         const item = message.flags.sourceItem;
 
-        if (
-            message.flags &&
-            message.flags.sourceItem &&
-            message.flags.sourceItem.targets
-        ) {
+        if (message.flags && message.flags.sourceItem && message.flags.sourceItem.targets) {
             for (let i = 0; i < message.flags.sourceItem.targets.length; i++) {
                 const resultData = message.flags.resultData[i];
                 const dialogOptions = message.flags.dialogOptions[i];
 
-                const token = game.scenes.active.tokens.get(
-                    message.flags.sourceItem.targetIds[i]
-                );
+                const token = game.scenes.active.tokens.get(message.flags.sourceItem.targetIds[i]);
 
                 let targetEntity = {};
                 if (token.isLinked) {
@@ -307,19 +241,10 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                     });
                 } else if (item.type == "achievement") {
                     let ownerType = 0;
-                    if (
-                        item.owner.type == "adversity" ||
-                        item.owner.type == "hazard"
-                    )
-                        ownerType = 1;
+                    if (item.owner.type == "adversity" || item.owner.type == "hazard") ownerType = 1;
 
                     if (!resultData.hit) {
-                        targetData.progressDice = Math.max(
-                            targetData.progressDice +
-                                resultData.variableGain *
-                                    (ownerType == targetData.type ? 1 : -1),
-                            0
-                        );
+                        targetData.progressDice = Math.max(targetData.progressDice + resultData.variableGain * (ownerType == targetData.type ? 1 : -1), 0);
                     }
 
                     await targetEntity.update({

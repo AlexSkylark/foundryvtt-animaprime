@@ -25,7 +25,8 @@
                 "reactions": [],
                 "boosts": [],
                 "extras": []
-            }
+            },
+            "resistances": []
         },
         "adversity": {
             "templates": ["base"],
@@ -60,6 +61,9 @@
             "profession": "",
             "background": "",
             "skills": [],
+            "exp": 0,
+            "expFragment": 0,
+            "reroll": 0,
             "traits": {
                 "trait1": {
                     "name": "",
@@ -84,16 +88,7 @@
         }
     },
     "Item": {
-        "types": [
-            "maneuver",
-            "power",
-            "strike",
-            "boost",
-            "achievement",
-            "reaction",
-            "skill",
-            "extra"
-        ],
+        "types": ["maneuver", "power", "strike", "boost", "achievement", "reaction", "skill", "resistance", "extra"],
         "templates": {
             "base": {
                 "description": "-",
@@ -105,8 +100,12 @@
             }
         },
         "skill": {
-            "name": "New Skill",
+            "name": "-- new skill --",
             "rating": 3
+        },
+        "resistance": {
+            "name": "-- new res --",
+            "rating": 1
         },
         "maneuver": {
             "templates": ["base"],

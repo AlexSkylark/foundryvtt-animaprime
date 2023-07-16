@@ -31,17 +31,24 @@
                     <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue health minus"data-property="health.value" data-operation="minus"><i class="fas fa-minus"></i></div>
                     <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue healthmax plus" data-property="health.max" data-operation="plus"><i class="fas fa-plus"></i></div>
                     <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue healthmax minus"data-property="health.max" data-operation="minus"><i class="fas fa-minus"></i></div>
-                    <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue plus" data-property="defense" data-operation="plus"><i class="fas fa-plus"></i></div>
-                    <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue minus"data-property="defense" data-operation="minus"><i class="fas fa-minus"></i></div>                    
                     <div class="health-defense">
                         <div class="actor-{{actor.id}} health-bar-frame">
                             <div class="health-bar-frame health-bar"></div>
                             <span>{{system.health.value}} / {{system.health.max}}</span>
-                        </div>
-                        <div class="attribute-value">
+                        </div>                        
+                        <div class="attribute-value icon-container">
                             <span>{{system.defense}}</span>
+                            <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue defense plus" data-property="defense" data-operation="plus"><i class="fas fa-plus"></i></div>
+                            <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue defense minus"data-property="defense" data-operation="minus"><i class="fas fa-minus"></i></div>
                         </div>
                     </div>                    
+                </div>
+            </div>
+            <div class="container-section flex0">
+                <label class="container-header">Experience</label>
+                <div class="container-wrapper">
+                    Exp<input class="input-text exp-input" name="system.exp" type="text" value="{{system.exp}}" placeholder="[passion]" {{#unless editUnlocked}}disabled{{/unless}} />                    
+                    Frag<input class="input-text exp-fragment-input" name="system.expFragment" type="text" value="{{system.expFragment}}" placeholder="[passion]" {{#unless editUnlocked}}disabled{{/unless}} />
                 </div>
             </div>
             <div class="container-section flex0">
@@ -74,58 +81,108 @@
             </div>
         </div>
         <div class="right-side">            
-            <div class="container-section">
-                <label class="container-header">Personality Traits</label>
-                <div class="container-wrapper">
-                    <div class="flexrow">
-                        <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait1.name" type="text" value="{{system.traits.trait1.name}}" placeholder="[choose a personality trait]" />
-                        <input class="input-text trait-check" name="system.traits.trait1.marked" type="checkbox" {{checked system.traits.trait1.marked}} />
-                    </div>
-                    <div class="flexrow">
-                        <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait2.name" type="text" value="{{system.traits.trait2.name}}" placeholder="[choose a personality trait]" />
-                        <input  class="input-text trait-check" name="system.traits.trait2.marked" type="checkbox" {{checked system.traits.trait2.marked}} />
-                    </div>
-                    <div class="flexrow">
-                        <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait3.name" type="text" value="{{system.traits.trait3.name}}" placeholder="[choose a personality trait]" />
-                        <input class="input-text trait-check" name="system.traits.trait3.marked" type="checkbox" {{checked system.traits.trait3.marked}} />
-                    </div>                
-                </div>
-            </div>
-            <div class="dice-pools">
-                <div class="dice-pool-strip icon-container flex0">                    
-                    <div class="icon button-changevalue plus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="actionDice" data-operation="plus"><i class="fas fa-plus"></i></div>
-                    <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}"data-property="actionDice" data-operation="minus"><i class="fas fa-minus"></i></div>
-                    <label class="label-action">Action Dice (<input type="text" class="input-action-max" value="{{system.dice.actionDiceMax}}" name="system.dice.actionDiceMax" />)</label>
-                    <div class="attribute-value double-value">
-                        <span>{{system.actionDice}}</span>
-                    </div>                    
-                </div>
-                <div class="dice-pool-strip icon-container flex0">
-                    <div class="icon button-changevalue plus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="strikeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
-                    <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="strikeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
-                    <label>Strike Dice</label>
-                    <div class="attribute-value">
-                        <span>{{system.strikeDice}}</span>
+            <div class="personality-resistance-container">
+                <div class="container-section personality-section">
+                    <label class="container-header">Personality Traits</label>
+                    <div class="container-wrapper">
+                        <div class="flexrow">
+                            <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait1.name" type="text" value="{{system.traits.trait1.name}}" placeholder="[choose a personality trait]" />                            
+                        </div>
+                        <div class="flexrow">
+                            <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait2.name" type="text" value="{{system.traits.trait2.name}}" placeholder="[choose a personality trait]" />                            
+                        </div>
+                        <div class="flexrow">
+                            <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait3.name" type="text" value="{{system.traits.trait3.name}}" placeholder="[choose a personality trait]" />                            
+                            <!--<input class="input-text trait-check" name="system.traits.trait3.marked" type="checkbox" {{checked system.traits.trait3.marked}} />-->
+                        </div>                
                     </div>
                 </div>
-                <div class="dice-pool-strip icon-container flex0">
-                    <div class="icon button-changevalue plus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="chargeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
-                    <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="chargeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
-                    <label>Charge Dice</label>
-                    <div class="attribute-value">
-                        <span>{{system.chargeDice}}</span>
-                    </div>
-                </div>
-                <div class="dice-pool-strip icon-container flex0">                    
-                    <div class="icon button-changevalue plus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="threatDice" data-operation="plus"><i class="fas fa-plus"></i></div>
-                    <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="threatDice" data-operation="minus"><i class="fas fa-minus"></i></div>
-                    <label>Threat Dice</label>
-                    <div class="attribute-value">
-                        <span>{{system.threatDice}}</span>
+                <div class="container-section resistance-section icon-container">
+                    <label class="container-header">Resistances</label>
+                    <span class="icon button-addresistance item-create {{#unless editUnlocked}}edit-hidden{{/unless}}" data-type="resistance"><i class="fas fa-plus"></i></span>
+                    <div class="container-wrapper skills-container resistances-container">                        
+                        {{#each resistances as |item id|}}
+                        <div class="item icon-container" data-item-id="{{item._id}}">
+                            <span class="skill-unit">{{this.name}} ({{this.system.rating}})</span>
+                            <span class="icon fas fa-edit item-edit {{#unless ../editUnlocked}}edit-hidden{{/unless}}"></span>
+                            <span class="icon fas fa-trash item-delete {{#unless ../editUnlocked}}edit-hidden{{/unless}}"></span>
+                        </div>
+                        {{/each}}
                     </div>
                 </div>
             </div>
             
+            <div class="dice-section">
+                <div class="dice-pools">
+                    <div class="dice-pool-container">
+                        <div class="dice-pool-strip">
+                            <label class="label-action">Action Dice (<input type="text" class="input-action-max" value="{{system.dice.actionDiceMax}}" name="system.dice.actionDiceMax" />)</label>
+                        </div>
+                        <div class="attribute-container">
+                            <div class="attribute-value double-value">
+                                <span>{{system.actionDice}}</span>
+                            </div>
+                            <div class="attribute-edit-container icon-container">
+                                <div class="icon button-changevalue plus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="actionDice" data-operation="plus"><i class="fas fa-plus"></i></div>
+                                <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}"data-property="actionDice" data-operation="minus"><i class="fas fa-minus"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dice-pool-container">
+                        <div class="dice-pool-strip">
+                            <label>Strike Dice</label>
+                        </div>
+                        <div class="attribute-container">
+                            <div class="attribute-value double-value">
+                                <span>{{system.strikeDice}}</span>
+                            </div>
+                            <div class="attribute-edit-container icon-container">
+                                <div class="icon button-changevalue plus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="strikeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
+                                <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="strikeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dice-pool-container">
+                        <div class="dice-pool-strip">
+                            <label>Charge Dice</label>
+                        </div>
+                        <div class="attribute-container">
+                            <div class="attribute-value double-value">
+                                <span>{{system.chargeDice}}</span>
+                            </div>
+                            <div class="attribute-edit-container icon-container">
+                                <div class="icon button-changevalue plus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="chargeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
+                                <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="chargeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dice-pool-container">
+                        <div class="dice-pool-strip">
+                            <label>Threat Dice</label>
+                        </div>
+                        <div class="attribute-container">
+                            <div class="attribute-value double-value">
+                                <span>{{system.threatDice}}</span>
+                            </div>
+                            <div class="attribute-edit-container icon-container">
+                                <div class="icon button-changevalue plus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="threatDice" data-operation="plus"><i class="fas fa-plus"></i></div>
+                                <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="threatDice" data-operation="minus"><i class="fas fa-minus"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="container-wrapper reroll-container icon-container">                        
+                    <label class="reroll-header">Rerolls</label>
+                    <span class="reroll-value">{{system.reroll}}</span>                                                        
+                    <div class="icon button-changevalue plus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="reroll" data-operation="plus"><i class="fas fa-plus"></i></div>
+                    <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="reroll" data-operation="minus"><i class="fas fa-minus"></i></div>                            
+                </div>                
+            </div>
+                            
             <nav class="sheet-tabs tabs" data-group="primary-tabs">                                                
                 <a data-tab="profession">Character Actions</a>
                 <a data-tab="basic" class="basic">Basic Actions</a>                

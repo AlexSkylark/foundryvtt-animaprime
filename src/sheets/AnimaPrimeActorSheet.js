@@ -42,12 +42,14 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
 
     prepareItemData(context) {
         const skills = [];
+        const resistances = [];
         const basicActions = [];
         const actions = [];
 
         for (let i of context.items) {
             // Append to gear.
             if (i.type === "skill") skills.push(i);
+            else if (i.type === "resistance") resistances.push(i);
             // Append to features.
             else if (i.system.basic) basicActions.push(i);
             else actions.push(i);
@@ -66,6 +68,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         }
 
         context.skills = skills;
+        context.resistances = resistances;
 
         context.basicActions1 = [];
         context.basicActions2 = [];
@@ -73,8 +76,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         context.actions2 = [];
 
         for (let i = 0; i < basicActions.length; i++) {
-            if (i % 2 != 0 || i == 6)
-                context.basicActions2.push(basicActions[i]);
+            if (i % 2 != 0 || i == 6) context.basicActions2.push(basicActions[i]);
             else context.basicActions1.push(basicActions[i]);
         }
 
@@ -88,9 +90,9 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
 
         context.editUnlocked = context.system.enableEdit || game.user.isGM;
         context.editName = context.options.token == null;
-        context.actorName = context.options.token
-            ? context.options.token.name
-            : context.actor.name;
+        context.actorName = context.options.token ? context.options.token.name : context.actor.name;
+
+        context.reroll = context.system.reroll ?? 0;
     }
 
     formatManeuverGains(elem) {
@@ -118,11 +120,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
             if (times < 2) {
                 text += gain.indexOf(i.toString()) + 1;
             } else {
-                text +=
-                    gain.indexOf(i.toString()) +
-                    1 +
-                    "-" +
-                    (gain.lastIndexOf(i.toString()) + 1);
+                text += gain.indexOf(i.toString()) + 1 + "-" + (gain.lastIndexOf(i.toString()) + 1);
             }
 
             if (i == 0) text += " fail,";
@@ -141,27 +139,19 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
     async activateListeners(html) {
         await super.activateListeners(html);
 
-        html.find(".button-changevalue").click(
-            this._onPropertyIncrementValue.bind(this)
-        );
+        html.find(".button-changevalue").click(this._onPropertyIncrementValue.bind(this));
 
         html.find(".item-create").click(this._onItemCreate.bind(this));
         html.find(".item-edit").click(this._onItemEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
         html.find(".item-roll").click(this._onItemRoll.bind(this));
-        html.find(".generic-skill-roll").click(
-            this._onGenericSkillRoll.bind(this)
-        );
+        html.find(".generic-skill-roll").click(this._onGenericSkillRoll.bind(this));
 
         if (game.user.isGM) {
-            html.find(".lock-container").click(
-                this._onToggleEditable.bind(this)
-            );
+            html.find(".lock-container").click(this._onToggleEditable.bind(this));
         }
 
-        html.find(".button-reform-basicactions").click(
-            this._onReformBasicActions.bind(this)
-        );
+        html.find(".button-reform-basicactions").click(this._onReformBasicActions.bind(this));
     }
 
     async _onToggleEditable(ev) {
@@ -193,8 +183,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         }
 
         let operation = ev.currentTarget.dataset.operation;
-        let newValue =
-            operation == "plus" ? propertyValue + 1 : propertyValue - 1;
+        let newValue = operation == "plus" ? propertyValue + 1 : propertyValue - 1;
         newValue = Math.max(newValue, 0);
         if (isValue) {
             const maxValue = this.actor.system[resourceName].max;
@@ -202,11 +191,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         }
 
         // special treatment for action dice
-        if (
-            propertyName == "actionDice" &&
-            newValue > this.actor.system.dice.actionDiceMax
-        )
-            newValue--;
+        if (propertyName == "actionDice" && newValue > this.actor.system.dice.actionDiceMax) newValue--;
 
         let updateObject = { system: {} };
         if (isComplex) {
@@ -214,37 +199,21 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
             updateObject.system[resourceName][resourceProp] = newValue;
 
             if (isMax) {
-                if (this.actor.system[resourceName].value > newValue)
-                    updateObject.system[resourceName].value = newValue;
-                else if (operation == "plus")
-                    updateObject.system[resourceName].value =
-                        this.actor.system[resourceName].value + 1;
+                if (this.actor.system[resourceName].value > newValue) updateObject.system[resourceName].value = newValue;
+                else if (operation == "plus") updateObject.system[resourceName].value = this.actor.system[resourceName].value + 1;
             }
         } else {
             updateObject.system[propertyName] = newValue;
         }
 
         if (propertyValue != newValue) {
-            const chatMsg =
-                (operation == "plus" ? "added" : "subtracted") +
-                " 1 " +
-                propertyName
-                    .replace("Dice", " die")
-                    .replace(".value", " point")
-                    .replace(".max", " max point") +
-                (operation == "plus" ? " to " : " from ") +
-                this.actor.name;
+            const chatMsg = (operation == "plus" ? "added" : "subtracted") + " 1 " + propertyName.replace("Dice", " die").replace(".value", " point").replace(".max", " max point") + (operation == "plus" ? " to " : " from ") + this.actor.name;
 
             if (!game.user.isGM) {
                 ChatMessage.create({
                     user: game.user._id,
                     speaker: ChatMessage.getSpeaker({ alias: this.actor.name }),
-                    content:
-                        '<span class="result-message' +
-                        (operation == "plus" ? " success" : " partial") +
-                        '">' +
-                        chatMsg +
-                        "</span>",
+                    content: '<span class="result-message' + (operation == "plus" ? " success" : " partial") + '">' + chatMsg + "</span>",
                 });
             }
 
@@ -259,7 +228,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         const header = event.currentTarget;
         const type = header.dataset.type;
         const data = duplicate(header.dataset);
-        const name = `new ${type}`;
+
+        const name = `- new -`;
 
         // Prepare the item object.
         const itemData = {
@@ -290,8 +260,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         const li = $(ev.currentTarget).parents(".item");
         const item = this.actor.getEmbeddedDocument("Item", li.data("itemId"));
 
-        const dialogTemplate =
-            "systems/animaprime/templates/dialogs/dialog-confirmdelete/dialog-confirmdelete.hbs";
+        const dialogTemplate = "systems/animaprime/templates/dialogs/dialog-confirmdelete/dialog-confirmdelete.hbs";
 
         Dialog.confirm({
             title: "Delete Item",
@@ -313,10 +282,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         ev.preventDefault();
         ev.stopPropagation();
 
-        const item = this.actor.getEmbeddedDocument(
-            "Item",
-            $(ev.currentTarget).closest(".item").data("itemId")
-        );
+        const item = this.actor.getEmbeddedDocument("Item", $(ev.currentTarget).closest(".item").data("itemId"));
 
         await item.roll(ev.ctrlKey, ev.shiftKey);
     }
@@ -349,9 +315,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
 
         this.actor.deleteEmbeddedDocuments("Item", basicActions);
 
-        let items = await game.packs
-            .get("animaprime.basic-actions")
-            .getDocuments();
+        let items = await game.packs.get("animaprime.basic-actions").getDocuments();
         items = items.sort((a, b) => a.name.localeCompare(b.name));
 
         const BasicManeuver = items[1];

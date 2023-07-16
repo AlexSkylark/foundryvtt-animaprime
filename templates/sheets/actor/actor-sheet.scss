@@ -20,7 +20,7 @@
 	.container-header {
 		background-color: var(--primary-color);
 		border-radius: 8px;
-		padding: 6px 20px;
+		padding: 5px 20px;
 		text-align: center;
 		color: #fff;
 		font-weight: 600;                
@@ -35,7 +35,7 @@
 		border: 2px solid var(--primary-color);
 		overflow: auto;
 		border-radius: 8px;
-		padding: 16px 8px;
+		padding: 8px;
 		margin-left: 11px;
 		background-color: #fff;
 		width: calc(100% - 20px);
@@ -44,11 +44,11 @@
 			font-size: 22px;
 			width: calc(100% - 26px);
 			color: #222;
+			position: relative;
+			top: -3px;
 		}
 	}
 }
-
-
 
 .button-reform-basicactions {
 	border: 3px solid var(--primary-color);

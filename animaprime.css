@@ -175,7 +175,7 @@ select:focus {
 .container-section .container-header {
   background-color: var(--primary-color);
   border-radius: 8px;
-  padding: 6px 20px;
+  padding: 5px 20px;
   text-align: center;
   color: #fff;
   font-weight: 600;
@@ -189,7 +189,7 @@ select:focus {
   border: 2px solid var(--primary-color);
   overflow: auto;
   border-radius: 8px;
-  padding: 16px 8px;
+  padding: 8px;
   margin-left: 11px;
   background-color: #fff;
   width: calc(100% - 20px);
@@ -198,6 +198,8 @@ select:focus {
   font-size: 22px;
   width: calc(100% - 26px);
   color: #222;
+  position: relative;
+  top: -3px;
 }
 
 .button-reform-basicactions {
@@ -221,9 +223,12 @@ select:focus {
   background: #fff;
   z-index: 0;
 }
+.adversity-sheet .skill-resistance-section {
+  display: flex;
+}
 .adversity-sheet .decorative-square {
   background-color: var(--primary-color-light);
-  height: 530px;
+  height: 536px;
   width: 159px;
   position: absolute;
   top: 62px;
@@ -233,14 +238,17 @@ select:focus {
 .adversity-sheet .decorative-square.small-square {
   height: 240px;
 }
+.adversity-sheet .skill-section-container, .adversity-sheet .resistance-section-container {
+  width: 50%;
+}
 .adversity-sheet .skill-button-container {
   display: flex;
+  flex-direction: column;
   margin: 0px auto;
   width: 90%;
 }
 .adversity-sheet .skill-button-container .skill-button {
   cursor: pointer;
-  width: 50%;
   margin: 12px 5px;
   background-color: #fff;
   text-align: center;
@@ -249,6 +257,7 @@ select:focus {
   padding: 6px;
   border-radius: 12px;
   font-weight: bold;
+  margin-bottom: 2px;
 }
 .adversity-sheet .skills-container {
   margin-bottom: 24px;
@@ -265,7 +274,7 @@ select:focus {
   left: -24px;
 }
 .adversity-sheet .skills-container .skill-line {
-  flex: 0 0 50%;
+  flex: 0 0 90%;
 }
 .adversity-sheet .skills-container .skill-unit {
   border-bottom: 1px solid #333;
@@ -578,7 +587,7 @@ select:focus {
   top: 56px;
 }
 .adversity-sheet .right-side.dice-pools .dice-pool-strip label {
-  width: calc(100% - 80px);
+  width: calc(100% - 72px);
   text-align: end;
   color: #fff;
   font-size: 16px;
@@ -1105,34 +1114,28 @@ select:focus {
   border-radius: 0;
   margin: 1px 12px;
 }
+.character-sheet .input-text.exp-input {
+  max-width: 31%;
+  margin-right: 2px;
+  margin-left: 1px;
+  padding-bottom: 0;
+  text-align: center;
+}
+.character-sheet .input-text.exp-fragment-input {
+  max-width: calc(35% - 11px);
+  margin-left: 1px;
+  padding-bottom: 0;
+  text-align: center;
+}
 .character-sheet .input-text.name {
   max-width: 50%;
 }
 .character-sheet .input-text::placeholder {
   color: #777;
 }
-.character-sheet .attribute-value {
-  border: 3px solid var(--primary-color);
-  border-radius: 31px;
-  background-color: #fff;
-  width: 66px;
-  height: 55px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.character-sheet .attribute-value span {
-  font-size: 42px;
-  font-weight: 400;
-  font-family: "Caveat", cursive;
-  color: #555;
-  position: relative;
-  bottom: 2px;
-  right: 4px;
-}
-.character-sheet .icon-container .button-changevalue {
+.character-sheet .button-changevalue {
   border: 2px solid var(--primary-color);
-  width: 31px;
+  width: 26px;
   height: 26px;
   border-radius: 20px;
   background-color: #fff;
@@ -1140,7 +1143,19 @@ select:focus {
   align-items: center;
   justify-content: center;
   z-index: 9;
-  position: relative;
+}
+.character-sheet .attribute-value {
+  border: 3px solid var(--primary-color);
+  border-radius: 28px;
+  background-color: #fff;
+}
+.character-sheet .attribute-value span {
+  font-size: 40px;
+  font-weight: 400;
+  font-family: "Caveat", cursive;
+  color: #555;
+  display: block;
+  text-align: center;
 }
 .character-sheet header {
   padding: 4px;
@@ -1274,18 +1289,34 @@ select:focus {
   top: -8px;
   left: 120px;
 }
-.character-sheet .left-side .defense-button .button-changevalue.plus {
-  left: calc(100% + 2px);
-  bottom: 40px;
-}
-.character-sheet .left-side .defense-button .button-changevalue.minus {
-  left: calc(100% + 2px);
-  top: -28px;
-}
 .character-sheet .left-side .health-defense {
-  margin-top: -33px;
+  margin-top: 19px;
   margin-left: 1px;
   width: calc(100% + 5px);
+}
+.character-sheet .left-side .health-defense .button-changevalue.defense {
+  position: relative;
+}
+.character-sheet .left-side .health-defense .attribute-value {
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  float: right;
+  position: relative;
+  top: -53px;
+  right: -13px;
+}
+.character-sheet .left-side .health-defense .attribute-value span {
+  margin-top: -2px;
+  margin-left: -7px;
+}
+.character-sheet .left-side .health-defense .attribute-value .icon.plus {
+  left: calc(100% - 10px);
+  bottom: 54px;
+}
+.character-sheet .left-side .health-defense .attribute-value .icon.minus {
+  left: calc(100% - 10px);
+  top: -42px;
 }
 .character-sheet .left-side .health-defense div.health-bar-frame {
   width: 120px;
@@ -1320,14 +1351,7 @@ select:focus {
   left: -7px;
   width: 100%;
 }
-.character-sheet .left-side .health-defense div:last-child {
-  float: right;
-  position: relative;
-  top: -53px;
-  width: 56px;
-  right: -13px;
-}
-.character-sheet .left-side .button-addskill {
+.character-sheet .button-addskill, .character-sheet .button-addresistance {
   border: 2px solid var(--primary-color);
   border-radius: 17px;
   background-color: #fff;
@@ -1336,20 +1360,25 @@ select:focus {
   bottom: 18px;
   right: 15px;
 }
-.character-sheet .left-side .skills-container {
-  height: 316px;
+.character-sheet .skills-container {
+  height: 250px;
+  padding-top: 20px;
   overflow: auto;
 }
-.character-sheet .left-side .skills-container .icon {
+.character-sheet .skills-container.resistances-container {
+  height: 104px;
+  padding-top: 10px;
+}
+.character-sheet .skills-container .icon {
   float: right;
   position: relative;
   bottom: 17px;
   left: 8px;
 }
-.character-sheet .left-side .skills-container .icon.item-edit {
+.character-sheet .skills-container .icon.item-edit {
   left: -24px;
 }
-.character-sheet .left-side .skills-container .skill-unit {
+.character-sheet .skills-container .skill-unit {
   border-bottom: 2px solid #333;
   display: block;
   font-family: "Caveat", cursive;
@@ -1376,64 +1405,126 @@ select:focus {
   margin-bottom: 9px;
   border-radius: 8px;
 }
+.character-sheet .right-side .personality-resistance-container {
+  display: flex;
+}
+.character-sheet .right-side .personality-section {
+  width: 72%;
+}
 .character-sheet .right-side .trait-value {
-  flex: 0 0 91%;
+  flex: 0 0 96%;
   margin-right: -10px;
 }
 .character-sheet .right-side .trait-check {
   margin-top: 7px;
+}
+.character-sheet .right-side .dice-section {
+  display: flex;
 }
 .character-sheet .right-side .dice-pools {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 12px;
+  margin-left: 12px;
+  width: 83%;
 }
-.character-sheet .right-side .dice-pools .dice-pool-strip {
-  background-color: var(--primary-color);
-  height: 32px;
-  align-items: center;
-  justify-content: flex-end;
-  width: 43%;
+.character-sheet .right-side .dice-pools .dice-pool-container {
+  width: 50%;
   display: flex;
-  margin: 15px 0;
-  margin-left: 19px;
-  margin-right: 11px;
-  border-radius: 8px;
+  margin-bottom: 6px;
 }
-.character-sheet .right-side .dice-pools .dice-pool-strip label {
-  width: calc(100% - 80px);
+.character-sheet .right-side .dice-pools .dice-pool-container .dice-pool-strip {
+  height: 32px;
+  padding: 5px 0px;
   text-align: end;
+  padding-right: 26px;
+  margin-top: 12px;
+  background-color: var(--primary-color);
+  border-radius: 8px;
+  width: calc(100% - 56px);
+}
+.character-sheet .right-side .dice-pools .dice-pool-container .dice-pool-strip label {
   color: #fff;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
 }
-.character-sheet .right-side .dice-pools .dice-pool-strip label.label-action {
-  margin-top: -4px;
-}
-.character-sheet .right-side .dice-pools .dice-pool-strip label .input-action-max {
-  width: 24px;
+.character-sheet .right-side .dice-pools .dice-pool-container .dice-pool-strip label .input-action-max {
+  width: 23px;
   color: #fff;
-  text-align: center;
+  text-align: left;
   font-size: 25px;
-  padding-right: 7px;
+  position: relative;
+  height: 17px;
+}
+.character-sheet .right-side .dice-pools .dice-pool-container .attribute-container {
+  display: grid;
+}
+.character-sheet .right-side .dice-pools .dice-pool-container .attribute-container .attribute-edit-container {
+  grid-column: 1;
+  grid-row: 1;
+}
+.character-sheet .right-side .dice-pools .dice-pool-container .attribute-container .attribute-edit-container .button-changevalue {
+  position: relative;
+  bottom: 5px;
+  left: 21px;
+}
+.character-sheet .right-side .dice-pools .dice-pool-container .attribute-container .attribute-edit-container .button-changevalue.minus {
+  top: 9px;
+}
+.character-sheet .right-side .dice-pools .dice-pool-container .attribute-value {
+  grid-column: 1;
+  grid-row: 1;
+  width: 56px;
+  height: 56px;
+  margin-left: -18px;
+}
+.character-sheet .right-side .dice-pools .dice-pool-container .attribute-value span {
+  margin-top: -2px;
+  margin-left: -9px;
+}
+.character-sheet .right-side .reroll-container {
+  height: 100px;
+  border: 2px solid var(--primary-color);
+  margin-top: 22px;
+  width: calc(17% - 23px);
+  border-radius: 12px;
+}
+.character-sheet .right-side .reroll-container .reroll-value {
+  font-size: 40px;
+  font-weight: 400;
+  font-family: "Caveat", cursive;
+  color: #555;
+  display: block;
+  text-align: center;
+  margin-left: -12px;
+  margin-top: 4px;
+}
+.character-sheet .right-side .reroll-container .reroll-header {
+  background-color: var(--primary-color);
+  padding: 6px;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 600;
+  display: block;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+}
+.character-sheet .right-side .reroll-container .button-changevalue {
   position: relative;
 }
-.character-sheet .right-side .dice-pools .dice-pool-strip .attribute-value {
-  position: relative;
-  left: 16px;
+.character-sheet .right-side .reroll-container .button-changevalue.plus {
+  top: -36px;
+  left: 68px;
 }
-.character-sheet .right-side .dice-pools .dice-pool-strip .button-changevalue {
-  left: 100%;
-  bottom: 18px;
-}
-.character-sheet .right-side .dice-pools .dice-pool-strip .button-changevalue.minus {
-  top: 18px;
-  left: calc(100% - 27px);
+.character-sheet .right-side .reroll-container .button-changevalue.minus {
+  top: -62px;
+  left: -14px;
 }
 .character-sheet .right-side .actions-section-container {
   overflow-y: auto;
-  height: 415px;
+  height: 426px;
   display: flex;
   flex-direction: row;
   border-bottom: 2px solid var(--primary-color);
@@ -1995,6 +2086,10 @@ select:focus {
 }
 .field-container .value-field input[type=text] {
   height: 15px;
+}
+
+.name-field {
+  min-width: 60%;
 }
 
 .name-field {
@@ -2693,6 +2788,19 @@ select:focus {
 .form-dialog-plusminus-button.plus {
   left: -8px;
   top: -2px;
+}
+
+.form-damage-type {
+  position: relative;
+  top: 4px;
+  right: 46px;
+}
+.form-damage-type .form-input-damage-type {
+  font-family: "Caveat", cursive;
+  font-size: 25px;
+  color: #333;
+  width: calc(100% + 16px);
+  margin-left: -14px;
 }
 
 .dialog-maneuver select {
