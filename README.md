@@ -27,8 +27,6 @@ As some people are getting the link and might be interested in trying out the sy
 
 - The Weakened condition, as well as strike targets with resistance, now try to remove dice from the least relevant first. The order of attempted removing is: condition dice, bonus dice, threat/progress dice, action dice, strike dice, and ability dice last.
 
-### Modifications currently under playtest (those can be changed/refined at any moment)
-
 - GOALS REWORK. Instead of having two "sides", goals now are attributed a type: **FRIENDLY** or **HOSTILE**. same as units, who can also be either Friendly (Characters and Allies) or Hostile (Adversities and Hazards). When attempting goals, anyone can attempt an achievement action on any goal. When trying to advance a goal of your own type, rolls will function normally. When rolling an achievement on a goal of the opposite type, however, that represents you are HAMPERING progress on that goal, trying to keep the other side from completing it. Offer a description of what are you doing to sabotage the goal or make it more difficult for your opponents to achieve. Mechanically, this means:
   - You can't augment your roll with any type of dice other than strike or action dice.
   - instead of adding progress and/or completing the goal, successes in that roll will SUBTRACT progress from the goal, to a minimum of 0.
@@ -38,6 +36,21 @@ As some people are getting the link and might be interested in trying out the sy
   - there's a cap in how much threat a strike/achievement action can inflict, and that cap is the strike/achievement's ability dice + 1, not counting ability modifiers. I.e. a strike with Roll = 1d has a threat cap if 2, while a strike with a roll of 2d+1 has a threat cap of 3. 
   - As atacking an enemy with weakness to the strike doubles the effective ability dice for the roll, so do the threat cap is increased accordingly.
   - only "natural" dice can inflict threat. Natural dice are ability dice, strike dice and action dice. This means that threat/progress dice, bonus dice, and dice gained from any other means (like the empowered condition) work similarly to ability modifiers - while they count for checking if the number of successes of the roll beats the defense of the target, those dice will not cound for effects of adding threat.
+
+### Modifications currently under playtest (those can be changed/refined at any moment)
+
+- EXPERIENCE POINTS SYSTEM: A proposed character evolution system is being playtested at the moment using progression trees similar to the ones proposed in Anime Prime: Resurgence, with a few spins:
+  - Instead of buying "evolution items" one at a time, characters spend EXP to buy items, with cost as follows:
+    - Ability Points (used to buy a new trait/ability at rtating 3 or raise the rating of an existing one by 1): **1 EXP**
+    - Defense (raise character defense by 1): **2 EXP**
+    - Resistance (raise a particular resistance of the character by 1): **2 EXP**
+    - Action Point (raises the action pool size by 1): **2 EXP**
+    - HP (raise max HP by 1): **4 EXP**
+    - Action Card (character gains a new action card to use in combat): **4 EXP**
+    - Class Evolution: **6 EXP**
+  - Characters gain 1 EXP per session, plus one for each personality trait that was used in a relevant manner throughout the session (to a maximum of 2). Additionally, the GM can award players "EXP Fragments" at their discretion
+  - A player can, at any time (even during a session) trade EXP fragments to full-fledged EXP, at a rate of four-to-one. EXP gained in that fashion can be spent IMMEDIATELY, even if mid-session or even mid-combat.
+  - At the beginning of each combat, players can spend 1 EXP fragment to gain 2 "rerolls" for the upcoming combat. Personality trait marks and the rerolls tied to it have been discontinued. This is now the means for players to get dice rerolls.
 
 ## TODO / Roadmap
 - More playtesting, MUCH MORE PLAYTESTING
