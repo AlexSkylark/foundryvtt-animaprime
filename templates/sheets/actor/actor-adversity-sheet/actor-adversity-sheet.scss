@@ -5,9 +5,13 @@
     background: #fff;
     z-index: 0;
 
+    .skill-resistance-section {
+        display: flex;
+    }
+
     .decorative-square {
         background-color: var(--primary-color-light);
-        height: 530px;
+        height: 536px;
         width: 159px;
         position: absolute;
         top: 62px;
@@ -20,15 +24,19 @@
         
     }
 
+    .skill-section-container, .resistance-section-container {
+        width: 50%;
+    }
+
     .skill-button-container {
         
         display: flex;
+        flex-direction: column;
         margin: 0px auto;
         width: 90%;
 
         .skill-button {
             cursor: pointer;
-            width: 50%;
             margin: 12px 5px;
             background-color: #fff;
             text-align: center;
@@ -37,6 +45,7 @@
             padding: 6px;
             border-radius: 12px;
             font-weight: bold;
+            margin-bottom: 2px;
         }
     }
 
@@ -58,7 +67,7 @@
         }
 
         .skill-line {
-            flex: 0 0 50%;
+            flex: 0 0 90%;
             
         }
 
@@ -442,7 +451,7 @@
                 }
                
                 label {
-                    width: calc(100% - 80px);
+                    width: calc(100% - 72px);
                     text-align: end;
                     color: #fff;
                     font-size: 16px;

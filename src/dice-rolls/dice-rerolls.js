@@ -1,7 +1,6 @@
 import * as SkillRoll from "./skill-roll.js";
 import * as ManeuverRoll from "./maneuver-roll.js";
 import * as AttackRoll from "./attack-roll.js";
-import AnimaPrimeActor from "../AnimaPrimeActor.js";
 
 Hooks.on("renderChatMessage", (app, [html]) => {
     html.addEventListener("click", async (event) => {
@@ -13,9 +12,7 @@ Hooks.on("renderChatMessage", (app, [html]) => {
                 return;
             }
 
-            const rerollList = await game.settings
-                .get("animaprime", "commitedRerolls")
-                .split(",");
+            const rerollList = await game.settings.get("animaprime", "commitedRerolls").split(",");
             flags.commit = rerollList.some((x) => x == flags.reroll);
 
             if (flags.commit) {
@@ -24,9 +21,7 @@ Hooks.on("renderChatMessage", (app, [html]) => {
             }
 
             if (app.flags.tokenId) {
-                app.flags.sourceItem.owner = game.scenes.active.tokens.get(
-                    app.flags.tokenId
-                ).actor;
+                app.flags.sourceItem.owner = game.scenes.active.tokens.get(app.flags.tokenId).actor;
             } else {
                 app.flags.sourceItem.owner = game.actors.get(app.flags.actorId);
             }
@@ -55,52 +50,29 @@ Hooks.on("renderChatMessage", (app, [html]) => {
 });
 
 async function performReroll(flags) {
-    if (flags.sourceItem.type == "skill")
-        SkillRoll.skillCheck(flags.sourceItem, flags.additionalData.withHelp);
-    else if (flags.sourceItem.type == "maneuver")
-        ManeuverRoll.maneuverRoll(
-            flags.sourceItem,
-            true,
-            flags.dialogOptions,
-            flags.reroll
-        );
-    else if (
-        flags.sourceItem.type == "strike" ||
-        flags.sourceItem.type == "achievement"
-    ) {
-        AttackRoll.attackRoll(
-            flags.sourceItem,
-            true,
-            flags.dialogOptions,
-            flags.reroll
-        );
+    const reroll = flags.sourceItem.owner.system.reroll;
+
+    await flags.sourceItem.owner.update({
+        "system.reroll": reroll - 1,
+    });
+
+    if (flags.sourceItem.type == "skill") SkillRoll.skillCheck(flags.sourceItem, flags.additionalData.withHelp);
+    else if (flags.sourceItem.type == "maneuver") ManeuverRoll.maneuverRoll(flags.sourceItem, true, flags.dialogOptions, flags.reroll);
+    else if (flags.sourceItem.type == "strike" || flags.sourceItem.type == "achievement") {
+        AttackRoll.attackRoll(flags.sourceItem, true, flags.dialogOptions, flags.reroll);
     }
 }
 
 async function performCommit(flags) {
     if (flags.sourceItem.type == "maneuver") {
-        ManeuverRoll.commitResults(
-            flags.resultData,
-            flags.sourceItem,
-            flags.dialogOptions
-        );
-    } else if (
-        flags.sourceItem.type == "strike" ||
-        flags.sourceItem.type == "achievement"
-    ) {
-        AttackRoll.commitResults(
-            flags.resultData,
-            flags.sourceItem,
-            flags.dialogOptions,
-            flags.itemTarget
-        );
+        ManeuverRoll.commitResults(flags.resultData, flags.sourceItem, flags.dialogOptions);
+    } else if (flags.sourceItem.type == "strike" || flags.sourceItem.type == "achievement") {
+        AttackRoll.commitResults(flags.resultData, flags.sourceItem, flags.dialogOptions, flags.itemTarget);
     }
 
     flags.enableReroll = false;
 
-    let rerollList = await game.settings
-        .get("animaprime", "commitedRerolls")
-        .split(",");
+    let rerollList = await game.settings.get("animaprime", "commitedRerolls").split(",");
     rerollList.push(flags.reroll);
 
     if (rerollList.length > 20) rerollList.shift();
@@ -111,9 +83,7 @@ async function performCommit(flags) {
     return ChatMessage.create({
         user: game.user._id,
         speaker: ChatMessage.getSpeaker({ alias: flags.sourceItem.owner.name }),
-        content: await renderTemplate(
-            "systems/animaprime/templates/rolls/commit-roll.hbs"
-        ),
+        content: await renderTemplate("systems/animaprime/templates/rolls/commit-roll.hbs"),
         flags: {
             ...flags,
             rerollConfig: rerollConfig,

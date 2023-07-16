@@ -5,8 +5,10 @@
     
     $(".target-{{this.targetId}} > .form-action-dice-max").val({{this.maxActionDice}});
     $(".target-{{this.targetId}} > .form-action-value-max").html({{this.maxActionDice}});
+
+    $(".target-{{this.targetId}} > .form-input-damage-type").val("{{this.damageType}}");    
     
-    var windowRoot{{this.targetId}} = $(".target-{{this.targetId}}").parent().parent().parent().parent().parent().parent().parent().parent();
+    var windowRoot{{this.targetId}} = $(".target-{{this.targetId}}").parent().parent().parent().parent().parent().parent().parent();
     
     windowRoot{{this.targetId}}.find(".dialog-bonus").hide();
     windowRoot{{this.targetId}}.find(".dialog-weakresist").hide();
@@ -162,18 +164,9 @@
                 </div>            
             </div>
             <div class=" dialog-field-container flexrow dialog-weakresist">                
-                <label>Target has resistance?</label>
-                <div class="flexrow dialog-buttons">                    
-                    <button class="form-dialog-plusminus-button minus" onclick="modifyDice('resistance-dice', false, '{{this.targetId}}')">
-                        <span class="fas fa-minus" />
-                    </button>                    
-                    <button class="form-dialog-plusminus-button plus" onclick="modifyDice('resistance-dice', true, '{{this.targetId}}')">
-                        <span class="fas fa-plus" />
-                    </button>
-                    <div class="form-dice-field bonus target-{{this.targetId}}">
-                        <input type="hidden" class="form-resistance-dice" name="resistance" value="0" />                        
-                        <span class="form-dice-value form-resistance-value">0</span>
-                    </div>
+                <label>Damage Type:</label>                                
+                <div class="form-dice-field form-damage-type resistance target-{{this.targetId}}">
+                    <input type="text" class="form-input-damage-type" name="damageType" value="" />
                 </div>
             </div>
             {{/unless}}
@@ -181,8 +174,8 @@
         <div class="dialog-advanced-buttons-container flexrow">
             <button class="dialog-button-advanced show-bonus" onclick="toggleBonus{{this.targetId}}(1)">Show Bonus</button>
             <button class="dialog-button-advanced hide-bonus" onclick="toggleBonus{{this.targetId}}(-1)">Hide Bonus</button>
-            <button class="dialog-button-advanced show-weakresist" onclick="toggleWeakResist{{this.targetId}}(1)">Show Weak/Resist</button>
-            <button class="dialog-button-advanced hide-weakresist" onclick="toggleWeakResist{{this.targetId}}(-1)">Hide Weak/Resist</button>
+            <button class="dialog-button-advanced show-weakresist" onclick="toggleWeakResist{{this.targetId}}(1)">Show Advanced</button>
+            <button class="dialog-button-advanced hide-weakresist" onclick="toggleWeakResist{{this.targetId}}(-1)">Hide Advanced</button>
         </div>
     </div>
 </form>

@@ -178,3 +178,17 @@
         top: -2px;    
     }
 }
+
+.form-damage-type {
+    position: relative;    
+    top: 4px;
+    right: 46px;
+
+    .form-input-damage-type {
+        font-family: "Caveat", cursive;
+        font-size: 25px;
+        color: #333;
+        width: calc(100% + 16px);
+        margin-left: -14px;
+    }
+}
