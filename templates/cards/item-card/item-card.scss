@@ -6,10 +6,14 @@ $maneuver-background: #e5e6f3   ;
     img {            
         border-color: $color;
     }
-
+    
     .item-card {
         background-color: $background;
         border-color: $color;
+
+        .item-title {
+            cursor: pointer;
+        }
     
         .item-header {
             background-color: $color;

@@ -3044,6 +3044,9 @@ select:focus {
   background-color: #e5e6f3;
   border-color: #212cce;
 }
+.item-card-container.maneuver .item-card .item-title {
+  cursor: pointer;
+}
 .item-card-container.maneuver .item-card .item-header {
   background-color: #212cce;
 }
@@ -3060,6 +3063,9 @@ select:focus {
 .item-card-container.strike .item-card {
   background-color: #f9e0e8;
   border-color: #b80523;
+}
+.item-card-container.strike .item-card .item-title {
+  cursor: pointer;
 }
 .item-card-container.strike .item-card .item-header {
   background-color: #b80523;
@@ -3078,6 +3084,9 @@ select:focus {
   background-color: #e0faee;
   border-color: #12886e;
 }
+.item-card-container.achievement .item-card .item-title {
+  cursor: pointer;
+}
 .item-card-container.achievement .item-card .item-header {
   background-color: #12886e;
 }
@@ -3094,6 +3103,9 @@ select:focus {
 .item-card-container.power .item-card {
   background-color: #ebe1ff;
   border-color: #6105b8;
+}
+.item-card-container.power .item-card .item-title {
+  cursor: pointer;
 }
 .item-card-container.power .item-card .item-header {
   background-color: #6105b8;
@@ -3112,6 +3124,9 @@ select:focus {
   background-color: #f8e7d1;
   border-color: #d36702;
 }
+.item-card-container.boost .item-card .item-title {
+  cursor: pointer;
+}
 .item-card-container.boost .item-card .item-header {
   background-color: #d36702;
 }
@@ -3129,6 +3144,9 @@ select:focus {
   background-color: #d1ecf8;
   border-color: #0490a8;
 }
+.item-card-container.reaction .item-card .item-title {
+  cursor: pointer;
+}
 .item-card-container.reaction .item-card .item-header {
   background-color: #0490a8;
 }
@@ -3145,6 +3163,9 @@ select:focus {
 .item-card-container.extra .item-card {
   background-color: #f3f0f0;
   border-color: #6b6b6b;
+}
+.item-card-container.extra .item-card .item-title {
+  cursor: pointer;
 }
 .item-card-container.extra .item-card .item-header {
   background-color: #6b6b6b;

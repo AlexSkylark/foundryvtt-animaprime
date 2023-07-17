@@ -288,13 +288,12 @@ Hooks.once("init", async () => {
         },
     });
 
-    await game.settings.register("animaprime", "primaryColor", {
+    await ColorPicker.register("animaprime", "primaryColor", {
         name: "Primary Color",
         hint: "Color used on Sheets",
+        default: "#723485",
         scope: "client",
         config: true,
-        type: String,
-        default: "#643b68",
         onChange: (value) => {
             changePrimaryColor(value);
         },
@@ -386,6 +385,11 @@ function configureStatusEffects() {
             id: "weakened",
             label: "Weakened",
             icon: "systems/animaprime/assets/icons/breaking-chain.svg",
+        },
+        {
+            id: "marked",
+            label: "Marked",
+            icon: "systems/animaprime/assets/icons/cross-mark.svg",
         },
     ];
 }
