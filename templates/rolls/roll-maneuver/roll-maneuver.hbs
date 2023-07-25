@@ -6,7 +6,13 @@
                 <h4 class="header-title">Maneuver {{#if flavor.isReroll}}re{{/if}}roll</h4>
                 <h4 class="header-name">{{flavor.entityData.name}}</h4>
             </div>
+            {{#if flavor.entityData.system.additionalEffect}}
+            <div class="item-description">
+                <p>Additional Effect: <br />{{flavor.entityData.system.additionalEffect}}</p>
+            </div>
+            {{/if}}
         </div>
+        
         <div class="flexcol">
             <div class="target-section">
                 <ol class="rolls rolls-{{flavor.targetData.[0].rollsId}}">

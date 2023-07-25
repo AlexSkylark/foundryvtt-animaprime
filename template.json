@@ -118,14 +118,16 @@
                 "r5": "1",
                 "r6": "2"
             },
-            "gainText": ""
+            "gainText": "",
+            "aditionalEffect": ""
         },
         "strike": {
             "targets": 1,
             "range": 0,
             "sdl": 4,
             "roll": "1d",
-            "damage": "physical"
+            "damage": "physical",
+            "aditionalEffect": ""
         },
         "power": {
             "templates": ["base", "effect"],
@@ -137,7 +139,8 @@
         "achievement": {
             "templates": ["base", "effect"],
             "sdl": 4,
-            "roll": "1d"
+            "roll": "1d",
+            "aditionalEffect": ""
         },
         "reaction": {
             "templates": ["base", "effect"],

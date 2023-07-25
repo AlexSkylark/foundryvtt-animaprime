@@ -3,7 +3,7 @@ export default class AnimaPrimeActionSheet extends ItemSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["animaprime", "sheet", "item", "skill-sheet"],
             width: 500,
-            height: 268,
+            height: 305,
             resizable: false,
         });
     }

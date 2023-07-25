@@ -8,6 +8,9 @@
         </div>
         <div class="item-description-container">
             <span class="item-description">{{system.description}}</span>
+            {{#if system.additionalEffect}}
+            <span class="item-description"><strong>Additional Effect: </strong>{{system.additionalEffect}}</span>
+            {{/if}}
             {{#if system.gainText}}
             <span class="item-description"><strong>Gain: </strong>{{system.gainText}}</span>
             {{/if}}

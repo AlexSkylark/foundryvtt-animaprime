@@ -8,7 +8,10 @@
             </div>
             <div class="item-description">
                 <p>{{flavor.entityData.system.description}}</p>
-            </div>
+                {{#if flavor.entityData.system.additionalEffect}}            
+                <p>Additional Effect: <br />{{flavor.entityData.system.additionalEffect}}</p>            
+                {{/if}}
+            </div>            
         </div>
         <div class="flexcol">
             {{#each flavor.targetData}}
