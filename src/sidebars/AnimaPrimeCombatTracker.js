@@ -17,8 +17,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
-            template:
-                "/systems/animaprime/templates/sidebars/combat-tracker/combat-tracker.hbs",
+            template: "/systems/animaprime/templates/sidebars/combat-tracker/combat-tracker.hbs",
         });
     }
 
@@ -26,10 +25,9 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         var context = await super.getData();
 
         for (let t of context.turns) {
-            const comb = await this.viewed.getEmbeddedDocument(
-                "Combatant",
-                t.id
-            );
+            const comb = await this.viewed.getEmbeddedDocument("Combatant", t.id);
+
+            if (comb.actor.type == "goal") continue;
 
             t.name = comb.actor.name;
             t.faction = comb.faction;
@@ -41,13 +39,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         }
 
         if (this.viewed) {
-            if (this.viewed.combsWaitingTurn.length > 0)
-                context.activeFaction = this.viewed.combsWaitingTurn[0].faction;
-            else if (this.viewed.combsOnQueue.length > 0)
-                context.activeFaction = this.viewed.getMinObject(
-                    this.viewed.combsOnQueue,
-                    "initiative"
-                ).faction;
+            if (this.viewed.combsWaitingTurn.length > 0) context.activeFaction = this.viewed.combsWaitingTurn[0].faction;
+            else if (this.viewed.combsOnQueue.length > 0) context.activeFaction = this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative").faction;
             else context.activeFaction = "friendly";
         }
 
@@ -57,21 +50,15 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
     activateListeners(html) {
         super.activateListeners(html);
 
-        html.find(".combatant-take-turn").click(
-            this._onCombatantTakeTurn.bind(this)
-        );
+        html.find(".combatant-take-turn").click(this._onCombatantTakeTurn.bind(this));
 
-        html.find(".combat-custom-control").click(
-            this._onCombatCustomControl.bind(this)
-        );
+        html.find(".combat-custom-control").click(this._onCombatCustomControl.bind(this));
     }
 
     async _onCombatantTakeTurn(ev) {
         ev.preventDefault();
 
-        const combatantId = $(ev.currentTarget)
-            .closest(".combatant")
-            .data("combatantId");
+        const combatantId = $(ev.currentTarget).closest(".combatant").data("combatantId");
 
         if (game.user.isGM) this.performTakeTurn(combatantId);
         else
@@ -109,17 +96,9 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             return;
         }
 
-        const lastComb = await this.viewed.getMinObject(
-            this.viewed.combsOnQueue,
-            "initiative"
-        );
+        const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
-        await this.viewed.setInitiative(
-            combatantId,
-            this.viewed.combsOnQueue.length == 0
-                ? 10000
-                : lastComb.initiative - 1
-        );
+        await this.viewed.setInitiative(combatantId, this.viewed.combsOnQueue.length == 0 ? 10000 : lastComb.initiative - 1);
 
         const takeTurnComb = this.viewed.turns.find((a) => {
             return a.id == combatantId;
@@ -172,38 +151,20 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             return;
         }
 
-        const lastComb = await this.viewed.getMinObject(
-            this.viewed.combsOnQueue,
-            "initiative"
-        );
+        const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
         let combsToReset = [];
         if (this.viewed.combsWaitingTurn.length == 0) {
             combsToReset.push(lastComb);
-            combsToReset = combsToReset.concat(
-                this.viewed.combsOutofQueue.filter(
-                    (x) => x.faction == lastComb.faction && !x.isDefeated
-                )
-            );
+            combsToReset = combsToReset.concat(this.viewed.combsOutofQueue.filter((x) => x.faction == lastComb.faction && !x.isDefeated));
             this.viewed.resetInitiative(combsToReset, true);
         } else {
-            const nextFaction = lastComb
-                ? this.getInverseFaction(lastComb.faction)
-                : "friendly";
-            combsToReset = combsToReset.concat(
-                this.viewed.combsOutofQueue.filter(
-                    (x) => x.faction == nextFaction && !x.isDefeated
-                )
-            );
+            const nextFaction = lastComb ? this.getInverseFaction(lastComb.faction) : "friendly";
+            combsToReset = combsToReset.concat(this.viewed.combsOutofQueue.filter((x) => x.faction == nextFaction && !x.isDefeated));
             this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
         }
 
-        if (
-            this.viewed.combsOnQueue.length > 1 &&
-            this.viewed.combsWaitingTurn == 0 &&
-            this.viewed.getCurrentCombatant().id ==
-                this.viewed.current.combatantId
-        ) {
+        if (this.viewed.combsOnQueue.length > 1 && this.viewed.combsWaitingTurn == 0 && this.viewed.getCurrentCombatant().id == this.viewed.current.combatantId) {
             this.viewed.previousTurn();
         }
     }
@@ -232,10 +193,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             }
         }
 
-        const lastComb = await this.viewed.getMinObject(
-            this.viewed.combsOnQueue,
-            "initiative"
-        );
+        const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
         let combsToReset = [];
         let nextFaction = lastComb.faction;
@@ -244,12 +202,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             nextFaction = this.getInverseFaction(nextFaction);
 
             for (let t of this.viewed.turns) {
-                if (
-                    t.faction == nextFaction &&
-                    (t.initiative <= 1000 || t.initiative == null) &&
-                    !t.isDefeated
-                )
-                    combsToReset.push(t);
+                if (t.faction == nextFaction && (t.initiative <= 1000 || t.initiative == null) && !t.isDefeated) combsToReset.push(t);
             }
         }
 
@@ -261,9 +214,6 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
     }
 
     getCurrentTurnToken() {
-        return ui.combat.viewed.getEmbeddedDocument(
-            "Combatant",
-            ui.combat.viewed.current.combatantId
-        ).token;
+        return ui.combat.viewed.getEmbeddedDocument("Combatant", ui.combat.viewed.current.combatantId).token;
     }
 }

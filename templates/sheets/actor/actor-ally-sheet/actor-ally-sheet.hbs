@@ -2,6 +2,10 @@
 
     {{> "systems/animaprime/templates/partials/script-health.hbs" actor}}
 
+    {{#if editUnlocked}}
+        {{> "systems/animaprime/templates/partials/script-reformbasics.hbs" actor}}
+    {{/if}}
+
     <div class="decorative-square{{#unless editUnlocked}} small-square{{/unless}}">&nbsp;</div>
     <header class="flexcol">    
         <div class="header-namestrip flexrow flex0">
@@ -87,6 +91,7 @@
                 </div>
             </div>
             <div class="tab actions-section-container" data-tab="basic" data-group="primary-tabs">
+                <button class="button-reform-basicactions">Refresh Basic Actions</button>
                 <div class="actions-section">
                     {{#each basicActions as |item id|}}
                     {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=true}}

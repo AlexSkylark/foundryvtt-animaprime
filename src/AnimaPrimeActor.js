@@ -18,15 +18,13 @@ export default class AnimaPrimeActor extends Actor {
         if (this.system.difficulty == 0) {
             return 0;
         } else {
-            return Math.floor(
-                (this.system.progressDice / this.system.difficulty) * 100
-            );
+            return Math.floor((this.system.progressDice / this.system.difficulty) * 100);
         }
     }
 
     checkCondition(condition) {
         const effects = this.temporaryEffects.filter((temp) => {
-            return temp.isTemporary == condition;
+            return temp.name.toUpperCase() == condition.toUpperCase();
         });
         return effects.length > 0;
     }
