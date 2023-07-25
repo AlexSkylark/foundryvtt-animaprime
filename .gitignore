@@ -5,6 +5,7 @@
 
 # Node Modules
 node_modules/
+packs/basic-actions/
 npm-debug.log
 *.zip
 

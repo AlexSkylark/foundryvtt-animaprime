@@ -64,6 +64,9 @@
 
     <ol id="combat-tracker" class="directory-list waiting-line">
         {{#each turns}}
+
+            {{#unless (isGoal this)}}
+
             {{#if (and (isOutOfQueue this.initiative) (isFriendly this.faction)) }}
             {{#unless this.isAlly}}
             <li class="combatant actor directory-item flexrow {{this.css}} {{this.faction}} {{#if this.isAlly}} ally{{/if}}" data-combatant-id="{{this.id}}">
@@ -96,8 +99,13 @@
             </li>            
             {{/unless}}            
             {{/if}}
+
+            {{/unless}}
         {{/each}}
         {{#each turns}}
+
+            {{#unless (isGoal this)}}
+
             {{#if (and (isOutOfQueue this.initiative) (isFriendly this.faction)) }}
             {{#if this.isAlly}}
             <li class="combatant actor directory-item flexrow {{this.css}} {{this.faction}} ally" data-combatant-id="{{this.id}}">
@@ -132,6 +140,9 @@
             </li>
             {{/if}}
             {{/if}}
+
+            {{/unless}}
+
         {{/each}}
     </ol>
 
@@ -139,6 +150,9 @@
     
     <ol id="combat-tracker" class="directory-list waiting-line">
         {{#each turns}}
+
+            {{#unless (isGoal this)}}
+
             {{#if (and (isOutOfQueue this.initiative) (isHostile this.faction)) }}
             <li class="combatant actor directory-item flexrow {{this.css}} {{this.faction}}" data-combatant-id="{{this.id}}">
                 <img class="token-image" src="{{this.img}}" title="{{this.name}}"/>
@@ -169,6 +183,9 @@
                 </div>
             </li>
             {{/if}}
+
+            {{/unless}}
+            
         {{/each}}
     </ol>
 

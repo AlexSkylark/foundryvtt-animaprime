@@ -1,13 +1,7 @@
 import * as DiceRolls from "./dice-rolls.js";
 
-export async function maneuverRoll(
-    maneuver,
-    isReroll = false,
-    dialogOptions,
-    reroll
-) {
-    const messageTemplate =
-        "systems/animaprime/templates/rolls/roll-maneuver/roll-maneuver.hbs";
+export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, reroll) {
+    const messageTemplate = "systems/animaprime/templates/rolls/roll-maneuver/roll-maneuver.hbs";
 
     let maneuverDice = parseInt(maneuver.system.roll.replace("d"));
     const isQuickened = maneuver.owner.checkCondition("quickened");
@@ -25,9 +19,7 @@ export async function maneuverRoll(
                 type: maneuver.type,
             };
 
-            dialogOptions = await DiceRolls.getManeuverRollOptions(
-                itemForDialog
-            );
+            dialogOptions = await DiceRolls.getManeuverRollOptions(itemForDialog);
             if (dialogOptions.cancelled) return;
         } else {
             dialogOptions = { maneuverStyle: "regular" };
@@ -60,13 +52,7 @@ export async function maneuverRoll(
     rollResult.push(await rl.evaluate({ async: true }));
 
     let resultData = [];
-    resultData.push(
-        checkManeuverResult(
-            maneuver.system.gain,
-            rollResult[0].dice[0].results,
-            dialogOptions.maneuverStyle == "aggressive"
-        )
-    );
+    resultData.push(checkManeuverResult(maneuver.system.gain, rollResult[0].dice[0].results, dialogOptions.maneuverStyle == "aggressive"));
 
     let resultsCopy = JSON.parse(JSON.stringify(rollResult[0].dice[0].results));
 
@@ -125,9 +111,7 @@ export async function maneuverRoll(
 
     // turn off supported condition
     if (isSupported) {
-        const supportedEffect = CONFIG.statusEffects.find(
-            (e) => e.id == "supported"
-        );
+        const supportedEffect = CONFIG.statusEffects.find((e) => e.id == "supported");
 
         const token = maneuver.owner.getActiveTokens()[0];
         token.toggleEffect(supportedEffect, false);
@@ -153,26 +137,11 @@ export async function maneuverRoll(
         isSupportive: dialogOptions.maneuverStyle == "supportive",
     });
 
-    await DiceRolls.renderRoll(
-        rollResult,
-        maneuver,
-        resultData,
-        messageTemplate,
-        additionalData,
-        isReroll,
-        this.commitResults,
-        dialogOptions,
-        null,
-        reroll
-    );
+    await DiceRolls.renderRoll(rollResult, maneuver, resultData, messageTemplate, additionalData, isReroll, this.commitResults, dialogOptions, null, reroll);
 }
 
 function checkManeuverTarget(maneuver, maneuverStyle) {
-    if (
-        maneuverStyle == "cunning" ||
-        maneuverStyle == "heroic" ||
-        maneuverStyle == "supportive"
-    ) {
+    if (maneuverStyle == "cunning" || maneuverStyle == "heroic" || maneuverStyle == "supportive") {
         const originalTargets = duplicate(maneuver.targets);
         if (maneuverStyle == "cunning") {
             maneuver.targets = maneuver.targets.filter((i) => {
@@ -188,17 +157,8 @@ function checkManeuverTarget(maneuver, maneuverStyle) {
             });
         }
 
-        if (
-            !maneuver.targets ||
-            !maneuver.targets.length ||
-            maneuver.targets.length != originalTargets.length
-        ) {
-            ui.notifications.error(
-                `Please select a suitable target when using the <i>"${
-                    maneuverStyle.charAt(0).toUpperCase() +
-                    maneuverStyle.slice(1)
-                }"</i> maneuver style.`
-            );
+        if (!maneuver.targets || !maneuver.targets.length || maneuver.targets.length != originalTargets.length) {
+            ui.notifications.error(`Please select a suitable target when using the <i>"${maneuverStyle.charAt(0).toUpperCase() + maneuverStyle.slice(1)}"</i> maneuver style.`);
             return false;
         }
     }
@@ -242,10 +202,7 @@ export async function commitResults(resultData, item, dialogOptions) {
             break;
         case "defensive":
             await item.owner.update({
-                "system.threatDice": Math.max(
-                    item.owner.system.threatDice - 1,
-                    0
-                ),
+                "system.threatDice": Math.max(item.owner.system.threatDice - 1, 0),
             });
             break;
         case "reckless":

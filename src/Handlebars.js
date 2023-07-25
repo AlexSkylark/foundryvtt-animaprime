@@ -12,9 +12,7 @@ export function registerHandlebarsHelpers() {
     });
 
     Handlebars.registerHelper("isPositiveGoal", function (value1, value2) {
-        const systemData =
-            game.scenes.active.tokens.get(value1).actorData.system ??
-            game.scenes.active.tokens.get(value1).actor.system;
+        const systemData = game.scenes.active.tokens.get(value1).actorData.system ?? game.scenes.active.tokens.get(value1).actor.system;
 
         const targetType = systemData.type;
         const ownerType = value2 == "character" || value2 == "ally" ? 0 : 1;
@@ -82,6 +80,10 @@ export function registerHandlebarsHelpers() {
         return value.toUpperCase() == "HAZARD";
     });
 
+    Handlebars.registerHelper("isGoal", function (value) {
+        return value.name.toUpperCase().indexOf("GOAL") >= 0;
+    });
+
     Handlebars.registerHelper("isFriendly", function (value) {
         return value.toUpperCase() == "FRIENDLY";
     });
@@ -108,13 +110,10 @@ export function registerHandlebarsHelpers() {
         return true;
     });
 
-    Handlebars.registerHelper(
-        "itemOwnerHasCondition",
-        function (value, condition) {
-            return value.owner.checkCondition("condition");
-            return true;
-        }
-    );
+    Handlebars.registerHelper("itemOwnerHasCondition", function (value, condition) {
+        return value.owner.checkCondition("condition");
+        return true;
+    });
 
     Handlebars.registerHelper({
         not: (v1) => !v1,

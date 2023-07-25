@@ -16,7 +16,7 @@ export default class AnimaPrimeCombat extends Combat {
             console.log("passei começo");
             let actorData = combatant.actor.system;
 
-            if (combatant.actor.type == "character") actorData.actionDice = 2;
+            if (combatant.actor.type == "character") actorData.actionDice = actorData.dice.actionDiceMax;
             actorData.chargeDice = 0;
             actorData.strikeDice = 0;
             actorData.threatDice = 0;
@@ -44,18 +44,8 @@ export default class AnimaPrimeCombat extends Combat {
                     await token.actor.update({
                         "system.loomingTurns": newValue,
                     });
-                    if (newValue > 0)
-                        ui.notifications.warn(
-                            `Looming conflict goal "${
-                                token.actor.name
-                            }" will expire in ${newValue} ${
-                                newValue > 1 ? "turns" : "turn"
-                            }! Hurry up!`
-                        );
-                    else
-                        ui.notifications.warn(
-                            `Looming conflict goal "${token.actor.name} has EXPIRED!!!`
-                        );
+                    if (newValue > 0) ui.notifications.warn(`Looming conflict goal "${token.actor.name}" will expire in ${newValue} ${newValue > 1 ? "turns" : "turn"}! Hurry up!`);
+                    else ui.notifications.warn(`Looming conflict goal "${token.actor.name} has EXPIRED!!!`);
                 }
             }
         }
@@ -66,33 +56,23 @@ export default class AnimaPrimeCombat extends Combat {
 
         if (end)
             this.turns.forEach(async (combatant) => {
-                console.log("passei");
                 let actorData = combatant.actor.system;
 
-                actorData.actionDice = 2;
+                actorData.actionDice = 0;
                 actorData.chargeDice = 0;
                 actorData.strikeDice = 0;
                 actorData.threatDice = 0;
-                actorData.health.value = actorData.health.max;
 
                 await combatant.actor.update({ system: actorData });
             });
     }
 
-    async _onCreateEmbeddedDocuments(
-        embeddedName,
-        documents,
-        result,
-        options,
-        userId
-    ) {
-        await super._onCreateEmbeddedDocuments(
-            embeddedName,
-            documents,
-            result,
-            options,
-            userId
-        );
+    async _onCreate(data, options, userId) {
+        if (!this.collection.viewed) ui.combat.initialize({ combat: this, render: false });
+    }
+
+    async _onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
+        await super._onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId);
 
         if (this.combsWaitingTurn.length) {
             let faction = this.combsWaitingTurn.find((a) => {
@@ -100,14 +80,8 @@ export default class AnimaPrimeCombat extends Combat {
             }).faction;
             for (let i = 0; i < documents.length; i++) {
                 if (documents[i].faction == faction) {
-                    let lastInitiative = this.getMinObject(
-                        this.combsWaitingTurn,
-                        "initiative"
-                    ).initiative;
-                    await this.setInitiative(
-                        documents[i].id,
-                        lastInitiative - 1
-                    );
+                    let lastInitiative = this.getMinObject(this.combsWaitingTurn, "initiative").initiative;
+                    await this.setInitiative(documents[i].id, lastInitiative - 1);
                 }
             }
         }
@@ -116,15 +90,8 @@ export default class AnimaPrimeCombat extends Combat {
     async resetInitiative(combatants, takeTurn) {
         let startingNumber = takeTurn ? 1000 : 0;
 
-        for (
-            let i = startingNumber;
-            Math.abs(i - startingNumber) < combatants.length;
-            i--
-        ) {
-            await this.setInitiative(
-                combatants[Math.abs(i - startingNumber)].id,
-                i
-            );
+        for (let i = startingNumber; Math.abs(i - startingNumber) < combatants.length; i--) {
+            await this.setInitiative(combatants[Math.abs(i - startingNumber)].id, i);
         }
     }
 
