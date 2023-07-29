@@ -10,11 +10,17 @@
         <div class="flexcol">
             <div class="flexrow">               
                 <ol class="rolls rolls-{{flavor.targetData.0.rollsId}}">
+                    {{#each flavor.targetData.0.additionalData.abilityDice}}
+                    <li title="Skill die" class="roll{{#if (isSuccess this.result)}} success{{/if}}{{#if (eq this.result 6)}} charge-success{{/if}}"><div class="roll-dice">{{{this.result}}}</div></li>
+                    {{/each}}
+                    {{#each flavor.targetData.0.additionalData.bonusDice}}
+                    <li title="Focus die" class="roll bonus{{#if (isSuccess this.result)}} success{{/if}}{{#if (eq this.result 6)}} charge-success{{/if}}"><div class="roll-dice bonus">{{{this.result}}}</div></li>
+                    {{/each}}
+                    <!--
                     {{#each flavor.targetData.0.rollResult.dice.0.results}}
-                    <li class="roll {{#if this.success}}success{{/if}}">
-                        <div class="roll-dice">{{{this.result}}}</div>
-                    </li>
-                    {{/each}}                
+                    <li class="roll {{#if this.success}}success{{/if}}"><div class="roll-dice">{{{this.result}}}</div></li>
+                    {{/each}}
+                    -->
                 </ol>                
             </div>
             {{#if (isSkillCriticalSuccess flavor.targetData.0.resultData.successes)}}

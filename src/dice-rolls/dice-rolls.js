@@ -141,41 +141,6 @@ export async function getManeuverRollOptions(item) {
     });
 }
 
-export async function getSkillRollOptions(item) {
-    return new Promise(async (resolve) => {
-        const dialogOptions = {
-            width: 320,
-            height: 291,
-            classes: ["window-dialog"],
-        };
-
-        const data = {
-            title: item.type.charAt(0).toUpperCase() + item.type.slice(1) + " Roll",
-            content: await renderTemplate("systems/animaprime/templates/dialogs/dialog-skillroll/dialog-skillroll.hbs", item),
-            options: {
-                classes: ["window-content-white"],
-            },
-            buttons: {
-                cancel: {
-                    label: '<i class="fas fa-x"></i> Cancel',
-                    callback: (html) => resolve({ cancelled: true }),
-                },
-                normal: {
-                    label: '<i class="fas fa-check"></i> Confirm',
-                    callback: (html) =>
-                        resolve({
-                            difficulty: html[0].querySelector("form").difficulty.value,
-                        }),
-                },
-            },
-            default: "normal",
-            close: () => resolve({ cancelled: true }),
-        };
-
-        new Dialog(data, dialogOptions).render(true);
-    });
-}
-
 export async function getItemRollOptions(item) {
     const template = "systems/animaprime/templates/dialogs/dialog-itemroll/dialog-itemroll.hbs";
 
@@ -347,19 +312,6 @@ export function checkVariableGain(splitResults) {
     }
 
     return Math.min(variableGain, splitResults.abilityDice.length + 1);
-}
-
-export function checkSkillSuccess(results, difficulty) {
-    var sux = 0;
-
-    for (let i of results) {
-        if (i.result >= difficulty) {
-            sux++;
-            i.success = true;
-        }
-    }
-
-    return sux;
 }
 
 export function checkForReroll(owner) {
