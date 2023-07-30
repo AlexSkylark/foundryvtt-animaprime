@@ -5,3 +5,10 @@
     font-family: 'Montserrat';
     padding: 32px 16px;
 }
+.dialog-confirmdelete {
+    input[type=text], span {
+        background: none;
+        border: 0;
+        color: #444;
+    }
+}

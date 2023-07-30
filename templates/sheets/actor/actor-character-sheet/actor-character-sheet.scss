@@ -5,6 +5,12 @@
     background: #fff;
     z-index: 0;
 
+    .input-text, span {
+        background: none;
+        border: 0;
+        color: #444;
+    }
+
     .decorative-square {
         background-color: var(--primary-color-light);
         height: 807px;
@@ -107,6 +113,7 @@
                 max-width: 21%;
                 color: #fff;
                 font-size: 24px;
+                border: 0;
                 border-bottom: 2px solid var(--primary-color-light);
                 border-radius: 0;
                 margin: 0px 6px;

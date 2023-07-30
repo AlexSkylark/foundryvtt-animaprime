@@ -5,6 +5,12 @@
     background: #fff;
     z-index: 0;
 
+    input[type=text], span {
+        background: none;
+        border: 0;
+        color: #444;
+    }
+
     .decorative-square {
         background-color: var(--primary-color-light);
         height: 426px;

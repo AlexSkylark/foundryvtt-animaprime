@@ -1,6 +1,12 @@
 @use '../dialog.scss';
 
 .dialog-maneuver {    
+
+    input[type=text], span {
+        background: none;
+        border: 0;
+        color: #444;
+    }
     
     select {
         background-color: #fff;

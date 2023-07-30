@@ -2,6 +2,12 @@
 
 .dialog-container-itemroll {
 
+    input[type=text], span {
+        background: none;
+        border: 0;
+        color: #444;
+    }
+
     .strike {
         background-color: #fcf3f5;
     }

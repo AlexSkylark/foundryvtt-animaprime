@@ -71,12 +71,6 @@
   border-bottom-left-radius: 12px;
 }
 
-input[type=text], span {
-  background: none;
-  border: 0;
-  color: #444;
-}
-
 li {
   list-style: none;
 }
@@ -229,6 +223,11 @@ select:focus {
 .adversity-sheet {
   background: #fff;
   z-index: 0;
+}
+.adversity-sheet input[type=text], .adversity-sheet span {
+  background: none;
+  border: 0;
+  color: #444;
 }
 .adversity-sheet .skill-resistance-section {
   display: flex;
@@ -660,6 +659,11 @@ select:focus {
   background: #fff;
   z-index: 0;
 }
+.ally-sheet input[type=text], .ally-sheet span {
+  background: none;
+  border: 0;
+  color: #444;
+}
 .ally-sheet .decorative-square {
   background-color: var(--primary-color-light);
   height: 530px;
@@ -1088,6 +1092,11 @@ select:focus {
   background: #fff;
   z-index: 0;
 }
+.character-sheet .input-text, .character-sheet span {
+  background: none;
+  border: 0;
+  color: #444;
+}
 .character-sheet .decorative-square {
   background-color: var(--primary-color-light);
   height: 807px;
@@ -1178,6 +1187,7 @@ select:focus {
   max-width: 21%;
   color: #fff;
   font-size: 24px;
+  border: 0;
   border-bottom: 2px solid var(--primary-color-light);
   border-radius: 0;
   margin: 0px 6px;
@@ -1700,6 +1710,11 @@ select:focus {
   background: #fff;
   z-index: 0;
 }
+.hazard-sheet input[type=text], .hazard-sheet span {
+  background: none;
+  border: 0;
+  color: #444;
+}
 .hazard-sheet .decorative-square {
   background-color: var(--primary-color-light);
   height: 426px;
@@ -2103,6 +2118,11 @@ select:focus {
   min-width: 60%;
 }
 
+.action-sheet input[type=text], .action-sheet span {
+  background: none;
+  border: 0;
+  color: #444;
+}
 .action-sheet .name {
   flex: 0 0 60%;
 }
@@ -2654,6 +2674,11 @@ select:focus {
   align-items: center;
   font-family: "Montserrat";
 }
+.dialog-container-itemroll input[type=text], .dialog-container-itemroll span {
+  background: none;
+  border: 0;
+  color: #444;
+}
 .dialog-container-itemroll .strike {
   background-color: #fcf3f5;
 }
@@ -2814,6 +2839,11 @@ select:focus {
   margin-left: -14px;
 }
 
+.dialog-maneuver input[type=text], .dialog-maneuver span {
+  background: none;
+  border: 0;
+  color: #444;
+}
 .dialog-maneuver select {
   background-color: #fff;
   border: 2px solid var(--primary-color);
@@ -2851,6 +2881,11 @@ select:focus {
   filter: saturate(1.25);
 }
 
+.dialog-usepower input[type=text], .dialog-usepower span {
+  background: none;
+  border: 0;
+  color: #444;
+}
 .dialog-usepower .dialog-elements {
   align-items: flex-start;
   font-family: "Montserrat";
@@ -2861,6 +2896,12 @@ select:focus {
   align-items: flex-start;
   font-family: "Montserrat";
   padding: 32px 16px;
+}
+
+.dialog-confirmdelete input[type=text], .dialog-confirmdelete span {
+  background: none;
+  border: 0;
+  color: #444;
 }
 
 .dialog-curtain {
@@ -3033,6 +3074,11 @@ select:focus {
   color: #bddcfb;
 }
 
+.item-card-container input[type=text], .item-card-container span {
+  background: none;
+  border: 0;
+  color: #444;
+}
 .item-card-container:last-child {
   padding-bottom: 18px;
 }

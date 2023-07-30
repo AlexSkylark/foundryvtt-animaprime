@@ -36,6 +36,12 @@ $maneuver-background: #e5e6f3   ;
 
 .item-card-container {
 
+    input[type=text], span {
+        background: none;
+        border: 0;
+        color: #444;
+    }
+
     &:last-child {
         padding-bottom: 18px;
     }
