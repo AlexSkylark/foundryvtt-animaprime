@@ -52,6 +52,7 @@ export async function skillCheck(skill, withHelp = false, difficult = false) {
         help: withHelp,
         successes: sux,
         difficultyText: difficultyText,
+        difficulty: parseInt(dialogOptions.difficulty),
     });
 
     const splittedResults = [DiceRolls.splitRollResult(rollResult[0].dice[0].results, dice, 0, 0, 0, rollResult[0].dice[0].results.length - dice)];
