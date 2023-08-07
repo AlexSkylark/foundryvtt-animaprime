@@ -23,18 +23,19 @@
                     -->
                 </ol>                
             </div>
-            {{#if (isSkillCriticalSuccess flavor.targetData.0.resultData.successes)}}
-            <span class="result-message critical">{{flavor.targetData.0.resultData.successes}} successes. CRITICAL SUCCESS!</span>
-            {{/if}}
-            {{#if (isSkillSuccess flavor.targetData.0.resultData.successes)}}
-            <span class="result-message success">{{flavor.targetData.0.resultData.successes}} successes. Total Success!</span>
-            {{/if}}
-            {{#if (is1 flavor.targetData.0.resultData.successes)}}
-            <span class="result-message partial">1 success. Partial Success.</span>
-            {{/if}}
-            {{#if (is0 flavor.targetData.0.resultData.successes)}}
-            <span class="result-message failure">Total Failure!</span>
-            {{/if}}
+            {{#if (gte flavor.targetData.0.resultData.criticals 2)}}
+            <span class="result-message critical">{{flavor.targetData.0.resultData.criticals}} crits. CRITICAL SUCCESS!</span>
+            {{else}}
+                {{#if (gte flavor.targetData.0.resultData.successes 2)}}
+                <span class="result-message success">{{flavor.targetData.0.resultData.successes}} successes. Total Success!</span>
+                {{/if}}
+                {{#if (eq flavor.targetData.0.resultData.successes 1)}}
+                <span class="result-message partial">1 success. Partial Success.</span>
+                {{/if}}
+                {{#if (eq flavor.targetData.0.resultData.successes 0)}}
+                <span class="result-message failure">Total Failure!</span>
+                {{/if}}
+            {{/if}}            
         </div>        
     </div>    
 </div>

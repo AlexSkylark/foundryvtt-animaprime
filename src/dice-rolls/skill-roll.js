@@ -20,18 +20,7 @@ export async function skillCheck(skill, withHelp = false, difficult = false) {
     const rl = new Roll(rollFormula, skill);
     rollResult.push(await rl.evaluate({ async: true }));
 
-    let sixes = await checkSkillSixes(rollResult[0].dice[0].results);
-
-    while (sixes > 0) {
-        const rexFormula = sixes + "d6";
-        const rexRoll = new Roll(rexFormula, skill);
-        const rexResults = await rexRoll.evaluate({ async: true });
-
-        sixes = await checkSkillSixes(rexResults.dice[0].results);
-
-        rollResult[0].dice[0].results = rollResult[0].dice[0].results.concat(rexResults.dice[0].results);
-    }
-
+    const sixes = await checkSkillSixes(rollResult[0].dice[0].results);
     const sux = await checkSkillSuccess(rollResult[0].dice[0].results, dialogOptions.difficulty);
 
     let difficultyText = "regular";
@@ -51,6 +40,7 @@ export async function skillCheck(skill, withHelp = false, difficult = false) {
     resultData.push({
         help: withHelp,
         successes: sux,
+        criticals: sixes,
         difficultyText: difficultyText,
         difficulty: parseInt(dialogOptions.difficulty),
     });
