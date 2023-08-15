@@ -25,15 +25,15 @@ export default class AnimaPrimeCombat extends Combat {
             await combatant.actor.update({ system: actorData });
         });
 
-        await this.resetInitiative(this.combsFriendly, true);
-        await this.resetInitiative(this.combsHostile, false);
+        this.resetInitiative(this.combsFriendly, true);
+        this.resetInitiative(this.combsHostile, false);
     }
 
     async nextRound() {
         super.nextRound();
 
-        await this.resetInitiative(this.combsFriendly, true);
-        await this.resetInitiative(this.combsHostile, false);
+        this.resetInitiative(this.combsFriendly, true);
+        this.resetInitiative(this.combsHostile, false);
 
         for (let token of game.scenes.active.tokens) {
             let data = token.actor.system;
@@ -81,7 +81,7 @@ export default class AnimaPrimeCombat extends Combat {
             for (let i = 0; i < documents.length; i++) {
                 if (documents[i].faction == faction) {
                     let lastInitiative = this.getMinObject(this.combsWaitingTurn, "initiative").initiative;
-                    await this.setInitiative(documents[i].id, lastInitiative - 1);
+                    this.setInitiative(documents[i].id, lastInitiative - 1);
                 }
             }
         }
@@ -91,7 +91,7 @@ export default class AnimaPrimeCombat extends Combat {
         let startingNumber = takeTurn ? 1000 : 0;
 
         for (let i = startingNumber; Math.abs(i - startingNumber) < combatants.length; i--) {
-            await this.setInitiative(combatants[Math.abs(i - startingNumber)].id, i);
+            this.setInitiative(combatants[Math.abs(i - startingNumber)].id, i);
         }
     }
 
