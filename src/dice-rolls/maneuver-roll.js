@@ -5,7 +5,7 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
 
     let maneuverDice = parseInt(maneuver.system.roll.replace("d"));
     const isQuickened = maneuver.owner.checkCondition("quickened");
-    const isSlowed = maneuver.owner.checkCondition("slowed");
+    const isSlowed = maneuver.owner.checkCondition("dazed");
 
     if (isQuickened) {
         maneuverDice += 1;

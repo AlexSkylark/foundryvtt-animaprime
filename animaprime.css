@@ -2580,6 +2580,10 @@ select:focus {
   margin-top: 14px !important;
   padding-top: 3px !important;
 }
+.roll-poison .result-message {
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+}
 
 .window-dialog {
   border: 4px solid var(--primary-color);

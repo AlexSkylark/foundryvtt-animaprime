@@ -141,9 +141,20 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         // check poisoned condition
         if (takeTurnComb.actor.checkCondition("poisoned")) {
             const poisonItem = {
-                name: "poison",
+                name: "poisoned",
                 owner: takeTurnComb.token,
                 img: "icons/magic/death/skull-poison-green.webp",
+            };
+
+            PoisonRoll.poisonRoll(poisonItem);
+        }
+
+        // check burning condition
+        if (takeTurnComb.actor.checkCondition("burning")) {
+            const poisonItem = {
+                name: "burning",
+                owner: takeTurnComb.token,
+                img: "icons/magic/fire/flame-burning-embers-orange.webp",
             };
 
             PoisonRoll.poisonRoll(poisonItem);

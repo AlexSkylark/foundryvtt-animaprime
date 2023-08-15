@@ -17,7 +17,7 @@
             <div class="target-section">
                 <ol class="rolls rolls-{{flavor.targetData.[0].rollsId}}">
                     {{#if flavor.targetData.[0].additionalData.slowedDie}}
-                    <li class="roll roll-slowed outside-dice" title="Slowed Condition die: {{flavor.targetData.[0].additionalData.slowedDie.result}}"><img src="../../systems/animaprime/assets/d6-forbidden.svg" /><div class="roll-dice slowed">{{flavor.targetData.[0].additionalData.slowedDie.result}}</div></li>
+                    <li class="roll roll-slowed outside-dice" title="Dazed Condition die: {{flavor.targetData.[0].additionalData.slowedDie.result}}"><img src="../../systems/animaprime/assets/d6-forbidden.svg" /><div class="roll-dice slowed">{{flavor.targetData.[0].additionalData.slowedDie.result}}</div></li>
                     {{/if}}
                     {{#if flavor.targetData.[0].additionalData.defensiveDie}}
                     <li class="roll roll-defensive outside-dice" title="Defensive Maneuver die: {{flavor.targetData.[0].additionalData.defensiveDie.result}}"><img src="../../systems/animaprime/assets/d6-forbidden.svg" /><div class="roll-dice defensive">{{flavor.targetData.[0].additionalData.defensiveDie.result}}</div></li>

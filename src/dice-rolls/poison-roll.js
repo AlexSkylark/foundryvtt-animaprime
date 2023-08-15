@@ -1,8 +1,7 @@
 import * as DiceRolls from "./dice-rolls.js";
 
 export async function poisonRoll(poison, isReroll = false) {
-    const messageTemplate =
-        "systems/animaprime/templates/rolls/roll-poison/roll-poison.hbs";
+    const messageTemplate = "systems/animaprime/templates/rolls/roll-poison/roll-poison.hbs";
 
     const rollFormula = "1d6";
 
@@ -11,15 +10,7 @@ export async function poisonRoll(poison, isReroll = false) {
 
     const resultData = [checkPoisonResult(rollResult[0].dice[0].results)];
 
-    await DiceRolls.renderRoll(
-        rollResult,
-        poison,
-        resultData,
-        messageTemplate,
-        [],
-        isReroll,
-        this.commitResults
-    );
+    await DiceRolls.renderRoll(rollResult, poison, resultData, messageTemplate, [], isReroll, this.commitResults);
 }
 
 function checkPoisonResult(results) {
@@ -31,9 +22,7 @@ export async function commitResults(resultData, poisonData) {
     let owner = poisonData.owner;
 
     if (resultData[0] == true) {
-        const poisonEffect = CONFIG.statusEffects.find(
-            (e) => e.id == "poisoned"
-        );
+        const poisonEffect = CONFIG.statusEffects.find((e) => e.id == poisonData.name);
         owner.object.toggleEffect(poisonEffect, false);
     } else {
         let ownerActor = {};

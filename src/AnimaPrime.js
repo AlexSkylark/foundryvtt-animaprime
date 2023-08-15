@@ -366,6 +366,16 @@ function configureStatusEffects() {
             icon: "icons/svg/unconscious.svg",
         },
         {
+            id: "burning",
+            label: "Burning",
+            icon: "systems/animaprime/assets/icons/candlebright.svg",
+        },
+        {
+            id: "dazed",
+            label: "Dazed",
+            icon: "systems/animaprime/assets/icons/star-swirl.svg",
+        },
+        {
             id: "diseased",
             label: "Diseased",
             icon: "systems/animaprime/assets/icons/pill.svg",
@@ -413,14 +423,9 @@ function configureStatusEffects() {
             ],
         },
         {
-            id: "slowed",
-            label: "Slowed",
-            icon: "systems/animaprime/assets/icons/turtle.svg",
-        },
-        {
             id: "supported",
             label: "Supported",
-            icon: "systems/animaprime/assets/icons/wing.svg",
+            icon: "systems/animaprime/assets/icons/curly-wing.svg",
         },
         {
             id: "weakened",
