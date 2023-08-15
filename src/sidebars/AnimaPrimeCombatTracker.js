@@ -107,7 +107,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
         const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
-        await this.viewed.setInitiative(combatantId, this.viewed.combsOnQueue.length == 0 ? 10000 : lastComb.initiative - 1);
+        this.viewed.setInitiative(combatantId, this.viewed.combsOnQueue.length == 0 ? 10000 : lastComb.initiative - 1);
 
         const takeTurnComb = this.viewed.turns.find((a) => {
             return a.id == combatantId;
@@ -115,7 +115,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
         console.log(takeTurnComb);
 
-        await this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
+        this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
 
         while (takeTurnComb.id != this.viewed.combatant.id) {
             if (takeTurnComb.initiative >= this.viewed.combatant.initiative) {
