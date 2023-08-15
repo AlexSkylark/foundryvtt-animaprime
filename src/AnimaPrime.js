@@ -256,11 +256,52 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
     }
 });
 
+Hooks.once("ready", async function () {
+    // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
+    Hooks.on("hotbarDrop", (bar, data, slot) => createActionCardMacro(bar, data, slot));
+});
+
+async function createActionCardMacro(bar, data, slot) {
+    if (data.type !== "Item") return;
+
+    const splitData = data.uuid.split(".");
+    const item = game.actors.get(splitData[1]).items.get(splitData[3]);
+
+    // Create the macro command
+    const command = `game.animaprime.rollItemMacro("${splitData[3]}");`;
+    let macro = game.macros.find((m) => m.name === item.name && m.command === command);
+    if (!macro) {
+        macro = await Macro.create({
+            name: item.name,
+            type: "script",
+            img: item.img,
+            command: command,
+            flags: { "animaprime.itemMacro": true },
+        });
+    }
+    setTimeout(async () => {
+        await game.user.assignHotbarMacro(macro, slot);
+    }, 50);
+
+    return false;
+}
+
 Hooks.once("init", async () => {
     game.animaprime = {
         AnimaPrimeItem,
         AnimaPrimeCombat,
         AnimaPrimeCombatant,
+        rollItemMacro: (itemName) => {
+            const speaker = ChatMessage.getSpeaker();
+            let actor;
+            if (speaker.token) actor = game.actors.tokens[speaker.token];
+            if (!actor) actor = game.actors.get(speaker.actor);
+            const item = actor ? actor.items.get(itemName) : null;
+            if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
+
+            // Trigger the item roll
+            return item.roll();
+        },
     };
 
     CONFIG.Actor.documentClass = AnimaPrimeActor;

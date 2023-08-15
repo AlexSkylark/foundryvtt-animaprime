@@ -152,6 +152,16 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         }
 
         html.find(".button-reform-basicactions").click(this._onReformBasicActions.bind(this));
+
+        if (game.user.isGM || this.actor.isOwner) {
+            let handler = (ev) => this._onDragStart(ev);
+            // Find all items on the character sheet.
+            html.find(".item-card").each((i, li) => {
+                // Add draggable attribute and dragstart listener.
+                li.setAttribute("draggable", true);
+                li.addEventListener("dragstart", handler, false);
+            });
+        }
     }
 
     async _onToggleEditable(ev) {

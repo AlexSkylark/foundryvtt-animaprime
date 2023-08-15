@@ -112,7 +112,7 @@ export async function getManeuverRollOptions(item) {
     return new Promise((resolve) => {
         const dialogOptions = {
             width: 400,
-            height: 268,
+            height: 230,
             classes: ["window-dialog"],
         };
 
@@ -129,7 +129,6 @@ export async function getManeuverRollOptions(item) {
                     callback: (html) =>
                         resolve({
                             maneuverStyle: html[0].querySelector("form").maneuverStyle.value,
-                            supportDie: html[0].querySelector("form").supportDie.checked,
                         }),
                 },
             },

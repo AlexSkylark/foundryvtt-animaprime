@@ -1,16 +1,25 @@
 import * as PoisonRoll from "../dice-rolls/poison-roll.js";
 
 export default class AnimaPrimeCombatTracker extends CombatTracker {
+    turnTakable = true;
+
     constructor(options) {
         super(options);
 
         game.socket.on("system.animaprime", async (argument) => {
-            if (argument.operation == "takeTurn") {
-                await this.performTakeTurn(argument.id);
-            } else if (argument.operation == "endTurn") {
-                await this.performEndTurn();
-            } else if (argument.operation == "cancelTurn") {
-                await this.performCancelTurn();
+            if (game.user.isGM) {
+                if (argument.operation == "takeTurn") {
+                    if (this.turnTakable) {
+                        this.turnTakable = false;
+                        await this.performTakeTurn(argument.id);
+                    }
+                } else if (argument.operation == "endTurn") {
+                    await this.performEndTurn();
+                    this.turnTakable = true;
+                } else if (argument.operation == "cancelTurn") {
+                    await this.performCancelTurn();
+                    this.turnTakable = true;
+                }
             }
         });
     }
