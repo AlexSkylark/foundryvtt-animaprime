@@ -325,7 +325,13 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
 
         this.actor.deleteEmbeddedDocuments("Item", basicActions);
 
-        let items = await game.packs.get("animaprime.basic-actions").getDocuments();
+        let items = [];
+        if (this.actor.type == "vehicle") {
+            items = await game.packs.get("animaprime.basic-vehicle-actions").getDocuments();
+        } else {
+            items = await game.packs.get("animaprime.basic-actions").getDocuments();
+        }
+
         items = items.sort((a, b) => a.name.localeCompare(b.name));
 
         const BasicManeuver = items[1];

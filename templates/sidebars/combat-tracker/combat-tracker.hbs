@@ -38,24 +38,28 @@
     <ol id="combat-tracker" class="directory-list main-queue">
         {{#each turns}}
             {{#if (isOnQueue this)}}
-            <li class="combatant actor directory-item flexrow{{#if this.isOnTurn}} active{{/if}}" data-combatant-id="{{this.id}}">
-                <img class="token-image" data-src="{{this.img}}" title="{{this.name}}"/>
-                <div class="token-name flexcol">
-                    <h4>{{this.displayName}}</h4>
-                    {{#unless this.v}}<h4 class="turnUnitData">HP:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>{{/unless}}
-                    <div class="combatant-controls flexrow">
-                        {{#if ../user.isGM}}
-                        <a class="combatant-control {{#if this.defeated}}active{{/if}}" title="{{localize 'COMBAT.ToggleDead'}}" data-control="toggleDefeated">
-                            <i class="fas fa-skull"></i></a>
-                        {{/if}}
-                        <div class="token-effects">
-                            {{#each this.effects}}
-                            <img class="token-effect" src="{{this}}"/>
-                            {{/each}}
-                        </div>
-                    </div>
-                </div>                
-            </li>
+                {{#if (isMultiple10 this.initiative)}}
+                    <li class="combatant actor directory-item flexrow{{#if this.isOnTurn}} active{{/if}}" data-combatant-id="{{this.id}}">                                        
+                        <div class="flexrow" style="flex: auto">
+                            <img style="align-self: center" class="token-image" data-src="{{this.img}}" title="{{this.name}}"/>
+                            <div class="token-name flexcol">
+                                <h4>{{this.displayName}}</h4>
+                                {{#unless this.v}}<h4 class="turnUnitData">HP:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>{{/unless}}
+                                <div class="combatant-controls flexrow">
+                                    {{#if ../user.isGM}}
+                                    <a class="combatant-control {{#if this.defeated}}active{{/if}}" title="{{localize 'COMBAT.ToggleDead'}}" data-control="toggleDefeated">
+                                        <i class="fas fa-skull"></i></a>
+                                    {{/if}}
+                                    <div class="token-effects">
+                                        {{#each this.effects}}
+                                        <img class="token-effect" src="{{this}}"/>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                       
+                    </li>
+                {{/if}}
             {{/if}}
         {{/each}}
     </ol>
@@ -134,7 +138,7 @@
                                     <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
                                 {{/unless}}
                             {{/unless}}
-                        {{/if}}
+                        {{/if}}                        
                     {{/if}}
                 </div>
             </li>
@@ -175,10 +179,10 @@
                 <div class="token-initiative">
                     {{#if ../combat.round}}
                         {{#if (and (canTakeTurn this.initiative) (or isControlling ../user.isGM))}}
-                        {{#unless this.defeated}}
-                            <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
-                        {{/unless}}
-                        {{/if}}
+                            {{#unless this.defeated}}
+                                <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
+                            {{/unless}}
+                        {{/if}}                        
                     {{/if}}
                 </div>
             </li>
@@ -191,11 +195,19 @@
 
     <nav id="combat-controls" class="directory-footer flexrow">    
         {{#if user.isGM}}
-            {{#if round}}
-                <a class="combat-control" title="{{localize 'COMBAT.RoundPrev'}}" data-control="previousRound"><i class="fas fa-step-backward"></i></a>                
-                <a class="combat-custom-control" title="{{localize 'COMBAT.TurnPrev'}}" data-control="cancelTurn"><i class="fas fa-arrow-left"></i></a>                                        
-                <a class="combat-control center" title="{{localize 'COMBAT.End'}}" data-control="endCombat">{{localize 'COMBAT.End'}}</a>            
-                <a class="combat-custom-control" title="{{localize 'COMBAT.TurnNext'}}" data-control="endTurn"><i class="fas fa-check"></i></a>                
+            {{#if round}}                
+                <a class="combat-control" title="{{localize 'COMBAT.RoundPrev'}}" data-control="previousRound"><i class="fas fa-step-backward"></i></a>
+                {{#if this.combat.combsOnQueue.length}}
+                <a class="combat-custom-control" title="{{localize 'COMBAT.TurnPrev'}}" data-control="cancelTurn"><i class="fas fa-arrow-left"></i></a>
+                {{else}}
+                <span>&nbsp;</span>
+                {{/if}}
+                <a class="combat-control center" title="{{localize 'COMBAT.End'}}" data-control="endCombat">{{localize 'COMBAT.End'}}</a>
+                {{#unless this.combat.combsWaitingTurn.length}}
+                <a class="combat-custom-control" title="{{localize 'COMBAT.TurnNext'}}" data-control="endTurn"><i class="fas fa-check"></i></a>
+                {{else}}
+                <span>&nbsp;</span>
+                {{/unless}}
                 <a class="combat-control" title="{{localize 'COMBAT.RoundNext'}}" data-control="nextRound"><i class="fas fa-step-forward"></i></a>
             {{else}}
                 <a class="combat-control center" title="{{localize 'COMBAT.Begin'}}" data-control="startCombat">{{localize 'COMBAT.Begin'}}</a>

@@ -54,16 +54,30 @@
                     {{#each this.additionalData.empoweredDice}}
                     <li title="Empowered Condition die"class="roll condition{{#if (isSuccess this.result)}} success{{/if}}"><div class="roll-dice empowered">{{{this.result}}}</div></li>
                     {{/each}}
+
+                    {{#if (gt this.additionalData.scaleDice.length 10)}}
+                        <li title="Power Scale Augmentation"class="roll outside-dice success"><div class="extra-dice-label">+ {{this.additionalData.scaleDice.length}}x <div class="roll-dice empowered">*</div></div></li>
+                    {{else}}
+                        {{#each this.additionalData.scaleDice}}
+                        <li title="Power Scale Augmentation"class="roll outside-dice success"><div class="roll-dice empowered">*</div></li>
+                        {{/each}}
+                    {{/if}}
+                    
                 </ol>                
                 <span class="result-message{{#if this.resultData.hit}} success{{/if}} {{#unless this.resultData.successes}} failure{{/unless}}">
                 {{#if this.resultData.hit}}
-                CRITICAL HIT! {{this.targetName}} loses a Health point!
+                    {{#if (eq this.resultData.wounds 1)}}
+                        CRITICAL HIT! {{this.targetName}} loses a Health point!
+                    {{/if}}
+                    {{#if (gt this.resultData.wounds 1)}}
+                        OBLITERATION HIT! {{this.targetName}} loses {{this.resultData.wounds}} Health Points!
+                    {{/if}}
                 {{else}}
                     {{#if this.resultData.successes}}
-                        {{#if this.resultData.variableGain}}                        
+                        {{#if (gt this.resultData.variableGain 0)}}
                             Hit! {{this.targetName}} gained {{this.resultData.variableGain}} threat {{#if (is1 this.resultData.variableGain)}}die{{else}}dice{{/if}}.
                         {{else}}
-                            Parry! the strike was mitigated by {{this.targetName}}.
+                            Defend! the strike was mitigated by {{this.targetName}}.
                         {{/if}}
                     {{else}}
                         The strike missed {{this.targetName}} completely!

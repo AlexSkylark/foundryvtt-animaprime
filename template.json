@@ -1,6 +1,6 @@
 {
     "Actor": {
-        "types": ["character", "adversity", "ally", "hazard", "goal"],
+        "types": ["character", "adversity", "ally", "hazard", "goal", "vehicle"],
         "templates": {
             "base": {
                 "health": {
@@ -8,6 +8,7 @@
                     "max": 3
                 },
                 "defense": 5,
+                "powerScale": 0,
                 "enableEdit": false
             },
             "dice": {
@@ -17,32 +18,19 @@
                 "chargeDice": 0,
                 "threatDice": 0
             },
-            "actions": {
-                "maneuvers": [],
-                "strikes": [],
-                "achievements": [],
-                "powers": [],
-                "reactions": [],
-                "boosts": [],
-                "extras": []
-            },
             "resistances": []
         },
         "adversity": {
             "templates": ["base"],
             "strikeDice": 0,
             "chargeDice": 0,
-            "threatDice": 0,
-            "strikes": [],
-            "powers": []
+            "threatDice": 0
         },
         "ally": {
             "templates": ["base"],
             "strikeDice": 0,
             "chargeDice": 0,
-            "threatDice": 0,
-            "strikes": [],
-            "powers": []
+            "threatDice": 0
         },
         "hazard": {
             "health": {
@@ -50,8 +38,7 @@
                 "max": 1
             },
             "defense": 8,
-            "threatDice": 0,
-            "strikes": []
+            "threatDice": 0
         },
         "character": {
             "templates": ["base", "dice", "actions"],
@@ -66,16 +53,13 @@
             "reroll": 0,
             "traits": {
                 "trait1": {
-                    "name": "",
-                    "marked": false
+                    "name": ""
                 },
                 "trait2": {
-                    "name": "",
-                    "marked": false
+                    "name": ""
                 },
                 "trait3": {
-                    "name": "",
-                    "marked": false
+                    "name": ""
                 }
             }
         },
@@ -84,6 +68,14 @@
             "progressDice": 0,
             "looming": false,
             "loomingTurns": 0,
+            "type": "0"
+        },
+        "vehicle": {
+            "templates": ["base"],
+            "strikeDice": 0,
+            "chargeDice": 0,
+            "threatDice": 0,
+            "chargeDiceMax": 10,
             "type": "0"
         }
     },

@@ -5,15 +5,16 @@ export default class AnimaPrimeCombatant extends Combatant {
         this.flags = { isOnTurn: false };
     }
 
+    get initPlus10() {
+        return this.initiative + 10;
+    }
+
     get isOnTurn() {
         const combat = game.combats.active;
 
         if (!combat || !combat.getCurrentCombatant()) return false;
 
-        return (
-            combat.getCurrentCombatant().id == this.id &&
-            combat.combsWaitingTurn.length == 0
-        );
+        return combat.getCurrentCombatant().id == this.id && combat.combsWaitingTurn.length == 0;
     }
 
     get isAlly() {
@@ -21,21 +22,17 @@ export default class AnimaPrimeCombatant extends Combatant {
     }
 
     get faction() {
-        return this.actor.type == "character" || this.actor.type == "ally"
-            ? "friendly"
-            : "hostile";
+        if (this.actor.type == "character" || this.actor.type == "ally") {
+            return "friendly";
+        } else if (this.actor.type == "vehicle") {
+            return this.actor.system.type == "0" ? "friendly" : "hostile";
+        } else {
+            return "hostile";
+        }
     }
 
     get healthValue() {
-        return (
-            " " +
-            (Math.round(
-                (this.actor.system.health.value /
-                    this.actor.system.health.max) *
-                    100
-            ) +
-                "%")
-        );
+        return " " + (Math.round((this.actor.system.health.value / this.actor.system.health.max) * 100) + "%");
     }
 
     get displayName() {

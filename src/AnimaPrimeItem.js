@@ -29,8 +29,7 @@ export default class AnimaPrimeItem extends Item {
             let image = "";
             switch (data.type) {
                 case "skill":
-                    image =
-                        "icons/skills/trades/academics-study-reading-book.webp";
+                    image = "icons/skills/trades/academics-study-reading-book.webp";
                     break;
                 case "maneuver":
                     image = "icons/magic/air/air-smoke-casting.webp";
@@ -45,8 +44,7 @@ export default class AnimaPrimeItem extends Item {
                     image = "icons/skills/movement/arrow-upward-yellow.webp";
                     break;
                 case "reaction":
-                    image =
-                        "icons/skills/targeting/target-strike-triple-blue.webp";
+                    image = "icons/skills/targeting/target-strike-triple-blue.webp";
                     break;
                 case "extra":
                     image = "icons/commodities/materials/feather-orange.webp";
@@ -73,13 +71,9 @@ export default class AnimaPrimeItem extends Item {
                     ui.notifications.error("A unit needs to take this turn.");
                     return;
                 }
-                const currentCombatActor =
-                    game.combats.active.getCurrentActor();
+                const currentCombatActor = game.combats.active.getCurrentActor();
 
-                if (
-                    this.type != "reaction" &&
-                    currentCombatActor.id != this.actor.id
-                ) {
+                if (this.type != "reaction" && currentCombatActor.id != this.actor.id) {
                     ui.notifications.error("It's somebody else's turn now!");
                     return;
                 }

@@ -150,25 +150,7 @@ $hostile-border: #d30058;
             }
         }            
     }    
-/*    
-        
 
-        .combatant {            
-            &.friendly {
-                
-
-                &.active {
-                    background-color: rgba(0, 140, 255, 0.2) !important;
-
-                    border-top: 1px solid rgb(0, 122, 170) !important;                    
-                    border-bottom: none !important;
-                    &:last-child {
-                        border-bottom: 1px solid rgb(0, 122, 170) !important;
-                    }
-                }
-            }
-        }
-*/
     button {
         display: block;
         width: 80px;

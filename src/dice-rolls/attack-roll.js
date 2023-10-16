@@ -14,7 +14,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     // validations
     if (item.type == "strike") {
         item.targets = item.targets.filter((i) => {
-            return i.type == "character" || i.type == "adversity" || i.type == "ally" || i.type == "hazard";
+            return i.type == "character" || i.type == "adversity" || i.type == "ally" || i.type == "hazard" || i.type == "vehicle";
         });
     } else if (item.type == "achievement") {
         item.targets = item.targets.filter((i) => {
@@ -58,6 +58,15 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     if (!dialogOptions) {
         dialogOptions = [];
         let dialogPromises = [];
+
+        if (game.user.isGM) {
+            ui.combat.render();
+        } else {
+            game.socket.emit("system.animaprime", {
+                operation: "initAttack",
+                attacker: item.owner,
+            });
+        }
 
         for (let i = 0; i < item.targets.length; i++) {
             let itemForDialog = {
@@ -134,13 +143,31 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
             }
         }
 
-        const splitRes = DiceRolls.splitRollResult(rollResults[i].dice[0].results, abilityDice[i], dialogOptions[i].strikeDice, dialogOptions[i].actionDice, dialogOptions[i].variableDice, dialogOptions[i].bonusDice, dialogOptions[i].resistance, successModifier, isEmpowered, isWeakened, positiveGoal);
+        let splitRes = DiceRolls.splitRollResult(rollResults[i].dice[0].results, abilityDice[i], dialogOptions[i].strikeDice, dialogOptions[i].actionDice, dialogOptions[i].variableDice, dialogOptions[i].bonusDice, dialogOptions[i].resistance, successModifier, isEmpowered, isWeakened, positiveGoal);
 
-        const itemRes = checkItemResult(itemFixedOptions[i].defenseAttribute - (item.type == "achievement" ? 1 : 0), DiceRolls.checkSuccess(rollResults[i].dice[0].results, isWeakened * -1), DiceRolls.checkVariableGain(splitRes), successModifier, forceNoHit);
+        let itemSux = DiceRolls.checkSuccess(rollResults[i].dice[0].results, isWeakened * -1);
+        let powerScaleDiff = 1;
+
+        let itemSuxOriginal = JSON.parse(JSON.stringify(itemSux));
+        let successModifierOriginal = JSON.parse(JSON.stringify(successModifier));
+        if (item.type == "strike") {
+            powerScaleDiff = Math.pow(2, parseInt(item.owner.system.powerScale) - parseInt(item.targets[i].system.powerScale));
+            itemSux = Math.floor(itemSux * powerScaleDiff);
+            successModifier = Math.floor(successModifier * powerScaleDiff);
+            if (powerScaleDiff > 1) {
+                for (let i = itemSuxOriginal + successModifierOriginal; i < itemSux + successModifier; i++) {
+                    splitRes.scaleDice.push(rollResults[0].dice[0].results[0]);
+                }
+            }
+        }
+        let vGain = DiceRolls.checkVariableGain(splitRes, powerScaleDiff);
+        let itemRes = checkItemResult(itemFixedOptions[i].defenseAttribute - (item.type == "achievement" ? 1 : 0), itemSux, vGain, successModifier, powerScaleDiff, forceNoHit);
 
         splittedResults.push(splitRes);
         resultData.push(itemRes);
     }
+
+    ui.combat.render();
 
     // chat message rendering
     await DiceRolls.renderRoll(rollResults, item, resultData, messageTemplate, splittedResults, isReroll, this.commitResults, dialogOptions, item.targetId, previousRolls);
@@ -206,14 +233,20 @@ export async function commitResults(resultData, item, dialogOptions) {
     }
 }
 
-function checkItemResult(targetDefense, successes, variableGain, successModifier, forceNoHit = false) {
+function checkItemResult(targetDefense, successes, variableGain, successModifier, powerScaleDiff, forceNoHit = false) {
     let returnValue = {
         hit: false,
         successes: successes,
         variableGain: variableGain,
+        wounds: 1,
     };
 
-    if (!forceNoHit && successes + successModifier > targetDefense) returnValue.hit = true;
+    if (!forceNoHit) {
+        let totalSux = successes + successModifier;
+        if (totalSux > targetDefense) returnValue.hit = true;
+
+        if (powerScaleDiff > 1) returnValue.wounds = Math.floor(totalSux / targetDefense);
+    }
 
     return returnValue;
 }

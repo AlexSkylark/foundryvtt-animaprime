@@ -1,4 +1,6 @@
 export default class AnimaPrimeCombat extends Combat {
+    awaitingAssist = false;
+
     prepareData() {
         super.prepareData();
     }
@@ -17,7 +19,8 @@ export default class AnimaPrimeCombat extends Combat {
             let actorData = combatant.actor.system;
 
             if (combatant.actor.type == "character") actorData.actionDice = actorData.dice.actionDiceMax;
-            actorData.chargeDice = 0;
+            if (combatant.actor.type == "vehicle") actorData.chargeDice = parseInt(actorData.chargeDiceMax);
+
             actorData.strikeDice = 0;
             actorData.threatDice = 0;
             actorData.health.value = actorData.health.max;
@@ -138,6 +141,24 @@ export default class AnimaPrimeCombat extends Combat {
     get combsHostile() {
         return this.turns.filter((i) => {
             return i.faction == "hostile";
+        });
+    }
+
+    get combsAssist() {
+        return this.turns.filter((i) => {
+            return i.initiative % 10 != 0;
+        });
+    }
+
+    get currentFaction() {
+        const comb = this.getCurrentCombatant();
+        return comb ? this.getCurrentCombatant().faction : "";
+    }
+
+    get currentAssists() {
+        const comb = this.getCurrentCombatant();
+        return this.turns.filter((x) => {
+            return x.initiative % 10 != 0 && x.initiative > comb.initiative && x.initiative < comb.initiative + 10;
         });
     }
 

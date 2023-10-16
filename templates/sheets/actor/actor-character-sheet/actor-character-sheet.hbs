@@ -116,7 +116,7 @@
                 <div class="dice-pools">
                     <div class="dice-pool-container">
                         <div class="dice-pool-strip">
-                            <label class="label-action">Action Dice (<input type="text" class="input-action-max" value="{{system.dice.actionDiceMax}}" name="system.dice.actionDiceMax" />)</label>
+                            <label class="label-action">Action Dice (<input type="text" class="input-action-max" value="{{system.dice.actionDiceMax}}" name="system.dice.actionDiceMax" />&nbsp;)</label>
                         </div>
                         <div class="attribute-container">
                             <div class="attribute-value double-value">
@@ -181,8 +181,7 @@
                     <div class="icon button-changevalue plus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="reroll" data-operation="plus"><i class="fas fa-plus"></i></div>
                     <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="reroll" data-operation="minus"><i class="fas fa-minus"></i></div>                            
                 </div>                
-            </div>
-                            
+            </div>                            
             <nav class="sheet-tabs tabs" data-group="primary-tabs">                                                
                 <a data-tab="profession">Character Actions</a>
                 <a data-tab="basic" class="basic">Basic Actions</a>                
@@ -215,8 +214,7 @@
                             {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../editUnlocked}}
                             {{/each}}
                         </div>
-                    </div>
-                    
+                    </div>                    
                 </div>
             </section>            
         </div>

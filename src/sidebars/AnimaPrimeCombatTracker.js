@@ -21,6 +21,10 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                     this.turnTakable = true;
                 }
             }
+
+            if (argument.operation == "initAttack") {
+                ui.combat.render();
+            }
         });
     }
 
@@ -45,6 +49,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             t.threatValue = comb.threatValue;
             t.displayName = comb.displayName;
             t.isOnTurn = comb.isOnTurn;
+            t.initPlus10 = comb.initPlus10;
         }
 
         if (this.viewed) {
@@ -107,13 +112,11 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
         const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
-        await this.viewed.setInitiative(combatantId, this.viewed.combsOnQueue.length == 0 ? 10000 : lastComb.initiative - 1);
+        await this.viewed.setInitiative(combatantId, this.viewed.combsOnQueue.length == 0 ? 10000 : lastComb.initiative - 10);
 
         const takeTurnComb = this.viewed.turns.find((a) => {
             return a.id == combatantId;
         });
-
-        console.log(takeTurnComb);
 
         await this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
 
@@ -124,10 +127,6 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                 await this.viewed.nextTurn();
             }
         }
-
-        const myComb = this.viewed.combatants.find((a) => {
-            return a.id == combatantId;
-        });
 
         // check doomed condition
         if (takeTurnComb.actor.checkCondition("doomed")) {
@@ -176,10 +175,12 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         let combsToReset = [];
         if (this.viewed.combsWaitingTurn.length == 0) {
             combsToReset.push(lastComb);
+            combsToReset = combsToReset.concat(this.viewed.combsOnQueue.filter((x) => x.initiative % 10 != 0 && x.initiative > lastComb.initiative && x.initiative < lastComb.initiative + 10));
             combsToReset = combsToReset.concat(this.viewed.combsOutofQueue.filter((x) => x.faction == lastComb.faction && !x.isDefeated));
             this.viewed.resetInitiative(combsToReset, true);
         } else {
             const nextFaction = lastComb ? this.getInverseFaction(lastComb.faction) : "friendly";
+            combsToReset = combsToReset.concat(this.viewed.combsOnQueue.filter((x) => x.initiative % 10 != 0 && x.initiative > lastComb.initiative && x.initiative < lastComb.initiative + 10));
             combsToReset = combsToReset.concat(this.viewed.combsOutofQueue.filter((x) => x.faction == nextFaction && !x.isDefeated));
             this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
         }

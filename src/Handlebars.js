@@ -115,14 +115,18 @@ export function registerHandlebarsHelpers() {
         return true;
     });
 
+    Handlebars.registerHelper("isMultiple10", function (value) {
+        return value % 10 == 0;
+    });
+
     Handlebars.registerHelper({
         not: (v1) => !v1,
         eq: (v1, v2) => v1 == v2,
         ne: (v1, v2) => v1 != v2,
-        lt: (v1, v2) => v1 < v2,
-        gt: (v1, v2) => v1 > v2,
-        lte: (v1, v2) => v1 <= v2,
-        gte: (v1, v2) => v1 >= v2,
+        lt: (v1, v2) => parseInt(v1) < parseInt(v2),
+        gt: (v1, v2) => parseInt(v1) > parseInt(v2),
+        lte: (v1, v2) => parseInt(v1) <= parseInt(v2),
+        gte: (v1, v2) => parseInt(v1) >= parseInt(v2),
         and() {
             return Array.prototype.every.call(arguments, Boolean);
         },

@@ -245,6 +245,7 @@ export function splitRollResult(results, regular, strike = 0, action = 0, variab
         successDice: [],
         empoweredDice: [],
         weakenedDice: [],
+        scaleDice: [],
     };
 
     for (let i = 0; i < regular; i++) diceTypeArray.push("abilityDice");
@@ -295,7 +296,7 @@ export function checkSuccess(results, successModifier) {
     return Math.max(successes + successModifier, 0);
 }
 
-export function checkVariableGain(splitResults) {
+export function checkVariableGain(splitResults, powerScaleDiff) {
     let variableGain = 0;
 
     for (let i of splitResults.abilityDice) {
@@ -310,7 +311,9 @@ export function checkVariableGain(splitResults) {
         if (i.result >= 3) variableGain++;
     }
 
-    return Math.min(variableGain, splitResults.abilityDice.length + 1);
+    variableGain = Math.floor(variableGain * powerScaleDiff);
+
+    return Math.min(variableGain, Math.floor((splitResults.abilityDice.length + 1) * powerScaleDiff));
 }
 
 export function checkForReroll(owner) {

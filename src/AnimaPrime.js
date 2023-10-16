@@ -2,6 +2,7 @@ import AnimaPrimeActorSheet from "../src/sheets/AnimaPrimeActorSheet.js";
 import AnimaPrimeAdversitySheet from "../src/sheets/AnimaPrimeAdversitySheet.js";
 import AnimaPrimeHazardSheet from "../src/sheets/AnimaPrimeHazardSheet.js";
 import AnimaPrimeAllySheet from "../src/sheets/AnimaPrimeAllySheet.js";
+import AnimaPrimeVehicleSheet from "../src/sheets/AnimaPrimeVehicleSheet.js";
 
 import AnimaPrimeSkillSheet from "../src/sheets/AnimaPrimeSkillSheet.js";
 import AnimaPrimeResistanceSheet from "../src/sheets/AnimaPrimeResistanceSheet.js";
@@ -46,6 +47,11 @@ function registerSheets() {
         types: ["hazard"],
     });
 
+    Actors.registerSheet("animaprime", AnimaPrimeVehicleSheet, {
+        makedefault: true,
+        types: ["vehicle"],
+    });
+
     Items.unregisterSheet("core", ItemSheet);
 
     Items.registerSheet("animaprime", AnimaPrimeSkillSheet, {
@@ -75,6 +81,9 @@ Hooks.on("createActor", async (actor, data, context, userId) => {
         items[0] = BasicManeuver;
         items[1] = BasicStrike;
 
+        await actor.createEmbeddedDocuments("Item", items);
+    } else if (actor.type == "vehicle") {
+        let items = await game.packs.get("animaprime.basic-vehicle-actions").getDocuments();
         await actor.createEmbeddedDocuments("Item", items);
     } else if (actor.type == "goal") {
         actor.ownership.default = 2;
@@ -230,7 +239,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
                 if (item.type == "strike") {
                     if (resultData.hit) {
-                        targetData.health.value -= 1;
+                        targetData.health.value -= resultData.wounds;
                         targetData.threatDice = 0;
                     } else {
                         targetData.threatDice += resultData.variableGain;
@@ -309,6 +318,7 @@ Hooks.once("init", async () => {
     CONFIG.Combat.documentClass = AnimaPrimeCombat;
     CONFIG.Combatant.documentClass = AnimaPrimeCombatant;
     CONFIG.ui.combat = AnimaPrimeCombatTracker;
+    CONFIG.time.turnTime = 10;
 
     CONFIG.dialogWindows = [];
 
