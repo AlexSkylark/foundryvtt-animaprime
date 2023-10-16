@@ -143,15 +143,16 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
             }
         }
 
-        let splitRes = DiceRolls.splitRollResult(rollResults[i].dice[0].results, abilityDice[i], dialogOptions[i].strikeDice, dialogOptions[i].actionDice, dialogOptions[i].variableDice, dialogOptions[i].bonusDice, dialogOptions[i].resistance, successModifier, isEmpowered, isWeakened, positiveGoal);
+        let powerScaleDiff = 1;
+        if (item.type == "strike") powerScaleDiff = Math.pow(2, parseInt(item.owner.system.powerScale) - parseInt(item.targets[i].system.powerScale));
+
+        let splitRes = DiceRolls.splitRollResult(rollResults[i].dice[0].results, abilityDice[i], dialogOptions[i].strikeDice, dialogOptions[i].actionDice, dialogOptions[i].variableDice, dialogOptions[i].bonusDice, dialogOptions[i].resistance, successModifier, isEmpowered, isWeakened, positiveGoal, powerScaleDiff);
 
         let itemSux = DiceRolls.checkSuccess(rollResults[i].dice[0].results, isWeakened * -1);
-        let powerScaleDiff = 1;
 
         let itemSuxOriginal = JSON.parse(JSON.stringify(itemSux));
         let successModifierOriginal = JSON.parse(JSON.stringify(successModifier));
         if (item.type == "strike") {
-            powerScaleDiff = Math.pow(2, parseInt(item.owner.system.powerScale) - parseInt(item.targets[i].system.powerScale));
             itemSux = Math.floor(itemSux * powerScaleDiff);
             successModifier = Math.floor(successModifier * powerScaleDiff);
             if (powerScaleDiff > 1) {

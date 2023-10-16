@@ -55,6 +55,11 @@
                     <li title="Empowered Condition die"class="roll condition{{#if (isSuccess this.result)}} success{{/if}}"><div class="roll-dice empowered">{{{this.result}}}</div></li>
                     {{/each}}
 
+                    {{#each this.additionalData.scaleReductionDice}}
+                    <li class="roll roll-weaken outside-dice" title="Power Scale Reduction"><img src="../../systems/animaprime/assets/d6-forbidden.svg" /><div class="roll-dice weakened">{{this.result}}</div></li>
+                    {{/each}}
+                    
+
                     {{#if (gt this.additionalData.scaleDice.length 10)}}
                         <li title="Power Scale Augmentation"class="roll outside-dice success"><div class="extra-dice-label">+ {{this.additionalData.scaleDice.length}}x <div class="roll-dice empowered">*</div></div></li>
                     {{else}}

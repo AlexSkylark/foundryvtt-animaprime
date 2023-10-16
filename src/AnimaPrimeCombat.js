@@ -1,6 +1,4 @@
 export default class AnimaPrimeCombat extends Combat {
-    awaitingAssist = false;
-
     prepareData() {
         super.prepareData();
     }
@@ -144,22 +142,9 @@ export default class AnimaPrimeCombat extends Combat {
         });
     }
 
-    get combsAssist() {
-        return this.turns.filter((i) => {
-            return i.initiative % 10 != 0;
-        });
-    }
-
     get currentFaction() {
         const comb = this.getCurrentCombatant();
         return comb ? this.getCurrentCombatant().faction : "";
-    }
-
-    get currentAssists() {
-        const comb = this.getCurrentCombatant();
-        return this.turns.filter((x) => {
-            return x.initiative % 10 != 0 && x.initiative > comb.initiative && x.initiative < comb.initiative + 10;
-        });
     }
 
     getCurrentActor() {

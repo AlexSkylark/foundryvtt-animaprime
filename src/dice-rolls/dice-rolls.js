@@ -233,7 +233,7 @@ export function processRollOptions(form, variableMax) {
     };
 }
 
-export function splitRollResult(results, regular, strike = 0, action = 0, variable = 0, bonus = 0, resistance = 0, successModifier = 0, isEmpowered = false, isWeakened = false, positiveGoal = true) {
+export function splitRollResult(results, regular, strike = 0, action = 0, variable = 0, bonus = 0, resistance = 0, successModifier = 0, isEmpowered = false, isWeakened = false, positiveGoal = true, powerScaleDiff = 1) {
     let diceTypeArray = [];
     let returnArray = {
         abilityDice: [],
@@ -246,6 +246,7 @@ export function splitRollResult(results, regular, strike = 0, action = 0, variab
         empoweredDice: [],
         weakenedDice: [],
         scaleDice: [],
+        scaleReductionDice: [],
     };
 
     for (let i = 0; i < regular; i++) diceTypeArray.push("abilityDice");
@@ -255,6 +256,25 @@ export function splitRollResult(results, regular, strike = 0, action = 0, variab
         for (let i = 0; i < variable; i++) diceTypeArray.push("variableDice");
         for (let i = 0; i < bonus; i++) diceTypeArray.push("bonusDice");
         if (isEmpowered) diceTypeArray.push("empoweredDice");
+    }
+
+    if (powerScaleDiff < 1) {
+        let sux = 0;
+        for (let s = 0; s < results.length; s++) {
+            if (results[s].result >= 3) sux++;
+        }
+        let adjustedSux = Math.floor(sux * powerScaleDiff);
+        let suxReduction = sux - adjustedSux;
+
+        let suxAdjusted = 0;
+        let suxReductionPointer = diceTypeArray.length - 1;
+        while (suxAdjusted < suxReduction) {
+            if (results[suxReductionPointer].result >= 3) {
+                diceTypeArray[suxReductionPointer] = "scaleReductionDice";
+                suxAdjusted++;
+            }
+            suxReductionPointer--;
+        }
     }
 
     if (isWeakened)
@@ -273,6 +293,7 @@ export function splitRollResult(results, regular, strike = 0, action = 0, variab
         if (diceTypeArray[i] == "variableDice") returnArray.variableDice.push(results[i]);
         if (diceTypeArray[i] == "bonusDice") returnArray.bonusDice.push(results[i]);
         if (diceTypeArray[i] == "empoweredDice") returnArray.empoweredDice.push(results[i]);
+        if (diceTypeArray[i] == "scaleReductionDice") returnArray.scaleReductionDice.push(results[i]);
     }
 
     for (let i = 0; i < Math.min(resistance, results.length); i++) {
@@ -311,7 +332,7 @@ export function checkVariableGain(splitResults, powerScaleDiff) {
         if (i.result >= 3) variableGain++;
     }
 
-    variableGain = Math.floor(variableGain * powerScaleDiff);
+    if (powerScaleDiff > 1) variableGain = Math.floor(variableGain * powerScaleDiff);
 
     return Math.min(variableGain, Math.floor((splitResults.abilityDice.length + 1) * powerScaleDiff));
 }
