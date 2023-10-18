@@ -95,8 +95,10 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                     id: combatantId,
                 });
         } else if (ev.currentTarget.dataset.control == "endTurn") {
-            if (game.user.isGM) this.performEndTurn();
-            else
+            if (game.user.isGM) {
+                this.performEndTurn();
+                this.turnTakable = true;
+            } else
                 game.socket.emit("system.animaprime", {
                     operation: "endTurn",
                     id: combatantId,
