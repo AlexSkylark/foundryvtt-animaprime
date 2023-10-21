@@ -6,7 +6,6 @@
 # Node Modules
 node_modules/
 packs/basic-actions/
-packs/basic-vehicle-actions/
 npm-debug.log
 *.zip
 
