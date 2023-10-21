@@ -4,7 +4,15 @@ export default class AnimaPrimeAdversitySheet extends AnimaPrimeActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             width: 480,
-            height: this.prototype.editUnlocked ? 620 : 310,
+            height: 340,
         });
+    }
+
+    get widthUnlocked() {
+        return 645;
+    }
+
+    get heightUnlocked() {
+        return 745;
     }
 }

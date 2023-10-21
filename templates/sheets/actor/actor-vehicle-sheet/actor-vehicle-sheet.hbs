@@ -9,9 +9,16 @@
     <div class="decorative-square{{#unless editUnlocked}} small-square{{/unless}}">&nbsp;</div>
     <header class="flexcol">    
         <div class="header-namestrip flexrow flex0">
-            <input class="name" name="name" type="text" value="{{actorName}}" {{#unless editName}}disabled{{/unless}} />
+            <input class="name{{#unless owner}} small{{/unless}}{{#if isGM}} is-gm{{/if}}" name="name" type="text" value="{{actorName}}" {{#unless editName}}disabled{{/unless}} />
             <span class="power-scale-label">Power Scale:</span>
-            <input class="input-power-scale" name="system.powerScale" type="text" value="{{system.powerScale}}" />
+            <input class="input-power-scale" name="system.powerScale" type="text" value="{{system.powerScale}}" {{#unless isGM}}disabled{{/unless}} />
+            {{#if isGM}}
+            <div class="lock-container {{#if system.enableEdit}}lock-off{{else}}lock-on{{/if}}">
+                <div class="lock-button {{#if system.enableEdit}}lock-off{{else}}lock-on{{/if}}">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+            {{/if}}
         </div>
     </header>
     <div class="flexrow sheet-columns">
@@ -30,10 +37,10 @@
                     <div class="health-defense">
                         <div class="actor-{{actor.id}} health-bar-frame">
                             <div class="health-bar-frame health-bar"></div>
-                            <span class="{{#unless editUnlocked}} edit-hidden{{/unless}}">{{system.health.value}} / {{system.health.max}}</span>
+                            <span class="{{#unless owner}} edit-hidden{{/unless}}">{{system.health.value}} / {{system.health.max}}</span>
                         </div>
                         <div class="attribute-value">
-                            <span class="{{#unless editUnlocked}} edit-hidden{{/unless}}">{{system.defense}}</span>
+                            <span class="{{#unless owner}} edit-hidden{{/unless}}">{{system.defense}}</span>
                         </div>
                     </div>                    
                 </div>
@@ -48,7 +55,7 @@
                 </select>
             </div>
         {{/if}}                       
-            {{#if editUnlocked}}
+            {{#if owner}}
             <div class="dice-pool-strip icon-container flex0">
                 <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="strikeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
                 <div class="icon button-changevalue minus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="strikeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
@@ -60,13 +67,13 @@
             <div class="dice-pool-strip icon-container flex0">
                 <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="chargeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
                 <div class="icon button-changevalue minus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="chargeDice" data-operation="minus"><i class="fas fa-minus"></i></div>
-                <label>Charge Dice (<input type="text" class="input-charge-max" value="{{system.chargeDiceMax}}" name="system.chargeDiceMax" />&nbsp;)</label>
+                <label>Charge Dice (<input type="text"{{#unless editUnlocked}} disabled{{/unless}} class="input-charge-max" value="{{system.chargeDiceMax}}" name="system.chargeDiceMax" />&nbsp;)</label>
                 <div class="attribute-value">
                     <span>{{system.chargeDice}}</span>
                 </div>
             </div>
             {{/if}}
-            <div class="dice-pool-strip icon-container flex0{{#unless editUnlocked}} threat-only{{/unless}}">
+            <div class="dice-pool-strip icon-container flex0{{#unless owner}} threat-only{{/unless}}">
                 <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="threatDice" data-operation="plus"><i class="fas fa-plus"></i></div>
                 <div class="icon button-changevalue minus{{#unless editUnlocked}} edit-hidden{{/unless}}"data-property="threatDice" data-operation="minus"><i class="fas fa-minus"></i></div>
                 <label>Threat Dice</label>
@@ -77,8 +84,8 @@
         </div>
     </div>
     
-    {{#if editUnlocked}}
-    <nav class="sheet-tabs tabs" data-group="primary-tabs">
+    {{#if owner}}
+    <nav class="sheet-tabs tabs{{#if isGM}} gm-spacing{{/if}}" data-group="primary-tabs">
         <a data-tab="profession">Main Actions</a>
         <a data-tab="basic">Basic Actions</a>        
     </nav>            

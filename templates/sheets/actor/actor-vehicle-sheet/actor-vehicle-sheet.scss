@@ -17,7 +17,7 @@
 
     .decorative-square {
         background-color: var(--primary-color-light);
-        height: 658px;
+        height: 667px;
         width: 159px;
         position: absolute;
         top: 62px;
@@ -28,6 +28,50 @@
             height: 240px;
         }
         
+    }
+
+    .lock-container {
+        display: inline-flex;
+        max-width: 30px;
+        cursor: pointer;
+        min-width: 64px;
+        border: 2px solid #fff;
+        padding: 3px;
+        flex-direction: column;
+        border-radius: 18px;               
+
+        .lock-button {
+            border: 2px solid #999;
+            border-radius: 11px;
+            padding: 1px;
+            padding-left: 6px;
+            width: 30px;
+
+            &.lock-on {
+                align-items: start;
+                background-color: #852f37;
+                border-color: #f185a0;
+            }
+
+            &.lock-off {
+                align-items: end;
+                background-color: #09b9a2e6;
+                border-color: #00ffdc;
+                padding-left: 7px;
+            }
+        }
+
+        &.lock-on {
+            align-items: start;
+            background-color: #780f37;
+            border-color: #f3bcc5;
+        }
+
+        &.lock-off {
+            align-items: end;
+            background-color: #0f786a;
+            border-color: #bcf3e4;
+        }
     }
 
     .skill-section-container, .resistance-section-container {
@@ -118,7 +162,7 @@
         margin: 1px 12px;
 
         &.name {
-            max-width: 50%;
+            max-width: 50%;            
         }
 
         &::placeholder {
@@ -216,8 +260,16 @@
                 border-radius: 0;
                 margin: 0px 6px;
 
-                &.name {
+                &.name {                                    
                     max-width: 69%;
+                
+                    &.small {
+                        max-width: 67%;
+                    }
+
+                    &.is-gm {
+                        max-width: 57%;                        
+                    }
                 }
 
                 &::placeholder {
@@ -577,7 +629,11 @@
         border-bottom: 2px solid var(--primary-color);
         padding: 0;
         margin: 0px 24px;
-        margin-top: -32px;
+        margin-top: 0;
+
+        &.gm-spacing {
+            margin-top: -32px;
+        }
         
         a {
             padding: 4px 12px;

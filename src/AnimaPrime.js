@@ -70,6 +70,33 @@ function registerSheets() {
     });
 }
 
+Hooks.on("renderActorSheet", async (sheet, html, data) => {
+    let varWidth = sheet.constructor.defaultOptions.width;
+    let varHeight = sheet.constructor.defaultOptions.height;
+
+    if (sheet.actor.isOwner || game.user.isGM) {
+        varWidth = sheet.widthUnlocked;
+        varHeight = sheet.heightUnlocked;
+    }
+
+    let varLeft = window.innerWidth / 2 - varWidth / 2;
+    let varTop = window.innerHeight / 2 - varHeight / 2;
+
+    await sheet.setPosition({
+        left: varLeft,
+        top: varTop,
+        width: varWidth,
+        height: varHeight,
+    });
+
+    sheet.options.width = varWidth;
+    sheet.options.height = varHeight;
+    sheet.options.left = varLeft;
+    sheet.options.top = varTop;
+
+    html.css("top", `${varTop}px`);
+});
+
 Hooks.on("createActor", async (actor, data, context, userId) => {
     if (actor.type == "character" || actor.type == "adversity" || actor.type == "ally") {
         let items = await game.packs.get("animaprime.basic-actions").getDocuments();

@@ -3,9 +3,17 @@ import AnimaPrimeActorSheet from "./AnimaPrimeActorSheet.js";
 export default class AnimaPrimeVehicleSheet extends AnimaPrimeActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            width: 645,
-            height: this.prototype.editUnlocked ? 745 : 310,
+            width: 615,
+            height: 405,
         });
+    }
+
+    get widthUnlocked() {
+        return 645;
+    }
+
+    get heightUnlocked() {
+        return 750;
     }
 
     async activateListeners(html) {
