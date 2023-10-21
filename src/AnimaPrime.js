@@ -116,7 +116,7 @@ Hooks.on("createActor", async (actor, data, context, userId) => {
         actor.ownership.default = 2;
     }
 
-    if ((actor.type == "character" || actor.type == "ally") && actor.prototypeToken) await actor.prototypeToken.update({ actorLink: true });
+    if ((actor.type == "character" || actor.type == "ally" || actor.type == "vehicle") && actor.prototypeToken) await actor.prototypeToken.update({ actorLink: true });
 });
 
 Hooks.on("preUpdateActor", async (actor, change, context, userId) => {

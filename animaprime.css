@@ -714,9 +714,12 @@ select:focus {
   border: 0;
   color: #444;
 }
+.ally-sheet .skill-resistance-section {
+  display: flex;
+}
 .ally-sheet .decorative-square {
   background-color: var(--primary-color-light);
-  height: 530px;
+  height: 658px;
   width: 159px;
   position: absolute;
   top: 62px;
@@ -724,16 +727,19 @@ select:focus {
   z-index: -110;
 }
 .ally-sheet .decorative-square.small-square {
-  height: 247px;
+  height: 270px;
+}
+.ally-sheet .skill-section-container, .ally-sheet .resistance-section-container {
+  width: 50%;
 }
 .ally-sheet .skill-button-container {
   display: flex;
+  flex-direction: column;
   margin: 0px auto;
   width: 90%;
 }
 .ally-sheet .skill-button-container .skill-button {
   cursor: pointer;
-  width: 50%;
   margin: 12px 5px;
   background-color: #fff;
   text-align: center;
@@ -742,6 +748,7 @@ select:focus {
   padding: 6px;
   border-radius: 12px;
   font-weight: bold;
+  margin-bottom: 2px;
 }
 .ally-sheet .skills-container {
   margin-bottom: 24px;
@@ -758,7 +765,7 @@ select:focus {
   left: -24px;
 }
 .ally-sheet .skills-container .skill-line {
-  flex: 0 0 50%;
+  flex: 0 0 90%;
 }
 .ally-sheet .skills-container .skill-unit {
   border-bottom: 1px solid #333;
@@ -775,6 +782,15 @@ select:focus {
 }
 .ally-sheet .sheet-columns {
   flex-direction: row;
+}
+.ally-sheet .power-scale-label {
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+}
+.ally-sheet .input-power-scale {
+  max-width: 44px !important;
+  text-align: center;
 }
 .ally-sheet .input-text {
   color: #555;
@@ -869,23 +885,39 @@ select:focus {
   margin: 0px 6px;
 }
 .ally-sheet header .header-namestrip input[type=text].name {
-  max-width: 70%;
+  max-width: 69%;
+}
+.ally-sheet header .header-namestrip input[type=text].name.small {
+  max-width: 56%;
 }
 .ally-sheet header .header-namestrip input[type=text]::placeholder {
   color: #ddd;
 }
 .ally-sheet .left-side {
-  flex: 0 0 200px;
+  flex: 0 0 240px;
   margin-left: 4px;
   display: flex;
+}
+.ally-sheet .left-side.small-column {
+  flex: 0 0 180px;
+}
+.ally-sheet .left-side.small-column img {
+  height: 180px;
+}
+.ally-sheet .left-side.small-column .icon-container {
+  right: 0;
+  left: 26px;
+}
+.ally-sheet .left-side.small-column .icon-container .health-bar-frame {
+  width: 120px;
 }
 .ally-sheet .left-side .left-side-container {
   margin-top: 10px;
 }
 .ally-sheet .left-side img {
   border: 4px solid var(--primary-color);
-  width: 160px;
-  height: 151px;
+  width: 100%;
+  height: 240px;
   border-radius: 32px;
   padding: 4px;
   margin: 0 21px;
@@ -908,9 +940,10 @@ select:focus {
   background-color: rgba(0, 0, 0, 0);
 }
 .ally-sheet .left-side .defense-button {
-  float: left;
+  float: right;
   height: 6px;
   position: relative;
+  right: 32px;
 }
 .ally-sheet .left-side .defense-button .button-changevalue {
   width: 26px;
@@ -937,11 +970,11 @@ select:focus {
 }
 .ally-sheet .left-side .defense-button .button-changevalue.healthmax.plus {
   top: -23px;
-  left: 120px;
+  left: 140px;
 }
 .ally-sheet .left-side .defense-button .button-changevalue.healthmax.minus {
   top: -8px;
-  left: 120px;
+  left: 140px;
 }
 .ally-sheet .left-side .defense-button .button-changevalue.plus {
   left: calc(100% + 2px);
@@ -957,7 +990,7 @@ select:focus {
   width: calc(100% + 5px);
 }
 .ally-sheet .left-side .health-defense div.health-bar-frame {
-  width: 120px;
+  width: 140px;
   background-color: #444;
   border: 2px solid #000;
   border-radius: 8px;
@@ -1027,7 +1060,9 @@ select:focus {
   margin: 0px 12px;
   margin-top: -14px;
   margin-left: -4px;
-  max-height: 200px;
+}
+.ally-sheet .right-side.small-column {
+  margin-top: 16px !important;
 }
 .ally-sheet .right-side .passion-background {
   margin-left: 20px;
@@ -1053,8 +1088,9 @@ select:focus {
   align-items: center;
   margin-right: 27px;
   justify-content: flex-start;
-  margin-top: 3px;
+  margin-top: 36px;
   bottom: 10px;
+  margin-left: 24px;
 }
 .ally-sheet .right-side.dice-pools .dice-pool-strip {
   background-color: var(--primary-color);
@@ -1072,11 +1108,20 @@ select:focus {
   top: 56px;
 }
 .ally-sheet .right-side.dice-pools .dice-pool-strip label {
-  width: calc(100% - 80px);
+  width: calc(100% - 72px);
   text-align: end;
   color: #fff;
   font-size: 16px;
   font-weight: 600;
+}
+.ally-sheet .right-side.dice-pools .dice-pool-strip label .input-charge-max {
+  width: 33px;
+  color: #fff;
+  text-align: center;
+  font-size: 25px;
+  position: relative;
+  height: 17px;
+  border: 0;
 }
 .ally-sheet .right-side.dice-pools .dice-pool-strip .attribute-value {
   position: relative;
@@ -1090,21 +1135,31 @@ select:focus {
   top: 18px;
   left: calc(100% - 25px);
 }
-.ally-sheet .tabs-unlocked {
-  position: relative;
-  top: 60px;
-}
 .ally-sheet .actions-section-container {
   width: calc(100% - 45px);
   border-bottom: 2px solid var(--primary-color);
   margin-left: 24px;
-  height: 250px;
+  height: 300px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+}
+.ally-sheet .actions-column {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding-top: 8px;
+}
+.ally-sheet .actions-column:first-child {
+  margin-left: 8px;
+}
+.ally-sheet .actions-column:last-child {
+  margin-right: 8px;
 }
 .ally-sheet .actions-section {
   display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
+  flex-direction: row;
+  flex-wrap: wrap;
   margin-left: 24px;
   margin-bottom: 18px;
   padding-top: 6px;
@@ -1114,7 +1169,7 @@ select:focus {
   border-bottom: 2px solid var(--primary-color);
   padding: 0;
   margin: 0px 24px;
-  margin-top: -63px;
+  margin-top: -6px;
 }
 .ally-sheet nav.sheet-tabs a {
   padding: 4px 12px;
@@ -1132,10 +1187,6 @@ select:focus {
   background-color: var(--primary-color-light);
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
-}
-.ally-sheet .item-card-container {
-  width: 93%;
-  margin-left: 8px;
 }
 
 .character-sheet {
