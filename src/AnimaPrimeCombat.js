@@ -86,6 +86,7 @@ export default class AnimaPrimeCombat extends Combat {
                 }
             }
         }
+        ui.combat.render();
     }
 
     async resetInitiative(combatants, takeTurn) {
@@ -94,6 +95,12 @@ export default class AnimaPrimeCombat extends Combat {
         for (let i = startingNumber; Math.abs(i - startingNumber) < combatants.length; i--) {
             this.setInitiative(combatants[Math.abs(i - startingNumber)].id, i);
         }
+        ui.combat.render();
+    }
+
+    async setInitiative(id, value) {
+        const combatant = this.combatants.get(id, { strict: true });
+        await combatant.update({ initiative: value }, { render: false });
     }
 
     get combsOnQueue() {

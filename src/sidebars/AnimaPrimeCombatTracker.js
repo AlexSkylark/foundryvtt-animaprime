@@ -160,6 +160,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
             PoisonRoll.poisonRoll(poisonItem);
         }
+
+        ui.combat.render();
     }
 
     async performCancelTurn() {
@@ -190,6 +192,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         if (this.viewed.combsOnQueue.length > 1 && this.viewed.combsWaitingTurn == 0 && this.viewed.getCurrentCombatant().id == this.viewed.current.combatantId) {
             this.viewed.previousTurn();
         }
+
+        ui.combat.render();
     }
 
     async performEndTurn() {
