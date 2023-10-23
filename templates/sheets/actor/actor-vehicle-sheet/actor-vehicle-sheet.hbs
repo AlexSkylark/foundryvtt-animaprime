@@ -37,10 +37,10 @@
                     <div class="health-defense">
                         <div class="actor-{{actor.id}} health-bar-frame">
                             <div class="health-bar-frame health-bar"></div>
-                            <span class="{{#unless owner}} edit-hidden{{/unless}}">{{system.health.value}} / {{system.health.max}}</span>
+                            <span class="{{#unless (eq system.type 0)}} edit-hidden{{/unless}}">{{system.health.value}} / {{system.health.max}}</span>
                         </div>
                         <div class="attribute-value">
-                            <span class="{{#unless owner}} edit-hidden{{/unless}}">{{system.defense}}</span>
+                            <span class="{{#unless (eq system.type 0)}} edit-hidden{{/unless}}">{{system.defense}}</span>
                         </div>
                     </div>                    
                 </div>

@@ -203,17 +203,16 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         // special treatment for action dice
         if (propertyName == "actionDice" && newValue > this.actor.system.dice.actionDiceMax) newValue--;
 
-        let updateObject = { system: {} };
+        let updateObject = {};
         if (isComplex) {
-            updateObject.system[resourceName] = {};
-            updateObject.system[resourceName][resourceProp] = newValue;
+            updateObject[`system.${resourceName}.${resourceProp}`] = newValue;
 
             if (isMax) {
-                if (this.actor.system[resourceName].value > newValue) updateObject.system[resourceName].value = newValue;
-                else if (operation == "plus") updateObject.system[resourceName].value = this.actor.system[resourceName].value + 1;
+                if (this.actor.system[resourceName].value > newValue) updateObject[`system.${resourceName}.value`] = newValue;
+                else if (operation == "plus") updateObject[`system.${resourceName}.value`] = this.actor.system[resourceName].value + 1;
             }
         } else {
-            updateObject.system[propertyName] = newValue;
+            updateObject[`system.${propertyName}`] = newValue;
         }
 
         if (propertyValue != newValue) {

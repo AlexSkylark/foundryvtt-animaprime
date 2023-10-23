@@ -1,6 +1,5 @@
 import AnimaPrimeActorSheet from "../src/sheets/AnimaPrimeActorSheet.js";
 import AnimaPrimeAdversitySheet from "../src/sheets/AnimaPrimeAdversitySheet.js";
-import AnimaPrimeHazardSheet from "../src/sheets/AnimaPrimeHazardSheet.js";
 import AnimaPrimeAllySheet from "../src/sheets/AnimaPrimeAllySheet.js";
 import AnimaPrimeVehicleSheet from "../src/sheets/AnimaPrimeVehicleSheet.js";
 
@@ -41,10 +40,6 @@ function registerSheets() {
     Actors.registerSheet("animaprime", AnimaPrimeAllySheet, {
         makedefault: true,
         types: ["ally"],
-    });
-    Actors.registerSheet("animaprime", AnimaPrimeHazardSheet, {
-        makedefault: true,
-        types: ["hazard"],
     });
 
     Actors.registerSheet("animaprime", AnimaPrimeVehicleSheet, {
@@ -268,6 +263,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                     if (resultData.hit) {
                         targetData.health.value -= resultData.wounds;
                         targetData.threatDice = 0;
+                        targetEntity.effects.clear();
                     } else {
                         targetData.threatDice += resultData.variableGain;
                     }
@@ -277,7 +273,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                     });
                 } else if (item.type == "achievement") {
                     let ownerType = 0;
-                    if (item.owner.type == "adversity" || item.owner.type == "hazard") ownerType = 1;
+                    if (item.owner.type == "adversity") ownerType = 1;
 
                     if (!resultData.hit) {
                         targetData.progressDice = Math.max(targetData.progressDice + resultData.variableGain * (ownerType == targetData.type ? 1 : -1), 0);

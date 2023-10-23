@@ -76,10 +76,6 @@ export function registerHandlebarsHelpers() {
         return value.toUpperCase() == "CHARACTER";
     });
 
-    Handlebars.registerHelper("isHazard", function (value) {
-        return value.toUpperCase() == "HAZARD";
-    });
-
     Handlebars.registerHelper("isGoal", function (value) {
         return value.name.toUpperCase().indexOf("GOAL") >= 0;
     });

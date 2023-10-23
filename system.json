@@ -2,7 +2,7 @@
     "id": "animaprime",
     "title": "Anima Prime: REBOOT",
     "description": "Unofficial Foundry VTT Extension for Anima Prime, version REBOOT",
-    "version": "0.1.9.6",
+    "version": "0.1.9.7",
     "authors": [
         {
             "name": "AlexionStar",
@@ -29,14 +29,14 @@
             "name": "basic-actions",
             "label": "Basic Actions",
             "system": "animaprime",
-            "path": "./packs/basic-actions.db",
+            "path": "packs/basic-actions",
             "type": "Item"
         },
         {
             "name": "basic-vehicle-actions",
             "label": "Basic Vehicle Actions",
             "system": "animaprime",
-            "path": "./packs/basic-vehicle-actions.db",
+            "path": "packs/basic-vehicle-actions",
             "type": "Item"
         }
     ]

@@ -98,8 +98,7 @@
 
 <form>    
     <div class="flexrow dialog-container dialog-container-itemroll">        
-        <div class="dialog-fields-container">
-            {{#unless (isHazard owner.type)}}
+        <div class="dialog-fields-container">            
             <div class=" dialog-field-container flexrow">
                 <label class="strike">Add Strike Dice?</label>
                 <div class="flexrow dialog-buttons">
@@ -138,7 +137,6 @@
                 </div>
             </div>
             {{/if}}
-            {{/unless}}            
             <div class=" dialog-field-container flexrow dialog-bonus">
                 <label class="bonus">Add Bonus Dice?</label>        
                 <div class="flexrow dialog-buttons">                    

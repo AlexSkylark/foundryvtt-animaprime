@@ -14,7 +14,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     // validations
     if (item.type == "strike") {
         item.targets = item.targets.filter((i) => {
-            return i.type == "character" || i.type == "adversity" || i.type == "ally" || i.type == "hazard" || i.type == "vehicle";
+            return i.type == "character" || i.type == "adversity" || i.type == "ally" || i.type == "vehicle";
         });
     } else if (item.type == "achievement") {
         item.targets = item.targets.filter((i) => {
@@ -113,12 +113,12 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     });
 
     let successModifier = 0;
-    if (item.system.roll.indexOf("+") >= 0) successModifier = parseInt(item.system.roll.split("d")[1].replace("+", "").replace("-", ""));
-
     let splittedResults = [];
     let rollResults = [];
     let resultData = [];
     for (let i = 0; i < item.targets.length; i++) {
+        if (item.system.roll.indexOf("+") >= 0) successModifier = parseInt(item.system.roll.split("d")[1].replace("+", "").replace("-", ""));
+
         // roll execution
         const rollFormula = (abilityDice[i] + dialogOptions[i].strikeDice + dialogOptions[i].actionDice + dialogOptions[i].variableDice + dialogOptions[i].bonusDice - (dialogOptions[i].resistance ?? 0) + (isEmpowered ? 1 : 0)).toString() + "d6";
 

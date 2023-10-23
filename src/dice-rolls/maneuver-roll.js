@@ -145,7 +145,7 @@ function checkManeuverTarget(maneuver, maneuverStyle) {
         const originalTargets = duplicate(maneuver.targets);
         if (maneuverStyle == "cunning") {
             maneuver.targets = maneuver.targets.filter((i) => {
-                return i.type == "adversity" || i.type == "hazard";
+                return i.type == "adversity";
             });
         } else if (maneuverStyle == "heroic") {
             maneuver.targets = maneuver.targets.filter((i) => {
