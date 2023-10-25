@@ -7,8 +7,12 @@ export default class AnimaPrimeCombat extends Combat {
         super.prepareBaseData();
     }
 
-    async renderCombat() {
-        await ui.combat.render();
+    async renderCombat(updating = false) {
+        if (updating) {
+            await ui.combat.render();
+        } else {
+            await ui.combat.render();
+        }
     }
 
     async startCombat() {

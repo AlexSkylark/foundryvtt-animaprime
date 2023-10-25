@@ -113,6 +113,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         }
 
         this.isUpdating = true;
+        await this.viewed.renderCombat(this.isUpdating);
 
         const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
@@ -163,9 +164,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             PoisonRoll.poisonRoll(poisonItem);
         }
 
-        await this.viewed.renderCombat();
-
         this.isUpdating = false;
+        await this.viewed.renderCombat(this.isUpdating);
     }
 
     async performCancelTurn() {
@@ -179,6 +179,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         }
 
         this.isUpdating = true;
+        await this.viewed.renderCombat(this.isUpdating);
 
         const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
@@ -199,9 +200,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             this.viewed.previousTurn();
         }
 
-        await this.viewed.renderCombat();
-
         this.isUpdating = false;
+        await this.viewed.renderCombat(this.isUpdating);
     }
 
     async performEndTurn() {
@@ -215,6 +215,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         }
 
         this.isUpdating = true;
+        await this.viewed.renderCombat(this.isUpdating);
 
         if (this.viewed.combsOutofQueue.length == 0) {
             this.viewed.nextTurn();
@@ -245,9 +246,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
         await this.viewed.resetInitiative(combsToReset, true);
 
-        await this.viewed.renderCombat();
-
         this.isUpdating = false;
+        await this.viewed.renderCombat(this.isUpdating);
     }
 
     getInverseFaction(faction) {
