@@ -1,10 +1,10 @@
 <section class="{{cssClass}} combat-tracker-tab directory flexcol" id="{{cssId}}" data-tab="{{tabName}}">
-    {{#if isUpdating}}
+    {{#if combat.isUpdating}}
     <div class="sidebar-curtain">
         <span>Updating...</span>
     </div>
     {{/if}}
-    <span class="">{{ isUpdating }}</span>
+    UPDATE: {{ combat.isUpdating }}
     <header class="combat-tracker-header">
         {{#if user.isGM}}
         <nav class="encounters flexrow" aria-label="COMBAT.NavLabel">

@@ -1,4 +1,6 @@
 export default class AnimaPrimeCombat extends Combat {
+    isUpdating = false;
+
     prepareData() {
         super.prepareData();
     }
@@ -13,7 +15,6 @@ export default class AnimaPrimeCombat extends Combat {
         await super.update({ sheet: "open" });
 
         this.turns.forEach(async (combatant) => {
-            console.log("passei começo");
             let actorData = combatant.actor.system;
 
             if (combatant.actor.type == "character") actorData.actionDice = actorData.dice.actionDiceMax;
@@ -31,7 +32,7 @@ export default class AnimaPrimeCombat extends Combat {
     }
 
     async nextRound() {
-        super.nextRound();
+        await super.nextRound();
 
         await this.resetInitiative(this.combsFriendly, true);
         await this.resetInitiative(this.combsHostile, false);

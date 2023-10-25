@@ -3,8 +3,6 @@ import * as PoisonRoll from "../dice-rolls/poison-roll.js";
 export default class AnimaPrimeCombatTracker extends CombatTracker {
     turnTakable = true;
 
-    isUpdating = false;
-
     constructor(options) {
         super(options);
 
@@ -61,8 +59,6 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             else if (this.viewed.combsOnQueue.length > 0) context.activeFaction = this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative").faction;
             else context.activeFaction = "friendly";
         }
-
-        context.isUpdating = this.isUpdating;
 
         return context;
     }
@@ -123,12 +119,20 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
     }
 
     async updateRender(updating) {
-        this.isUpdating = updating;
         if (updating == false) {
-            setTimeout(async () => await ui.combat.render(), 500);
+            this.pauseForRender(500).then(async () => {
+                this.viewed.isUpdating = updating;
+                await ui.combat.render();
+                $(".main-queue").scrollTop($(".main-queue")[0].scrollHeight);
+            });
         } else {
+            this.viewed.isUpdating = updating;
             await ui.combat.render();
         }
+    }
+
+    pauseForRender(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     async performTakeTurn(combatantId) {
@@ -228,7 +232,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         }
 
         if (this.viewed.combsOutofQueue.length == 0) {
-            this.viewed.nextTurn();
+            await this.viewed.nextRound();
             return;
         } else {
             if (
@@ -236,7 +240,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                     return t.isDefeated;
                 }).length == this.viewed.combsOutofQueue.length
             ) {
-                this.viewed.nextRound();
+                await this.viewed.nextRound();
                 return;
             }
         }
