@@ -3203,6 +3203,22 @@ select:focus {
   margin-bottom: 8px;
 }
 
+.sidebar-curtain {
+  background-color: rgba(0, 0, 0, 0.7333333333);
+  width: 298px;
+  height: 100vh;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar-curtain span {
+  font-size: 36px;
+}
+
 .turnUnitData {
   font-size: 10px;
   max-height: 11px;

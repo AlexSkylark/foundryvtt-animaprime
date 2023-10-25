@@ -3,6 +3,8 @@ import * as PoisonRoll from "../dice-rolls/poison-roll.js";
 export default class AnimaPrimeCombatTracker extends CombatTracker {
     turnTakable = true;
 
+    isUpdating = false;
+
     constructor(options) {
         super(options);
 
@@ -53,6 +55,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             else if (this.viewed.combsOnQueue.length > 0) context.activeFaction = this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative").faction;
             else context.activeFaction = "friendly";
         }
+
+        context.isUpdating = this.isUpdating;
 
         return context;
     }
@@ -108,6 +112,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             return;
         }
 
+        this.isUpdating = true;
+
         const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
         await this.viewed.setInitiative(combatantId, this.viewed.combsOnQueue.length == 0 ? 10000 : lastComb.initiative - 10);
@@ -158,6 +164,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         }
 
         await this.viewed.renderCombat();
+
+        this.isUpdating = false;
     }
 
     async performCancelTurn() {
@@ -169,6 +177,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         if (this.viewed.combsOnQueue.length == 0) {
             return;
         }
+
+        this.isUpdating = true;
 
         const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
@@ -190,6 +200,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         }
 
         await this.viewed.renderCombat();
+
+        this.isUpdating = false;
     }
 
     async performEndTurn() {
@@ -201,6 +213,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             ui.notifications.error("A unit needs to take this turn.");
             return;
         }
+
+        this.isUpdating = true;
 
         if (this.viewed.combsOutofQueue.length == 0) {
             this.viewed.nextTurn();
@@ -232,6 +246,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         await this.viewed.resetInitiative(combsToReset, true);
 
         await this.viewed.renderCombat();
+
+        this.isUpdating = false;
     }
 
     getInverseFaction(faction) {
