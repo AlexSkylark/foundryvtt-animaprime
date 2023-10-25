@@ -145,11 +145,7 @@ Hooks.on("preUpdateActor", async (actor, change, context, userId) => {
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
-    if (message.flags.sourceItem) {
-        setTimeout(() => {
-            ui.combat.render();
-        });
-    } else {
+    if (!message.flags.sourceItem) {
         setTimeout(() => {
             $("li[data-message-id='" + message.id + "']").addClass("chat-message-message");
         });

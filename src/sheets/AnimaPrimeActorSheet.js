@@ -227,8 +227,6 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
             }
 
             await this.actor.update(updateObject);
-
-            setTimeout(() => ui.combat.render(), 300);
         }
     }
 

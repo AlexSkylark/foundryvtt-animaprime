@@ -66,8 +66,6 @@ export async function renderRoll(rollResult, entityData, resultData, messageTemp
 
         await commitCallback(resultData, entityData, dialogOptions, itemTarget);
     }
-
-    setTimeout(() => ui.combat.render(), 500);
 }
 
 function sortDiceRolls(renderedRoll, chatMessageUniqueId) {

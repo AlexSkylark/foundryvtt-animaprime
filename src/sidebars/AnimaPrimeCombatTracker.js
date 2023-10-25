@@ -21,10 +21,6 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                     this.turnTakable = true;
                 }
             }
-
-            if (argument.operation == "initAttack") {
-                ui.combat.render();
-            }
         });
     }
 
@@ -161,7 +157,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             PoisonRoll.poisonRoll(poisonItem);
         }
 
-        ui.combat.render();
+        await this.viewed.renderCombat();
     }
 
     async performCancelTurn() {
@@ -181,19 +177,19 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             combsToReset.push(lastComb);
             combsToReset = combsToReset.concat(this.viewed.combsOnQueue.filter((x) => x.initiative % 10 != 0 && x.initiative > lastComb.initiative && x.initiative < lastComb.initiative + 10));
             combsToReset = combsToReset.concat(this.viewed.combsOutofQueue.filter((x) => x.faction == lastComb.faction && !x.isDefeated));
-            this.viewed.resetInitiative(combsToReset, true);
+            await this.viewed.resetInitiative(combsToReset, true);
         } else {
             const nextFaction = lastComb ? this.getInverseFaction(lastComb.faction) : "friendly";
             combsToReset = combsToReset.concat(this.viewed.combsOnQueue.filter((x) => x.initiative % 10 != 0 && x.initiative > lastComb.initiative && x.initiative < lastComb.initiative + 10));
             combsToReset = combsToReset.concat(this.viewed.combsOutofQueue.filter((x) => x.faction == nextFaction && !x.isDefeated));
-            this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
+            await this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
         }
 
         if (this.viewed.combsOnQueue.length > 1 && this.viewed.combsWaitingTurn == 0 && this.viewed.getCurrentCombatant().id == this.viewed.current.combatantId) {
             this.viewed.previousTurn();
         }
 
-        ui.combat.render();
+        await this.viewed.renderCombat();
     }
 
     async performEndTurn() {
@@ -233,7 +229,9 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             }
         }
 
-        this.viewed.resetInitiative(combsToReset, true);
+        await this.viewed.resetInitiative(combsToReset, true);
+
+        await this.viewed.renderCombat();
     }
 
     getInverseFaction(faction) {

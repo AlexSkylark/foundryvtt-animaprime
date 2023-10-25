@@ -59,15 +59,6 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         dialogOptions = [];
         let dialogPromises = [];
 
-        if (game.user.isGM) {
-            ui.combat.render();
-        } else {
-            game.socket.emit("system.animaprime", {
-                operation: "initAttack",
-                attacker: item.owner,
-            });
-        }
-
         for (let i = 0; i < item.targets.length; i++) {
             let itemForDialog = {
                 ...item,
@@ -167,8 +158,6 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         splittedResults.push(splitRes);
         resultData.push(itemRes);
     }
-
-    ui.combat.render();
 
     // chat message rendering
     await DiceRolls.renderRoll(rollResults, item, resultData, messageTemplate, splittedResults, isReroll, this.commitResults, dialogOptions, item.targetId, previousRolls);

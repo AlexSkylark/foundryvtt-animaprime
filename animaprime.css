@@ -3174,8 +3174,8 @@ select:focus {
 
 .dialog-curtain {
   background-color: rgba(0, 0, 0, 0.4901960784);
-  width: 100vw;
-  height: 100vh;
+  width: 200vw;
+  height: 200vh;
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
