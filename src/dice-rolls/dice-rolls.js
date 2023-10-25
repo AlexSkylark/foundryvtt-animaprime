@@ -176,7 +176,7 @@ export async function getConfirmEndOfTurn(actor) {
         const endTurnDialogResult = await confirmEndTurnDialog();
         if (endTurnDialogResult.confirmed) {
             if (game.user.isGM) {
-                ui.combat.performEndTurn();
+                await ui.combat.performEndTurn();
             } else {
                 game.socket.emit("system.animaprime", {
                     operation: "endTurn",

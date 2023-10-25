@@ -13,13 +13,19 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                 if (argument.operation == "takeTurn") {
                     if (this.turnTakable) {
                         this.turnTakable = false;
+                        await this.updateRender(true);
                         await this.performTakeTurn(argument.id);
+                        await this.updateRender(false);
                     }
                 } else if (argument.operation == "endTurn") {
+                    await this.updateRender(true);
                     await this.performEndTurn();
+                    await this.updateRender(false);
                     this.turnTakable = true;
                 } else if (argument.operation == "cancelTurn") {
+                    await this.updateRender(true);
                     await this.performCancelTurn();
+                    await this.updateRender(false);
                     this.turnTakable = true;
                 }
             }
@@ -74,12 +80,16 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
         const combatantId = $(ev.currentTarget).closest(".combatant").data("combatantId");
 
-        if (game.user.isGM) this.performTakeTurn(combatantId);
-        else
+        if (game.user.isGM) {
+            await this.updateRender(true);
+            await this.performTakeTurn(combatantId);
+            await this.updateRender(false);
+        } else {
             game.socket.emit("system.animaprime", {
                 operation: "takeTurn",
                 id: combatantId,
             });
+        }
     }
 
     async _onCombatCustomControl(ev) {
@@ -88,15 +98,21 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         const combatantId = this.viewed.combatant.id;
 
         if (ev.currentTarget.dataset.control == "cancelTurn") {
-            if (game.user.isGM) this.performCancelTurn();
-            else
+            if (game.user.isGM) {
+                await this.updateRender(true);
+                await this.performCancelTurn();
+                await this.updateRender(false);
+            } else {
                 game.socket.emit("system.animaprime", {
                     operation: "cancelTurn",
                     id: combatantId,
                 });
+            }
         } else if (ev.currentTarget.dataset.control == "endTurn") {
             if (game.user.isGM) {
-                this.performEndTurn();
+                await this.updateRender(true);
+                await this.performEndTurn();
+                await this.updateRender(false);
                 this.turnTakable = true;
             } else
                 game.socket.emit("system.animaprime", {
@@ -106,14 +122,20 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         }
     }
 
+    async updateRender(updating) {
+        this.isUpdating = updating;
+        if (updating == false) {
+            setTimeout(async () => await ui.combat.render(), 500);
+        } else {
+            await ui.combat.render();
+        }
+    }
+
     async performTakeTurn(combatantId) {
         if (!game.user.isGM) {
             ui.notifications.error("only a GM user can issue that command");
             return;
         }
-
-        this.isUpdating = true;
-        await this.viewed.renderCombat(this.isUpdating);
 
         const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
@@ -163,9 +185,6 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
             PoisonRoll.poisonRoll(poisonItem);
         }
-
-        this.isUpdating = false;
-        await this.viewed.renderCombat(this.isUpdating);
     }
 
     async performCancelTurn() {
@@ -177,9 +196,6 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         if (this.viewed.combsOnQueue.length == 0) {
             return;
         }
-
-        this.isUpdating = true;
-        await this.viewed.renderCombat(this.isUpdating);
 
         const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
@@ -199,9 +215,6 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         if (this.viewed.combsOnQueue.length > 1 && this.viewed.combsWaitingTurn == 0 && this.viewed.getCurrentCombatant().id == this.viewed.current.combatantId) {
             this.viewed.previousTurn();
         }
-
-        this.isUpdating = false;
-        await this.viewed.renderCombat(this.isUpdating);
     }
 
     async performEndTurn() {
@@ -213,9 +226,6 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             ui.notifications.error("A unit needs to take this turn.");
             return;
         }
-
-        this.isUpdating = true;
-        await this.viewed.renderCombat(this.isUpdating);
 
         if (this.viewed.combsOutofQueue.length == 0) {
             this.viewed.nextTurn();
@@ -245,9 +255,6 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         }
 
         await this.viewed.resetInitiative(combsToReset, true);
-
-        this.isUpdating = false;
-        await this.viewed.renderCombat(this.isUpdating);
     }
 
     getInverseFaction(faction) {
