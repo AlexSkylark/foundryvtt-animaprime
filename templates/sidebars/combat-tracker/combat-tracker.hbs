@@ -138,12 +138,10 @@
                 <div class="token-initiative">
                     {{#if ../combat.round}}
                         {{#if (and (canTakeTurn this.initiative) (or owner ../user.isGM))}}
-                            {{#unless ../combat.combsFriendlyWaitingTurn}}
-                                {{#unless this.defeated}}
-                                    <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
-                                {{/unless}}
+                            {{#unless this.defeated}}
+                                <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
                             {{/unless}}
-                        {{/if}}                        
+                        {{/if}}
                     {{/if}}
                 </div>
             </li>
@@ -169,7 +167,7 @@
                     <h4>{{this.displayName}}</h4>
                     {{#unless this.defeated}}<h4 class="turnUnitData">HP:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>{{/unless}}
                     <div class="combatant-controls flexrow">
-                        {{#if ../user.isGM}}                            
+                        {{#if ../user.isGM}}
                         <a class="combatant-control {{#if this.defeated}}active{{/if}}" title="{{localize 'COMBAT.ToggleDead'}}" data-control="toggleDefeated">
                             <i class="fas fa-skull"></i></a>
                         {{/if}}

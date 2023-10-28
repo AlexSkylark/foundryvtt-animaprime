@@ -184,14 +184,6 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
         await this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
 
-        while (takeTurnComb.id != this.viewed.combatant.id) {
-            if (takeTurnComb.initiative >= this.viewed.combatant.initiative) {
-                await this.viewed.previousTurn();
-            } else {
-                await this.viewed.nextTurn();
-            }
-        }
-
         // check doomed condition
         if (takeTurnComb.actor.checkCondition("doomed")) {
             const currentThreatDice = takeTurnComb.actor.system.threatDice;
