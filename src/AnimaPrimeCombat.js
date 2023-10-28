@@ -10,6 +10,8 @@ export default class AnimaPrimeCombat extends Combat {
     }
 
     async startCombat() {
+        ui.combat.updateRender(true);
+
         super.startCombat();
 
         await super.update({ sheet: "open" });
@@ -29,6 +31,8 @@ export default class AnimaPrimeCombat extends Combat {
 
         await this.resetInitiative(this.combsFriendly, true);
         await this.resetInitiative(this.combsHostile, false);
+
+        ui.combat.updateRender(false);
     }
 
     async nextRound() {

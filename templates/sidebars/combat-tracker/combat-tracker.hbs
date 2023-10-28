@@ -2,6 +2,11 @@
     {{#if combat.isUpdating}}
     <div class="sidebar-curtain">
         <span>Updating...</span>
+        <div class="ring-2">
+          <div class="ball-holder">
+            <div class="ball"></div>
+          </div>
+        </div>
     </div>
     {{/if}}
     <header class="combat-tracker-header">
@@ -82,7 +87,7 @@
                 <img class="token-image" src="{{this.img}}" title="{{this.name}}"/>
                 <div class="token-name flexcol">
                     <h4>{{this.displayName}}</h4>
-                    {{#unless this.defeated}}<h4 class="turnUnitData">HP:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>{{/unless}}
+                    {{#unless this.defeated}}<h4 class="turnUnitData">INIT: {{this.initiative}} / HP:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>{{/unless}}
                     <div class="combatant-controls flexrow">
                         {{#if ../user.isGM}}
                         <a class="combatant-control {{#if this.defeated}}active{{/if}}" title="{{localize 'COMBAT.ToggleDead'}}" data-control="toggleDefeated">
@@ -96,14 +101,12 @@
                     </div>
                 </div>
 
-                <div class="token-initiative">
-                    {{#if ../combat.round}}
-                        {{#if (and (canTakeTurn this.initiative) (or owner ../user.isGM))}}
-                            {{#unless this.defeated}}
-                                <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
-                            {{/unless}}
-                        {{/if}}
-                    {{/if}}
+                <div class="token-initiative">                    
+                    {{#if (and (canTakeTurn this.initiative) (or owner ../user.isGM))}}
+                        {{#unless this.defeated}}
+                            <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
+                        {{/unless}}
+                    {{/if}}                    
                 </div>
             </li>            
             {{/unless}}            
@@ -120,7 +123,7 @@
             <li class="combatant actor directory-item flexrow {{this.css}} {{this.faction}} ally" data-combatant-id="{{this.id}}">
                 <img class="token-image" src="{{this.img}}" title="{{this.name}}"/>
                 <div class="token-name flexcol">
-                    <h4>{{this.displayName}}</h4>
+                    <h4>{{this.displayName}}</h4>                    
                     {{#unless this.defeated}}<h4 class="turnUnitData">HP:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>{{/unless}}
                     <div class="combatant-controls flexrow">
                         {{#if ../user.isGM}}
@@ -135,14 +138,14 @@
                     </div>
                 </div>
 
-                <div class="token-initiative">
-                    {{#if ../combat.round}}
-                        {{#if (and (canTakeTurn this.initiative) (or owner ../user.isGM))}}
-                            {{#unless this.defeated}}
-                                <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
-                            {{/unless}}
-                        {{/if}}
-                    {{/if}}
+                <div class="token-initiative">                    
+                {{#if (and (canTakeTurn this.initiative) (or owner ../user.isGM))}}
+                    {{#unless ../combat.combsFriendlyWaitingTurn}}
+                    {{#unless this.defeated}}
+                        <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
+                    {{/unless}}
+                    {{/unless}}
+                {{/if}}                    
                 </div>
             </li>
             {{/if}}
@@ -179,14 +182,12 @@
                     </div>
                 </div>
 
-                <div class="token-initiative">
-                    {{#if ../combat.round}}
-                        {{#if (and (canTakeTurn this.initiative) (or isControlling ../user.isGM))}}
-                            {{#unless this.defeated}}
-                                <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
-                            {{/unless}}
-                        {{/if}}                        
-                    {{/if}}
+                <div class="token-initiative">                    
+                    {{#if (and (canTakeTurn this.initiative) (or isControlling ../user.isGM))}}
+                        {{#unless this.defeated}}
+                            <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
+                        {{/unless}}
+                    {{/if}}                         
                 </div>
             </li>
             {{/if}}
