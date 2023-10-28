@@ -141,26 +141,20 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             this.pauseForRender(500).then(async () => {
                 this.viewed.isUpdating = updating;
                 await ui.combat.render();
-
-                if (game.user.isGM) {
-                    game.socket.emit("system.animaprime", {
-                        operation: "refreshSidebar",
-                        isUpdating: updating,
-                    });
-                }
-
-                $(".main-queue").scrollTop($(".main-queue")[0].scrollHeight);
+                this.pauseForRender(1).then(async () => {
+                    $(".main-queue").scrollTop($(".main-queue")[0].scrollHeight);
+                });
             });
         } else {
             this.viewed.isUpdating = updating;
             await ui.combat.render();
+        }
 
-            if (game.user.isGM) {
-                game.socket.emit("system.animaprime", {
-                    operation: "refreshSidebar",
-                    isUpdating: updating,
-                });
-            }
+        if (game.user.isGM) {
+            game.socket.emit("system.animaprime", {
+                operation: "refreshSidebar",
+                isUpdating: updating,
+            });
         }
     }
 
