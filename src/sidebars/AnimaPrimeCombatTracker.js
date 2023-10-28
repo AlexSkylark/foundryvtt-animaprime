@@ -25,6 +25,12 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                     await this.performCancelTurn();
                     await this.updateRender(false);
                     this.turnTakable = true;
+                } else if (argument.operation == "turnTakable") {
+                    this.turnTakable = argument.takable;
+                }
+            } else {
+                if (argument.operation == "refreshSidebar") {
+                    await this.updateRender(argument.isUpdating);
                 }
             }
         });
@@ -98,7 +104,13 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                 await this.updateRender(true);
                 await this.performCancelTurn();
                 await this.updateRender(false);
+                this.turnTakable = true;
             } else {
+                game.socket.emit("system.animaprime", {
+                    operation: "turnTakable",
+                    takable: true,
+                });
+
                 game.socket.emit("system.animaprime", {
                     operation: "cancelTurn",
                     id: combatantId,
@@ -110,11 +122,17 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                 await this.performEndTurn();
                 await this.updateRender(false);
                 this.turnTakable = true;
-            } else
+            } else {
+                game.socket.emit("system.animaprime", {
+                    operation: "turnTakable",
+                    takable: true,
+                });
+
                 game.socket.emit("system.animaprime", {
                     operation: "endTurn",
                     id: combatantId,
                 });
+            }
         }
     }
 
@@ -123,11 +141,26 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             this.pauseForRender(500).then(async () => {
                 this.viewed.isUpdating = updating;
                 await ui.combat.render();
+
+                if (game.user.isGM) {
+                    game.socket.emit("system.animaprime", {
+                        operation: "refreshSidebar",
+                        isUpdating: updating,
+                    });
+                }
+
                 $(".main-queue").scrollTop($(".main-queue")[0].scrollHeight);
             });
         } else {
             this.viewed.isUpdating = updating;
             await ui.combat.render();
+
+            if (game.user.isGM) {
+                game.socket.emit("system.animaprime", {
+                    operation: "refreshSidebar",
+                    isUpdating: updating,
+                });
+            }
         }
     }
 

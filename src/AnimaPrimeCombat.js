@@ -149,6 +149,12 @@ export default class AnimaPrimeCombat extends Combat {
         });
     }
 
+    get isOwnerOfCurrentComb() {
+        const comb = this.getCurrentCombatant();
+        if (comb) return comb.isOwner;
+        else return false;
+    }
+
     get currentFaction() {
         const comb = this.getCurrentCombatant();
         return comb ? this.getCurrentCombatant().faction : "";

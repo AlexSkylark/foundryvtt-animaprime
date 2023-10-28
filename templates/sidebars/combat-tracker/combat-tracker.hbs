@@ -4,7 +4,6 @@
         <span>Updating...</span>
     </div>
     {{/if}}
-    UPDATE: {{ combat.isUpdating }}
     <header class="combat-tracker-header">
         {{#if user.isGM}}
         <nav class="encounters flexrow" aria-label="COMBAT.NavLabel">
@@ -218,10 +217,10 @@
             {{else}}
                 <a class="combat-control center" title="{{localize 'COMBAT.Begin'}}" data-control="startCombat">{{localize 'COMBAT.Begin'}}</a>
             {{/if}}
-        {{else if control}}
-            {{#unless this.combat.combsWaitingTurn.length}}
+        {{else if this.combat.isOwnerOfCurrentComb}}
+            {{#unless this.combat.combsWaitingTurn.length}}                
                 <a class="combat-custom-control center" title="Cancel Turn" data-control="cancelTurn">Cancel <i class="fas fa-cancel"></i></a>
-                <a class="combat-custom-control center" title="End Turn" data-control="endTurn">End <i class="fas fa-check"></i></a>
+                <a class="combat-custom-control center" title="End Turn" data-control="endTurn">End <i class="fas fa-check"></i></a>                
             {{/unless}}
         {{/if}}
     </nav>    
