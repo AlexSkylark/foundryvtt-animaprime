@@ -17,7 +17,7 @@
         width: 159px;
         position: absolute;
         top: 62px;
-        left: 53px;
+        left: 65px;
         z-index: -1;
     }
 
@@ -119,7 +119,7 @@
                 margin: 0px 6px;
 
                 &.name {
-                    max-width: calc(100% - 470px);
+                    max-width: calc(100% - 510px);
                 }
 
                 &::placeholder {
@@ -174,12 +174,15 @@
     }
         
     .left-side {        
-        flex: 0 0 240px;
+        flex: 0 0 280px;
         margin-left: 4px;
         display: flex;
 
         .profile-container {
-            margin-left: 26px
+            margin: 0px auto;
+            width: 100%;
+            display: table;
+            text-align: center;            
         }
 
         img {
@@ -189,7 +192,7 @@
             border-radius: 32px;
             padding: 4px;
             margin: 0 21px;
-            margin-top: 20px;
+            margin-top: 8px;
             background-color: #fff;
         }
 
@@ -214,7 +217,7 @@
         .defense-button {
             float: left;
             height: 6px;
-            position: relative;
+            margin-left: 50px;
             
             .button-changevalue {
                 width: 26px;
@@ -350,7 +353,7 @@
 
     .skills-container {
         
-        height: 250px;
+        height: 325px;
         padding-top: 20px;
         overflow: auto;
 
@@ -407,10 +410,12 @@
         }
 
         .personality-section {
-            width: 72%;
+            width: 510px;
+            margin-top: 36px;
         }
 
         .resistance-section {
+            margin-top: 36px;
         }
 
         .trait-value {
@@ -552,7 +557,7 @@
 
         .actions-section-container {
             overflow-y: auto;
-            height: 426px;
+            height: 460px;
             display: flex;
             flex-direction: row;
             border-bottom: 2px solid var(--primary-color);

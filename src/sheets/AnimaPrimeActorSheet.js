@@ -4,8 +4,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["animaprime", "sheet", "actor", "actor-sheet-layout"],
-            width: 890,
-            height: 877,
+            width: 990,
+            height: 925,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
@@ -14,6 +14,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
                 },
             ],
             resizable: false,
+            scale: 0.96,
         });
     }
 
