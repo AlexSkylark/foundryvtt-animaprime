@@ -14,7 +14,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
                 },
             ],
             resizable: false,
-            scale: 0.96,
+            scale: 0.95,
         });
     }
 

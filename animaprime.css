@@ -1199,7 +1199,7 @@ select:focus {
 }
 .character-sheet .decorative-square {
   background-color: var(--primary-color-light);
-  height: 807px;
+  height: calc(100% - 63px);
   width: 159px;
   position: absolute;
   top: 62px;
