@@ -230,13 +230,13 @@
                     font-size: 10px;
                     
                     &.plus {
-                        top: -23px;
-                        left: 58px;
+                        top: 252px;
+                        left: 115px;
                     }
 
                     &.minus {
-                        top: -8px;
-                        left: 58px;    
+                        top: 270px;
+                        left: 115px;    
                     }
                 }
 
@@ -248,13 +248,13 @@
                     font-size: 10px;
                     
                     &.plus {
-                        top: -23px;
-                        left: 120px;
+                        top: 252px;
+                        left: 170px;
                     }
 
                     &.minus {
-                        top: -8px;
-                        left: 120px;    
+                        top: 270px;
+                        left: 170px;    
                     }
                 }                
             }
@@ -522,7 +522,7 @@
                 color: #555;
                 display: block;
                 text-align: center;
-                margin-left: -12px;
+                margin-left: -8px;
                 margin-top: 4px;
             }
 
@@ -541,10 +541,11 @@
             .button-changevalue {
                 
                 position: relative;
+                cursor: pointer;
 
                 &.plus {
                     top: -36px;
-                    left: 68px;
+                    left: 78px;
                 }
     
                 &.minus {

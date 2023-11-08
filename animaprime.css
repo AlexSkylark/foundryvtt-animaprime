@@ -1388,12 +1388,12 @@ select:focus {
   font-size: 10px;
 }
 .character-sheet .left-side .defense-button .button-changevalue.health.plus {
-  top: -23px;
-  left: 58px;
+  top: 252px;
+  left: 115px;
 }
 .character-sheet .left-side .defense-button .button-changevalue.health.minus {
-  top: -8px;
-  left: 58px;
+  top: 270px;
+  left: 115px;
 }
 .character-sheet .left-side .defense-button .button-changevalue.healthmax {
   position: absolute;
@@ -1402,12 +1402,12 @@ select:focus {
   font-size: 10px;
 }
 .character-sheet .left-side .defense-button .button-changevalue.healthmax.plus {
-  top: -23px;
-  left: 120px;
+  top: 252px;
+  left: 170px;
 }
 .character-sheet .left-side .defense-button .button-changevalue.healthmax.minus {
-  top: -8px;
-  left: 120px;
+  top: 270px;
+  left: 170px;
 }
 .character-sheet .left-side .health-defense {
   margin-top: 19px;
@@ -1622,7 +1622,7 @@ select:focus {
   color: #555;
   display: block;
   text-align: center;
-  margin-left: -12px;
+  margin-left: -8px;
   margin-top: 4px;
 }
 .character-sheet .right-side .reroll-container .reroll-header {
@@ -1638,10 +1638,11 @@ select:focus {
 }
 .character-sheet .right-side .reroll-container .button-changevalue {
   position: relative;
+  cursor: pointer;
 }
 .character-sheet .right-side .reroll-container .button-changevalue.plus {
   top: -36px;
-  left: 68px;
+  left: 78px;
 }
 .character-sheet .right-side .reroll-container .button-changevalue.minus {
   top: -62px;
