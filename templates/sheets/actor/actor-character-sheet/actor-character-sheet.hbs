@@ -116,7 +116,7 @@
                 <div class="dice-pools">
                     <div class="dice-pool-container">
                         <div class="dice-pool-strip">
-                            <label class="label-action">Action Dice (<input type="text" class="input-action-max" value="{{system.dice.actionDiceMax}}" name="system.dice.actionDiceMax" />&nbsp;)</label>
+                            <label class="label-action">Action Dice (<input {{#unless editUnlocked}}disabled{{/unless}} type="text" class="input-action-max" value="{{system.dice.actionDiceMax}}" name="system.dice.actionDiceMax" />&nbsp;)</label>
                         </div>
                         <div class="attribute-container">
                             <div class="attribute-value double-value">
