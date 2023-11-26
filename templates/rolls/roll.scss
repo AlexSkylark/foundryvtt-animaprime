@@ -54,6 +54,7 @@
             grid-row: 1;
             font-family: 'Montserrat';
             height: 42px;
+            overflow-x: overlay;
             padding-left: 60px;
             margin-top: 10px;
 
@@ -68,6 +69,7 @@
                 &.header-name {
                     padding-bottom: 3px;
                     font-size: 18px;
+                    white-space: nowrap;
                 }
             }
 

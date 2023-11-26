@@ -107,11 +107,14 @@ Hooks.on("createActor", async (actor, data, context, userId) => {
     } else if (actor.type == "vehicle") {
         let items = await game.packs.get("animaprime.basic-vehicle-actions").getDocuments();
         await actor.createEmbeddedDocuments("Item", items);
-    } else if (actor.type == "goal") {
+    }
+
+    debugger;
+    if (actor.type == "adversity" || actor.type == "ally") {
         actor.ownership.default = 2;
     }
 
-    if ((actor.type == "character" || actor.type == "ally" || actor.type == "vehicle") && actor.prototypeToken) await actor.prototypeToken.update({ actorLink: true });
+    if ((actor.type == "character" || actor.type == "ally" || actor.type == "vehicle" || actor.type == "goal") && actor.prototypeToken) await actor.prototypeToken.update({ actorLink: true });
 });
 
 Hooks.on("preUpdateActor", async (actor, change, context, userId) => {
@@ -309,7 +312,7 @@ async function createActionCardMacro(bar, data, slot) {
     }
     setTimeout(async () => {
         await game.user.assignHotbarMacro(macro, slot);
-    }, 50);
+    }, 500);
 
     return false;
 }

@@ -2467,6 +2467,7 @@ select:focus {
   grid-row: 1;
   font-family: "Montserrat";
   height: 42px;
+  overflow-x: overlay;
   padding-left: 60px;
   margin-top: 10px;
 }
@@ -2481,6 +2482,7 @@ select:focus {
 .roll-message-container .roll-header .header-label h4.header-name {
   padding-bottom: 3px;
   font-size: 18px;
+  white-space: nowrap;
 }
 
 .roll-header .item-description {
