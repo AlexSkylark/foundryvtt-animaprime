@@ -5,7 +5,7 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
 
     let maneuverDice = parseInt(maneuver.system.roll.replace("d"));
     const isQuickened = maneuver.owner.checkCondition("quickened");
-    const isSlowed = maneuver.owner.checkCondition("dazed");
+    const isDazed = maneuver.owner.checkCondition("dazed");
 
     if (isQuickened) {
         maneuverDice += 1;
@@ -76,22 +76,23 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
 
     let diceResults = rollResult[0].dice[0].results;
 
-    // take out slowed die
-    let slowedDie = null;
-    if (isSlowed) {
-        let indexSlowedCharge = diceResults.findIndex((x) => x.charge);
-        let indexSlowedStrike = diceResults.findIndex((x) => x.strike);
+    // take out dazed die
+    let dazedDie = null;
+    if (isDazed) {
+        debugger;
+        let indexDazedSuccess = diceResults.findIndex((x) => x.charge || x.strike);
 
-        if (indexSlowedCharge > -1) {
-            diceResults[indexSlowedCharge].charge = false;
-            diceResults[indexSlowedCharge].invisible = true;
-            slowedDie = diceResults[indexSlowedCharge];
-            resultData[0].charge -= 1;
-        } else if (indexSlowedStrike > -1) {
-            diceResults[indexSlowedStrike].strike = false;
-            diceResults[indexSlowedStrike].invisible = true;
-            slowedDie = diceResults[indexSlowedStrike];
-            resultData[0].strike -= 1;
+        if (indexDazedSuccess > -1) {
+            if (diceResults[indexDazedSuccess].charge) {
+                diceResults[indexDazedSuccess].charge = false;
+                resultData[0].charge -= 1;
+            } else {
+                diceResults[indexDazedSuccess].strike = false;
+                resultData[0].strike -= 1;
+            }
+
+            diceResults[indexDazedSuccess].invisible = true;
+            dazedDie = diceResults[indexDazedSuccess];
         }
     }
 
@@ -123,8 +124,8 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
         quickenedDie: quickenedDie,
         recklessDice: recklessDice,
         supportDice: supportDice,
-        isSlowed: isSlowed,
-        slowedDie: slowedDie,
+        isDazed: isDazed,
+        slowedDie: dazedDie,
         defensiveDie: defensiveDie,
         maneuverStyle: dialogOptions.maneuverStyle,
         hasSupportDie: isSupported,
