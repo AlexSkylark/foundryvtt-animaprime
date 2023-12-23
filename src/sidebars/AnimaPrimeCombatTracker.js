@@ -55,6 +55,8 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             t.isAlly = comb.isAlly;
             t.healthValue = comb.healthValue;
             t.threatValue = comb.threatValue;
+            t.threatStatus = comb.threatStatus;
+            t.healthStatus = comb.healthStatus;
             t.displayName = comb.displayName;
             t.isOnTurn = comb.isOnTurn;
             t.initPlus10 = comb.initPlus10;
@@ -156,6 +158,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                 isUpdating: updating,
             });
         }
+        await game.actionHud.render(true);
     }
 
     pauseForRender(ms) {
@@ -208,6 +211,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
             PoisonRoll.poisonRoll(poisonItem);
         }
+        await game.actionHud.render(true);
     }
 
     async performCancelTurn() {
@@ -238,6 +242,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         if (this.viewed.combsOnQueue.length > 1 && this.viewed.combsWaitingTurn == 0 && this.viewed.getCurrentCombatant().id == this.viewed.current.combatantId) {
             this.viewed.previousTurn();
         }
+        await game.actionHud.render(true);
     }
 
     async performEndTurn() {
@@ -278,6 +283,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         }
 
         await this.viewed.resetInitiative(combsToReset, true);
+        await game.actionHud.render(true);
     }
 
     getInverseFaction(faction) {

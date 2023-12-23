@@ -13,6 +13,114 @@
 	margin: -7px;
 }
 
+.health-defense-container {
+	display: flex;
+	margin-top: -50px;	
+	z-index: 10;
+	position: relative;
+	left: 66px;
+	top: 25px;
+
+	.defense-frame {
+		display: flex;
+		position: relative;
+		bottom: 11px;
+		right: 12px;
+		
+		.attribute-value-defense {
+			width: 60px;
+			height: 60px;
+			border-radius: 30px;
+			display: flex;
+			justify-content: center;
+			padding-right: 7px;
+
+			border: 3px solid var(--primary-color);
+        	background-color: #fff;
+
+			span {
+				font-size: 40px;
+				font-weight: 400;
+				font-family: "Caveat", cursive;
+				color: #555;
+				display: block;
+				text-align: center;
+			}
+		}
+
+		.button-changevalue {
+			
+			position: relative;
+
+			&.plus {
+				top: 1px;
+				right: 14px;
+			}
+
+			&.minus {
+				top: 11px;
+				right: 14px;
+			}
+		}
+	}
+	
+	.health-frame {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		align-items: end;
+		height: 60px;
+		width: 133px;
+	
+		.health-button-container {
+		
+			display: flex;
+			position: relative;	
+			right: 11px;
+			bottom: 9px;
+			
+			.button-changevalue {
+		
+				margin: 0px 1px;
+		
+				&.health {		
+					width: 18px !important;
+					height: 18px !important;
+					margin-top: 4px;
+					font-size: 10px;					
+				}
+			}
+		}
+	
+		.health-container {
+			display: flex;
+			flex-wrap: wrap-reverse;
+			flex-direction: row-reverse;
+			max-width: 136px;
+			background-color: #00000077;
+			border-radius: 12px;
+			padding: 3px;
+			border-bottom-right-radius: 0;
+			padding-right: 14px;
+	
+			.wound {
+				display: block;
+				border: 3px solid black;
+				width: 25px;
+				height: 25px;
+				border-radius: 13px;
+				background-color: #666;
+				margin: 1px 2px;
+	
+				&.gained {
+					background-color: #ff0000;
+				}
+			}
+		}
+	}
+}
+
+
 .container-section {
 
 	margin-top: 20px;

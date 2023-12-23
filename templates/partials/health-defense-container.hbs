@@ -1,0 +1,25 @@
+<div class="health-defense-container">
+    <div class="icon-container health-frame">
+        <div class="health-container">
+            {{#each wounds}}
+                <span class="wound{{#if this.wound}} gained{{/if}}"></span>
+            {{/each}}
+        </div>
+        <div class="health-button-container">
+            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue healthmax minus"data-property="health.max" data-operation="minus"><i class="fas fa-minus"></i></div>
+            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue health plus" data-property="health.value" data-operation="plus"><i class="fas fa-plus"></i></div>
+            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue health minus"data-property="health.value" data-operation="minus"><i class="fas fa-minus"></i></div>
+            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue healthmax plus" data-property="health.max" data-operation="plus"><i class="fas fa-plus"></i></div>
+
+        </div>
+    </div>
+    <div class="defense-frame icon-container">
+        <div class="attribute-value">
+            <span>{{system.defense}}</span>
+        </div>
+        <div class="defense-button-container icon-container">
+            <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue defense plus" data-property="defense" data-operation="plus"><i class="fas fa-plus"></i></div>
+            <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue defense minus"data-property="defense" data-operation="minus"><i class="fas fa-minus"></i></div>
+        </div>
+    </div>            
+</div>

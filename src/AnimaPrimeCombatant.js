@@ -32,7 +32,55 @@ export default class AnimaPrimeCombatant extends Combatant {
     }
 
     get healthValue() {
-        return " " + (Math.round((this.actor.system.health.value / this.actor.system.health.max) * 100) + "%");
+        return " " + this.actor.system.health.value + "/" + this.actor.system.health.max + " (" + (Math.round((this.actor.system.health.value / this.actor.system.health.max) * 100) + "%)");
+    }
+
+    get threatStatus() {
+        const percent = this.actor.system.threatDice / this.actor.system.defense;
+
+        if (percent == 0) {
+            return { status: "Guarded", level: 0 };
+        } else if (percent <= 0.15) {
+            return { status: "Cautious", level: 1 };
+        } else if (percent <= 0.5) {
+            return { status: "Exposed", level: 2 };
+        } else if (percent <= 0.75) {
+            return { status: "Vulnerable", level: 3 };
+        } else if (percent <= 1.1) {
+            return { status: "Defenseless", level: 4 };
+        } else {
+            return { status: "Fatal Opening", level: 5 };
+        }
+    }
+
+    get healthStatus() {
+        const wounds = this.actor.system.health.value;
+        const maxWounds = this.actor.system.health.max;
+        const remainingWounds = this.actor.system.health.max - this.actor.system.health.value;
+
+        if (wounds == 0) {
+            return { status: "Untouched", level: 0 };
+        } else if (maxWounds == 2) {
+            if (remainingWounds > 0) {
+                return { status: "Wounded", level: 3 };
+            }
+        } else if (maxWounds == 3) {
+            if (remainingWounds == 2) {
+                return { status: "Injured", level: 2 };
+            } else if (remainingWounds == 1) {
+                return { status: "Wounded", level: 3 };
+            }
+        } else {
+            if (remainingWounds == 3) {
+                return { status: "Injured", level: 2 };
+            } else if (remainingWounds == 2) {
+                return { status: "Wounded", level: 3 };
+            } else if (remainingWounds == 1) {
+                return { status: "Critical Condition", level: 4 };
+            } else if (remainingWounds > 0) {
+                return { status: "Grazed", level: 1 };
+            }
+        }
     }
 
     get displayName() {

@@ -5,7 +5,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["animaprime", "sheet", "actor", "actor-sheet-layout"],
             width: 990,
-            height: 925,
+            height: 840,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
@@ -24,6 +24,24 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
 
     get editUnlocked() {
         return (this.actor && this.actor.system.enableEdit) || game.user.isGM;
+    }
+
+    get isDead() {
+        return this.actor.system.health.value >= this.actor.system.health.max;
+    }
+
+    get wounds() {
+        let wounds = this.actor.system.health.value;
+        let woundsMax = this.actor.system.health.max;
+
+        let returnArray = [];
+
+        for (let i = 0; i < woundsMax; i++) {
+            if (wounds > i) returnArray.push({ wound: true });
+            else returnArray.push({ wound: false });
+        }
+
+        return returnArray.reverse();
     }
 
     getData() {
@@ -92,6 +110,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         context.editUnlocked = context.system.enableEdit || game.user.isGM;
         context.editName = context.options.token == null;
         context.actorName = context.options.token ? context.options.token.name : context.actor.name;
+        context.wounds = this.wounds;
+        context.isDead = this.isDead;
 
         context.reroll = context.system.reroll ?? 0;
     }
@@ -207,11 +227,6 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         let updateObject = {};
         if (isComplex) {
             updateObject[`system.${resourceName}.${resourceProp}`] = newValue;
-
-            if (isMax) {
-                if (this.actor.system[resourceName].value > newValue) updateObject[`system.${resourceName}.value`] = newValue;
-                else if (operation == "plus") updateObject[`system.${resourceName}.value`] = this.actor.system[resourceName].value + 1;
-            }
         } else {
             updateObject[`system.${propertyName}`] = newValue;
         }

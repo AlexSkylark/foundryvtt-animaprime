@@ -13,12 +13,13 @@ import AnimaPrimeCombatTracker from "../src/sidebars/AnimaPrimeCombatTracker.js"
 import AnimaPrimeCombatant from "../src/AnimaPrimeCombatant.js";
 import AnimaPrimeCombat from "../src/AnimaPrimeCombat.js";
 import AnimaPrimeActor from "../src/AnimaPrimeActor.js";
+import AnimaPrimeActionHUD from "./AnimaPrimeActionHUD.js";
 
 import * as HandlebarsHelpers from "./Handlebars.js";
 import * as DiceRolls from "./dice-rolls/dice-rolls.js";
 
 async function preloadTemplates() {
-    const templatePaths = ["systems/animaprime/templates/cards/item-card/item-card.hbs", "systems/animaprime/templates/partials/script-health.hbs", "systems/animaprime/templates/partials/script-reformbasics.hbs"];
+    const templatePaths = ["systems/animaprime/templates/cards/item-card/item-card.hbs", "systems/animaprime/templates/partials/script-health.hbs", "systems/animaprime/templates/partials/script-reformbasics.hbs", "systems/animaprime/templates/partials/health-defense-container.hbs"];
 
     return loadTemplates(templatePaths);
 }
@@ -109,7 +110,6 @@ Hooks.on("createActor", async (actor, data, context, userId) => {
         await actor.createEmbeddedDocuments("Item", items);
     }
 
-    debugger;
     if (actor.type == "adversity" || actor.type == "ally") {
         actor.ownership.default = 2;
     }
@@ -260,7 +260,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
                 if (item.type == "strike") {
                     if (resultData.hit) {
-                        targetData.health.value -= resultData.wounds;
+                        targetData.health.value += resultData.wounds;
                         targetData.threatDice = 0;
                         targetEntity.effects.clear();
                     } else {
@@ -285,6 +285,14 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
             }
         }
     }
+});
+
+Hooks.once("canvasReady", async () => {
+    if (!game.actionHud) {
+        game.actionHud = new AnimaPrimeActionHUD();
+    }
+
+    await game.actionHud.render(true);
 });
 
 Hooks.once("ready", async function () {

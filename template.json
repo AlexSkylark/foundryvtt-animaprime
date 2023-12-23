@@ -4,7 +4,7 @@
         "templates": {
             "base": {
                 "health": {
-                    "value": 2,
+                    "value": 0,
                     "max": 2
                 },
                 "defense": 5,
@@ -108,7 +108,7 @@
         "strike": {
             "targets": 1,
             "range": 0,
-            "sdl": 4,
+            "sdl": 3,
             "roll": "1d",
             "damage": "physical",
             "aditionalEffect": ""

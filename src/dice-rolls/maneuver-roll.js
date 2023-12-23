@@ -79,7 +79,6 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
     // take out dazed die
     let dazedDie = null;
     if (isDazed) {
-        debugger;
         let indexDazedSuccess = diceResults.findIndex((x) => x.charge || x.strike);
 
         if (indexDazedSuccess > -1) {

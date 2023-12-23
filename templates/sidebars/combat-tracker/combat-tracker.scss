@@ -10,6 +10,15 @@ $hostile-background: #f74e5229;
 $hostile-background-hover: #f74e5277;
 $hostile-border: #d30058;
 
+$level-colors : (
+    "level-0": #28b405,
+    "level-1": #b4f762,
+    "level-2": #fcf082,
+    "level-3": #f09761,
+    "level-4": #d43a42,
+    "level-5": #641519
+);
+
 @keyframes loadingBall {
     0% {
         transform: rotate(0deg);
@@ -22,6 +31,32 @@ $hostile-border: #d30058;
 #combat-tracker {
     padding: 0 !important;
 }
+
+.health-threat-line {
+    
+    display: flex;
+        
+    .status-relative {
+        display: block;
+        width: 26px;
+        height: 13px;
+        position: relative;        
+        bottom: 2px;
+        margin-left: 3px;
+        margin-right: 10px;
+        border: 2px solid #999;
+        background-color: #000;
+    }
+
+    @each $color, $value in $level-colors {
+        .bg-#{$color} {
+            background-color: $value;
+            border-color: darken($value, 50%);
+        }
+    }
+}
+
+
 
 .sidebar-curtain {    
     background-color: #222228f9;

@@ -1,0 +1,20 @@
+<div class="action-hud-container">    
+    {{#unless game.combats.active.isUpdating}}
+        <div class="hud-actions-container">
+        {{#each mainActions}}
+            <div class="bg-{{this.type}} action-hud-item item item-roll" data-item-id="{{this.id}}">
+                <img src="{{this.img}}" />
+                {{this.name}}
+            </div>
+        {{/each}}
+        </div>
+        <div class="hud-actions-container">
+        {{#each basicActions}}
+            <div class="bg-{{this.type}} action-hud-item item item-roll" data-item-id="{{this.id}}">
+                <img src="{{this.img}}" />
+                {{this.name}}
+            </div>
+        {{/each}}
+        </div>
+    {{/unless}}
+</div>

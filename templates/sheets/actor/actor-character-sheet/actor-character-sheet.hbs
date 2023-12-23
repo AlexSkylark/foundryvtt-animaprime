@@ -23,34 +23,36 @@
         <div class="left-side flexcol">
             <div class="profile-container flex0">
                 <div class="image-container">
-                    <img src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />                    
+                    <img src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />
                 </div>
-                
-                <div class="icon-container defense-button">                    
-                    <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue health plus" data-property="health.value" data-operation="plus"><i class="fas fa-plus"></i></div>
-                    <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue health minus"data-property="health.value" data-operation="minus"><i class="fas fa-minus"></i></div>
-                    <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue healthmax plus" data-property="health.max" data-operation="plus"><i class="fas fa-plus"></i></div>
-                    <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue healthmax minus"data-property="health.max" data-operation="minus"><i class="fas fa-minus"></i></div>
-                    <div class="health-defense">
-                        <div class="actor-{{actor.id}} health-bar-frame">
-                            <div class="health-bar-frame health-bar"></div>
-                            <span>{{system.health.value}} / {{system.health.max}}</span>
-                        </div>                        
-                        <div class="attribute-value icon-container">
+                <!-- HEALTH/DEFENSE FRAME -->
+                <div class="health-defense-container">
+                    <div class="icon-container health-frame">
+                        <div title="Wounds" class="health-container">
+                            {{#each wounds}}
+                                <span class="wound{{#if this.wound}} gained{{/if}}"></span>
+                            {{/each}}
+                        </div>
+                        <div class="health-button-container">
+                            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue healthmax minus"data-property="health.max" data-operation="minus"><i class="fas fa-minus"></i></div>
+                            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue health minus"data-property="health.value" data-operation="minus"><i class="fas fa-minus"></i></div>
+                            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue health plus" data-property="health.value" data-operation="plus"><i class="fas fa-plus"></i></div>
+                            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue healthmax plus" data-property="health.max" data-operation="plus"><i class="fas fa-plus"></i></div>
+
+                        </div>
+                    </div>
+                    <div class="defense-frame icon-container">
+                        <div class="attribute-value-defense">
                             <span>{{system.defense}}</span>
+                        </div>
+                        <div class="defense-button-container icon-container">
                             <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue defense plus" data-property="defense" data-operation="plus"><i class="fas fa-plus"></i></div>
                             <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue defense minus"data-property="defense" data-operation="minus"><i class="fas fa-minus"></i></div>
                         </div>
-                    </div>                    
+                    </div>            
                 </div>
-            </div>
-            <div class="container-section flex0">
-                <label class="container-header">Experience</label>
-                <div class="container-wrapper">
-                    Exp<input class="input-text exp-input" name="system.exp" type="text" value="{{system.exp}}" placeholder="[passion]" {{#unless editUnlocked}}disabled{{/unless}} />                    
-                    Frag<input class="input-text exp-fragment-input" name="system.expFragment" type="text" value="{{system.expFragment}}" placeholder="[passion]" {{#unless editUnlocked}}disabled{{/unless}} />
-                </div>
-            </div>
+                <!-- FIM DA HEALTH/DEFENSE FRAME -->
+            </div>            
             <div class="container-section flex0">
                 <label class="container-header">Passion</label>
                 <div class="container-wrapper">

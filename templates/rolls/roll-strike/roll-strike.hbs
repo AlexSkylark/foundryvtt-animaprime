@@ -72,10 +72,10 @@
                 <span class="result-message{{#if this.resultData.hit}} success{{/if}} {{#unless this.resultData.successes}} failure{{/unless}}">
                 {{#if this.resultData.hit}}
                     {{#if (eq this.resultData.wounds 1)}}
-                        CRITICAL HIT! {{this.targetName}} loses a Health point!
+                        CRITICAL HIT! {{this.targetName}} gains a wound!
                     {{/if}}
                     {{#if (gt this.resultData.wounds 1)}}
-                        OBLITERATION HIT! {{this.targetName}} loses {{this.resultData.wounds}} Health Points!
+                        OBLITERATION HIT! {{this.targetName}} gains {{this.resultData.wounds}} wounds!
                     {{/if}}
                 {{else}}
                     {{#if this.resultData.successes}}

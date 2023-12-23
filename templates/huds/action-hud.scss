@@ -1,0 +1,61 @@
+$item-types : (
+    "maneuver": #212cceaa,
+    "strike": #b80523aa,
+    "power": #6105b8aa,
+    "extra": #6b6b6baa,
+    "boost": #d36702aa,
+    "achievement": #13c54eaa,
+    "reaction": #1aa9c2aa
+);
+
+@each $type, $value in $item-types {
+    .bg-#{$type} {
+        background-color: darken($value, 25%);
+        border-color: darken($value, 35%);
+    }
+}
+
+.action-hud-container { 
+    display: flex; 
+    text-align: center;
+    flex-direction: column;
+    z-index: 50;
+    position: absolute;
+    bottom: 70px;
+    left: 220px;
+
+    .hud-actions-container {
+        display: flex;
+        max-width: 35vw;
+        flex-wrap: wrap-reverse;
+        margin: 8px 0px;
+
+        .action-hud-item {
+            display: flex;
+            margin: 3px;        
+            padding: 4px 8px;
+            color: #fff;
+            align-items: center;
+            font-size: 14px;
+            border-style:solid;
+            border-width: 2px;
+            border-radius: 12px;
+            cursor: pointer;
+    
+            img {
+                width: 24px;
+                border: 0;
+                margin-right: 8px;
+                border-radius: 8px;
+            }
+        }
+    }
+    
+    @each $type, $value in $item-types {
+        &.bg-#{$type} {
+            background-color: darken($value, 30%) !important;
+            border-color: darken($value, 60%) !important;
+        }
+    }
+}
+

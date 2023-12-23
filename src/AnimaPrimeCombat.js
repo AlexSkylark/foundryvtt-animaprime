@@ -24,7 +24,6 @@ export default class AnimaPrimeCombat extends Combat {
 
             actorData.strikeDice = 0;
             actorData.threatDice = 0;
-            actorData.health.value = actorData.health.max;
 
             await combatant.actor.update({ system: actorData });
         });
@@ -72,6 +71,7 @@ export default class AnimaPrimeCombat extends Combat {
                 await combatant.actor.update({ system: actorData }, { render: false });
             });
         }
+        await game.actionHud.render(true);
     }
 
     async _onCreate(data, options, userId) {
@@ -168,6 +168,15 @@ export default class AnimaPrimeCombat extends Combat {
         const currentComb = this.getCurrentCombatant();
         if (!currentComb) return null;
         const token = game.scenes.active.tokens.get(currentComb.token.id);
+        if (token.isLinked) {
+            return game.actors.get(token.actor.id);
+        } else {
+            return token.actor ?? token.actorData;
+        }
+    }
+
+    getActorFromCombatant(comb) {
+        const token = game.scenes.active.tokens.get(comb.token.id);
         if (token.isLinked) {
             return game.actors.get(token.actor.id);
         } else {

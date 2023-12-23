@@ -157,7 +157,10 @@ input {
 .icon-container {
 
 	&:hover > .icon {
-		
+		opacity: 1;
+	}
+
+	&:hover > * > .icon {
 		opacity: 1;
 	}
 
