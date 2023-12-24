@@ -669,6 +669,8 @@ select:focus {
   padding: 0;
   margin: 0px 24px;
   margin-top: -6px;
+  position: relative;
+  z-index: 41;
 }
 .adversity-sheet nav.sheet-tabs a {
   padding: 4px 12px;
@@ -1044,6 +1046,8 @@ select:focus {
   padding: 0;
   margin: 0px 24px;
   margin-top: -6px;
+  position: relative;
+  z-index: 41;
 }
 .ally-sheet nav.sheet-tabs a {
   padding: 4px 12px;
@@ -1998,6 +2002,8 @@ select:focus {
   padding: 0;
   margin: 0px 24px;
   margin-top: 0;
+  position: relative;
+  z-index: 41;
 }
 .vehicle-sheet nav.sheet-tabs.gm-spacing {
   margin-top: -32px;
