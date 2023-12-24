@@ -168,11 +168,8 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
         if (!game.user.isGM) {
             const actorOwner = game.actors.get(message.speaker.actor);
-            const currentCombatantActor = game.combats.active.getCurrentActor();
-            if (currentCombatantActor && currentCombatantActor.id == message.speaker.actor) {
-                if (!message.flags.enableReroll && actorOwner.isOwner) {
-                    await DiceRolls.getConfirmEndOfTurn(item.owner);
-                }
+            if (!message.flags.enableReroll && actorOwner.isOwner) {
+                await DiceRolls.getConfirmEndOfTurn(item.owner);
             }
         }
     }
@@ -184,7 +181,6 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
     if (game.user.isGM && message.flags.rerollConfig) {
         if (message.flags.rerollConfig.charAt(0) == ",") message.flags.rerollConfig = message.flags.rerollConfig.slice(1);
-
         await game.settings.set("animaprime", "commitedRerolls", message.flags.rerollConfig);
     }
 });

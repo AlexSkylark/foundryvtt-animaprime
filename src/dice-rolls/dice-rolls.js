@@ -172,7 +172,11 @@ export async function getItemRollOptions(item) {
 }
 
 export async function getConfirmEndOfTurn(actor) {
-    if (ui.combat.getCurrentTurnToken().actorId == (actor.id ?? actor._id)) {
+    const actorIdByCombat = game.combats.active.getCurrentCombatant().actorId;
+    const actorIdByInterface = ui.combat.getCurrentTurnToken().actorId;
+    const actorIdParameter = actor.id ?? actor._id;
+
+    if (actorIdByCombat == actorIdParameter || actorIdByInterface == actorIdParameter) {
         const endTurnDialogResult = await confirmEndTurnDialog();
         if (endTurnDialogResult.confirmed) {
             if (game.user.isGM) {
