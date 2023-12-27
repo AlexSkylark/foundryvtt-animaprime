@@ -10,6 +10,10 @@ export async function poisonRoll(poison, isReroll = false) {
 
     const resultData = [checkPoisonResult(poison.name, rollResult[0].dice[0].results)];
 
+    poison.label = "Poison";
+    if (poison.name == "burning") poison.label = "Burning";
+    else if (poison.name == "bleeding") poison.label = "Bleeding";
+
     await DiceRolls.renderRoll(rollResult, poison, resultData, messageTemplate, [], isReroll, this.commitResults);
 }
 

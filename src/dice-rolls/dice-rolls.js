@@ -32,6 +32,7 @@ export async function renderRoll(rollResult, entityData, resultData, messageTemp
             enableReroll: enableReroll,
             isReroll: isReroll,
             targetData: targetData,
+            resultData: resultData,
         },
     });
 

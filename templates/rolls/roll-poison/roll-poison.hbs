@@ -12,8 +12,8 @@
                         <li class="roll{{#if (is1 this.result)}} success{{/if}}" title="Poison die"><div class="roll-dice">{{{this.result}}}</div></li>
                         {{/each}}                
                     </ol>                                
-                    {{#if (is1 flavor.targetData.[0].rollResult.dice.0.results.0.result)}}
-                        <span class="result-message success">{{#if (eq flavor.entityData.name "burning")}}Burning{{else}}Poison{{/if}} cleansed!</span>
+                    {{#if flavor.resultData.[0]}}
+                        <span class="result-message success">{{flavor.entityData.label}} cleansed!</span>
                     {{else}}
                         <span class="result-message failure">Not cleansed! +1 Threat die</span>
                     {{/if}}
