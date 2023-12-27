@@ -8,13 +8,17 @@ export async function poisonRoll(poison, isReroll = false) {
     const rl = new Roll(rollFormula, poison);
     const rollResult = [await rl.evaluate({ async: true })];
 
-    const resultData = [checkPoisonResult(rollResult[0].dice[0].results)];
+    const resultData = [checkPoisonResult(poison.name, rollResult[0].dice[0].results)];
 
     await DiceRolls.renderRoll(rollResult, poison, resultData, messageTemplate, [], isReroll, this.commitResults);
 }
 
-function checkPoisonResult(results) {
-    if (results[0].result == 1) return true;
+function checkPoisonResult(conditionName, results) {
+    let cleanseValue = 1;
+    if (conditionName == "burning") cleanseValue = 6;
+    else if (conditionName == "bleeding") cleanseValue = 2;
+
+    if (results[0].result == cleanseValue) return true;
     else return false;
 }
 

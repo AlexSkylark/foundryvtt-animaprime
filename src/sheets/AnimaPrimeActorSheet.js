@@ -27,10 +27,13 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
     }
 
     get isDead() {
+        if (!this.actor.system.health) return false;
         return this.actor.system.health.value >= this.actor.system.health.max;
     }
 
     get wounds() {
+        if (!this.actor.system.health) return 0;
+
         let wounds = this.actor.system.health.value;
         let woundsMax = this.actor.system.health.max;
 
