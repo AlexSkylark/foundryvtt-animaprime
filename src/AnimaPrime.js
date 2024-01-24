@@ -14,12 +14,13 @@ import AnimaPrimeCombatant from "../src/AnimaPrimeCombatant.js";
 import AnimaPrimeCombat from "../src/AnimaPrimeCombat.js";
 import AnimaPrimeActor from "../src/AnimaPrimeActor.js";
 import AnimaPrimeActionHUD from "./AnimaPrimeActionHUD.js";
+import AnimaPrimeGamemasterHUD from "./AnimaPrimeGamemasterHUD.js";
 
 import * as HandlebarsHelpers from "./Handlebars.js";
 import * as DiceRolls from "./dice-rolls/dice-rolls.js";
 
 async function preloadTemplates() {
-    const templatePaths = ["systems/animaprime/templates/cards/item-card/item-card.hbs", "systems/animaprime/templates/partials/script-health.hbs", "systems/animaprime/templates/partials/script-reformbasics.hbs", "systems/animaprime/templates/partials/health-defense-container.hbs"];
+    const templatePaths = ["systems/animaprime/templates/cards/item-card/item-card.hbs", "systems/animaprime/templates/partials/script-health.hbs", "systems/animaprime/templates/partials/script-reformbasics.hbs", "systems/animaprime/templates/partials/script-togglegmhud.hbs", "systems/animaprime/templates/partials/health-defense-container.hbs"];
 
     return loadTemplates(templatePaths);
 }
@@ -288,7 +289,12 @@ Hooks.once("canvasReady", async () => {
         game.actionHud = new AnimaPrimeActionHUD();
     }
 
+    if (!game.gmHud) {
+        game.gmHud = new AnimaPrimeGamemasterHUD();
+    }
+
     await game.actionHud.render(true);
+    await game.gmHud.render(true);
 });
 
 Hooks.once("ready", async function () {

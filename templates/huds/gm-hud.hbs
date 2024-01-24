@@ -1,0 +1,24 @@
+<div>
+    {{> "systems/animaprime/templates/partials/script-togglegmhud.hbs"}}
+    <div class="gm-hud-container">
+        {{#if isGM}}
+        <div class="hud-actions-container">
+            <div class="bg-customskill gm-hud-item" data-item-id="CUSTOM_SKILL">
+                <div class="hud-customskill-data">
+                    
+                    <div>
+                        <input id="gm-customskill-actor" placeholder="Character Name" type="text" value="" />
+                    </div>                
+                    <div class="second-line">
+                        <input id="gm-customskill-skill" placeholder="Ability" type="text" value="" />
+                        <input id="gm-customskill-level" placeholder="Level" type="text" value="3" style="max-width: 45px; margin-right: -1px" />
+                    </div>
+                </div>
+                <div class="hud-customskill-roll hud-roll">
+                    <img src="icons/skills/trades/academics-study-reading-book.webp" title="Roll Custom Skill" />
+                </div>            
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>
