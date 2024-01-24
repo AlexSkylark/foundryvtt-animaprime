@@ -1,0 +1,82 @@
+name: Release Update
+"on":
+    - push
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Read and increment build number in system.json
+              id: increment_version
+              run: |
+                  FILE_CONTENT=$(cat system.json)
+
+                  MAJOR=$(echo "$FILE_CONTENT" | jq -r '.version | split(".") | .[1]')
+                  MINOR=$(echo "$FILE_CONTENT" | jq -r '.version | split(".") | .[2]')
+                  BUILD=$(echo "$FILE_CONTENT" | jq -r '.version | split(".") | .[3]')
+
+                  UPDATED_BUILD=$((BUILD + 1))
+                  UPDATED_CONTENT=$(jq --argjson major "$MAJOR" --argjson minor "$MINOR" --argjson updatedBuild "$UPDATED_BUILD" '.version |= "0.\($major|tonumber).\($minor|tonumber).\($updatedBuild|tonumber)"' <<< "$FILE_CONTENT")
+
+                  echo "$UPDATED_CONTENT" > system.json
+                  cat system.json
+
+                  COMMIT_MESSAGE="Incremented build number to 0.$MAJOR.$MINOR.$UPDATED_BUILD"
+                  echo "$COMMIT_MESSAGE" > commit_message.txt
+
+            - name: Commit and push changes
+              run: |
+                  git config user.name "GitHub Actions"
+                  git config user.email "actions@users.noreply.github.com"
+                  git add system.json
+                  git commit -m "$(cat commit_message.txt)"
+                  git push
+              env:
+                  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+            - name: Create Zip File
+              run: >
+                  zip -r foundryvtt-animaprime.zip --exclude=node_modules
+                  --exclude=.npmignore --exclude=.gitignore --exclude=.gitattributes
+                  --exclude=gulpfile.js . -x \*.git\* \*.github\*
+
+            - name: Get Release ID
+              id: get_release
+              run: >
+                  RELEASE_ID=$(curl -s -H "Authorization: Bearer ${{
+                  secrets.GITHUB_TOKEN }}" \
+                    "https://api.github.com/repos/${{ github.repository }}/releases/tags/v0.2" | jq -r .id)
+                  echo "::set-output name=release_id::$RELEASE_ID"
+              env:
+                  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+            - name: Get Asset ID
+              id: get_asset
+              run: >
+                  RELEASE_ID=${{ steps.get_release.outputs.release_id }}
+
+                  ASSET_ID=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN
+                  }}" \
+                    "https://api.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}/assets" | jq -r '.[] | select(.name == "foundryvtt-animaprime.zip") | .id')
+                  echo "::set-output name=asset_id::$ASSET_ID"
+
+            - name: Delete Existing Asset
+              if: steps.get_asset.outputs.asset_id != null
+              run: |
+                  RELEASE_ID=${{ steps.get_release.outputs.release_id }}
+                  ASSET_ID=${{ steps.get_asset.outputs.asset_id }}
+                  curl -X DELETE -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/releases/assets/${ASSET_ID}"
+              env:
+                  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+            - name: Update Release
+              run: |
+                  RELEASE_ID=${{ steps.get_release.outputs.release_id }}
+                  curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                    -H "Content-Type: application/zip" \
+                    --data-binary "@foundryvtt-animaprime.zip" \
+                    "https://uploads.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}/assets?name=foundryvtt-animaprime.zip"
+              env:
+                  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
