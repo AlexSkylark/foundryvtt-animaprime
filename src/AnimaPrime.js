@@ -407,6 +407,11 @@ function configureStatusEffects() {
             icon: "systems/animaprime/assets/icons/candlebright.svg",
         },
         {
+            id: "bleeding",
+            label: "Bleeding",
+            icon: "systems/animaprime/assets/icons/blood.svg",
+        },
+        {
             id: "dazed",
             label: "Dazed",
             icon: "systems/animaprime/assets/icons/star-swirl.svg",

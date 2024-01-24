@@ -211,6 +211,17 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
             PoisonRoll.poisonRoll(poisonItem);
         }
+
+        // check bleeding condition
+        if (takeTurnComb.actor.checkCondition("bleeding")) {
+            const poisonItem = {
+                name: "bleeding",
+                owner: takeTurnComb.token,
+                img: "icons/skills/wounds/blood-drip-droplet-red.webp",
+            };
+
+            PoisonRoll.poisonRoll(poisonItem);
+        }
         await game.actionHud.render(true);
     }
 

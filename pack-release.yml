@@ -1,0 +1,42 @@
+name: Release Update
+
+on: [push]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Create Zip File
+              run: |
+                  # Customize this command to exclude specific files or directories
+                  zip -r foundryvtt-animaprime.zip --exclude=node_modules .
+
+            - name: Get Release ID
+              id: get_release
+              run: |
+                  RELEASE_ID=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                    "https://api.github.com/repos/${{ github.repository }}/releases/tags/v0.2" | jq -r .id)
+                  echo "::set-output name=release_id::$RELEASE_ID"
+
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Upload Zip File to Release
+              uses: actions/upload-artifact@v2
+              with:
+                  name: foundryvtt-animaprime.zip
+                  path: foundryvtt-animaprime.zip
+
+            - name: Update Release
+              run: |
+                  RELEASE_ID=${{ steps.get_release.outputs.release_id }}
+                  curl -X PATCH -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                    -H "Accept: application/vnd.github.v3+json" \
+                    "https://api.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}" \
+                    -d '{"body": "Updated Release - $(date '+%Y-%m-%d %H:%M:%S')"}'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
