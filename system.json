@@ -1,43 +1,48 @@
 {
-    "id": "animaprime",
-    "title": "Anima Prime: REBOOT",
-    "description": "Unofficial Foundry VTT Extension for Anima Prime, version REBOOT",
-    "version": "0.2.0.-1",
-    "authors": [
-        {
-            "name": "AlexionStar",
-            "flags": {}
-        }
-    ],
-    "socket": true,
-    "esmodules": ["src/dice-rolls/dice-rerolls.js", "src/AnimaPrime.js"],
-    "styles": ["animaprime.css"],
-    "gridDistance": 5,
-    "gridUnits": "m",
-    "primaryTokenAttribute": "health",
-    "license": "LICENSE.txt",
-    "url": "https://github.com/alexskylark/foundryvtt-animaprime",
-    "manifest": "https://raw.githubusercontent.com/alexskylark/foundryvtt-animaprime/main/system.json",
-    "readme": "https://raw.githubusercontent.com/alexskylark/foundryvtt-animaprime/main/README.md",
-    "download": "https://github.com/AlexSkylark/foundryvtt-animaprime/releases/download/v0.2/foundryvtt-animaprime.zip",
-    "compatibility": {
-        "minimum": "0.10.0",
-        "verified": "11"
+  "id": "animaprime",
+  "title": "Anima Prime: REBOOT",
+  "description": "Unofficial Foundry VTT Extension for Anima Prime, version REBOOT",
+  "version": "0.2.0.0",
+  "authors": [
+    {
+      "name": "AlexionStar",
+      "flags": {}
+    }
+  ],
+  "socket": true,
+  "esmodules": [
+    "src/dice-rolls/dice-rerolls.js",
+    "src/AnimaPrime.js"
+  ],
+  "styles": [
+    "animaprime.css"
+  ],
+  "gridDistance": 5,
+  "gridUnits": "m",
+  "primaryTokenAttribute": "health",
+  "license": "LICENSE.txt",
+  "url": "https://github.com/alexskylark/foundryvtt-animaprime",
+  "manifest": "https://raw.githubusercontent.com/alexskylark/foundryvtt-animaprime/main/system.json",
+  "readme": "https://raw.githubusercontent.com/alexskylark/foundryvtt-animaprime/main/README.md",
+  "download": "https://github.com/AlexSkylark/foundryvtt-animaprime/releases/download/v0.2/foundryvtt-animaprime.zip",
+  "compatibility": {
+    "minimum": "0.10.0",
+    "verified": "11"
+  },
+  "packs": [
+    {
+      "name": "basic-actions",
+      "label": "Basic Actions",
+      "system": "animaprime",
+      "path": "packs/basic-actions",
+      "type": "Item"
     },
-    "packs": [
-        {
-            "name": "basic-actions",
-            "label": "Basic Actions",
-            "system": "animaprime",
-            "path": "packs/basic-actions",
-            "type": "Item"
-        },
-        {
-            "name": "basic-vehicle-actions",
-            "label": "Basic Vehicle Actions",
-            "system": "animaprime",
-            "path": "packs/basic-vehicle-actions",
-            "type": "Item"
-        }
-    ]
+    {
+      "name": "basic-vehicle-actions",
+      "label": "Basic Vehicle Actions",
+      "system": "animaprime",
+      "path": "packs/basic-vehicle-actions",
+      "type": "Item"
+    }
+  ]
 }
