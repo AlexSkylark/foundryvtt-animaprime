@@ -139,7 +139,7 @@ export async function getManeuverRollOptions(item) {
     });
 }
 
-export async function getItemRollOptions(item) {
+export async function getItemRollOptions(item, targetId) {
     const template = "systems/animaprime/templates/dialogs/dialog-itemroll/dialog-itemroll.hbs";
 
     const html = await renderTemplate(template, item);
@@ -148,7 +148,7 @@ export async function getItemRollOptions(item) {
         const dialogOptions = {
             width: 440,
             height: item.owner.type == "character" ? 368 : 304,
-            classes: ["window-dialog", "window-dialog-itemroll"],
+            classes: ["window-dialog", "window-dialog-itemroll", `window-target-${targetId}`],
         };
 
         const data = {
@@ -231,8 +231,9 @@ export function processRollOptions(form, variableMax) {
         actionDice: parseInt(form.actionDice?.value ?? 0),
         variableDice: variableMax,
         bonusDice: parseInt(form.bonusDice?.value ?? 0),
+        rollModifier: parseInt(form.rollModifier?.value ?? 0),
         weakness: parseInt(form.weakness?.checked ? 2 : 1) ?? 1,
-        damageType: form.damageType?.value ?? "physical",
+        damageType: form.damageType?.value ?? "physical"
     };
 }
 

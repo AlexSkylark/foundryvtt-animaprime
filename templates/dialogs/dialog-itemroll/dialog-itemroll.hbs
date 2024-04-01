@@ -2,32 +2,24 @@
 
     $(".target-{{this.targetId}} > .form-strike-dice-max").val({{this.maxStrikeDice}});
     $(".target-{{this.targetId}} > .form-strike-value-max").html({{this.maxStrikeDice}});
-    
+
     $(".target-{{this.targetId}} > .form-action-dice-max").val({{this.maxActionDice}});
     $(".target-{{this.targetId}} > .form-action-value-max").html({{this.maxActionDice}});
 
-    $(".target-{{this.targetId}} > .form-input-damage-type").val("{{this.damageType}}");    
-    
-    var windowRoot{{this.targetId}} = $(".target-{{this.targetId}}").parent().parent().parent().parent().parent().parent().parent();
-    
+    $(".target-{{this.targetId}} > .form-input-damage-type").val("{{this.damageType}}");
+
+    $(".target-{{this.targetId}} > .form-roll-modifier-dice").val("{{this.rollModifier}}");
+    $(".target-{{this.targetId}} > .form-roll-modifier-value").html("{{this.rollModifier}}");
+    if ({{this.rollModifier}} == 0)
+        $(".form-conditional-plus").hide()
+
+    var windowRoot{{this.targetId}} = $(".window-target-{{this.targetId}}");
+
     windowRoot{{this.targetId}}.find(".dialog-bonus").hide();
     windowRoot{{this.targetId}}.find(".dialog-weakresist").hide();
     windowRoot{{this.targetId}}.find(".hide-bonus").hide();
     windowRoot{{this.targetId}}.find(".hide-weakresist").hide();
-    
-    {{#if (isAchievement type)}}
-        windowRoot{{this.targetId}}.find(".show-weakresist").hide();
-        windowRoot{{this.targetId}}.find(".show-bonus").css("max-width", "50%");
-        windowRoot{{this.targetId}}.find(".show-bonus").css("margin", "0px auto");
 
-        {{#unless (isPositiveGoal this.targetId owner.type)}}
-            windowRoot{{this.targetId}}.find(".dialog-advanced-buttons-container").hide();            
-            setTimeout(() => {
-                windowRoot{{this.targetId}}.height(windowRoot{{this.targetId}}.height() - 96);
-            })            
-        {{/unless}}
-    {{/if}}
-    
     function toggleBonus{{this.targetId}}(factor) {
         windowRoot{{this.targetId}}.height(windowRoot{{this.targetId}}.height() + (64 * factor));
         windowRoot{{this.targetId}}.find(".dialog-bonus").toggle()
@@ -41,7 +33,9 @@
     }
 
     function toggleWeakResist{{this.targetId}}(factor) {
-        windowRoot{{this.targetId}}.height(windowRoot{{this.targetId}}.height() + (128 * factor));
+
+        windowRoot{{this.targetId}}.height(windowRoot{{this.targetId}}.height() + ({{#if (isAchievement type)}}64{{else}}192{{/if}} * factor));
+
         windowRoot{{this.targetId}}.find(".dialog-weakresist").toggle()
         windowRoot{{this.targetId}}.find(".hide-weakresist").toggle()
         windowRoot{{this.targetId}}.find(".show-weakresist").toggle()
@@ -50,11 +44,12 @@
             windowRoot{{this.targetId}}.find('.form-weakness-check').prop("checked", false);
             windowRoot{{this.targetId}}.find('.form-resistance-dice').val(0);
             windowRoot{{this.targetId}}.find('.form-resistance-value').html(0);
+            windowRoot{{this.targetId}}.find('.form-roll-modifier').html({{this.rollModifier}});
         }
     }
 
-    function modifyDice(diceType, add, targetId) {     
-        
+    function modifyDice(diceType, add, targetId) {
+
         const valueType = diceType.replace("dice", "value")
 
         const inputField = $(".target-" + targetId + " > .form-" + diceType)[0];
@@ -62,9 +57,9 @@
         const otherMaxInputs = $(".form-" + diceType + "-max").not(".target-" + targetId + " > .form-" + diceType + "-max");
         const inputSpan = $(".target-" + targetId + " > .form-" + valueType)[0];
 
-        if (add) {            
+        if (add) {
             if (parseInt(inputField.value) < parseInt(maxValue)) {
-                
+
                 inputField.value++
                 inputSpan.innerHTML = inputField.value
 
@@ -74,37 +69,43 @@
                         if (maxVal > 0) {
                             $(this).val(parseInt($(this).val()) - 1)
                             $(this).siblings("." + $(this)[0].classList[0].replace("dice", "value")).html($(this).val())
-                        }                            
+                        }
                     })
-            }                
+            }
         } else {
             if (parseInt(inputField.value) > 0) {
-                
+
                 inputField.value--
                 inputSpan.innerHTML = inputField.value
 
                 if (diceType == 'strike-dice' || diceType == 'action-dice')
                     otherMaxInputs.each(function (index) {
                         const maxVal = $(this).val()
-                        if (maxVal < {{this.maxStrikeDice}}) {                            
+                        if (maxVal < {{this.maxStrikeDice}}) {
                             $(this).val(parseInt($(this).val()) + 1)
                             $(this).siblings("." + $(this)[0].classList[0].replace("dice", "value")).html($(this).val())
-                        }                            
+                        }
                     })
-            }            
-        }        
+            }
+        }
+
+        if (diceType == 'roll-modifier-dice')
+            if (inputField.value == 0)
+                $(".form-conditional-plus").hide()
+            else
+                $(".form-conditional-plus").show()
     }
 </script>
 
-<form>    
-    <div class="flexrow dialog-container dialog-container-itemroll">        
-        <div class="dialog-fields-container">            
+<form>
+    <div class="flexrow dialog-container dialog-container-itemroll">
+        <div class="dialog-fields-container">
             <div class=" dialog-field-container flexrow">
                 <label class="strike">Add Strike Dice?</label>
                 <div class="flexrow dialog-buttons">
                     <button class="form-dialog-plusminus-button minus" onclick="modifyDice('strike-dice', false, '{{this.targetId}}')">
                         <span class="fas fa-minus" />
-                    </button>                    
+                    </button>
                     <button class="form-dialog-plusminus-button plus" onclick="modifyDice('strike-dice', true, '{{this.targetId}}')">
                         <span class="fas fa-plus" />
                     </button>
@@ -113,17 +114,17 @@
                         <input type="hidden" class="form-strike-dice-max" name="strikeDiceMax" />
                         <span class="form-dice-value form-strike-value">0</span>
                         <span>/</span>
-                        <span class="form-dice-value form-strike-value-max">0</span>                        
+                        <span class="form-dice-value form-strike-value-max">0</span>
                     </div>
                 </div>
             </div>
             {{#if (isCharacter owner.type)}}
             <div class=" dialog-field-container flexrow">
-                <label class="action">Add Action Dice?</label>        
+                <label class="action">Add Action Dice?</label>
                 <div class="flexrow dialog-buttons">
                     <button class="form-dialog-plusminus-button minus" onclick="modifyDice('action-dice', false, '{{this.targetId}}')">
                         <span class="fas fa-minus" />
-                    </button>                    
+                    </button>
                     <button class="form-dialog-plusminus-button plus" onclick="modifyDice('action-dice', true, '{{this.targetId}}')">
                         <span class="fas fa-plus" />
                     </button>
@@ -132,37 +133,53 @@
                         <input type="hidden" class="form-action-dice-max" name="actionDiceMax" />
                         <span class="form-dice-value form-action-value">0</span>
                         <span>/</span>
-                        <span class="form-dice-value form-action-value-max">0</span>                        
+                        <span class="form-dice-value form-action-value-max">0</span>
                     </div>
                 </div>
             </div>
             {{/if}}
             <div class=" dialog-field-container flexrow dialog-bonus">
-                <label class="bonus">Add Bonus Dice?</label>        
-                <div class="flexrow dialog-buttons">                    
+                <label class="bonus">Add Bonus Dice?</label>
+                <div class="flexrow dialog-buttons">
                     <button class="form-dialog-plusminus-button minus" onclick="modifyDice('bonus-dice', false, '{{this.targetId}}')">
                         <span class="fas fa-minus" />
-                    </button>                    
+                    </button>
                     <button class="form-dialog-plusminus-button plus" onclick="modifyDice('bonus-dice', true, '{{this.targetId}}')">
                         <span class="fas fa-plus" />
                     </button>
                     <div class="form-dice-field bonus target-{{this.targetId}}">
-                        <input type="hidden" class="form-bonus-dice" name="bonusDice" value="0" />                        
+                        <input type="hidden" class="form-bonus-dice" name="bonusDice" value="0" />
                         <span class="form-dice-value form-bonus-value">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class=" dialog-field-container flexrow dialog-weakresist">
+                <label>Roll Modifier:</label>
+                <div class="flexrow dialog-buttons">
+                    <button class="form-dialog-plusminus-button minus" onclick="modifyDice('roll-modifier-dice', false, '{{this.targetId}}')">
+                        <span class="fas fa-minus" />
+                    </button>
+                    <button class="form-dialog-plusminus-button plus" onclick="modifyDice('roll-modifier-dice', true, '{{this.targetId}}')">
+                        <span class="fas fa-plus" />
+                    </button>
+                    <div class="form-dice-field bonus target-{{this.targetId}}">
+                        <input type="hidden" class="form-roll-modifier-dice" name="rollModifier" value="0" />
+                        <span class="form-dice-value form-conditional-plus">+</span>
+                        <span class="form-dice-value form-roll-modifier-value">0</span>
                     </div>
                 </div>
             </div>
             {{#unless (isAchievement type)}}
             <div class=" dialog-field-container flexrow dialog-weakresist">
-                <label>Target has Weakness?</label>        
+                <label>Target has Weakness?</label>
                 <div class="flexrow dialog-buttons">
                     <div class="form-dice-field target-{{this.targetId}} flexrow">
                         <input class="input-text check form-weakness-check" name="weakness" type="checkbox"></input>
                     </div>
-                </div>            
+                </div>
             </div>
-            <div class=" dialog-field-container flexrow dialog-weakresist">                
-                <label>Damage Type:</label>                                
+            <div class=" dialog-field-container flexrow dialog-weakresist">
+                <label>Damage Type:</label>
                 <div class="form-dice-field form-damage-type resistance target-{{this.targetId}}">
                     <input type="text" class="form-input-damage-type" name="damageType" value="" />
                 </div>

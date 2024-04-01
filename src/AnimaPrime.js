@@ -168,7 +168,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         }
 
         if (!game.user.isGM) {
-            const actorOwner = game.actors.get(message.speaker.actor);
+            const actorOwner = game.actors.get(message.flags.actorId);
             if (!message.flags.enableReroll && actorOwner.isOwner) {
                 await DiceRolls.getConfirmEndOfTurn(item.owner);
             }

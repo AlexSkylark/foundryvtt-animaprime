@@ -1,6 +1,6 @@
 
 .dialog-curtain {
-    background-color: #0000007d;
+    background-color: #00000033;
     width: 200vw;
     height: 200vh;
     position: fixed;
@@ -12,21 +12,21 @@
 .dialog-endturn {
 
     .dialog-container {
-        
+
         justify-content: center;
         position: relative;
-        
+
         .dialog-field-container-endturn {
-        
+
             align-items: center;
             text-align: center;
-            flex: 0 0 95%;    
+            flex: 0 0 95%;
             margin: 2px !important;
-            padding: 10px 5px !important;    
+            padding: 10px 5px !important;
             font-size: 20px;
             padding-top: 0px !important;
-                
-            label {            
+
+            label {
                 padding-right: 6px;
                 font-family: 'Montserrat';
 

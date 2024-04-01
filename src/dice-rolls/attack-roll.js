@@ -54,6 +54,10 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         });
     }
 
+    let successModifier = 0;
+    if (item.system.roll.indexOf("+") >= 0)
+        successModifier = parseInt(item.system.roll.split("d")[1].replace("+", "").replace("-", ""));
+
     // dialog
     if (!dialogOptions) {
         dialogOptions = [];
@@ -65,6 +69,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
                 maxStrikeDice: Math.min(ownerData.strikeDice, item.system.sdl),
                 maxActionDice: Math.min(2, ownerData.actionDice),
                 damageType: item.system.damage,
+                rollModifier: successModifier,
                 maxVariableDice: itemFixedOptions[i].variableDiceValue,
                 variableDiceName: itemFixedOptions[i].variableDiceName,
                 type: item.type,
@@ -75,7 +80,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
             };
             dialogOptions.push({});
             dialogPromises.push(
-                DiceRolls.getItemRollOptions(itemForDialog).then((result) => {
+                DiceRolls.getItemRollOptions(itemForDialog, item.targetIds[i]).then((result) => {
                     dialogOptions[i] = result;
                 })
             );
@@ -103,12 +108,12 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         abilityDice.push(parseInt(item.system.roll.split("d")[0]) * options.weakness);
     });
 
-    let successModifier = 0;
     let splittedResults = [];
     let rollResults = [];
     let resultData = [];
     for (let i = 0; i < item.targets.length; i++) {
-        if (item.system.roll.indexOf("+") >= 0) successModifier = parseInt(item.system.roll.split("d")[1].replace("+", "").replace("-", ""));
+
+        successModifier = dialogOptions[i].rollModifier;
 
         // roll execution
         const rollFormula = (abilityDice[i] + dialogOptions[i].strikeDice + dialogOptions[i].actionDice + dialogOptions[i].variableDice + dialogOptions[i].bonusDice - (dialogOptions[i].resistance ?? 0) + (isEmpowered ? 1 : 0)).toString() + "d6";
