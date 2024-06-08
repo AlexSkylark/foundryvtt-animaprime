@@ -23,12 +23,14 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     }
 
     if (!item.targets || !item.targets.length || item.targets.length != item.originalItemTargets.length) {
-        ui.notifications.error(`Please select suitable targets for the <i>"${item.name}"</i> ${item.type} action.`);
+        ui.notifications.error(`Please select suitable targets for the <i>"${item.name}"</i> ${item.type} action. Targets de-selected`);
+        game.user.updateTokenTargets([]);
         return;
     }
 
     if (item.targets.length > (item.system.targets ?? 1)) {
-        ui.notifications.error((item.system.targets ?? 1) == 1 ? `Too many targets! the <i>"${item.name}"</i> ${item.type} action is single-target.` : `Too many targets! the <i>"${item.name}"</i> ${item.type} action can hit ${item.system.targets} targets at most.`);
+        ui.notifications.error(((item.system.targets ?? 1) == 1 ? `Too many targets! the <i>"${item.name}"</i> ${item.type} action is single-target.` : `Too many targets! the <i>"${item.name}"</i> ${item.type} action can hit ${item.system.targets} targets at most.`) + " Targets de-selected");
+        game.user.updateTokenTargets([]);
         return;
     }
 
