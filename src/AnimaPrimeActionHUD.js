@@ -23,18 +23,20 @@ export default class AnimaPrimeActionHUD extends Application {
     async getData(options = {}) {
         let data = super.getData();
 
-        let combatant = game.combats.active.getCurrentCombatant();
+        if (game.combats.active) {
+            let combatant = game.combats.active.getCurrentCombatant();
 
-        if (combatant && combatant.isOnTurn) {
-            let actor = game.combats.active.getActorFromCombatant(combatant);
+            if (combatant && combatant.isOnTurn) {
+                let actor = game.combats.active.getActorFromCombatant(combatant);
 
-            if (actor.isOwner) {
-                const actionsCollection = actor.getEmbeddedCollection("Item").filter((i) => i.type != "skill");
+                if (actor.isOwner) {
+                    const actionsCollection = actor.getEmbeddedCollection("Item").filter((i) => i.type != "skill");
 
-                data.basicActions = actionsCollection.filter((i) => i.system.basic == true);
-                data.mainActions = actionsCollection.filter((i) => i.system.basic == false);
+                    data.basicActions = actionsCollection.filter((i) => i.system.basic == true);
+                    data.mainActions = actionsCollection.filter((i) => i.system.basic == false);
 
-                return data;
+                    return data;
+                }
             }
         }
 

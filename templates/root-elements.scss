@@ -6,7 +6,7 @@
 	font-style: normal;
 	font-weight: 400;
 	font-display: swap;
-	src: url(https://fonts.gstatic.com/s/montserrat/v24/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aXo.woff2) format('woff2');	
+	src: url(https://fonts.gstatic.com/s/montserrat/v24/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aXo.woff2) format('woff2');
   }
 
 @font-face {
@@ -60,12 +60,12 @@
 	--hue: 207;
 	--saturation: 64%;
 	--light: 44%;
-	
+
 	/* Base color in variable */
 	--primary-color: hsl(var(--hue), var(--saturation), var(--light));
 	/* Base color lighten using calc */
 	--primary-color-light: hsl(var(--hue), var(--saturation), calc(var(--light) + 57.5%));
-    
+    scrollbar-color: auto;
 }
 
 .actor-sheet-layout {
@@ -115,7 +115,7 @@ li {
 
 input {
 	&:disabled:hover {
-		border-bottom: 2px solid variables.$input-line-color !important;                    
+		border-bottom: 2px solid variables.$input-line-color !important;
 	}
 }
 
@@ -164,7 +164,7 @@ input {
 		opacity: 1;
 	}
 
-	.icon {		
+	.icon {
 		opacity: 0;
 		cursor: pointer;
 	}
