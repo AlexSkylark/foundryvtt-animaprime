@@ -68,6 +68,7 @@ export default class AnimaPrimeCombat extends Combat {
                 actorData.strikeDice = 0;
                 actorData.threatDice = 0;
 
+                await combatant.actor.deleteEmbeddedDocuments("ActiveEffect", combatant.actor.temporaryEffects.map(e => e.id))
                 await combatant.actor.update({ system: actorData }, { render: false });
             });
         }

@@ -69,6 +69,9 @@ export default class AnimaPrimeGamemasterHUD extends Application {
         item.system.rating = skillLevel;
 
         await item.roll(ev.ctrlKey, ev.shiftKey);
+
+        await skillActor.delete();
+
         $(".gm-hud-container").hide();
     }
 }
