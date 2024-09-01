@@ -40,11 +40,11 @@ export default class AnimaPrimeCombatant extends Combatant {
 
         if (percent == 0) {
             return { status: "Guarded", level: 0 };
-        } else if (percent <= 0.15) {
+        } else if (percent <= 0.2) {
             return { status: "Cautious", level: 1 };
-        } else if (percent <= 0.5) {
+        } else if (percent <= 0.6) {
             return { status: "Exposed", level: 2 };
-        } else if (percent <= 0.75) {
+        } else if (percent <= 0.85) {
             return { status: "Vulnerable", level: 3 };
         } else if (percent <= 1.1) {
             return { status: "Defenseless", level: 4 };

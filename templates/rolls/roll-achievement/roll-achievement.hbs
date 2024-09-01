@@ -1,20 +1,20 @@
 <div class="roll-achievement roll-message-container" data-type="achievement">
-    <div class="roll item" data-item-id="{{_id}}">        
-        
+    <div class="roll item" data-item-id="{{_id}}">
+
         <div class="roll-header">
             <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
             <div class="header-label flexcol">
                 <h4 class="header-title">Achievement {{#if flavor.isReroll}}re{{/if}}roll</h4>
-                <h4 class="header-name">{{flavor.entityData.name}}</h4>                
+                <h4 class="header-name">{{flavor.entityData.name}}</h4>
             </div>
             <div class="item-description">
                 <p>{{flavor.entityData.system.description}}</p>
-                {{#if flavor.entityData.system.additionalEffect}}            
-                    <p><strong>Additional Effect:</strong><br />{{flavor.entityData.system.additionalEffect}}</p>            
+                {{#if flavor.entityData.system.additionalEffect}}
+                    <p><strong>Additional Effect:</strong><br />{{flavor.entityData.system.additionalEffect}}</p>
                 {{/if}}
             </div>
         </div>
-                
+
         <div class="flexcol">
             {{#each flavor.targetData}}
             <div class="target-section">
@@ -50,6 +50,7 @@
                     Goal COMPLETE!!!
                     {{else}}
                         {{#if (isPositiveGoal ../flavor.entityData.targetIds.[0] ../flavor.entityData.owner.type) }}
+                            a
                             {{#if (is0 ../flavor.targetData.[0].resultData.variableGain)}}
                                 No progress.
                             {{else}}
@@ -59,15 +60,15 @@
                             {{#if (is0 ../flavor.targetData.[0].resultData.variableGain)}}
                                 Couldn't sabotage progress! <br /> no progress dice taken.
                             {{else}}
-                                Progress sabotaged! <br /> up to {{../flavor.targetData.[0].resultData.variableGain}} progress {{#if (is1 ../flavor.targetData.[0].resultData.variableGain)}}die{{else}}dice{{/if}} taken.
+                                Progress sabotaged! <br /> {{../flavor.targetData.[0].resultData.variableGain}} progress {{#if (is1 ../flavor.targetData.[0].resultData.variableGain)}}die{{else}}dice{{/if}} taken.
                             {{/if}}
                         {{/if}}
                     {{/if}}
                 </span>
             </div>
             {{/each}}
-        </div>        
-    </div>    
+        </div>
+    </div>
 </div>
 {{#if flavor.enableReroll}}
 <div class="button-reroll-container flexrow">

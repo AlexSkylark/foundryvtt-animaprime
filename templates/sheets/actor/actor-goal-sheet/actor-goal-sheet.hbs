@@ -3,13 +3,13 @@
         <img class="header-image" src="{{actor.img}}" title="{{actor.name}}" data-edit="img" />
         <div contenteditable='true' class="header-name" name="name">{{actor.name}}</div>
     </section>
-    <div class="goal-sheet goal-sheet-{{actor.id}} flexcol">        
+    <div class="goal-sheet goal-sheet-{{actor.id}} flexcol">
         {{#if isGM}}
         <div class="cell flexrow select-goal-type">
             <select class="type-select" data-field="system.type">
-                <option value="0" {{#if (is0 system.type)}} selected {{/if}}>Type: Friendly</option>
-                <option value="1" {{#if (is1 system.type)}} selected {{/if}}>Type: Hostile</option>
-                <!--<option value="2" {{#if (is2 system.type)}} selected {{/if}}>Type: Contest</option>-->
+                <option value="0" {{#if (eq system.type 0)}} selected {{/if}}>Type: Friendly</option>
+                <option value="1" {{#if (eq system.type 1)}} selected {{/if}}>Type: Hostile</option>
+                <option value="2" {{#if (eq system.type 2)}} selected {{/if}}>Type: Contest</option>
             </select>
         </div>
         {{/if}}
@@ -26,7 +26,7 @@
             <label>Difficulty</label>
             <div class="property-value value-container">
                 <div class="icon button-changevalue plus{{#if isGM}} show-button{{/if}}" data-property="difficulty" data-operation="plus"><i class="fas fa-plus"></i></div>
-                <div class="icon button-changevalue minus{{#if isGM}} show-button{{/if}}" data-property="difficulty" data-operation="minus"><i class="fas fa-minus"></i></div>                            
+                <div class="icon button-changevalue minus{{#if isGM}} show-button{{/if}}" data-property="difficulty" data-operation="minus"><i class="fas fa-minus"></i></div>
                 <span class="goal-layout-line">{{system.difficulty}}</span>
             </div>
         </div>
@@ -50,5 +50,5 @@
             </div>
         </div>
         {{/if}}
-    </div>    
+    </div>
 </form>

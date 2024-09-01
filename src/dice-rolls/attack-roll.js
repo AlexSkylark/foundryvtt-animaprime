@@ -171,7 +171,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
 }
 
 function isPositiveGoal(goalType, ownerType) {
-    const targetType = ownerType == "character" || ownerType == "ally" ? 0 : 1;
+    const targetType = ownerType == "character" || ownerType == "ally" ? "0" : "1";
 
     if (goalType == targetType) return true;
     else return false;
