@@ -181,6 +181,11 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
 
         await this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
 
+        // set combatant as current turn
+        let takenTurn = this.viewed.turns.indexOf(takeTurnComb)
+
+        await this.viewed.update({ turn: takenTurn });
+
         // check doomed condition
         if (takeTurnComb.actor.checkCondition("doomed")) {
             const currentThreatDice = takeTurnComb.actor.system.threatDice;
@@ -235,7 +240,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             return;
         }
 
-        const lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
+        let lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
 
         let combsToReset = [];
         if (this.viewed.combsWaitingTurn.length == 0) {
@@ -248,11 +253,16 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             combsToReset = combsToReset.concat(this.viewed.combsOnQueue.filter((x) => x.initiative % 10 != 0 && x.initiative > lastComb.initiative && x.initiative < lastComb.initiative + 10));
             combsToReset = combsToReset.concat(this.viewed.combsOutofQueue.filter((x) => x.faction == nextFaction && !x.isDefeated));
             await this.viewed.resetInitiative(this.viewed.combsOutofQueue, false);
+
+            lastComb = await this.viewed.getMinObject(this.viewed.combsOnQueue, "initiative");
+            await this.viewed.update({ turn: this.viewed.turns.indexOf(lastComb)});
         }
 
+        /*
         if (this.viewed.combsOnQueue.length > 1 && this.viewed.combsWaitingTurn == 0 && this.viewed.getCurrentCombatant().id == this.viewed.current.combatantId) {
             this.viewed.previousTurn();
-        }
+        }*/
+
         await game.actionHud.render(true);
     }
 
