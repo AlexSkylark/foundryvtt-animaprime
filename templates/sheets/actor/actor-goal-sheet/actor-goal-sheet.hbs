@@ -6,15 +6,14 @@
     <div class="goal-sheet goal-sheet-{{actor.id}} flexcol">
         {{#if isGM}}
         <div class="cell flexrow select-goal-type">
-            <select class="type-select" data-field="system.type">
-                <option value="0" {{#if (eq system.type 0)}} selected {{/if}}>Type: Friendly</option>
-                <option value="1" {{#if (eq system.type 1)}} selected {{/if}}>Type: Hostile</option>
-                <option value="2" {{#if (eq system.type 2)}} selected {{/if}}>Type: Contest</option>
+            <select class="type-select" data-field="token.disposition">
+                <option value="1" {{#if (eq options.token.disposition 1)}} selected {{/if}}>Type: Friendly</option>
+                <option value="-1" {{#if (eq options.token.disposition -1)}} selected {{/if}}>Type: Hostile</option>
             </select>
         </div>
         {{/if}}
 
-        {{#if (and (not isGM) (eq system.type 1))}}
+        {{#if (and (not isGM) (eq options.token.disposition -1))}}
         <div class="cell flexrow">
             <label>Progress</label>
             <div class="property-value value-container value-container-hostile">

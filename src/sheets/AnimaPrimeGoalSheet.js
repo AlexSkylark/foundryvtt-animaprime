@@ -25,7 +25,7 @@ export default class AnimaPrimeGoalSheet extends AnimaPrimeActorSheet {
 
         if (!game.user.isGM) {
             let newHeight = 487;
-            if (this.actor.system.type == "1") {
+            if (this.token.disposition == "-1") {
                 newHeight -= 200;
             } else {
                 newHeight -= 132;
@@ -52,9 +52,8 @@ export default class AnimaPrimeGoalSheet extends AnimaPrimeActorSheet {
             ev.preventDefault();
 
             let elem = ev.currentTarget;
-            let field = elem.dataset.field;
 
-            return await this.document.update({ [field]: elem.value });
+            await this.token.update({ disposition: parseInt(elem.value) });
         });
     }
 }

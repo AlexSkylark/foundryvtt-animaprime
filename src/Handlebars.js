@@ -12,12 +12,10 @@ export function registerHandlebarsHelpers() {
     });
 
     Handlebars.registerHelper("isPositiveGoal", function (value1, value2) {
-        const systemData = game.scenes.active.tokens.get(value1).actor.system ?? game.scenes.active.tokens.get(value1).actorData.system;
+        const targetType = game.scenes.active.tokens.get(value1).disposition;
+        const ownerType = value2 == "character" || value2 == "ally" ? "1" : "-1";
 
-        const targetType = systemData.type;
-        const ownerType = value2 == "character" || value2 == "ally" ? "0" : "1";
-
-        return !targetType || targetType == ownerType;
+        return targetType == ownerType;
     });
 
     Handlebars.registerHelper("canTakeTurn", function (value) {

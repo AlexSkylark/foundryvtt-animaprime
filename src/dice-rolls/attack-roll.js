@@ -75,7 +75,6 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
                 maxVariableDice: itemFixedOptions[i].variableDiceValue,
                 variableDiceName: itemFixedOptions[i].variableDiceName,
                 type: item.type,
-                goalType: item.system.type,
                 targetType: item.targets[i].type,
                 targetName: item.targets[i].name,
                 targetId: item.targetIds[i],
@@ -127,7 +126,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         let positiveGoal = true;
         if (item.type == "achievement") {
             // if sabotaging goal
-            positiveGoal = isPositiveGoal(item.targets[i].system.type, item.owner.type);
+            positiveGoal = isPositiveGoal(item.targets[i].token.disposition, item.owner.type);
             if (!positiveGoal) {
                 forceNoHit = true;
 
@@ -171,7 +170,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
 }
 
 function isPositiveGoal(goalType, ownerType) {
-    const targetType = ownerType == "character" || ownerType == "ally" ? "0" : "1";
+    const targetType = ownerType == "character" || ownerType == "ally" ? "1" : "-1";
 
     if (goalType == targetType) return true;
     else return false;

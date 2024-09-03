@@ -59,8 +59,7 @@
             "difficulty": 0,
             "progressDice": 0,
             "looming": false,
-            "loomingTurns": 0,
-            "type": "0"
+            "loomingTurns": 0
         },
         "vehicle": {
             "templates": ["base"],

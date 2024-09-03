@@ -94,6 +94,10 @@ Hooks.on("renderActorSheet", async (sheet, html, data) => {
     html.css("top", `${varTop}px`);
 });
 
+Hooks.on("createToken", async (token, data, context, userId) => {
+    await token.update({ displayName: 30  });
+});
+
 Hooks.on("createActor", async (actor, data, context, userId) => {
     if (actor.type == "character" || actor.type == "adversity" || actor.type == "ally") {
         let items = await game.packs.get("animaprime.basic-actions").getDocuments();
@@ -111,11 +115,15 @@ Hooks.on("createActor", async (actor, data, context, userId) => {
         await actor.createEmbeddedDocuments("Item", items);
     }
 
-    if (actor.type == "adversity" || actor.type == "ally") {
-        actor.ownership.default = 2;
+    if (actor.type == "character" || actor.type == "ally" || actor.type == "goal") {
+        await actor.update({ prototypeToken: { disposition: 1 } });
+    } else if (actor.type == "adversity") {
+        await actor.update({ prototypeToken: { disposition: -1 } });
     }
 
     if ((actor.type == "character" || actor.type == "ally" || actor.type == "vehicle" || actor.type == "goal") && actor.prototypeToken) await actor.prototypeToken.update({ actorLink: true });
+
+    await actor.update({ prototypeToken: { displayName: 30 } });
 });
 
 Hooks.on("preUpdateActor", async (actor, change, context, userId) => {
@@ -268,13 +276,13 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                         system: targetData,
                     });
                 } else if (item.type == "achievement") {
-                    let ownerType = 0;
-                    if (item.owner.type == "adversity") ownerType = 1;
+                    let ownerType = 1;
+                    if (item.owner.type == "adversity") ownerType = -1;
 
                     if (resultData.hit) {
                         targetData.progressDice = 0;
                     } else {
-                        targetData.progressDice = Math.max(targetData.progressDice + resultData.variableGain * (ownerType == targetData.type ? 1 : -1), 0);
+                        targetData.progressDice = Math.max(targetData.progressDice + resultData.variableGain * (ownerType == token.disposition ? 1 : -1), 0);
                     }
 
                     await targetEntity.update({
@@ -352,7 +360,6 @@ Hooks.once("init", async () => {
     CONFIG.Combat.documentClass = AnimaPrimeCombat;
     CONFIG.Combatant.documentClass = AnimaPrimeCombatant;
     CONFIG.ui.combat = AnimaPrimeCombatTracker;
-    CONFIG.time.turnTime = 10;
 
     CONFIG.dialogWindows = [];
 
