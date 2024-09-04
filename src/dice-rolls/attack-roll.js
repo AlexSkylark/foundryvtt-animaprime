@@ -126,7 +126,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         let positiveGoal = true;
         if (item.type == "achievement") {
             // if sabotaging goal
-            positiveGoal = isPositiveGoal(item.targets[i].token.disposition, item.owner.type);
+            positiveGoal = isPositiveGoal((item.targets[i].token ?? item.targets[i].prototypeToken).disposition, item.owner.type);
             if (!positiveGoal) {
                 forceNoHit = true;
 
