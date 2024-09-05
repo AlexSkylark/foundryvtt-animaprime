@@ -1,5 +1,5 @@
 <div class="roll-maneuver roll maneuver roll-message-container" data-type="maneuver">
-    <div class="roll item" data-item-id="{{_id}}">        
+    <div class="roll item" data-item-id="{{_id}}">
         <div class="roll-header">
             <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
             <div class="header-label flexcol">
@@ -8,12 +8,12 @@
             </div>
             <div class="item-description">
                 <p>{{flavor.entityData.system.description}}</p>
-                {{#if flavor.entityData.system.additionalEffect}}            
-                    <p><strong>Additional Effect:</strong><br />{{flavor.entityData.system.additionalEffect}}</p>            
+                {{#if flavor.entityData.system.additionalEffect}}
+                    <p><strong>Additional Effect:</strong><br />{{flavor.entityData.system.additionalEffect}}</p>
                 {{/if}}
             </div>
         </div>
-        
+
         <div class="flexcol">
             <div class="target-section">
                 <ol class="rolls rolls-{{flavor.targetData.[0].rollsId}}">
@@ -64,7 +64,11 @@
                     <br />(-1 strike success, -1 threat die)
                     {{/if}}
                     {{#if flavor.targetData.[0].additionalData.isHeroic}}
-                    <br />(+1 bonus progress die to goal)
+                        {{#if flavor.targetData.[0].additionalData.isPositiveTarget}}
+                            <br />(+1 bonus progress die to goal)
+                        {{else}}
+                            <br />(-1 bonus progress die to goal)
+                        {{/if}}
                     {{/if}}
                     {{#if flavor.targetData.[0].additionalData.isReckless}}
                     <br />(+2 bonus dice to roll, +1 threat die)
@@ -72,10 +76,10 @@
                     {{#if flavor.targetData.[0].additionalData.isSupportive}}
                     <br />(+1 bonus strike die to ally)
                     {{/if}}
-                </span>               
-            </div>                   
-        </div>        
-    </div>    
+                </span>
+            </div>
+        </div>
+    </div>
 </div>
 {{#if flavor.enableReroll}}
 <div class="button-reroll-container flexrow">

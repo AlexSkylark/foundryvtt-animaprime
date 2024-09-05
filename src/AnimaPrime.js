@@ -98,6 +98,15 @@ Hooks.on("createToken", async (token, data, context, userId) => {
     await token.update({ displayName: 30  });
 });
 
+Hooks.on("updateToken", async (token, data, context, userId) => {
+
+    if (!token.combatant) return;
+
+    if (data.disposition != null) {
+        await ui.combat.viewed.handleDispositionChange(data.disposition, token.id);
+    }
+});
+
 Hooks.on("createActor", async (actor, data, context, userId) => {
     if (actor.type == "character" || actor.type == "adversity" || actor.type == "ally") {
         let items = await game.packs.get("animaprime.basic-actions").getDocuments();
@@ -227,7 +236,11 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                 if (dialogOptions.maneuverStyle == "cunning") {
                     targetData.threatDice += 1;
                 } else if (dialogOptions.maneuverStyle == "heroic") {
-                    targetData.progressDice += 1;
+                    const ownerDisposition = (item.owner.token ?? item.owner.prototypeToken).disposition;
+                    if (ownerDisposition == token.disposition)
+                        targetData.progressDice += 1;
+                    else
+                        targetData.progressDice = Math.max(targetData.progressDice - 1, 0);
                 } else if (dialogOptions.maneuverStyle == "supportive") {
                     targetData.strikeDice += 1;
                 }
@@ -276,13 +289,12 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                         system: targetData,
                     });
                 } else if (item.type == "achievement") {
-                    let ownerType = 1;
-                    if (item.owner.type == "adversity") ownerType = -1;
+                    const ownerDisposition = (item.owner.token ?? item.owner.prototypeToken).disposition;
 
                     if (resultData.hit) {
                         targetData.progressDice = 0;
                     } else {
-                        targetData.progressDice = Math.max(targetData.progressDice + resultData.variableGain * (ownerType == token.disposition ? 1 : -1), 0);
+                        targetData.progressDice = Math.max(targetData.progressDice + resultData.variableGain * (ownerDisposition == token.disposition ? 1 : -1), 0);
                     }
 
                     await targetEntity.update({

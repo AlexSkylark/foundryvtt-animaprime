@@ -13,7 +13,7 @@ export function registerHandlebarsHelpers() {
 
     Handlebars.registerHelper("isPositiveGoal", function (value1, value2) {
         const targetType = game.scenes.active.tokens.get(value1).disposition;
-        const ownerType = value2 == "character" || value2 == "ally" ? "1" : "-1";
+        const ownerType = (value2.token ?? value2.prototypeToken).disposition;
 
         return targetType == ownerType;
     });

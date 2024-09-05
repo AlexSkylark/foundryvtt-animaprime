@@ -108,6 +108,23 @@ export default class AnimaPrimeCombat extends Combat {
         await combatant.update({ initiative: value }, { render: false });
     }
 
+    async handleDispositionChange(disposition, tokenId) {
+        ui.combat.updateRender(true);
+
+        const dispositionChangeComb = this.combatants.find((tk) => tk.tokenId == tokenId);
+
+        if (dispositionChangeComb.initiative <= 1000) {
+
+            await this.setInitiative(dispositionChangeComb.id, 9999);
+            await this.setInitiative(dispositionChangeComb.id, this.getMinObject(disposition == 1 ? this.combsFriendly : this.combsHostile, "initiative").initiative - 1)
+
+            await this.resetInitiative(this.combsWaitingTurn, true)
+            await this.resetInitiative(this.combsNotWaitingTurn, false)
+        }
+
+        ui.combat.updateRender(false);
+    }
+
     get combsOnQueue() {
         return this.turns.filter((i) => {
             return i.initiative > 1000;

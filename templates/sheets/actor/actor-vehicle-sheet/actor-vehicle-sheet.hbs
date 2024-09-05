@@ -7,7 +7,7 @@
     {{/if}}
 
     <div class="decorative-square{{#unless editUnlocked}} small-square{{/unless}}">&nbsp;</div>
-    <header class="flexcol">    
+    <header class="flexcol">
         <div class="header-namestrip flexrow flex0">
             <input class="name{{#unless owner}} small{{/unless}}{{#if isGM}} is-gm{{/if}}" name="name" type="text" value="{{actorName}}" {{#unless editName}}disabled{{/unless}} />
             <span class="power-scale-label">Power Scale:</span>
@@ -50,19 +50,19 @@
                         <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue defense plus" data-property="defense" data-operation="plus"><i class="fas fa-plus"></i></div>
                         <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue defense minus"data-property="defense" data-operation="minus"><i class="fas fa-minus"></i></div>
                     </div>
-                </div>            
+                </div>
             </div>
-            <!-- FIM DA HEALTH/DEFENSE FRAME --> 
+            <!-- FIM DA HEALTH/DEFENSE FRAME -->
         </div>
         <div class="right-side flexcol dice-pools">
             {{#if isGM}}
             <div class="select-vehicle-type">
-                <select class="type-select" data-field="system.type">
-                    <option value="0" {{#if (is0 system.type)}} selected {{/if}}>Type: Friendly</option>
-                    <option value="1" {{#if (is1 system.type)}} selected {{/if}}>Type: Hostile</option>                    
+                <select class="type-select" data-field="token.disposition">
+                    <option value="1" {{#if (eq data.token.disposition 1)}} selected {{/if}}>Type: Friendly</option>
+                    <option value="-1" {{#if (eq data.token.disposition -1)}} selected {{/if}}>Type: Hostile</option>
                 </select>
             </div>
-        {{/if}}                       
+        {{/if}}
             {{#if owner}}
             <div class="dice-pool-strip icon-container flex0">
                 <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="strikeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
@@ -91,14 +91,14 @@
             </div>
         </div>
     </div>
-    
+
     {{#if owner}}
     <nav class="sheet-tabs tabs{{#if isGM}} gm-spacing{{/if}}" data-group="primary-tabs">
         <a data-tab="profession">Main Actions</a>
-        <a data-tab="basic">Basic Actions</a>        
-    </nav>            
+        <a data-tab="basic">Basic Actions</a>
+    </nav>
     <section class="sheet-body">
-        <div class="tab" data-tab="basic" data-group="primary-tabs">                    
+        <div class="tab" data-tab="basic" data-group="primary-tabs">
             <button class="button-reform-basicactions">Refresh Basic Actions</button>
             <div class="actions-section-container">
                 <div class="actions-column">
@@ -125,8 +125,8 @@
                     {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../editUnlocked}}
                     {{/each}}
                 </div>
-            </div>                    
-        </div>               
+            </div>
+        </div>
     </section>
     {{/if}}
 </form>

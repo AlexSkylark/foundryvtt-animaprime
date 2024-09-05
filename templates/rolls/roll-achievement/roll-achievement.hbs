@@ -49,7 +49,7 @@
                     {{#if ../flavor.targetData.[0].resultData.hit}}
                     Goal COMPLETE!!!
                     {{else}}
-                        {{#if (isPositiveGoal ../flavor.entityData.targetIds.[0] ../flavor.entityData.owner.type) }}
+                        {{#if (isPositiveGoal ../flavor.entityData.targetIds.[0] ../flavor.entityData.owner) }}
                             {{#if (is0 ../flavor.targetData.[0].resultData.variableGain)}}
                                 No progress.
                             {{else}}

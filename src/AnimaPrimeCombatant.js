@@ -25,7 +25,7 @@ export default class AnimaPrimeCombatant extends Combatant {
         if (this.actor.type == "character" || this.actor.type == "ally") {
             return "friendly";
         } else if (this.actor.type == "vehicle") {
-            return this.actor.system.type == "0" ? "friendly" : "hostile";
+            return (this.token ?? this.prototypeToken).disposition == 1 ? "friendly" : "hostile";
         } else {
             return "hostile";
         }

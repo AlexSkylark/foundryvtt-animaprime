@@ -32,7 +32,7 @@
         </nav>
         {{/if}}
 
-        <div class="encounter-controls flexrow {{#if hasCombat}}combat{{/if}}">            
+        <div class="encounter-controls flexrow {{#if hasCombat}}combat{{/if}}">
             {{#if combatCount}}
             {{#if combat.round}}
             <h3 class="encounter-title noborder">{{localize 'COMBAT.Round'}} {{combat.round}}</h3>
@@ -49,17 +49,17 @@
         {{#each turns}}
             {{#if (isOnQueue this)}}
                 {{#if (isMultiple10 this.initiative)}}
-                    <li class="combatant actor directory-item flexrow{{#if this.isOnTurn}} active{{/if}}" data-combatant-id="{{this.id}}">                                        
+                    <li class="combatant actor directory-item flexrow{{#if this.isOnTurn}} active{{/if}}" data-combatant-id="{{this.id}}">
                         <div class="flexrow" style="flex: auto">
                             <img style="align-self: center" class="token-image" data-src="{{this.img}}" title="{{this.name}}"/>
                             <div class="token-name flexcol">
-                                <h4>{{this.displayName}}</h4> 
+                                <h4>({{this.initiative}}) {{this.displayName}}</h4>
                                 {{#if (isFriendly this.faction)}}
                                 <h4 class="turnUnitData">Wounds:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>
                                 {{else}}
                                 <div class="health-threat-line">
-                                    <span class="turnUnitData">Health:</span><span title="{{this.healthStatus.status}}" class="status-relative bg-level-{{this.healthStatus.level}}"></span> 
-                                    <span class="turnUnitData">Threat:</span><span title="{{this.threatStatus.status}}" class="status-relative bg-level-{{this.threatStatus.level}}"></span> 
+                                    <span class="turnUnitData">Health:</span><span title="{{this.healthStatus.status}}" class="status-relative bg-level-{{this.healthStatus.level}}"></span>
+                                    <span class="turnUnitData">Threat:</span><span title="{{this.threatStatus.status}}" class="status-relative bg-level-{{this.threatStatus.level}}"></span>
                                 </div>
                                 {{/if}}
                                 <div class="combatant-controls flexrow">
@@ -74,13 +74,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>                       
+                        </div>
                     </li>
                 {{/if}}
             {{/if}}
         {{/each}}
     </ol>
-        
+
     <h3 class="encounter combat-section-title friendly-section flex0">Friendly Units</h4>
 
     <ol id="combat-tracker" class="directory-list waiting-line">
@@ -93,7 +93,7 @@
             <li class="combatant actor directory-item flexrow {{this.css}} {{this.faction}} {{#if this.isAlly}} ally{{/if}}" data-combatant-id="{{this.id}}">
                 <img class="token-image" src="{{this.img}}" title="{{this.name}}"/>
                 <div class="token-name flexcol">
-                    <h4>{{this.displayName}}</h4>
+                    <h4>({{this.initiative}}) {{this.displayName}}</h4>
                     {{#unless this.defeated}}<h4 class="turnUnitData">Wounds:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>{{/unless}}
                     <div class="combatant-controls flexrow">
                         {{#if ../user.isGM}}
@@ -108,15 +108,15 @@
                     </div>
                 </div>
 
-                <div class="token-initiative">                    
+                <div class="token-initiative">
                     {{#if (and (canTakeTurn this.initiative) (or owner ../user.isGM))}}
                         {{#unless this.defeated}}
                             <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
                         {{/unless}}
-                    {{/if}}                    
+                    {{/if}}
                 </div>
-            </li>            
-            {{/unless}}            
+            </li>
+            {{/unless}}
             {{/if}}
 
             {{/unless}}
@@ -130,7 +130,7 @@
             <li class="combatant actor directory-item flexrow {{this.css}} {{this.faction}} ally" data-combatant-id="{{this.id}}">
                 <img class="token-image" src="{{this.img}}" title="{{this.name}}"/>
                 <div class="token-name flexcol">
-                    <h4>{{this.displayName}}</h4>                    
+                    <h4>({{this.initiative}}) {{this.displayName}}</h4>
                     {{#unless this.defeated}}<h4 class="turnUnitData">Wounds:{{this.healthValue}}{{#if this.threatValue}} - Threat: {{this.threatValue}}{{/if}}</h4>{{/unless}}
                     <div class="combatant-controls flexrow">
                         {{#if ../user.isGM}}
@@ -145,14 +145,14 @@
                     </div>
                 </div>
 
-                <div class="token-initiative">                    
+                <div class="token-initiative">
                 {{#if (and (canTakeTurn this.initiative) (or owner ../user.isGM))}}
                     {{#unless ../combat.combsFriendlyWaitingTurn}}
                     {{#unless this.defeated}}
                         <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
                     {{/unless}}
                     {{/unless}}
-                {{/if}}                    
+                {{/if}}
                 </div>
             </li>
             {{/if}}
@@ -164,7 +164,7 @@
     </ol>
 
     <h3 class="encounter combat-section-title hostile-section flex0">Hostile Units</h4>
-    
+
     <ol id="combat-tracker" class="directory-list waiting-line">
         {{#each turns}}
 
@@ -174,11 +174,11 @@
             <li class="combatant actor directory-item flexrow {{this.css}} {{this.faction}}" data-combatant-id="{{this.id}}">
                 <img class="token-image" src="{{this.img}}" title="{{this.name}}"/>
                 <div class="token-name flexcol">
-                    <h4>{{this.displayName}}</h4>
+                    <h4>({{this.initiative}}) {{this.displayName}}</h4>
                     {{#unless this.defeated}}
                         <div class="health-threat-line">
-                            <span class="turnUnitData">Health:</span><span title="{{this.healthStatus.status}}" class="status-relative bg-level-{{this.healthStatus.level}}"></span> 
-                            <span class="turnUnitData">Threat:</span><span title="{{this.threatStatus.status}}" class="status-relative bg-level-{{this.threatStatus.level}}"></span> 
+                            <span class="turnUnitData">Health:</span><span title="{{this.healthStatus.status}}" class="status-relative bg-level-{{this.healthStatus.level}}"></span>
+                            <span class="turnUnitData">Threat:</span><span title="{{this.threatStatus.status}}" class="status-relative bg-level-{{this.threatStatus.level}}"></span>
                         </div>
                     {{/unless}}
                     <div class="combatant-controls flexrow">
@@ -194,24 +194,24 @@
                     </div>
                 </div>
 
-                <div class="token-initiative">                    
+                <div class="token-initiative">
                     {{#if (and (canTakeTurn this.initiative) (or isControlling ../user.isGM))}}
                         {{#unless this.defeated}}
                             <button class="combatant-take-turn" title="take turn" data-control="takeTurn">Take Turn</button>
                         {{/unless}}
-                    {{/if}}                         
+                    {{/if}}
                 </div>
             </li>
             {{/if}}
 
             {{/unless}}
-            
+
         {{/each}}
     </ol>
 
-    <nav id="combat-controls" class="directory-footer flexrow">    
+    <nav id="combat-controls" class="directory-footer flexrow">
         {{#if user.isGM}}
-            {{#if round}}                
+            {{#if round}}
                 <a class="combat-control" title="{{localize 'COMBAT.RoundPrev'}}" data-control="previousRound"><i class="fas fa-step-backward"></i></a>
                 {{#if this.combat.combsOnQueue.length}}
                 <a class="combat-custom-control" title="{{localize 'COMBAT.TurnPrev'}}" data-control="cancelTurn"><i class="fas fa-arrow-left"></i></a>
@@ -229,10 +229,10 @@
                 <a class="combat-control center" title="{{localize 'COMBAT.Begin'}}" data-control="startCombat">{{localize 'COMBAT.Begin'}}</a>
             {{/if}}
         {{else if this.combat.isOwnerOfCurrentComb}}
-            {{#unless this.combat.combsWaitingTurn.length}}                
+            {{#unless this.combat.combsWaitingTurn.length}}
                 <a class="combat-custom-control center" title="Cancel Turn" data-control="cancelTurn">Cancel <i class="fas fa-cancel"></i></a>
-                <a class="combat-custom-control center" title="End Turn" data-control="endTurn">End <i class="fas fa-check"></i></a>                
+                <a class="combat-custom-control center" title="End Turn" data-control="endTurn">End <i class="fas fa-check"></i></a>
             {{/unless}}
         {{/if}}
-    </nav>    
+    </nav>
 </section>

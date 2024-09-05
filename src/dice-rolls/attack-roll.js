@@ -126,7 +126,8 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         let positiveGoal = true;
         if (item.type == "achievement") {
             // if sabotaging goal
-            positiveGoal = isPositiveGoal((item.targets[i].token ?? item.targets[i].prototypeToken).disposition, item.owner.type);
+            const targetToken = game.scenes.active.tokens.find((tk) => tk.id == item.targetIds[i])
+            positiveGoal = isPositiveGoal(targetToken.disposition, (item.owner.token ?? item.owner.prototypeToken).disposition);
             if (!positiveGoal) {
                 forceNoHit = true;
 
@@ -170,9 +171,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
 }
 
 function isPositiveGoal(goalType, ownerType) {
-    const targetType = ownerType == "character" || ownerType == "ally" ? "1" : "-1";
-
-    if (goalType == targetType) return true;
+    if (goalType == ownerType) return true;
     else return false;
 }
 

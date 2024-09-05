@@ -117,6 +117,9 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
         token.toggleEffect(supportedEffect, false);
     }
 
+    // is the target of equal disposition to the user?
+    const isPositive = game.scenes.active.tokens.find((tk) => tk.id == maneuver.targetIds[0]).disposition == (maneuver.owner.token ?? maneuver.owner.prototypeToken).disposition;
+
     let additionalData = [];
     additionalData.push({
         isQuickened: isQuickened,
@@ -128,6 +131,7 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
         defensiveDie: defensiveDie,
         maneuverStyle: dialogOptions.maneuverStyle,
         hasSupportDie: isSupported,
+        isPositiveTarget: isPositive,
         isRegular: dialogOptions.maneuverStyle == "regular",
         isAggressive: dialogOptions.maneuverStyle == "aggressive",
         isCunning: dialogOptions.maneuverStyle == "cunning",

@@ -21,11 +21,9 @@ export default class AnimaPrimeVehicleSheet extends AnimaPrimeActorSheet {
 
         html.find(".type-select").change(async (ev) => {
             ev.preventDefault();
-
             let elem = ev.currentTarget;
-            let field = elem.dataset.field;
-
-            return await this.document.update({ [field]: elem.value });
+            await (this.actor.token ?? this.actor.prototypeToken).update({ disposition: parseInt(elem.value) });
+            this.render(true);
         });
     }
 }
