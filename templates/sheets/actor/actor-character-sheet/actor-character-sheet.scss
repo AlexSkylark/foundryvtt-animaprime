@@ -38,6 +38,7 @@
     }
 
     .sheet-columns {
+        display: flex;
         flex-direction: row;
     }
 
@@ -71,7 +72,7 @@
             color: variables.$input-placeholder-color;
         }
     }
-    
+
     .button-changevalue {
         border: 2px solid var(--primary-color);
         width: 26px;
@@ -108,7 +109,7 @@
             padding: 12px;
             margin: 2px 8px 8px;
             color: #fff;
-            
+
             input[type=text] {
                 max-width: 21%;
                 color: #fff;
@@ -119,12 +120,16 @@
                 margin: 0px 6px;
 
                 &.name {
-                    max-width: calc(100% - 510px);
+                    max-width: calc(100% - 450px);
+                }
+
+                &.race {
+                    max-width: 150px;
                 }
 
                 &::placeholder {
                     color: #ddd;
-                }                           
+                }
             }
 
             .lock-container {
@@ -135,7 +140,7 @@
                 border: 2px solid #fff;
                 padding: 3px;
                 flex-direction: column;
-                border-radius: 18px;               
+                border-radius: 18px;
 
                 .lock-button {
                     border: 2px solid #999;
@@ -149,7 +154,7 @@
                         background-color: #852f37;
                         border-color: #f185a0;
                     }
-    
+
                     &.lock-off {
                         align-items: end;
                         background-color: #09b9a2e6;
@@ -172,8 +177,8 @@
             }
         }
     }
-        
-    .left-side {        
+
+    .left-side {
         flex: 0 0 280px;
         margin-left: 4px;
         display: flex;
@@ -182,7 +187,7 @@
             margin: 0px auto;
             width: 100%;
             display: table;
-            text-align: center;            
+            text-align: center;
         }
 
         img {
@@ -198,13 +203,13 @@
 
         .image-container {
             position: relative;
-        }        
-    }       
+        }
+    }
 
     .button-addskill, .button-addresistance {
         border: 2px solid var(--primary-color);
         border-radius: 17px;
-        background-color: #fff; 
+        background-color: #fff;
         padding: 1px 4px;
         position: relative;
         bottom: 18px;
@@ -212,15 +217,15 @@
     }
 
     .skills-container {
-        
-        height: 347px;
+
+        height: 280px;
         padding-top: 20px;
         overflow: auto;
 
         &.resistances-container {
             height: 104px;
             padding-top: 10px;
-        }        
+        }
 
         .icon {
             float: right;
@@ -232,7 +237,7 @@
                 left: -24px
             }
         }
-        
+
         .skill-unit {
             border-bottom: 2px solid variables.$input-line-color;
             display: block;
@@ -262,7 +267,7 @@
                 min-width: 105px;
                 margin-bottom: 9px;
                 border-radius: 8px;
-            }            
+            }
         }
 
         .personality-resistance-container {
@@ -270,12 +275,13 @@
         }
 
         .personality-section {
-            width: 510px;
             margin-top: 24px;
+            width: calc(100% - 182px)
         }
 
         .resistance-section {
             margin-top: 24px;
+            width: 180px;
         }
 
         .trait-value {
@@ -300,13 +306,13 @@
             margin-left: 12px;
             width: 83%;
 
-            .dice-pool-container {                
+            .dice-pool-container {
                 width: 50%;
                 display: flex;
                 margin-bottom: 6px;
-                
+
                 .dice-pool-strip {
-                    
+
                     height: 32px;
                     padding: 5px 0px;
                     text-align: end;
@@ -325,7 +331,7 @@
                             width: 23px;
                             color: #fff;
                             text-align: center;
-                            font-size: 25px;    
+                            font-size: 25px;
                             position: relative;
                             height: 17px;
                             border: 0;
@@ -340,7 +346,7 @@
                         grid-column: 1;
                         grid-row: 1;
 
-                        .button-changevalue {                    
+                        .button-changevalue {
                             position: relative;
                             bottom: 5px;
                             left: 21px;
@@ -355,17 +361,17 @@
                 .attribute-value {
                     grid-column: 1;
                     grid-row: 1;
-                    
+
                     width: 56px;
                     height: 56px;
-                    margin-left: -18px;       
-            
+                    margin-left: -18px;
+
                     span {
                         margin-top: -2px;
                         margin-left: -9px;
                     }
                 }
-            }            
+            }
         }
 
         .reroll-container {
@@ -392,40 +398,40 @@
                 color: #fff;
                 font-size: 18px;
                 text-align: center;
-                font-weight: 600;            
+                font-weight: 600;
                 display: block;
                 border-top-left-radius: 9px;
                 border-top-right-radius: 9px;
             }
 
             .button-changevalue {
-                
+
                 position: relative;
                 cursor: pointer;
 
                 &.plus {
                     top: -36px;
-                    left: 78px;
+                    left: 70px;
                 }
-    
+
                 &.minus {
                     top: -62px;
                     left: -14px;
                 }
             }
-            
+
         }
 
         .actions-section-container {
             overflow-y: auto;
-            height: 400px;
+            height: 340px;
             display: flex;
             flex-direction: row;
             border-bottom: 2px solid var(--primary-color);
         }
-        .actions-column {            
+        .actions-column {
             display: flex;
-            flex-direction: column;            
+            flex-direction: column;
             width: 50%;
             padding-top: 8px;
 
@@ -440,15 +446,15 @@
     }
 
     nav.sheet-tabs {
-        
+
         border-top: 0;
         border-bottom: 2px solid var(--primary-color);
         padding: 0;
         margin-left:24px;
-        margin-right:24px;
+        margin-right:12px;
         margin-top: 18px;
         margin-bottom: 0px;
-        
+
         a {
             padding: 4px 36px;
 
@@ -463,7 +469,7 @@
             &.active {
                 border-top: 2px solid var(--primary-color);
                 border-left: 2px solid var(--primary-color);
-                border-right: 2px solid var(--primary-color);                
+                border-right: 2px solid var(--primary-color);
 
                 background-color: var(--primary-color-light);
 
@@ -473,7 +479,7 @@
         }
     }
 
-    .tab {        
-        margin: 0px 24px;        
+    .tab {
+        margin: 0px 12px;
     }
 }

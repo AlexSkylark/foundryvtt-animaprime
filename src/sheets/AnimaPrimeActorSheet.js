@@ -4,8 +4,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["animaprime", "sheet", "actor", "actor-sheet-layout"],
-            width: 990,
-            height: 840,
+            width: 940,
+            height: 790,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
@@ -13,8 +13,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
                     initial: "features",
                 },
             ],
-            resizable: false,
-            scale: 0.95,
+            resizable: false
         });
     }
 
@@ -170,6 +169,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         html.find(".item-delete").click(this._onItemDelete.bind(this));
         html.find(".item-roll").click(this._onItemRoll.bind(this));
         html.find(".generic-skill-roll").click(this._onGenericSkillRoll.bind(this));
+        html.find(".item-value").click(this._onItemValueChange.bind(this));
 
         if (game.user.isGM) {
             html.find(".lock-container").click(this._onToggleEditable.bind(this));
@@ -357,5 +357,39 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
         items[1] = BasicStrike;
 
         await this.actor.createEmbeddedDocuments("Item", items);
+    }
+
+    async _onItemValueChange(ev) {
+
+        if ((!ev.ctrlKey && !ev.altKey) || !game.user.isGM)
+            return;
+
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        let updateObject = {};
+
+        const propName = ev.currentTarget.dataset.property;
+        const li = $(ev.currentTarget).parents(".item");
+        const item = this.actor.getEmbeddedDocument("Item", li.data("itemId"));
+        let propValue = parseInt(item.system[propName]);
+
+        if (ev.altKey) {
+            if (propValue > 0) propValue -= 1;
+        }
+        else if (ev.ctrlKey) {
+            propValue += 1;
+        }
+
+        updateObject[`system.${propName}`] = propValue;
+
+        if (!item.system.originalValues || item.system.originalValues.isEmpty) {
+            item.system.isEmpty = false;
+            updateObject["system.originalValues"] = item.system;
+        }
+
+        //debugger;
+        await item.update(updateObject);
+        li.focus();
     }
 }

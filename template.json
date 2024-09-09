@@ -76,7 +76,8 @@
             "base": {
                 "description": "-",
                 "cost": 0,
-                "basic": false
+                "basic": false,
+                "originalValues": {}
             },
             "effect": {
                 "effect": "-"

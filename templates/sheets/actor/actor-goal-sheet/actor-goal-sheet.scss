@@ -1,7 +1,7 @@
 @use '../actor-sheet.scss';
 @use '../../../variables';
 
-.goal-sheet {          
+.goal-sheet {
 
     .header {
         display: flex;
@@ -17,7 +17,7 @@
         }
 
         .header-name {
-            
+
             background-color: var(--primary-color);
             padding: 8px;
             align-self: center;
@@ -78,7 +78,7 @@
                 margin-right: -22px;
                 margin-top: 7px;
             }
-    
+
             .value-container {
                 margin-left: 0px;
                 color: var(--primary-color);
@@ -88,8 +88,8 @@
                 }
             }
         }
-    
-        .property-value {     
+
+        .property-value {
             border: 2px solid var(--primary-color);
             display: flex;
             justify-content: center;
@@ -101,15 +101,15 @@
             border-radius: 30px;
             margin-top: 10px;
             font-weight: 600;
-            font-size: 26px;        
+            font-size: 26px;
             z-index: 1;
             background-color: #fff;
-                        
+
             span {
                 color: var(--primary-color);
             }
 
-            .button-changevalue {                
+            .button-changevalue {
                 position: absolute;
                 border: 2px solid var(--primary-color);
                 background-color: #fff;
@@ -119,18 +119,17 @@
                 line-height: 16px;
                 visibility: hidden;
                 color: var(--primary-color);
+                cursor: pointer;
 
                 &.show-button {
                     visibility:visible;
                 }
-                
-                cursor: pointer;
-    
+
                 &.plus {
                     top: 36px;
                     left: 40px;
                 }
-    
+
                 &.minus {
                     top: 36px;
                     left: -8px;

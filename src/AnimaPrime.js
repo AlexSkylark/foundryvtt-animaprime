@@ -221,7 +221,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         const dialogOptions = message.flags.dialogOptions;
 
         if (dialogOptions && dialogOptions.maneuverStyle) {
-            if (dialogOptions.maneuverStyle == "cunning" || dialogOptions.maneuverStyle == "heroic" || dialogOptions.maneuverStyle == "supportive") {
+            if (dialogOptions.maneuverStyle == "cunning" || dialogOptions.maneuverStyle == "methodical" || dialogOptions.maneuverStyle == "supportive") {
                 const token = game.scenes.active.tokens.get(message.flags.sourceItem.targetIds[0]);
 
                 let targetEntity = {};
@@ -235,7 +235,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
                 if (dialogOptions.maneuverStyle == "cunning") {
                     targetData.threatDice += 1;
-                } else if (dialogOptions.maneuverStyle == "heroic") {
+                } else if (dialogOptions.maneuverStyle == "methodical") {
                     const ownerDisposition = (item.owner.token ?? item.owner.prototypeToken).disposition;
                     if (ownerDisposition == token.disposition)
                         targetData.progressDice += 1;
@@ -248,6 +248,8 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                 await targetEntity.update({
                     system: targetData,
                 });
+
+                await restoreOriginalValues(item, message);
             }
         }
     }
@@ -302,6 +304,24 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                     });
                 }
             }
+        }
+    }
+});
+
+// restore original values of items who were modified by GM
+Hooks.on("createChatMessage", async (message, data, options, userId) => {
+
+    if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+
+    if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
+
+        const item = message.flags.sourceItem;
+
+        if (item.system.originalValues != null) {
+            let itemOriginalValues = JSON.parse(JSON.stringify(item.system.originalValues));
+            itemOriginalValues.originalValues = { isEmpty: true };
+            let originalItem = game.scenes.active.tokens.get(message.speaker.token).actor.data.items.get(item.originalItem._id)
+            await originalItem.update({ system: itemOriginalValues });
         }
     }
 });

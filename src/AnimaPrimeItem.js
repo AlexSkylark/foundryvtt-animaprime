@@ -83,6 +83,7 @@ export default class AnimaPrimeItem extends Item {
         let itemData = {
             ...this,
             owner: this.actor,
+            originalItem: this
         };
 
         switch (this.type) {

@@ -1,25 +1,25 @@
 <form class="{{cssClass}} character-sheet" autocomplete="on">
 
     {{> "systems/animaprime/templates/partials/script-health.hbs" actor}}
-    
+
     {{#if editUnlocked}}
         {{> "systems/animaprime/templates/partials/script-reformbasics.hbs" actor}}
     {{/if}}
     <div class="decorative-square">&nbsp;</div>
-    <header class="flexcol">    
-        <div class="header-namestrip flexrow flex0">            
+    <header class="flexcol">
+        <div class="header-namestrip flexrow flex0">
             <input {{#unless editUnlocked}}disabled{{/unless}} class="name" name="name" type="text" value="{{actor.name}}" />
-            <input {{#unless editUnlocked}}disabled{{/unless}} name="system.race" type="text" value="{{system.race}}" placeholder="[race]" />
-            <input {{#unless editUnlocked}}disabled{{/unless}} name="system.profession" type="text" value="{{system.profession}}" placeholder="[profession]" />            
+            <input {{#unless editUnlocked}}disabled{{/unless}} class="race" name="system.race" type="text" value="{{system.race}}" placeholder="[race]" />
+            <input {{#unless editUnlocked}}disabled{{/unless}} name="system.profession" type="text" value="{{system.profession}}" placeholder="[profession]" />
             <div {{#unless game.user.isGM}}disabled="true"{{/unless}} class="lock-container {{#if system.enableEdit}}lock-off{{else}}lock-on{{/if}}">
                 <div class="lock-button {{#if system.enableEdit}}lock-off{{else}}lock-on{{/if}}">
                     <i class="fas fa-lock"></i>
                 </div>
             </div>
-                
+
         </div>
     </header>
-    <div class="flexrow sheet-columns">
+    <div class="sheet-columns">
         <div class="left-side flexcol">
             <div class="profile-container flex0">
                 <div class="image-container">
@@ -34,8 +34,8 @@
                             {{/each}}
                         </div>
                         <div class="health-button-container">
-                            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue healthmax minus"data-property="health.max" data-operation="minus"><i class="fas fa-minus"></i></div>
-                            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue health minus"data-property="health.value" data-operation="minus"><i class="fas fa-minus"></i></div>
+                            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue healthmax minus" data-property="health.max" data-operation="minus"><i class="fas fa-minus"></i></div>
+                            <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue health minus" data-property="health.value" data-operation="minus"><i class="fas fa-minus"></i></div>
                             <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue health plus" data-property="health.value" data-operation="plus"><i class="fas fa-plus"></i></div>
                             <div class="icon{{#unless editUnlocked}} edit-hidden{{/unless}} button-changevalue healthmax plus" data-property="health.max" data-operation="plus"><i class="fas fa-plus"></i></div>
 
@@ -49,15 +49,15 @@
                             <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue defense plus" data-property="defense" data-operation="plus"><i class="fas fa-plus"></i></div>
                             <div class="icon {{#unless editUnlocked}}edit-hidden{{/unless}} button-changevalue defense minus"data-property="defense" data-operation="minus"><i class="fas fa-minus"></i></div>
                         </div>
-                    </div>            
+                    </div>
                 </div>
                 <!-- FIM DA HEALTH/DEFENSE FRAME -->
-            </div>            
+            </div>
             <div class="container-section flex0">
                 <label class="container-header">Passion</label>
                 <div class="container-wrapper">
                     <input class="input-text" name="system.passion" type="text" value="{{system.passion}}" placeholder="[passion]" {{#unless editUnlocked}}disabled{{/unless}} />
-                    
+
                 </div>
             </div>
             <div class="container-section flex0">
@@ -66,43 +66,43 @@
                     <input class="input-text" name="system.background" type="text" value="{{system.background}}" placeholder="[background]" {{#unless editUnlocked}}disabled{{/unless}} />
                 </div>
             </div>
-            
+
             <div class="container-section icon-container flex0">
                 <label class="container-header">Traits and Abilities</label>
                 <span class="icon button-addskill item-create {{#unless editUnlocked}}edit-hidden{{/unless}}" data-type="skill"><i class="fas fa-plus"></i></span>
                 <div class="container-wrapper skills-container">
-                    <span class="generic-skill-roll">Generic Roll</span>                    
+                    <span class="generic-skill-roll">Generic Roll</span>
                     {{#each skills as |item id|}}
                     <div class="item icon-container" data-item-id="{{item._id}}">
                         <span class="skill-unit item-roll">{{this.name}} ({{this.system.rating}})</span>
                         <span class="icon fas fa-edit item-edit {{#unless ../editUnlocked}}edit-hidden{{/unless}}"></span>
                         <span class="icon fas fa-trash item-delete {{#unless ../editUnlocked}}edit-hidden{{/unless}}"></span>
-                    </div>                    
+                    </div>
                     {{/each}}
                 </div>
             </div>
         </div>
-        <div class="right-side">            
+        <div class="right-side">
             <div class="personality-resistance-container">
                 <div class="container-section personality-section">
                     <label class="container-header">Personality Traits</label>
                     <div class="container-wrapper">
                         <div class="flexrow">
-                            <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait1.name" type="text" value="{{system.traits.trait1.name}}" placeholder="[choose a personality trait]" />                            
+                            <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait1.name" type="text" value="{{system.traits.trait1.name}}" placeholder="[choose a personality trait]" />
                         </div>
                         <div class="flexrow">
-                            <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait2.name" type="text" value="{{system.traits.trait2.name}}" placeholder="[choose a personality trait]" />                            
+                            <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait2.name" type="text" value="{{system.traits.trait2.name}}" placeholder="[choose a personality trait]" />
                         </div>
                         <div class="flexrow">
-                            <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait3.name" type="text" value="{{system.traits.trait3.name}}" placeholder="[choose a personality trait]" />                            
+                            <input {{#unless editUnlocked}}disabled{{/unless}} class="input-text trait-value" name="system.traits.trait3.name" type="text" value="{{system.traits.trait3.name}}" placeholder="[choose a personality trait]" />
                             <!--<input class="input-text trait-check" name="system.traits.trait3.marked" type="checkbox" {{checked system.traits.trait3.marked}} />-->
-                        </div>                
+                        </div>
                     </div>
                 </div>
                 <div class="container-section resistance-section icon-container">
                     <label class="container-header">Resistances</label>
                     <span class="icon button-addresistance item-create {{#unless editUnlocked}}edit-hidden{{/unless}}" data-type="resistance"><i class="fas fa-plus"></i></span>
-                    <div class="container-wrapper skills-container resistances-container">                        
+                    <div class="container-wrapper skills-container resistances-container">
                         {{#each resistances as |item id|}}
                         <div class="item icon-container" data-item-id="{{item._id}}">
                             <span class="skill-unit">{{this.name}} ({{this.system.rating}})</span>
@@ -113,7 +113,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="dice-section">
                 <div class="dice-pools">
                     <div class="dice-pool-container">
@@ -176,20 +176,20 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="container-wrapper reroll-container icon-container">                        
+
+                <div class="container-wrapper reroll-container icon-container">
                     <label class="reroll-header">Rerolls</label>
-                    <span class="reroll-value">{{system.reroll}}</span>                                                        
+                    <span class="reroll-value">{{system.reroll}}</span>
                     <div class="icon button-changevalue plus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="reroll" data-operation="plus"><i class="fas fa-plus"></i></div>
-                    <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="reroll" data-operation="minus"><i class="fas fa-minus"></i></div>                            
-                </div>                
-            </div>                            
-            <nav class="sheet-tabs tabs" data-group="primary-tabs">                                                
+                    <div class="icon button-changevalue minus {{#unless editUnlocked}}edit-hidden{{/unless}}" data-property="reroll" data-operation="minus"><i class="fas fa-minus"></i></div>
+                </div>
+            </div>
+            <nav class="sheet-tabs tabs" data-group="primary-tabs">
                 <a data-tab="profession">Character Actions</a>
-                <a data-tab="basic" class="basic">Basic Actions</a>                
-            </nav>            
+                <a data-tab="basic" class="basic">Basic Actions</a>
+            </nav>
             <section class="sheet-body">
-                <div class="tab" data-tab="basic" data-group="primary-tabs">                    
+                <div class="tab" data-tab="basic" data-group="primary-tabs">
                     <button class="button-reform-basicactions">Refresh Basic Actions</button>
                     <div class="actions-section-container">
                         <div class="actions-column">
@@ -216,9 +216,9 @@
                             {{> "systems/animaprime/templates/cards/item-card/item-card.hbs" item enableEdit=../editUnlocked}}
                             {{/each}}
                         </div>
-                    </div>                    
+                    </div>
                 </div>
-            </section>            
+            </section>
         </div>
     </div>
 </form>

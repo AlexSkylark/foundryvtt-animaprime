@@ -136,7 +136,7 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
         isAggressive: dialogOptions.maneuverStyle == "aggressive",
         isCunning: dialogOptions.maneuverStyle == "cunning",
         isDefensive: dialogOptions.maneuverStyle == "defensive",
-        isHeroic: dialogOptions.maneuverStyle == "heroic",
+        isMethodical: dialogOptions.maneuverStyle == "methodical",
         isReckless: dialogOptions.maneuverStyle == "reckless",
         isSupportive: dialogOptions.maneuverStyle == "supportive",
     });
@@ -145,13 +145,13 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
 }
 
 function checkManeuverTarget(maneuver, maneuverStyle) {
-    if (maneuverStyle == "cunning" || maneuverStyle == "heroic" || maneuverStyle == "supportive") {
+    if (maneuverStyle == "cunning" || maneuverStyle == "methodical" || maneuverStyle == "supportive") {
         const originalTargets = duplicate(maneuver.targets);
         if (maneuverStyle == "cunning") {
             maneuver.targets = maneuver.targets.filter((i) => {
                 return i.type == "adversity";
             });
-        } else if (maneuverStyle == "heroic") {
+        } else if (maneuverStyle == "methodical") {
             maneuver.targets = maneuver.targets.filter((i) => {
                 return i.type == "goal";
             });

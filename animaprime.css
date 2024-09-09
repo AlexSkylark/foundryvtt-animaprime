@@ -1101,6 +1101,7 @@ select:focus {
   font-family: "Caveat", cursive;
 }
 .character-sheet .sheet-columns {
+  display: flex;
   flex-direction: row;
 }
 .character-sheet .input-text {
@@ -1173,7 +1174,10 @@ select:focus {
   margin: 0px 6px;
 }
 .character-sheet header .header-namestrip input[type=text].name {
-  max-width: calc(100% - 510px);
+  max-width: calc(100% - 450px);
+}
+.character-sheet header .header-namestrip input[type=text].race {
+  max-width: 150px;
 }
 .character-sheet header .header-namestrip input[type=text]::placeholder {
   color: #ddd;
@@ -1250,7 +1254,7 @@ select:focus {
   right: 15px;
 }
 .character-sheet .skills-container {
-  height: 347px;
+  height: 280px;
   padding-top: 20px;
   overflow: auto;
 }
@@ -1298,11 +1302,12 @@ select:focus {
   display: flex;
 }
 .character-sheet .right-side .personality-section {
-  width: 510px;
   margin-top: 24px;
+  width: calc(100% - 182px);
 }
 .character-sheet .right-side .resistance-section {
   margin-top: 24px;
+  width: 180px;
 }
 .character-sheet .right-side .trait-value {
   flex: 0 0 96%;
@@ -1411,7 +1416,7 @@ select:focus {
 }
 .character-sheet .right-side .reroll-container .button-changevalue.plus {
   top: -36px;
-  left: 78px;
+  left: 70px;
 }
 .character-sheet .right-side .reroll-container .button-changevalue.minus {
   top: -62px;
@@ -1419,7 +1424,7 @@ select:focus {
 }
 .character-sheet .right-side .actions-section-container {
   overflow-y: auto;
-  height: 400px;
+  height: 340px;
   display: flex;
   flex-direction: row;
   border-bottom: 2px solid var(--primary-color);
@@ -1441,7 +1446,7 @@ select:focus {
   border-bottom: 2px solid var(--primary-color);
   padding: 0;
   margin-left: 24px;
-  margin-right: 24px;
+  margin-right: 12px;
   margin-top: 18px;
   margin-bottom: 0px;
 }
@@ -1463,7 +1468,7 @@ select:focus {
   border-top-right-radius: 12px;
 }
 .character-sheet .tab {
-  margin: 0px 24px;
+  margin: 0px 12px;
 }
 
 .goal-sheet .header {

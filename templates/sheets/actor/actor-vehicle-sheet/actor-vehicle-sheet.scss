@@ -13,7 +13,7 @@
 
     .skill-resistance-section {
         display: flex;
-    }    
+    }
 
     .decorative-square {
         background-color: var(--primary-color-light);
@@ -27,7 +27,7 @@
         &.small-square {
             height: 240px;
         }
-        
+
     }
 
     .lock-container {
@@ -38,7 +38,7 @@
         border: 2px solid #fff;
         padding: 3px;
         flex-direction: column;
-        border-radius: 18px;               
+        border-radius: 18px;
 
         .lock-button {
             border: 2px solid #999;
@@ -79,7 +79,7 @@
     }
 
     .skill-button-container {
-        
+
         display: flex;
         flex-direction: column;
         margin: 0px auto;
@@ -99,8 +99,8 @@
         }
     }
 
-    .skills-container {    
-        
+    .skills-container {
+
         margin-bottom: 24px;
         display: flex;
         flex-wrap: wrap;
@@ -118,7 +118,7 @@
 
         .skill-line {
             flex: 0 0 90%;
-            
+
         }
 
         .skill-unit {
@@ -133,7 +133,7 @@
         }
     }
 
-    
+
 
     input[type=text] {
         font-family: 'Caveat', cursive;
@@ -162,7 +162,7 @@
         margin: 1px 12px;
 
         &.name {
-            max-width: 50%;            
+            max-width: 50%;
         }
 
         &::placeholder {
@@ -219,7 +219,7 @@
             padding: 6px 20px;
             text-align: center;
             color: #fff;
-            font-weight: 600;                
+            font-weight: 600;
             margin-left: 22px;
             position: relative;
             bottom: 4px;
@@ -241,7 +241,7 @@
                 width: calc(100% - 26px);
             }
         }
-    }    
+    }
 
     header {
         padding: 4px;
@@ -252,7 +252,7 @@
             padding: 12px;
             margin: 8px;
             color: #fff;
-    
+
             input[type=text] {
                 max-width: 21%;
                 color: #fff;
@@ -261,15 +261,15 @@
                 border-radius: 0;
                 margin: 0px 6px;
 
-                &.name {                                    
+                &.name {
                     max-width: 69%;
-                
+
                     &.small {
                         max-width: 67%;
                     }
 
                     &.is-gm {
-                        max-width: 57%;                        
+                        max-width: 57%;
                     }
                 }
 
@@ -279,8 +279,8 @@
             }
         }
     }
-        
-    .left-side {        
+
+    .left-side {
         margin-left: 4px;
         display: flex;
 
@@ -294,7 +294,7 @@
                     max-width: 240px;
                 }
             }
-            
+
         }
 
         img {
@@ -304,26 +304,26 @@
             width: 240px;
             border-radius: 32px;
             padding: 4px;
-            margin: 0 21px;            
+            margin: 0 21px;
             background-color: #fff;
         }
 
         .image-container {
             position: relative;
 
-        }        
+        }
 
         .button-addskill {
             border: 2px solid var(--primary-color);
             border-radius: 17px;
-            background-color: #fff; 
+            background-color: #fff;
             padding: 1px 4px;
             position: relative;
             bottom: 18px;
             right: 15px;
         }
-    
-        .skills-container {        
+
+        .skills-container {
 
             .icon {
                 float: right;
@@ -335,9 +335,9 @@
                     left: -24px
                 }
             }
-            
+
             .skill-unit {
-                border-bottom: 2px solid variables.$input-line-color;            
+                border-bottom: 2px solid variables.$input-line-color;
                 display: block;
                 font-family: "Caveat", cursive;
                 font-size: 20px;
@@ -345,7 +345,7 @@
                 padding-left: 6px;
                 padding-top: 6px;
             }
-        }        
+        }
     }
 
     .right-side {
@@ -368,7 +368,7 @@
                 border-radius: 8px;
             }
 
-            
+
         }
 
         .trait-value {
@@ -381,6 +381,13 @@
         }
 
         &.dice-pools {
+
+            align-items: center;
+            margin-right: 27px;
+            justify-content: flex-start;
+            margin-top: 36px;
+            bottom: 10px;
+            margin-left: 24px;
 
             .select-vehicle-type {
 
@@ -410,13 +417,6 @@
                 }
             }
 
-            align-items: center;            
-            margin-right: 27px;
-            justify-content: flex-start;
-            margin-top: 36px;            
-            bottom: 10px;
-            margin-left: 24px;          
-
             .dice-pool-strip {
                 background-color: var(--primary-color);
                 height: 32px;
@@ -427,12 +427,12 @@
                 margin: 15px 0;
                 margin-right: 11px;
                 border-radius: 8px;
-                
+
                 &.threat-only {
                     position: relative;
                     top: 56px;
                 }
-               
+
                 label {
                     width: calc(100% - 27px);
                     text-align: end;
@@ -444,7 +444,7 @@
                         width: 33px;
                         color: #fff;
                         text-align: center;
-                        font-size: 25px;    
+                        font-size: 25px;
                         position: relative;
                         height: 17px;
                         border: 0;
@@ -457,22 +457,22 @@
                 }
 
                 .button-changevalue {
-                    
+
                     left: 100%;
                     bottom: 18px;
-                        
+
                     &.minus {
-                        top: 18px;              
+                        top: 18px;
                         left: calc(100% - 25px);
                     }
                 }
             }
         }
-       
+
     }
 
     .actions-section-container {
-        
+
         width: calc(100% - 45px);
         border-bottom: 2px solid var(--primary-color);
         margin-left: 24px;
@@ -482,9 +482,9 @@
         flex-direction: row;
     }
 
-    .actions-column {            
+    .actions-column {
         display: flex;
-        flex-direction: column;            
+        flex-direction: column;
         width: 50%;
         padding-top: 8px;
 
@@ -497,17 +497,17 @@
         }
     }
 
-    .actions-section {            
+    .actions-section {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         margin-left: 24px;
-        margin-bottom: 18px;        
+        margin-bottom: 18px;
         padding-top: 6px;
     }
 
     nav.sheet-tabs {
-        
+
         border-top: 0;
         border-bottom: 2px solid var(--primary-color);
         padding: 0;
@@ -519,7 +519,7 @@
         &.gm-spacing {
             margin-top: -32px;
         }
-        
+
         a {
             padding: 4px 12px;
 

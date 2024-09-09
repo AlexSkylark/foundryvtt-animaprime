@@ -34,14 +34,12 @@
       "name": "basic-actions",
       "label": "Basic Actions",
       "system": "animaprime",
-      "path": "packs/basic-actions",
       "type": "Item"
     },
     {
       "name": "basic-vehicle-actions",
       "label": "Basic Vehicle Actions",
       "system": "animaprime",
-      "path": "packs/basic-vehicle-actions",
       "type": "Item"
     }
   ]

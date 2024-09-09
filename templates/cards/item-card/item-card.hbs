@@ -1,6 +1,6 @@
 <div class="item-card-container {{type}}">
     <img src="{{img}}" />
-    <div class="item-card item item-roll" data-item-id="{{_id}}">        
+    <div class="item-card item item-roll" data-item-id="{{_id}}">
         <div class="item-header icon-container">
             <label class="item-title">{{name}}</label>
             <i class="icon{{#unless enableEdit}} edit-hidden{{/unless}} item-title fas fa-edit item-edit"></i>
@@ -8,22 +8,22 @@
         </div>
         <div class="item-description-container">
             <span class="item-description">{{system.description}}</span>
-            {{#if system.additionalEffect}}
-            <span class="item-description"><strong>Additional Effect: </strong>{{system.additionalEffect}}</span>
-            {{/if}}
             {{#if system.gainText}}
-            <span class="item-description"><strong>Gain: </strong>{{system.gainText}}</span>
+            <span class="item-description gain"><strong>Gain: </strong>{{system.gainText}}</span>
             {{/if}}
             {{#if system.trigger}}
-            <span class="item-description"><strong>Trigger: </strong>{{system.trigger}}</span>
+            <span class="item-description trigger"><strong>Trigger: </strong>{{system.trigger}}</span>
             {{/if}}
             {{#if system.effect}}
-            <span class="item-description"><strong>Effect: </strong>{{system.effect}}</span>
+            <span class="item-description effect"><strong>Effect: </strong>{{system.effect}}</span>
+            {{/if}}
+            {{#if system.additionalEffect}}
+            <span class="item-description effect-add"><strong>Additional Effect: </strong>{{system.additionalEffect}}</span>
             {{/if}}
             {{#if system.damage}}
-            <span class="item-description"><strong>Damage Type: </strong>{{system.damage}}</span>
+            <span class="item-description type"><strong>Damage Type: </strong>{{system.damage}}</span>
             {{/if}}
-        </div>        
+        </div>
         <div class="cells">
             {{#if system.roll}}
             <div class="roll flexcol flex0">
@@ -32,29 +32,29 @@
             </div>
             {{/if}}
             {{#if system.cost includeZero=true}}
-            <div class="cost flexcol flex0">
+            <div class="cost item-value flexcol flex0" data-item-id="{{_id}}" data-property="cost">
                 <span class="cell-label">COST</span>
                 <span>{{system.cost}}</span>
             </div>
             {{/if}}
-            {{#if system.sdl}}
-            <div class="cost flexcol flex0">
+            {{#if system.sdl includeZero=true}}
+            <div class="cost item-value flexcol flex0" data-item-id="{{_id}}" data-property="sdl">
                 <span class="cell-label">SDL</span>
                 <span>{{system.sdl}}</span>
             </div>
             {{/if}}
-            {{#if system.targets}}
-            <div class="cost flexcol flex0">
+            {{#if system.targets includeZero=true}}
+            <div class="cost item-value flexcol flex0" data-item-id="{{_id}}" data-property="targets">
                 <span class="cell-label">TGTS</span>
                 <span>{{#if (eq system.targets 99)}}All{{else}}{{system.targets}}{{/if}}</span>
             </div>
             {{/if}}
-            {{#if system.range}}
-            <div class="cost flexcol flex0">
+            {{#if system.range includeZero=true}}
+            <div class="cost item-value flexcol flex0" data-item-id="{{_id}}" data-property="range">
                 <span class="cell-label">RNG</span>
                 <span>{{system.range}}</span>
             </div>
-            {{/if}}            
+            {{/if}}
         </div>
     </div>
 </div>
