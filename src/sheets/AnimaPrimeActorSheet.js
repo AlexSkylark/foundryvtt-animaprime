@@ -224,7 +224,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
             newValue = Math.min(newValue, maxValue);
         }
 
-        // special treatment for action dice
+        // special treatment for focus dice
         if (propertyName == "actionDice" && newValue > this.actor.system.dice.actionDiceMax) newValue--;
 
         let updateObject = {};
