@@ -1,4 +1,4 @@
-<div class="action-hud-container">    
+<div class="action-hud-container">
     {{#unless game.combats.active.isUpdating}}
         <div class="hud-actions-container">
         {{#each mainActions}}
@@ -6,6 +6,7 @@
                 <img src="{{this.img}}" />
                 {{this.name}}
             </div>
+            <div class="img-gear">&nbsp;</div>
         {{/each}}
         </div>
         <div class="hud-actions-container">
@@ -14,6 +15,9 @@
                 <img src="{{this.img}}" />
                 {{this.name}}
             </div>
+            {{#if (or this.system.scriptAfterResolve this.system.scriptBeforeResolve)}}
+                <img class="img-gear" src="../../systems/animaprime/assets/script-gear.png" />
+            {{/if}}
         {{/each}}
         </div>
     {{/unless}}

@@ -3414,6 +3414,15 @@ select:focus {
   bottom: 70px;
   left: 220px;
 }
+.action-hud-container .img-gear {
+  width: 28px;
+  height: 28px;
+  float: right;
+  margin-left: -18px;
+  position: relative;
+  border: 0;
+  bottom: 24px;
+}
 .action-hud-container .hud-actions-container {
   display: flex;
   max-width: 35vw;
@@ -3430,6 +3439,8 @@ select:focus {
   border-style: solid;
   border-width: 2px;
   border-radius: 12px;
+  margin-top: 12px;
+  margin-left: -1px;
   cursor: pointer;
 }
 .action-hud-container .hud-actions-container .action-hud-item img {
