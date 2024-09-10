@@ -194,7 +194,7 @@ export default class AnimaPrimeCombat extends Combat {
     }
 
     getActorFromCombatant(comb) {
-        const token = game.scenes.active.tokens.get(comb.token.id);
+        const token = comb.token;
         if (token.isLinked) {
             return game.actors.get(token.actor.id);
         } else {
