@@ -67,6 +67,8 @@ export async function renderRoll(rollResult, entityData, resultData, messageTemp
 
         await commitCallback(resultData, entityData, dialogOptions, itemTarget);
     }
+
+    game.user.updateTokenTargets([]);
 }
 
 function sortDiceRolls(renderedRoll, chatMessageUniqueId) {

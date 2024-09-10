@@ -52,7 +52,7 @@ export default class AnimaPrimeActionHUD extends Application {
         ev.preventDefault();
         ev.stopPropagation();
 
-        const item = game.combats.active.getCurrentActor().getEmbeddedDocument("Item", $(ev.currentTarget).closest(".item").data("itemId"));
+        const item = game.combats.active.getCurrentActor().items.get(ev.currentTarget.dataset.itemId);
 
         await item.roll(ev.ctrlKey, ev.shiftKey);
     }

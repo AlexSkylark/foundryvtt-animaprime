@@ -2099,6 +2099,23 @@ select:focus {
 .action-sheet .action-data .gain {
   margin-top: 12px;
 }
+.action-sheet .script-button-container {
+  margin-top: 16px;
+}
+.action-sheet .script-button-container button {
+  width: calc(100% - 16px);
+}
+.action-sheet .script-button-container .textarea-event {
+  display: none;
+}
+
+.script-editor-window .script-editor {
+  font-family: "Courier New", Courier, monospace;
+  height: 100%;
+}
+.script-editor-window .CodeMirror {
+  height: 100%;
+}
 
 .chat-message-message .message-content {
   border: 0 !important;

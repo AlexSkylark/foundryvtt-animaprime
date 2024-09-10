@@ -86,6 +86,13 @@ export default class AnimaPrimeItem extends Item {
             originalItem: this
         };
 
+        itemData.targets = [];
+        itemData.targetIds = [];
+        await game.user.targets.forEach((element) => {
+            itemData.targets.push(element.document.actor);
+            itemData.targetIds.push(element._id ?? element.id);
+        });
+
         switch (this.type) {
             case "skill":
                 SkillDiceRoll.skillCheck(itemData, ctrl, shift);
@@ -95,13 +102,6 @@ export default class AnimaPrimeItem extends Item {
                 break;
             case "strike":
             case "achievement":
-                itemData.targets = [];
-                itemData.targetIds = [];
-                await game.user.targets.forEach((element) => {
-                    itemData.targets.push(element.document.actor);
-                    itemData.targetIds.push(element._id ?? element.id);
-                });
-
                 AttackDiceRoll.attackRoll(itemData);
                 break;
             case "power":

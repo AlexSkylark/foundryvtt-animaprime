@@ -7,6 +7,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     const isEmpowered = checkCondition(item.owner, "empowered") && item.type == "strike";
     const isWeakened = checkCondition(item.owner, "weakened") && item.type == "strike";
     const isHexed = checkCondition(item.owner, "hexed");
+    const isSupported = checkCondition(item.owner, "supported");
 
     const ownerData = item.owner.system;
 
@@ -97,6 +98,8 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         if (!options.weakness) options.weakness = 1;
     });
 
+
+
     for (let i = 0; i < item.targets.length; i++) {
         const resistance = item.targets[i].items.filter((it) => it.type == "resistance" && dialogOptions[i].damageType.toUpperCase().indexOf(it.name.toUpperCase()) >= 0);
         if (resistance.length) {
@@ -115,6 +118,10 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     for (let i = 0; i < item.targets.length; i++) {
 
         successModifier = dialogOptions[i].rollModifier;
+
+        // add a bonus dice if supported
+        if (isSupported)
+            dialogOptions[i].bonusDice += 1;
 
         // roll execution
         const rollFormula = (abilityDice[i] + dialogOptions[i].strikeDice + dialogOptions[i].actionDice + dialogOptions[i].variableDice + dialogOptions[i].bonusDice - (dialogOptions[i].resistance ?? 0) + (isEmpowered ? 1 : 0)).toString() + "d6";

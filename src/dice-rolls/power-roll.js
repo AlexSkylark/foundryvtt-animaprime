@@ -1,7 +1,16 @@
+import * as ScriptEngine from "../AnimaPrimeScriptEngine.js"
+
 export async function powerRoll(power) {
     const ownerChargeDice = power.owner.system.chargeDice;
     power.capitalizedType =
         power.type.charAt(0).toUpperCase() + power.type.slice(1);
+
+    // execute validations as defined in script
+    if (power.system.scriptValidations) {
+        let valid = await ScriptEngine.executeValidations(power);
+
+        if (!valid) return;
+    }
 
     const isHexed = power.owner.checkCondition("hexed");
     if (isHexed) power.system.cost += 1;
@@ -48,6 +57,8 @@ async function castPower(power) {
         }
     );
 
+    game.user.updateTokenTargets([]);
+
     return ChatMessage.create({
         user: game.user._id,
         speaker: ChatMessage.getSpeaker({ alias: power.owner.name }),
@@ -57,3 +68,6 @@ async function castPower(power) {
         },
     });
 }
+
+
+

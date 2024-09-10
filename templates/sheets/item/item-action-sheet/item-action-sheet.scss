@@ -8,11 +8,11 @@
         border: 0;
         color: #444;
     }
-    
+
     .name {
         flex: 0 0 60%
     }
-    
+
     .field-container {
         padding-right: 16px;
     }
@@ -21,8 +21,8 @@
         margin-top: 12px;
     }
 
-    .description {        
-        flex: 0 0 65%;  
+    .description {
+        flex: 0 0 65%;
     }
 
     select {
@@ -33,7 +33,7 @@
     }
 
     .action-data {
-        
+
         span {
             display: block;
             margin-top: 4px;
@@ -41,11 +41,23 @@
         }
 
         .box-title {
-            margin-bottom: 16px;            
+            margin-bottom: 16px;
         }
 
         .gain {
             margin-top: 12px;
+        }
+    }
+
+    .script-button-container {
+        margin-top: 16px;
+
+        button {
+            width: calc(100% - 16px);
+        }
+
+        .textarea-event {
+            display: none;
         }
     }
 }

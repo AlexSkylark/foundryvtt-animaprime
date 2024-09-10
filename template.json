@@ -77,7 +77,10 @@
                 "description": "-",
                 "cost": 0,
                 "basic": false,
-                "originalValues": {}
+                "originalValues": {},
+                "scriptBeforeResolve": "",
+                "scriptAfterResolve": "",
+                "scriptValidations": ""
             },
             "effect": {
                 "effect": "-"

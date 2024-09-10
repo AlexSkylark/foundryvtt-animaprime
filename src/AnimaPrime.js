@@ -18,6 +18,7 @@ import AnimaPrimeGamemasterHUD from "./AnimaPrimeGamemasterHUD.js";
 
 import * as HandlebarsHelpers from "./Handlebars.js";
 import * as DiceRolls from "./dice-rolls/dice-rolls.js";
+import * as ScriptEngine from "./AnimaPrimeScriptEngine.js";
 
 async function preloadTemplates() {
     const templatePaths = ["systems/animaprime/templates/cards/item-card/item-card.hbs", "systems/animaprime/templates/partials/script-health.hbs", "systems/animaprime/templates/partials/script-reformbasics.hbs", "systems/animaprime/templates/partials/script-togglegmhud.hbs", "systems/animaprime/templates/partials/health-defense-container.hbs"];
@@ -185,7 +186,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         }
 
         if (!game.user.isGM) {
-            const actorOwner = game.actors.get(message.flags.actorId);
+            const actorOwner = game.actors.get(item.owner._id);
             if (!message.flags.enableReroll && actorOwner.isOwner) {
                 await DiceRolls.getConfirmEndOfTurn(item.owner);
             }
@@ -251,6 +252,8 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
                 await restoreOriginalValues(item, message);
             }
+
+            game.user.updateTokenTargets([]);
         }
     }
 });
@@ -262,7 +265,11 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
         const item = message.flags.sourceItem;
 
-        if (message.flags && message.flags.sourceItem && message.flags.sourceItem.targets) {
+        if (message.flags &&
+            message.flags.sourceItem &&
+            message.flags.sourceItem.targets &&
+            (message.flags.sourceItem.type == "strike" || message.flags.sourceItem.type == "achievement")
+        ) {
             for (let i = 0; i < message.flags.sourceItem.targets.length; i++) {
                 const resultData = message.flags.resultData[i];
                 const dialogOptions = message.flags.dialogOptions[i];
@@ -293,6 +300,14 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                 } else if (item.type == "achievement") {
                     const ownerDisposition = (item.owner.token ?? item.owner.prototypeToken).disposition;
 
+                    const itemOwnerActor = game.actors.get(item.owner._id);
+                    const isSupported = itemOwnerActor.checkCondition("supported");
+                    if (isSupported) {
+                        const supportedEffect = CONFIG.statusEffects.find((e) => e.id == "supported");
+                        const ownerToken = itemOwnerActor.getActiveTokens()[0];
+                        ownerToken.toggleEffect(supportedEffect, false);
+                    }
+
                     if (resultData.hit) {
                         targetData.progressDice = 0;
                     } else {
@@ -302,6 +317,8 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                     await targetEntity.update({
                         system: targetData,
                     });
+
+                    game.user.updateTokenTargets([]);
                 }
             }
         }
@@ -317,12 +334,27 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
         const item = message.flags.sourceItem;
 
-        if (item.system.originalValues != null) {
+        if (item.system.originalValues != null && !item.system.originalValues.isEmpty) {
             let itemOriginalValues = JSON.parse(JSON.stringify(item.system.originalValues));
             itemOriginalValues.originalValues = { isEmpty: true };
             let originalItem = game.scenes.active.tokens.get(message.speaker.token).actor.data.items.get(item.originalItem._id)
             await originalItem.update({ system: itemOriginalValues });
         }
+    }
+});
+
+// GM proxy for executing script actions
+Hooks.on("createChatMessage", async (message, data, options, userId) => {
+
+    if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+
+    if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
+
+        if (message.flags.sourceItem.system.scriptAfterResolve) {
+            await ScriptEngine.executeResolveScript(message.flags.sourceItem, message.flags.sourceItem.system.scriptAfterResolve);
+        }
+
+        game.user.updateTokenTargets([]);
     }
 });
 
@@ -343,31 +375,6 @@ Hooks.once("ready", async function () {
     // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
     Hooks.on("hotbarDrop", (bar, data, slot) => createActionCardMacro(bar, data, slot));
 });
-
-async function createActionCardMacro(bar, data, slot) {
-    if (data.type !== "Item") return;
-
-    const splitData = data.uuid.split(".");
-    const item = game.actors.get(splitData[1]).items.get(splitData[3]);
-
-    // Create the macro command
-    const command = `game.animaprime.rollItemMacro("${splitData[3]}");`;
-    let macro = game.macros.find((m) => m.name === item.name && m.command === command);
-    if (!macro) {
-        macro = await Macro.create({
-            name: item.name,
-            type: "script",
-            img: item.img,
-            command: command,
-            flags: { "animaprime.itemMacro": true },
-        });
-    }
-    setTimeout(async () => {
-        await game.user.assignHotbarMacro(macro, slot);
-    }, 500);
-
-    return false;
-}
 
 Hooks.once("init", async () => {
     game.animaprime = {
@@ -434,6 +441,31 @@ function changePrimaryColor(color) {
     r.style.setProperty("--hue", hslValue.hue);
     r.style.setProperty("--saturation", hslValue.saturation);
     r.style.setProperty("--light", hslValue.light);
+}
+
+async function createActionCardMacro(bar, data, slot) {
+    if (data.type !== "Item") return;
+
+    const splitData = data.uuid.split(".");
+    const item = game.actors.get(splitData[1]).items.get(splitData[3]);
+
+    // Create the macro command
+    const command = `game.animaprime.rollItemMacro("${splitData[3]}");`;
+    let macro = game.macros.find((m) => m.name === item.name && m.command === command);
+    if (!macro) {
+        macro = await Macro.create({
+            name: item.name,
+            type: "script",
+            img: item.img,
+            command: command,
+            flags: { "animaprime.itemMacro": true },
+        });
+    }
+    setTimeout(async () => {
+        await game.user.assignHotbarMacro(macro, slot);
+    }, 500);
+
+    return false;
 }
 
 function configureStatusEffects() {

@@ -19,7 +19,7 @@ export default class AnimaPrimeCombat extends Combat {
         this.turns.forEach(async (combatant) => {
             let actorData = combatant.actor.system;
 
-            if (combatant.actor.type == "character") actorData.actionDice = actorData.dice.actionDiceMax;
+            if (combatant.actor.type == "character") actorData.actionDice = actorData.actionDiceMax;
             if (combatant.actor.type == "vehicle") actorData.chargeDice = parseInt(actorData.chargeDiceMax);
 
             actorData.strikeDice = 0;

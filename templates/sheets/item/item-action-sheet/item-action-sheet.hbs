@@ -3,30 +3,30 @@
         <img class="profile-img" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
         <div class="field-container name flexcol">
             <label>{{item.type}} Name</label>
-            <div class="value-field">        
+            <div class="value-field">
                 <input type="text" name="name" value="{{item.name}}" />
             </div>
         </div>
         <div class="field-container flexcol">
             <label>cost</label>
-            <div class="value-field">        
+            <div class="value-field">
                 <input type="text" name="system.cost" value="{{system.cost}}" data-dtype="Number" />
             </div>
         </div>
         <div class="field-container flexcol">
             <label>basic?</label>
-            <div class="value-field">        
+            <div class="value-field">
                 <input type="checkbox" name="system.basic" {{checked system.basic}} data-dtype="Boolean" />
             </div>
         </div>
-    </section>    
-    <section class="action-system flexrow">    
+    </section>
+    <section class="action-system flexrow">
         {{#if system.effect}}
         <div class="flexrow">
             {{#if system.trigger}}
             <div class="field-container flexcol">
                 <label>trigger</label>
-                <div class="value-field">        
+                <div class="value-field">
                     <input type="text" name="system.trigger" value="{{system.trigger}}" data-dtype="String" />
                 </div>
             </div>
@@ -34,7 +34,7 @@
              {{#if system.key}}
             <div class="field-container flexcol">
                 <label>key</label>
-                <div class="value-field">        
+                <div class="value-field">
                     <input type="text" name="system.key"  value="{{system.key}}" data-dtype="String" />
                 </div>
             </div>
@@ -42,25 +42,25 @@
             {{#if system.effect}}
             <div class="field-container flexcol">
                 <label>effect</label>
-                <div class="value-field">        
+                <div class="value-field">
                     <input type="text" name="system.effect"  value="{{system.effect}}" data-dtype="String" />
                 </div>
             </div>
-            {{/if}}        
+            {{/if}}
         </div>
         {{/if}}
         {{#if system.roll}}
         <div class="field-container flexcol" {{#if system.gain}} style="flex: 0 0 40%" {{/if}}>
             <label>roll</label>
-            <div class="value-field">        
+            <div class="value-field">
                 <input type="text" name="system.roll"  value="{{system.roll}}" data-dtype="String" />
             </div>
         </div>
-        {{/if}}         
+        {{/if}}
         {{#if system.targets}}
         <div class="field-container flexcol">
             <label>targets</label>
-            <div class="value-field">        
+            <div class="value-field">
                 <input type="text" name="system.targets"  value="{{system.targets}}" data-dtype="String" />
             </div>
         </div>
@@ -68,7 +68,7 @@
         {{#if system.range includeZero=true}}
         <div class="field-container flexcol">
             <label>range</label>
-            <div class="value-field">        
+            <div class="value-field">
                 <input type="text" name="system.range"  value="{{system.range}}" data-dtype="String" />
             </div>
         </div>
@@ -76,7 +76,7 @@
         {{#if system.sdl}}
         <div class="field-container flexcol">
             <label>sdl</label>
-            <div class="value-field">        
+            <div class="value-field">
                 <input type="text" name="system.sdl"  value="{{system.sdl}}" data-dtype="String" />
             </div>
         </div>
@@ -84,13 +84,13 @@
         {{#if system.damage}}
         <div class="field-container flexcol">
             <label>damage</label>
-            <div class="value-field">        
+            <div class="value-field">
                 <input type="text" name="system.damage"  value="{{system.damage}}" data-dtype="String" />
             </div>
         </div>
         {{/if}}
         {{#if system.gain}}
-        <div class="gain">            
+        <div class="gain">
             <h4 class="box-title">Gain Selection</h4>
             <div class="flexrow">
                 <div class="flexrow">
@@ -148,7 +148,7 @@
     <section class="flexrow description-section" {{#if system.gain}}style=" margin-top: 0 "{{/if}}>
         <div class="field-container flexcol">
             <label>description</label>
-            <div class="value-field">        
+            <div class="value-field">
                 <input type="text" name="system.description" value="{{system.description}}" data-dtype="String" />
             </div>
         </div>
@@ -156,8 +156,24 @@
     <section class="flexrow description-section"></section>
             <div class="field-container flexcol">
             <label>Additional Effect</label>
-            <div class="value-field">        
+            <div class="value-field">
                 <input type="text" name="system.additionalEffect" value="{{system.additionalEffect}}" data-dtype="String" />
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="flexrow script-button-container">
+            <div class="button-container">
+                <button class="script-button" data-event="validations">Validations Script</button>
+                <textarea class="textarea-event" data-event="system.scriptValidations">{{system.scriptValidations}}</textarea>
+            </div>
+            <div class="button-container">
+                <button class="script-button" data-event="beforeResolve">BeforeResolve Script</button>
+                <textarea class="textarea-event" data-event="system.scriptBeforeResolve">{{system.scriptBeforeResolve}}</textarea>
+            </div>
+            <div class="button-container">
+                <button class="script-button" data-event="afterResolve">AfterResolve Script</button>
+                <textarea class="textarea-event" data-event="system.scriptAfterResolve">{{system.scriptAfterResolve}}</textarea>
             </div>
         </div>
     </section>

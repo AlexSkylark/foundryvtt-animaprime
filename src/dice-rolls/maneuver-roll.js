@@ -118,7 +118,7 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
     }
 
     // is the target of equal disposition to the user?
-    const isPositive = game.scenes.active.tokens.find((tk) => tk.id == maneuver.targetIds[0]).disposition == (maneuver.owner.token ?? maneuver.owner.prototypeToken).disposition;
+    const isPositive = !maneuver.targetIds[0] ? true : game.scenes.active.tokens.find((tk) => tk.id == maneuver.targetIds[0]).disposition == (maneuver.owner.token ?? maneuver.owner.prototypeToken).disposition;
 
     let additionalData = [];
     additionalData.push({

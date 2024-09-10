@@ -1,0 +1,10 @@
+.script-editor-window {
+    & .script-editor {
+      font-family: 'Courier New', Courier, monospace;
+      height: 100%;
+    }
+
+    & .CodeMirror {
+      height: 100%;
+    }
+  }
