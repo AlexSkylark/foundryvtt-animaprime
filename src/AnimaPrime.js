@@ -68,6 +68,7 @@ function registerSheets() {
     });
 }
 
+
 Hooks.on("renderActorSheet", async (sheet, html, data) => {
     let varWidth = sheet.constructor.defaultOptions.width;
     let varHeight = sheet.constructor.defaultOptions.height;
@@ -77,28 +78,20 @@ Hooks.on("renderActorSheet", async (sheet, html, data) => {
         varHeight = sheet.heightUnlocked;
     }
 
-    let varLeft = window.innerWidth / 2 - varWidth / 2;
-    let varTop = window.innerHeight / 2 - varHeight / 2;
-
     await sheet.setPosition({
-        left: varLeft,
-        top: varTop,
         width: varWidth,
         height: varHeight,
     });
 
     sheet.options.width = varWidth;
     sheet.options.height = varHeight;
-    sheet.options.left = varLeft;
-    sheet.options.top = varTop;
-
-    html.css("top", `${varTop}px`);
 });
 
 Hooks.on("createToken", async (token, data, context, userId) => {
     await token.update({ displayName: 30  });
 });
 
+// handle changes in disposition for actors/tokens in combat
 Hooks.on("updateToken", async (token, data, context, userId) => {
 
     if (!token.combatant) return;
@@ -108,7 +101,11 @@ Hooks.on("updateToken", async (token, data, context, userId) => {
     }
 });
 
+// gives basic actions to actor/tokens on create
 Hooks.on("createActor", async (actor, data, context, userId) => {
+
+    if (!game.user.isGM) return;
+
     if (actor.type == "character" || actor.type == "adversity" || actor.type == "ally") {
         let items = await game.packs.get("animaprime.basic-actions").getDocuments();
         items = items.sort((a, b) => a.name.localeCompare(b.name));
@@ -136,6 +133,7 @@ Hooks.on("createActor", async (actor, data, context, userId) => {
     await actor.update({ prototypeToken: { displayName: 30 } });
 });
 
+// handles name changes for actors in combat
 Hooks.on("preUpdateActor", async (actor, change, context, userId) => {
     if (change.name) {
         game.scenes.forEach(async (scene) => {
@@ -200,7 +198,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
     if (game.user.isGM && message.flags.rerollConfig) {
         if (message.flags.rerollConfig.charAt(0) == ",") message.flags.rerollConfig = message.flags.rerollConfig.slice(1);
-        await game.settings.set("animaprime", "commitedRerolls", message.flags.rerollConfig);
+        await game.combats.active.update({ "flags.commitedRerolls": message.flags.rerollConfig });
     }
 });
 
@@ -213,7 +211,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
     }
 });
 
-// GM proxy for maneuver commits on targets the player doesn't own
+// GM proxy for maneuver commits
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
@@ -258,7 +256,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
     }
 });
 
-// GM proxy for strike/achievement commits on targets the player doesn't own
+// GM proxy for strike/achievement commits
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
@@ -301,7 +299,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                     const ownerDisposition = (item.owner.token ?? item.owner.prototypeToken).disposition;
 
                     const itemOwnerActor = game.actors.get(item.owner._id);
-                    const isSupported = itemOwnerActor.checkCondition("supported");
+                    const isSupported = item.owner.checkCondition("supported");
                     if (isSupported) {
                         const supportedEffect = CONFIG.statusEffects.find((e) => e.id == "supported");
                         const ownerToken = itemOwnerActor.getActiveTokens()[0];
@@ -334,10 +332,10 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
         const item = message.flags.sourceItem;
 
-        if (item.system.originalValues != null && !item.system.originalValues.isEmpty) {
+        if (item.system.originalValues != null && Object.keys(item.system.originalValues).length) {
             let itemOriginalValues = JSON.parse(JSON.stringify(item.system.originalValues));
-            itemOriginalValues.originalValues = { isEmpty: true };
-            let originalItem = game.scenes.active.tokens.get(message.speaker.token).actor.data.items.get(item.originalItem._id)
+            itemOriginalValues.originalValues = null;
+            let originalItem = game.actors.get(item.owner._id).items.get(item.originalItem._id)
             await originalItem.update({ system: itemOriginalValues });
         }
     }
@@ -350,14 +348,35 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
     if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
 
-        if (message.flags.sourceItem.system.scriptAfterResolve) {
-            await ScriptEngine.executeResolveScript(message.flags.sourceItem, message.flags.sourceItem.system.scriptAfterResolve);
+        if (message.flags.sourceItem.type == "boost") {
+
+            let boost = {
+                scriptBeforeResolve: message.flags.sourceItem.system.scriptBeforeResolve,
+                scriptAfterResolve: message.flags.sourceItem.system.scriptAfterResolve,
+                validActions: message.flags.sourceItem.system.actionTypes
+            }
+
+            await game.combats.active.update({ "flags.actionBoost": boost });
+        } else {
+            if (message.flags.sourceItem.system.scriptAfterResolve) {
+                if (message.flags.sourceItem.targets && message.flags.sourceItem.targets.length) {
+                    for(let target of message.flags.sourceItem.targets) {
+                        await ScriptEngine.executeResolveScript(message.flags.sourceItem, target, message.flags.sourceItem.system.scriptAfterResolve);
+                    }
+                } else {
+                    await ScriptEngine.executeResolveScript(message.flags.sourceItem, null, message.flags.sourceItem.system.scriptAfterResolve);
+                }
+            }
+
+            // inactivate any boost scripts still active
+            await game.combats.active.update({ "flags.actionBoost": null });
         }
 
         game.user.updateTokenTargets([]);
     }
 });
 
+// setup action HUD
 Hooks.once("canvasReady", async () => {
     if (!game.actionHud) {
         game.actionHud = new AnimaPrimeActionHUD();
@@ -369,6 +388,13 @@ Hooks.once("canvasReady", async () => {
 
     await game.actionHud.render(true);
     await game.gmHud.render(true);
+});
+
+Hooks.on("deleteChatMessage", async (app) => {
+
+    if (game.user.isGM && app.flags.sourceItem.type == "boost") {
+        await game.combats.active.update({ "flags.actionBoost": null });
+    }
 });
 
 Hooks.once("ready", async function () {
@@ -406,18 +432,6 @@ Hooks.once("init", async () => {
     HandlebarsHelpers.registerHandlebarsHelpers();
     registerSheets();
     configureStatusEffects();
-
-    await game.settings.register("animaprime", "commitedRerolls", {
-        name: "Reroll List",
-        hint: "Comma-separated list for reroll control",
-        scope: "world",
-        config: false,
-        type: String,
-        default: "",
-        onChange: (value) => {
-            console.log("reroll added: " + value);
-        },
-    });
 
     await ColorPicker.register("animaprime", "primaryColor", {
         name: "Primary Color",

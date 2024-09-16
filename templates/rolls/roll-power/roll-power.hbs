@@ -1,20 +1,23 @@
-<div class="roll-power roll {{type}} roll-message-container" data-type="{{type}}">
-    <div class="roll item" data-item-id="{{_id}}">                
-        <div class="roll-header">
-            <img class="roll-img" src="{{img}}" title="{{name}}" />
-            <div class="header-label flexcol">
-                <h4 class="header-title">Cast {{capitalizedType}}</h4>
-                <h4 class="header-name">{{name}}</h4>
+<div>
+    <div class="gray-curtain-off"></div>
+    <div class="roll-power roll {{type}} roll-message-container" data-type="{{type}}">
+        <div class="roll item" data-item-id="{{_id}}"></div>
+            <div class="roll-header">
+                <img class="roll-img" src="{{img}}" title="{{name}}" />
+                <div class="header-label flexcol">
+                    <h4 class="header-title">Cast {{capitalizedType}}</h4>
+                    <h4 class="header-name">{{name}}</h4>
+                </div>
+                <div class="item-description">
+                    <p>{{system.description}}</p>
+                    {{#if system.additionalEffect}}
+                    <p><strong>Additional Effect:</strong><br />{{system.additionalEffect}}</p>
+                    {{/if}}
+                </div>
             </div>
-            <div class="item-description">
-                <p>{{system.description}}</p>
-                {{#if system.additionalEffect}}
-                <p><strong>Additional Effect:</strong><br />{{system.additionalEffect}}</p>
-                {{/if}}
+            <div class="flexcol">
+                <span class="result-message">{{message}}</span>
             </div>
         </div>
-        <div class="flexcol">
-            <span class="result-message">{{message}}</span>
-        </div>        
-    </div>    
+    </div>
 </div>

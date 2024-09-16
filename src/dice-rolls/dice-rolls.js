@@ -1,5 +1,6 @@
 export async function renderRoll(rollResult, entityData, resultData, messageTemplate, additionalData, isReroll, commitCallback, dialogOptions, itemTarget, reroll) {
-    let enableReroll = checkForReroll(entityData.owner);
+
+    let enableReroll = isReroll || checkForReroll(entityData.owner);
 
     if (entityData.type == "skill" && resultData == "total") enableReroll = false;
 
@@ -32,7 +33,7 @@ export async function renderRoll(rollResult, entityData, resultData, messageTemp
             enableReroll: enableReroll,
             isReroll: isReroll,
             targetData: targetData,
-            resultData: resultData,
+            resultData: resultData
         },
     });
 

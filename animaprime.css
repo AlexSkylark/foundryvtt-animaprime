@@ -2544,6 +2544,39 @@ select:focus {
   border-bottom-right-radius: 9px;
 }
 
+.dimmed {
+  opacity: 0.4;
+}
+
+.roll-power-button-container {
+  align-self: center;
+  margin: 0px 8px;
+}
+.roll-power-button-container .button-roll, .roll-power-button-container .boost-cancel {
+  border: 2px solid #d36702;
+  padding: 4px;
+  padding-bottom: 2px;
+  padding-right: 7px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  width: calc(100% - 8px);
+  color: #d36702;
+  font-size: 16px;
+  font-family: "Montserrat", "sans-serif";
+}
+.roll-power-button-container .boost-cancel:not(button) {
+  display: block;
+  border: 2px solid #f99f4c;
+  background-color: #f5cea9;
+  color: #f17400;
+  cursor: auto;
+}
+
 .roll-poison ol.rolls {
   margin-top: -20px;
 }
@@ -3127,6 +3160,9 @@ select:focus {
   color: #bddcfb;
 }
 
+.item-card-container {
+  margin-bottom: 6px;
+}
 .item-card-container input[type=text], .item-card-container span {
   background: none;
   border: 0;
@@ -3292,7 +3328,7 @@ select:focus {
   border: 2px solid;
   border-radius: 12px;
   margin-right: 18px;
-  padding-top: 9px;
+  padding-top: 12px;
   display: flex;
   flex-direction: column;
   border-top-right-radius: 24px;
@@ -3368,6 +3404,17 @@ select:focus {
   text-align: center;
   font-size: 16px;
   padding-top: 1px;
+}
+
+.img-gear-card {
+  width: 48px;
+  height: 48px !important;
+  background-color: transparent !important;
+  border: 0;
+  float: right;
+  position: relative !important;
+  bottom: 37px;
+  right: 7px;
 }
 
 .bg-maneuver {

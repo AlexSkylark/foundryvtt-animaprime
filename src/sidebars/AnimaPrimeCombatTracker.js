@@ -231,6 +231,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
     }
 
     async performCancelTurn() {
+
         if (!game.user.isGM) {
             ui.notifications.error("only a GM user can issue that command");
             return;
@@ -258,10 +259,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             await this.viewed.update({ turn: this.viewed.turns.indexOf(lastComb)});
         }
 
-        /*
-        if (this.viewed.combsOnQueue.length > 1 && this.viewed.combsWaitingTurn == 0 && this.viewed.getCurrentCombatant().id == this.viewed.current.combatantId) {
-            this.viewed.previousTurn();
-        }*/
+        await game.combats.active.update({ "flags.actionBoost": null });
 
         await game.actionHud.render(true);
     }

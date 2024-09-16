@@ -2,17 +2,17 @@
 @use '../roll.scss';
 
 .roll-power {
-    
+
     &.power {
         border-color: #6105b8;
         background-color: #f0eafc;
-        .roll-header {        
+        .roll-header {
             .roll-img {
                 border-color: #6105b8;
             }
             .header-label {
                 background-color: #6105b8;
-            }    
+            }
         }
 
         .result-message {
@@ -25,13 +25,13 @@
     &.boost {
         border-color: #d36702;
         background-color: #faecd8;
-        .roll-header {        
+        .roll-header {
             .roll-img {
                 border-color: #d36702;
             }
             .header-label {
                 background-color: #d36702;
-            }    
+            }
         }
 
         .result-message {
@@ -44,13 +44,13 @@
     &.reaction {
         border-color: #0490a8;
         background-color: #ecf5f8;
-        .roll-header {        
+        .roll-header {
             .roll-img {
                 border-color: #0490a8;
             }
             .header-label {
                 background-color: #0490a8;
-            }    
+            }
         }
 
         .result-message {
@@ -63,13 +63,13 @@
     &.extra {
         border-color: #6b6b6b;
         background-color: #f3f0f0;
-        .roll-header {        
+        .roll-header {
             .roll-img {
                 border-color: #6b6b6b;
             }
             .header-label {
                 background-color: #6b6b6b;
-            }    
+            }
         }
     }
 
@@ -83,5 +83,42 @@
     .result-message {
         border-bottom-left-radius: 9px;
         border-bottom-right-radius: 9px;
+    }
+}
+
+.dimmed {
+    opacity: 0.4;
+}
+
+.roll-power-button-container {
+    align-self: center;
+    margin: 0px 8px;
+
+    .button-roll, .boost-cancel {
+        border: 2px solid #d36702;
+        padding: 4px;
+        padding-bottom: 2px;
+        padding-right: 7px;
+        background-color: #fff;
+        border-radius: 8px;
+        margin: 4px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+        width: calc(100% - 8px);
+        color: #d36702;
+        font-size: 16px;
+        font-family: 'Montserrat', 'sans-serif';
+    }
+
+    .boost-cancel  {
+        &:not(button) {
+            display: block;
+            border: 2px solid #f99f4c;
+            background-color: #f5cea9;
+            color: #f17400;
+            cursor: auto;
+        }
     }
 }

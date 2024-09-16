@@ -57,4 +57,7 @@
             {{/if}}
         </div>
     </div>
+    {{#if (or this.system.scriptAfterResolve this.system.scriptBeforeResolve)}}
+        <img class="img-gear-card" src="../../systems/animaprime/assets/script-gear.png" />
+    {{/if}}
 </div>

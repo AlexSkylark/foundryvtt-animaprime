@@ -1,27 +1,31 @@
 const AsyncFunction = async function () {}.constructor;
 
-export async function executeResolveScript(item, scriptBody) {
-    let action = item.system;
-    let actionName = item.name;
-    let self = item.owner.system;
-    let target = [];
-    let targetName = "";
-    let targetId = "";
+export async function executeResolveScript(item, target, scriptBody) {
 
-    if (item.targets[0]) {
-        target = item.targets[0].system
-        targetName = item.targets[0].name
-        targetId = item.targets[0]._id;
+    let action = item.system;
+    let self = item.owner.system;
+
+    action.name = item.name;
+
+    let targetObject = null;
+    if (target) {
+        targetObject = target
+        targetObject.name = target.name
+        if (!targetObject.id)
+            targetObject.id = target._id;
     }
 
     let executionScript = initializeScriptBody(scriptBody);
 
-    const scriptFunction = new AsyncFunction("action", "actionName", "self", "target", "targetName", "targetId", executionScript);
+    const scriptFunction = new AsyncFunction("action", "self", "target", executionScript);
 
-    await scriptFunction(action, actionName, self, target, targetName, targetId);
+    const scriptResult = await scriptFunction(action, self, targetObject);
 
-    await game.actors.get(item.owner._id).update({ "system": self });
-    await game.actors.get(targetId).update({ system: target })
+    if (target && game.user.isGM)
+        await game.actors.get(targetObject.id).update({ system: targetObject })
+    await game.actors.get(item.owner._id).update({ system: self });
+
+    return scriptResult;
 }
 
 export async function executeValidations(item) {
@@ -30,25 +34,24 @@ export async function executeValidations(item) {
     if (validationBody.validations && validationBody.validations.length > 0) {
 
         let action = item.system;
-        let actionName = item.name;
         let self = item.owner.system;
-        let target = null;
-        let targetName = "";
-        let targetId = "";
+        let target = [];
+
+        action.name = item.name;
 
         if (game.user.targets.first()) {
             target = game.user.targets.first().document.actor.system
-            targetName = game.user.targets.first().document.name
-            targetId = game.user.targets.first().document.id;
+            target.name = game.user.targets.first().document.name
+            target.id = game.user.targets.first().document.id;
         }
 
         for(let validation of validationBody.validations) {
 
             let validationScript = validationBody.scriptBody + "return " + JSON.parse(JSON.stringify(validation.script));
 
-            let validationFunction = new Function("action", "actionName", "self", "target", "targetName", "targetId", validationScript);
+            let validationFunction = new Function("action", "self", "target", validationScript);
 
-            let valResult = await validationFunction(action, actionName, self, target, targetName, targetId);
+            let valResult = await validationFunction(action, self, target);
             if (!valResult) {
                 ui.notifications.error(validation.message);
                 return false;
@@ -64,14 +67,13 @@ function initializeScriptBody(originalScript) {
     let scriptBody = "";
     if (originalScript.indexOf('addCondition') >= 0) {
         scriptBody += addCondition.toString() + "\n\n";
-        originalScript = originalScript.replaceAll("addCondition(target", "await addCondition(targetId")
     }
 
     if (originalScript.indexOf('checkCondition') >= 0) {
         scriptBody += checkCondition.toString() + "\n\n";
     }
 
-    scriptBody += JSON.parse(JSON.stringify(originalScript));
+    scriptBody += "let dialogOptions = {};\n\n" + JSON.parse(JSON.stringify(originalScript)) + "\n\nreturn { dialogOptions: dialogOptions };";
 
     return scriptBody;
 }
@@ -81,7 +83,6 @@ function initializeValidationBody(originalValidations) {
     let scriptBody = "";
     if (originalValidations.indexOf('checkCondition') >= 0) {
         scriptBody += checkCondition.toString() + "\n\n";
-        originalValidations = originalValidations.replace("checkCondition(target", "checkCondition(targetId")
     }
 
     return {
@@ -91,15 +92,15 @@ function initializeValidationBody(originalValidations) {
 }
 
 function checkCondition(entity, condition) {
-    const effects = game.scenes.active.tokens.get(entity).actor.temporaryEffects.filter((temp) => {
+    const effects = game.scenes.active.tokens.get(entity.id).actor.temporaryEffects.filter((temp) => {
         return temp.name.toUpperCase() == condition.toUpperCase();
     });
     return (effects.length > 0);
 }
 
-async function addCondition(tokenId, conditionId) {
+async function addCondition(token, conditionId) {
 
-    const targetActor = game.actors.get(tokenId);
+    const targetActor = game.actors.get(token.id);
     const effects = targetActor.temporaryEffects.filter((temp) => {
         return temp.name.toUpperCase() == conditionId.toUpperCase();
     });

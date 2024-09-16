@@ -121,7 +121,9 @@
             "key": "-"
         },
         "boost": {
-            "templates": ["base", "effect"]
+            "templates": ["base", "effect"],
+            "cancelled": false,
+            "actionTypes": ""
         },
         "achievement": {
             "templates": ["base", "effect"],

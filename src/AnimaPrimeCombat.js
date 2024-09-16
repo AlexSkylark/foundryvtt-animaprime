@@ -5,10 +5,6 @@ export default class AnimaPrimeCombat extends Combat {
         super.prepareData();
     }
 
-    prepareBaseData() {
-        super.prepareBaseData();
-    }
-
     async startCombat() {
         ui.combat.updateRender(true);
 
@@ -68,10 +64,14 @@ export default class AnimaPrimeCombat extends Combat {
                 actorData.strikeDice = 0;
                 actorData.threatDice = 0;
 
+                await game.combats.active.update({ "flags.commitedRerolls": "" });
+                await game.combats.active.update({ "flags.actionBoost": null });
+
                 await combatant.actor.deleteEmbeddedDocuments("ActiveEffect", combatant.actor.temporaryEffects.map(e => e.id))
                 await combatant.actor.update({ system: actorData }, { render: false });
             });
         }
+
         await game.actionHud.render(true);
     }
 

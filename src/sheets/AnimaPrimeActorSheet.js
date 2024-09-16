@@ -383,8 +383,7 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
 
         updateObject[`system.${propName}`] = propValue;
 
-        if (!item.system.originalValues || item.system.originalValues.isEmpty) {
-            item.system.isEmpty = false;
+        if (!item.system.originalValues) {
             updateObject["system.originalValues"] = item.system;
         }
 

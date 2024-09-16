@@ -32,7 +32,7 @@ export default class AnimaPrimeActionSheet extends ItemSheet {
             let elem = ev.currentTarget;
             let field = elem.dataset.field;
 
-            return await super.getData().item.update({ [field]: elem.value });
+            return await this.item.update({ [field]: elem.value });
         });
 
         html.find(".textarea-event").change(async (ev) => {
@@ -41,7 +41,7 @@ export default class AnimaPrimeActionSheet extends ItemSheet {
             const elem = ev.currentTarget;
             const prop = ev.currentTarget.dataset.event;
 
-            return await super.getData().item.update({ [prop]: ev.detail?.scriptValue ?? elem.value });
+            return await this.item.update({ [prop]: ev.detail?.scriptValue ?? elem.value });
         });
 
 

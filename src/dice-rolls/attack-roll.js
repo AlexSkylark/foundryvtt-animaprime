@@ -1,13 +1,13 @@
 import * as DiceRolls from "./dice-rolls.js";
+import * as ScriptEngine from "../AnimaPrimeScriptEngine.js";
 
 export async function attackRoll(item, isReroll = false, dialogOptions, previousRolls) {
     // HTML template
     const messageTemplate = `systems/animaprime/templates/rolls/roll-${item.type}/roll-${item.type}.hbs`;
 
-    const isEmpowered = checkCondition(item.owner, "empowered") && item.type == "strike";
-    const isWeakened = checkCondition(item.owner, "weakened") && item.type == "strike";
-    const isHexed = checkCondition(item.owner, "hexed");
-    const isSupported = checkCondition(item.owner, "supported");
+    const isEmpowered = item.owner.checkCondition("empowered") && item.type == "strike";
+    const isWeakened = item.owner.checkCondition("weakened") && item.type == "strike";
+    const isSupported = item.owner.checkCondition("supported");
 
     const ownerData = item.owner.system;
 
@@ -33,16 +33,6 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         ui.notifications.error(((item.system.targets ?? 1) == 1 ? `Too many targets! the <i>"${item.name}"</i> ${item.type} action is single-target.` : `Too many targets! the <i>"${item.name}"</i> ${item.type} action can hit ${item.system.targets} targets at most.`) + " Targets de-selected");
         game.user.updateTokenTargets([]);
         return;
-    }
-
-    if (item.system.cost) {
-        const ownerChargeDice = ownerData.chargeDice;
-        item.capitalizedType = item.type.charAt(0).toUpperCase() + item.type.slice(1);
-
-        if (ownerChargeDice < item.system.cost + (isHexed ? 1 : 0)) {
-            ui.notifications.error(`Not enough available charge dice to use this ${item.capitalizedType}.`);
-            return;
-        }
     }
 
     let itemFixedOptions = [];
@@ -122,6 +112,34 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         // add a bonus dice if supported
         if (isSupported)
             dialogOptions[i].bonusDice += 1;
+
+        //execute scripts for each target
+        let scriptBody = ""
+        if (game.combats.active.flags.actionBoost?.scriptBeforeResolve) {
+            scriptBody = game.combats.active.flags.actionBoost?.scriptBeforeResolve + "\n\n";
+        }
+
+        if (item.system.scriptBeforeResolve) {
+            scriptBody += item.system.scriptBeforeResolve;
+        }
+
+        if (scriptBody) {
+            const scriptResult = await ScriptEngine.executeResolveScript(item, item.targets[i], scriptBody);
+
+            // sum script dialog options values with real ones;
+            if (scriptResult.dialogOptions) {
+                for (let key in dialogOptions[i]) {
+                    if (dialogOptions[i].hasOwnProperty(key)) {
+                        let val1 = dialogOptions[i][key];
+                        let val2 = scriptResult.dialogOptions[key];
+
+                        if (typeof val1 === 'number' && typeof val2 === 'number') {
+                            dialogOptions[i][key] = val1 + val2;
+                        }
+                    }
+                }
+            }
+        }
 
         // roll execution
         const rollFormula = (abilityDice[i] + dialogOptions[i].strikeDice + dialogOptions[i].actionDice + dialogOptions[i].variableDice + dialogOptions[i].bonusDice - (dialogOptions[i].resistance ?? 0) + (isEmpowered ? 1 : 0)).toString() + "d6";
@@ -227,10 +245,9 @@ export async function commitResults(resultData, item, dialogOptions) {
     });
 
     if (item.system.cost) {
-        const ownerChargeDice = ownerData.chargeDice;
-        const isHexed = checkCondition(item.owner, "hexed");
+        const isHexed = item.owner.checkCondition("hexed");
         await item.owner.update({
-            "system.chargeDice": ownerChargeDice - (item.system.cost + (isHexed ? 1 : 0)),
+            "system.chargeDice": ownerData.chargeDice - (item.system.cost + (isHexed ? 1 : 0)),
         });
     }
 }
@@ -253,6 +270,4 @@ function checkItemResult(targetDefense, successes, variableGain, successModifier
     return returnValue;
 }
 
-function checkCondition(actorData, condition) {
-    return actorData.effects.filter((e) => e.label.toUpperCase() == condition.toUpperCase()).length > 0;
-}
+

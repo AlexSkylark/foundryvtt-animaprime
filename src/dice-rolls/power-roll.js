@@ -1,25 +1,6 @@
-import * as ScriptEngine from "../AnimaPrimeScriptEngine.js"
-
 export async function powerRoll(power) {
-    const ownerChargeDice = power.owner.system.chargeDice;
     power.capitalizedType =
         power.type.charAt(0).toUpperCase() + power.type.slice(1);
-
-    // execute validations as defined in script
-    if (power.system.scriptValidations) {
-        let valid = await ScriptEngine.executeValidations(power);
-
-        if (!valid) return;
-    }
-
-    const isHexed = power.owner.checkCondition("hexed");
-    if (isHexed) power.system.cost += 1;
-    if (ownerChargeDice < power.system.cost) {
-        ui.notifications.error(
-            `Not enough available charge dice to cast this ${power.capitalizedType}.`
-        );
-        return;
-    }
 
     const dialogTemplate =
         "systems/animaprime/templates/dialogs/dialog-usepower/dialog-usepower.hbs";
@@ -39,32 +20,33 @@ export async function powerRoll(power) {
     });
 }
 
-async function castPower(power) {
-    var resultMessage = power.system.effect;
-
-    if (power.system.cost) {
-        const ownerChargeDice = power.owner.system.chargeDice;
-        await power.owner.update({
-            "system.chargeDice": ownerChargeDice - power.system.cost,
-        });
-    }
+async function castPower(item) {
+    var resultMessage = item.system.effect;
 
     const templateHtml = await renderTemplate(
         "systems/animaprime/templates/rolls/roll-power/roll-power.hbs",
         {
-            ...power,
+            ...item,
             message: resultMessage,
         }
     );
+
+    if (item.system.cost) {
+        const isHexed = item.owner.checkCondition(item.owner, "hexed");
+        await item.owner.update({
+            "system.chargeDice": item.owner.system.chargeDice - (item.system.cost + (isHexed ? 1 : 0)),
+        });
+    }
 
     game.user.updateTokenTargets([]);
 
     return ChatMessage.create({
         user: game.user._id,
-        speaker: ChatMessage.getSpeaker({ alias: power.owner.name }),
+        speaker: ChatMessage.getSpeaker({ alias: item.owner.name }),
         content: templateHtml,
         flags: {
-            sourceItem: power,
+            sourceItem: item,
+            cancelled: false
         },
     });
 }

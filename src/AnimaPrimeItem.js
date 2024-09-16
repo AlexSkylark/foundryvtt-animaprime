@@ -2,6 +2,7 @@ import * as SkillDiceRoll from "./dice-rolls/skill-roll.js";
 import * as ManeuverDiceRoll from "./dice-rolls/maneuver-roll.js";
 import * as AttackDiceRoll from "./dice-rolls/attack-roll.js";
 import * as PowerRoll from "./dice-rolls/power-roll.js";
+import * as ScriptEngine from "./AnimaPrimeScriptEngine.js";
 
 export default class AnimaPrimeItem extends Item {
     chatTemplate = {
@@ -82,9 +83,36 @@ export default class AnimaPrimeItem extends Item {
 
         let itemData = {
             ...this,
-            owner: this.actor,
+            owner: this.parent,
             originalItem: this
         };
+
+        // validate boost action type
+        if (game.combats.active.flags.actionBoost?.validActions) {
+            const boostedActionValid = game.combats.active.flags.actionBoost.validActions.indexOf(this.type) >= 0;
+            if (!boostedActionValid) {
+                ui.notifications.error("The current active boost can only enhance these action types: " + game.combats.active.flags.actionBoost.validActions.replace(",", ", ").toUpperCase());
+                return;
+            }
+        }
+
+        // execute validations as defined in script
+        if (itemData.system.scriptValidations?.trim()) {
+            let valid = await ScriptEngine.executeValidations(itemData);
+            if (!valid) return;
+        }
+
+        // check if unit has enough charge to cast action
+        itemData.capitalizedType = itemData.type.charAt(0).toUpperCase() + itemData.type.slice(1);
+        const ownerChargeDice = itemData.owner.system.chargeDice;
+        const isHexed = itemData.owner.checkCondition("hexed");
+        if (isHexed) itemData.system.cost += 1;
+        if (ownerChargeDice < itemData.system.cost) {
+            ui.notifications.error(
+                `Not enough available charge dice to cast this ${itemData.capitalizedType}.`
+            );
+            return;
+        }
 
         itemData.targets = [];
         itemData.targetIds = [];

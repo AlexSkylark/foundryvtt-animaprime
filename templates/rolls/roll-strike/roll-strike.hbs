@@ -1,5 +1,5 @@
 <div class="roll-strike roll strike roll-message-container" data-type="strike">
-    <div class="item" data-item-id="{{id}}">                
+    <div class="item" data-item-id="{{id}}">
         <div class="roll-header">
             <img class="roll-img" src="{{flavor.entityData.img}}" title="{{flavor.entityData.name}}" />
             <div class="header-label flexcol">
@@ -8,8 +8,8 @@
             </div>
             <div class="item-description">
                 <p>{{flavor.entityData.system.description}}</p>
-                {{#if flavor.entityData.system.additionalEffect}}            
-                    <p><strong>Additional Effect:</strong><br />{{flavor.entityData.system.additionalEffect}}</p>            
+                {{#if flavor.entityData.system.additionalEffect}}
+                    <p><strong>Additional Effect:</strong><br />{{flavor.entityData.system.additionalEffect}}</p>
                 {{/if}}
             </div>
         </div>
@@ -20,7 +20,7 @@
                     {{#each this.additionalData.weakenedDice}}
                     <li class="roll roll-weaken outside-dice" title="Weakened Condition die: {{this.result}}"><img src="../../systems/animaprime/assets/d6-forbidden.svg" /><div class="roll-dice weakened">{{this.result}}</div></li>
                     {{/each}}
-            
+
                     {{#each this.additionalData.resistanceDice}}
                     <li class="roll roll-resistance outside-dice" title="Resistance die"><img src="../../systems/animaprime/assets/d6-forbidden.svg" /><div class="roll-dice resistance">&nbsp;</div></li>
                     {{/each}}
@@ -58,7 +58,7 @@
                     {{#each this.additionalData.scaleReductionDice}}
                     <li class="roll roll-weaken outside-dice" title="Power Scale Reduction"><img src="../../systems/animaprime/assets/d6-forbidden.svg" /><div class="roll-dice weakened">{{this.result}}</div></li>
                     {{/each}}
-                    
+
 
                     {{#if (gt this.additionalData.scaleDice.length 10)}}
                         <li title="Power Scale Augmentation"class="roll outside-dice success"><div class="extra-dice-label">+ {{this.additionalData.scaleDice.length}}x <div class="roll-dice empowered">*</div></div></li>
@@ -67,8 +67,8 @@
                         <li title="Power Scale Augmentation"class="roll outside-dice success"><div class="roll-dice empowered">*</div></li>
                         {{/each}}
                     {{/if}}
-                    
-                </ol>                
+
+                </ol>
                 <span class="result-message{{#if this.resultData.hit}} success{{/if}} {{#unless this.resultData.successes}} failure{{/unless}}">
                 {{#if this.resultData.hit}}
                     {{#if (eq this.resultData.wounds 1)}}
@@ -91,12 +91,14 @@
                 </span>
             </div>
             {{/each}}
-        </div>                   
-    </div>        
+        </div>
+    </div>
 </div>
 {{#if flavor.enableReroll}}
 <div class="button-reroll-container flexrow">
-    <div class="button-roll reroll">Reroll <i class="fas fa-x"></i></div>
+    {{#if (gt flavor.entityData.owner.system.reroll 0)}}
+        <div class="button-roll reroll">Reroll <i class="fas fa-x"></i></div>
+    {{/if}}
     <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
 </div>
 {{/if}}

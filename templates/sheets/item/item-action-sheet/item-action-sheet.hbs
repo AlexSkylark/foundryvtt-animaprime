@@ -47,6 +47,14 @@
                 </div>
             </div>
             {{/if}}
+            {{#if (eq item.type "boost")}}
+            <div class="field-container flexcol">
+                <label>action types</label>
+                <div class="value-field">
+                    <input type="text" name="system.actionTypes"  value="{{system.actionTypes}}" data-dtype="String" />
+                </div>
+            </div>
+            {{/if}}
         </div>
         {{/if}}
         {{#if system.roll}}

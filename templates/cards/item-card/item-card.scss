@@ -2,11 +2,11 @@ $maneuver-color: #212cce;
 $maneuver-background: #e5e6f3   ;
 
 @mixin item-color($color, $background, $cellcolor) {
-    
-    img {            
+
+    img {
         border-color: $color;
     }
-    
+
     .item-card {
         background-color: $background;
         border-color: $color;
@@ -14,20 +14,20 @@ $maneuver-background: #e5e6f3   ;
         .item-title {
             cursor: pointer;
         }
-    
+
         .item-header {
             background-color: $color;
         }
-    
-        
-    
+
+
+
         .cells {
             div {
                 border-color: $color;
-    
+
                 .cell-label {
                     color: $color;
-                    background-color: $cellcolor;              
+                    background-color: $cellcolor;
                 }
             }
         }
@@ -35,6 +35,8 @@ $maneuver-background: #e5e6f3   ;
 }
 
 .item-card-container {
+
+    margin-bottom: 6px;
 
     input[type=text], span {
         background: none;
@@ -55,7 +57,7 @@ $maneuver-background: #e5e6f3   ;
         height: 64px;
         margin-bottom: -58px;
         margin-left: calc(100% - 71px);
-        position: relative;        
+        position: relative;
         z-index: 10;
     }
 
@@ -88,11 +90,11 @@ $maneuver-background: #e5e6f3   ;
     }
 }
 
-.item-card {    
+.item-card {
     border: 2px solid;
     border-radius: 12px;
     margin-right: 18px;
-    padding-top: 9px;
+    padding-top: 12px;
     display: flex;
     flex-direction: column;
     border-top-right-radius: 24px;
@@ -100,12 +102,12 @@ $maneuver-background: #e5e6f3   ;
     position: relative;
     z-index: 0;
 
-    .item-header {        
+    .item-header {
 
         display: flex;
         flex-direction: row;
         width: 90%;
-        
+
         span {
             color: #fff;
         }
@@ -125,8 +127,8 @@ $maneuver-background: #e5e6f3   ;
             font-weight: 600;
             font-size: 16px;
             padding: 2px;
-            padding-left: 8px;   
-        }        
+            padding-left: 8px;
+        }
     }
 
     .item-description-container {
@@ -142,15 +144,15 @@ $maneuver-background: #e5e6f3   ;
             font-size: 12px;
             padding: 0px 9px;
             padding-bottom: 0;
-        }   
+        }
     }
-    
+
     .cells {
-        
+
         display: flex;
         flex-direction: row;
         position: absolute;
-        bottom: 0;   
+        bottom: 0;
 
         div {
             background-color: #fff;
@@ -183,7 +185,17 @@ $maneuver-background: #e5e6f3   ;
                 font-size: 16px;
                 padding-top: 1px;
             }
-        }        
+        }
     }
-    
+}
+
+.img-gear-card {
+    width: 48px;
+    height: 48px !important;
+    background-color: transparent !important;
+    border: 0;
+    float: right;
+    position: relative !important;
+    bottom: 37px;
+    right: 7px;
 }

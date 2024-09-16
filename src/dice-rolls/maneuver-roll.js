@@ -1,11 +1,11 @@
 import * as DiceRolls from "./dice-rolls.js";
 
-export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, reroll) {
+export async function maneuverRoll(item, isReroll = false, dialogOptions, reroll) {
     const messageTemplate = "systems/animaprime/templates/rolls/roll-maneuver/roll-maneuver.hbs";
 
-    let maneuverDice = parseInt(maneuver.system.roll.replace("d"));
-    const isQuickened = maneuver.owner.checkCondition("quickened");
-    const isDazed = maneuver.owner.checkCondition("dazed");
+    let maneuverDice = parseInt(item.system.roll.replace("d"));
+    const isQuickened = item.owner.checkCondition("quickened");
+    const isDazed = item.owner.checkCondition("dazed");
 
     if (isQuickened) {
         maneuverDice += 1;
@@ -13,10 +13,10 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
 
     // dialog
     if (!dialogOptions) {
-        if (maneuver.owner.type == "character") {
+        if (item.owner.type == "character") {
             let itemForDialog = {
-                ...maneuver,
-                type: maneuver.type,
+                ...item,
+                type: item.type,
             };
 
             dialogOptions = await DiceRolls.getManeuverRollOptions(itemForDialog);
@@ -26,20 +26,20 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
         }
     }
 
-    maneuver.targets = [];
-    maneuver.targetIds = [];
+    item.targets = [];
+    item.targetIds = [];
     await game.user.targets.forEach((element) => {
-        maneuver.targets.push(element.document.actor);
-        maneuver.targetIds.push(element._id ?? element.id);
+        item.targets.push(element.document.actor);
+        item.targetIds.push(element._id ?? element.id);
     });
 
-    if (!checkManeuverTarget(maneuver, dialogOptions.maneuverStyle)) return;
+    if (!checkManeuverTarget(item, dialogOptions.maneuverStyle)) return;
 
     if (dialogOptions.maneuverStyle == "reckless") {
         maneuverDice += 2;
     }
 
-    const isSupported = maneuver.owner.checkCondition("supported");
+    const isSupported = item.owner.checkCondition("supported");
 
     if (isSupported) {
         maneuverDice += 1;
@@ -48,11 +48,11 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
     const rollFormula = maneuverDice + "d6";
 
     let rollResult = [];
-    const rl = new Roll(rollFormula, maneuver);
+    const rl = new Roll(rollFormula, item);
     rollResult.push(await rl.evaluate({ async: true }));
 
     let resultData = [];
-    resultData.push(checkManeuverResult(maneuver.system.gain, rollResult[0].dice[0].results, dialogOptions.maneuverStyle == "aggressive"));
+    resultData.push(checkManeuverResult(item.system.gain, rollResult[0].dice[0].results, dialogOptions.maneuverStyle == "aggressive"));
 
     let resultsCopy = JSON.parse(JSON.stringify(rollResult[0].dice[0].results));
 
@@ -113,12 +113,12 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
     if (isSupported) {
         const supportedEffect = CONFIG.statusEffects.find((e) => e.id == "supported");
 
-        const token = maneuver.owner.getActiveTokens()[0];
+        const token = item.owner.getActiveTokens()[0];
         token.toggleEffect(supportedEffect, false);
     }
 
     // is the target of equal disposition to the user?
-    const isPositive = !maneuver.targetIds[0] ? true : game.scenes.active.tokens.find((tk) => tk.id == maneuver.targetIds[0]).disposition == (maneuver.owner.token ?? maneuver.owner.prototypeToken).disposition;
+    const isPositive = !item.targetIds[0] ? true : game.scenes.active.tokens.find((tk) => tk.id == item.targetIds[0]).disposition == (item.owner.token ?? item.owner.prototypeToken).disposition;
 
     let additionalData = [];
     additionalData.push({
@@ -141,7 +141,14 @@ export async function maneuverRoll(maneuver, isReroll = false, dialogOptions, re
         isSupportive: dialogOptions.maneuverStyle == "supportive",
     });
 
-    await DiceRolls.renderRoll(rollResult, maneuver, resultData, messageTemplate, additionalData, isReroll, this.commitResults, dialogOptions, null, reroll);
+    await DiceRolls.renderRoll(rollResult, item, resultData, messageTemplate, additionalData, isReroll, this.commitResults, dialogOptions, null, reroll);
+
+    if (item.system.cost) {
+        const isHexed = item.owner.checkCondition("hexed");
+        await item.owner.update({
+            "system.chargeDice": item.owner.system.chargeDice - (item.system.cost + (isHexed ? 1 : 0)),
+        });
+    }
 }
 
 function checkManeuverTarget(maneuver, maneuverStyle) {

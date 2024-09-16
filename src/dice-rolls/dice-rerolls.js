@@ -7,12 +7,14 @@ Hooks.on("renderChatMessage", (app, [html]) => {
         if ($(event.target).hasClass("button-roll")) {
             const flags = app.flags;
 
+            if (!app.flags.actorId) return;
+
             if (!game.actors.get(app.flags.actorId).isOwner) {
                 ui.notifications.error("You did not perform this roll!");
                 return;
             }
 
-            const rerollList = await game.settings.get("animaprime", "commitedRerolls").split(",");
+            const rerollList = game.combats.active.flags.commitedRerolls.split(",");
             flags.commit = rerollList.some((x) => x == flags.reroll);
 
             if (flags.commit) {
@@ -72,10 +74,10 @@ async function performCommit(flags) {
 
     flags.enableReroll = false;
 
-    let rerollList = await game.settings.get("animaprime", "commitedRerolls").split(",");
+    let rerollList = game.combats.active.flags.commitedRerolls.split(",");
     rerollList.push(flags.reroll);
 
-    if (rerollList.length > 20) rerollList.shift();
+    if (rerollList.length > 10) rerollList.shift();
 
     let rerollConfig = rerollList.join(",");
     if (rerollConfig.charAt(0) == ",") rerollConfig.slice(1);
