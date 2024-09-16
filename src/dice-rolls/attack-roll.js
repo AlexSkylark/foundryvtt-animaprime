@@ -131,7 +131,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         // sum script dialog options values with real ones;
         if (scriptResult && scriptResult.dialogOptions) {
             for (let key in dialogOptions[i]) {
-                if (dialogOptions[i].hasOwnProperty(key)) {
+                if (scriptResult.dialogOptions[i]?.hasOwnProperty(key)) {
                     let val1 = dialogOptions[i][key];
                     let val2 = scriptResult.dialogOptions[i][key];
 
