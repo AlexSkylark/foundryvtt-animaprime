@@ -67,7 +67,7 @@ export async function renderRoll(rollResult, entityData, resultData, messageTemp
         if (game.dice3d) await game.dice3d.waitFor3DAnimationByMessageID(chatMessage.id);
 
         const sleep = m => new Promise(r => setTimeout(r, m))
-        await sleep(750);
+        await sleep(400);
         await commitCallback(resultData, entityData, dialogOptions, itemTarget);
     }
 

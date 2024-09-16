@@ -219,6 +219,9 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
+    const sleep = m => new Promise(r => setTimeout(r, m))
+    await sleep(800);
+
     if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
         const item = message.flags.sourceItem;
         const dialogOptions = message.flags.dialogOptions;
@@ -263,6 +266,9 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 // GM proxy for strike/achievement commits
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+
+    const sleep = m => new Promise(r => setTimeout(r, m))
+    await sleep(800);
 
     if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
         const item = message.flags.sourceItem;
