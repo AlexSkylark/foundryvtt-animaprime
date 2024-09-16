@@ -61,13 +61,15 @@ export async function renderRoll(rollResult, entityData, resultData, messageTemp
         },
     };
 
+    const chatMessage = await rollResult[0].toMessage(messageData);
+
     if (!enableReroll && commitCallback) {
         if (game.dice3d) await game.dice3d.waitFor3DAnimationByMessageID(chatMessage.id);
 
+        const sleep = m => new Promise(r => setTimeout(r, m))
+        await sleep(750);
         await commitCallback(resultData, entityData, dialogOptions, itemTarget);
     }
-
-    const chatMessage = await rollResult[0].toMessage(messageData);
 
     game.user.updateTokenTargets([]);
 }

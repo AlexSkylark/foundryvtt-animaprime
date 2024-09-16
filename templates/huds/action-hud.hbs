@@ -6,7 +6,9 @@
                 <img src="{{this.img}}" />
                 {{this.name}}
             </div>
-            <div class="img-gear">&nbsp;</div>
+            {{#if (or this.system.scriptAfterResolve this.system.scriptBeforeResolve)}}
+                <img class="img-gear" src="../../systems/animaprime/assets/script-gear.png" />
+            {{/if}}
         {{/each}}
         </div>
         <div class="hud-actions-container">

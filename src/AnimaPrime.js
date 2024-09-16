@@ -390,7 +390,7 @@ Hooks.once("canvasReady", async () => {
 
 Hooks.on("deleteChatMessage", async (app) => {
 
-    if (game.user.isGM && app.flags.sourceItem.type == "boost") {
+    if (game.user.isGM && app.flags.sourceItem && app.flags.sourceItem.type == "boost") {
         await game.combats.active.update({ "flags.actionBoost": null });
     }
 });
