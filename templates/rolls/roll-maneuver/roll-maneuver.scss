@@ -2,16 +2,17 @@
 @use '../roll.scss';
 
 .roll-maneuver {
-    
+
     border-color: #212cce;
     background-color: #e5e6f3;
-    .roll-header {        
+    .roll-header {
         .roll-img {
             border-color: #212cce;
         }
         .header-label {
             background-color: #212cce;
-        }    
+            border-bottom-left-radius: 40px;
+        }
     }
 
     .result-message {
@@ -20,20 +21,20 @@
         color: #0b126b;
     }
 
-    .roll {        
+    .roll {
         .roll-dice {
-            &.slowed, &.defensive {    
+            &.slowed, &.defensive {
                 background-color: #ffef82;
                 width: 29px;
                 line-height: 25px;
                 grid-row: 1;
-                grid-column: 1;                
+                grid-column: 1;
             }
 
             &.quickened, &.supported {
                 background-color: #ffef82;
             }
-            
+
             &.defensive {
                 background-color: #cfa8f9;
                 color: #4c0b92;
@@ -43,7 +44,7 @@
         &.strike-success {
             .roll-dice {
                 box-shadow: 0 0 6px #f13f92;
-                filter: drop-shadow(3px 3px 1px #a73158);                
+                filter: drop-shadow(3px 3px 1px #a73158);
             }
         }
 

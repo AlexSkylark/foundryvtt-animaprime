@@ -15,7 +15,7 @@
         font-weight: 600;
     }
 
-    .message-sender {    
+    .message-sender {
         font-size: 16px;
     }
 }
@@ -28,7 +28,7 @@
     margin: 7px;
     margin-top: 16px;
     background-color: #fffbfa;
-    
+
     .roll-header {
         display: grid;
 
@@ -37,7 +37,7 @@
             border-radius: 48px;
             height: 68px;
             padding: 2px;
-            background-color: #fff;    
+            background-color: #fff;
             grid-column: 1;
             grid-row: 1;
             z-index: 10;
@@ -54,22 +54,27 @@
             grid-row: 1;
             font-family: 'Montserrat';
             height: 47px;
-            overflow-x: overlay;
+            overflow-x: hidden;
             padding-left: 60px;
             margin-top: 10px;
+            border-bottom-left-radius: 36px;
 
-            h4 {                
+            h4 {
                 margin: 0;
                 color: #fff;
                 &.header-title {
-                    padding-top: 5px;
-                    font-size: 10px;                    
+                    padding-top: 7px;
+                    font-size: 10px;
                 }
-        
+
                 &.header-name {
+                    margin-left: 6px;
                     padding-bottom: 3px;
                     font-size: 18px;
                     white-space: nowrap;
+                    width: 95%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
 
@@ -107,11 +112,11 @@
     width: 100%;
     justify-content: center;
     align-items: center;
-    
-    .roll {       
-    
+
+    .roll {
+
         &.outside-dice {
-            
+
             display: grid;
             img {
                 grid-row: 1;
@@ -126,13 +131,13 @@
         }
 
         .roll-dice {
-            
+
             position: relative;
             float: left;
             width: 23px;
             line-height: 19px;
             margin: 6px 6px;
-            padding-top: 3px;        
+            padding-top: 3px;
             background-repeat: no-repeat;
             background-size: 24px 24px;
             font-size: var(--font-size-16);
@@ -144,20 +149,20 @@
             background-color: #bbb;
             border-radius: 8px;
             background-position-y: center;
-            filter: drop-shadow(2px 2px 1px #000000bb);            
+            filter: drop-shadow(2px 2px 1px #000000bb);
 
             &.strike {
                 background-color: #549fce;
             }
-            
+
             &.action {
                 background-color: #bf7de5;
             }
-    
+
             &.variable {
                 background-color: #e7a067;
             }
-    
+
             &.bonus {
                 background-color: #4fd3ae;
             }
@@ -165,17 +170,17 @@
             &.empowered {
                 background-color: #ffef82;
             }
-    
+
             &.reckless {
                 background-color: #cfa8f9;
                 color: #670fc7;
-            }                     
-    
+            }
+
             &.successdice {
                 background-image: url(../../systems/animaprime/assets/d6-green-successmodifier.svg);
             }
-        }    
-        
+        }
+
         &.success {
             .roll-dice {
                 box-shadow: 0 0 6px #17b6a1;
@@ -184,16 +189,16 @@
                 line-height: 26px;
                 margin: 6px 6px;
                 font-size: 20px;
-                padding-top: 1px;    
+                padding-top: 1px;
             }
         }
-    }    
+    }
 }
 
-.button-reroll-container {        
-    align-self: center;    
+.button-reroll-container {
+    align-self: center;
     margin: 0px 8px;
-            
+
     .button-roll {
         border: 2px solid;
         padding: 4px;
@@ -221,15 +226,15 @@
 
 .result-message {
     font-size: 13px;
-    text-align: center;    
+    text-align: center;
     padding: 3px;
     padding-bottom: 6px;
     font-weight: 800;
     background-color: #bbb;
     width: 100%;
-    display: block;    
+    display: block;
     border: 0px;
-    border-top: 2px solid #555;    
+    border-top: 2px solid #555;
     font-family: 'Montserrat';
 
     &.critical {
@@ -257,7 +262,7 @@
     }
 }
 
-.target-section {    
+.target-section {
     &:last-of-type {
         .result-message {
             border-bottom-left-radius: 9px;

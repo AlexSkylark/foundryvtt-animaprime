@@ -1,24 +1,24 @@
 <div class="roll-skill roll {{flavor.entityData.type}} roll-message-container" data-type="{{flavor.entityData.type}}">
-    
-    <div class="roll item" data-item-id="{{_id}}">        
+
+    <div class="roll item" data-item-id="{{_id}}">
         <div class="roll-header">
             <img class="roll-img" src="icons/skills/trades/academics-study-reading-book.webp" title="{{flavor.entityData.name}}" />
-            <div class="header-label flexcol">
+            <div class="header-label">
                 <h4 class="header-title">Trait/Ability {{#if flavor.isReroll}}re{{/if}}roll ({{flavor.targetData.0.resultData.difficultyText}})</h4>
-                <h4 class="header-name">{{flavor.entityData.name}}</h4>
+                <h4 class="header-name" title="{{flavor.entityData.name}}">{{flavor.entityData.name}}</h4>
             </div>
         </div>
-                
+
         <div class="flexcol">
-            <div class="flexrow">               
+            <div class="flexrow">
                 <ol class="rolls rolls-{{flavor.targetData.0.rollsId}}">
                     {{#each flavor.targetData.0.additionalData.abilityDice}}
                     <li title="Skill die" class="roll{{#if (gte this.result ../flavor.targetData.0.resultData.difficulty)}} success{{/if}}{{#if (eq this.result 6)}} charge-success{{/if}}"><div class="roll-dice">{{{this.result}}}</div></li>
                     {{/each}}
-                    {{#each flavor.targetData.0.additionalData.bonusDice}}                    
+                    {{#each flavor.targetData.0.additionalData.bonusDice}}
                     <li title="Focus die" class="roll bonus{{#if (gte this.result ../flavor.targetData.0.resultData.difficulty)}} success{{/if}}{{#if (eq this.result 6)}} charge-success{{/if}}"><div class="roll-dice bonus">{{{this.result}}}</div></li>
-                    {{/each}}                    
-                </ol>                
+                    {{/each}}
+                </ol>
             </div>
             {{#if (gte flavor.targetData.0.resultData.criticals 2)}}
             <span class="result-message critical">{{flavor.targetData.0.resultData.criticals}} crits. CRITICAL SUCCESS!</span>
@@ -32,7 +32,7 @@
                 {{#if (eq flavor.targetData.0.resultData.successes 0)}}
                 <span class="result-message failure">Total Failure!</span>
                 {{/if}}
-            {{/if}}            
-        </div>        
-    </div>    
+            {{/if}}
+        </div>
+    </div>
 </div>

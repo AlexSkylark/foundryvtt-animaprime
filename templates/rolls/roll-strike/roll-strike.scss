@@ -2,16 +2,17 @@
 @use '../roll.scss';
 
 .roll-strike {
-    
+
     border-color: #b80523;
     background-color: #f9e0e8;
-    .roll-header {        
+    .roll-header {
         .roll-img {
             border-color: #b80523;
         }
         .header-label {
             background-color: #b80523;
-        }    
+            border-bottom-left-radius: 40px;
+        }
     }
 
     .result-message {
@@ -27,10 +28,9 @@
         font-weight: 600;
     }
 
-    .roll {        
-        
-        .roll-dice {            
-            &.weakened, &.resistance {    
+    .roll {
+        .roll-dice {
+            &.weakened, &.resistance {
                 background-color: #ffef82;
                 width: 29px;
                 line-height: 25px;
@@ -44,35 +44,18 @@
         }
     }
 
-    .roll-header {        
-        h4 {            
-            color: #666;
-            &.header-title {
-                margin-top: 2px;
-                font-size: 16px;
-                margin-bottom: 0;
-            }
-
-            &.header-name {
-                font-size: 23px;    
-            }
-        }
-    }
-        
     .rolls {
         min-width: 100%;
     }
 
     .target-section {
-            
-        
         .result-message {
-            margin-top: 6px;            
+            margin-top: 6px;
         }
-        
+
         &:last-child {
             padding-bottom: 0;
-            border-bottom: 0;            
+            border-bottom: 0;
         }
     }
 }

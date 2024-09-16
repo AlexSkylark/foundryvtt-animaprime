@@ -2165,22 +2165,27 @@ select:focus {
   grid-row: 1;
   font-family: "Montserrat";
   height: 47px;
-  overflow-x: overlay;
+  overflow-x: hidden;
   padding-left: 60px;
   margin-top: 10px;
+  border-bottom-left-radius: 36px;
 }
 .roll-message-container .roll-header .header-label h4 {
   margin: 0;
   color: #fff;
 }
 .roll-message-container .roll-header .header-label h4.header-title {
-  padding-top: 5px;
+  padding-top: 7px;
   font-size: 10px;
 }
 .roll-message-container .roll-header .header-label h4.header-name {
+  margin-left: 6px;
   padding-bottom: 3px;
   font-size: 18px;
   white-space: nowrap;
+  width: 95%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .roll-header .item-description {
@@ -2383,6 +2388,7 @@ select:focus {
 }
 .roll-maneuver .roll-header .header-label {
   background-color: #212cce;
+  border-bottom-left-radius: 40px;
 }
 .roll-maneuver .result-message {
   border-color: #212cce;
@@ -2421,6 +2427,7 @@ select:focus {
 }
 .roll-strike .roll-header .header-label {
   background-color: #b80523;
+  border-bottom-left-radius: 40px;
 }
 .roll-strike .result-message {
   border-color: #b80523;
@@ -2443,17 +2450,6 @@ select:focus {
 .roll-strike .roll .roll-dice.resistance {
   background-color: #fca7bc;
 }
-.roll-strike .roll-header h4 {
-  color: #666;
-}
-.roll-strike .roll-header h4.header-title {
-  margin-top: 2px;
-  font-size: 16px;
-  margin-bottom: 0;
-}
-.roll-strike .roll-header h4.header-name {
-  font-size: 23px;
-}
 .roll-strike .rolls {
   min-width: 100%;
 }
@@ -2465,16 +2461,36 @@ select:focus {
   border-bottom: 0;
 }
 
-.roll-achievement .roll-header h4 {
-  color: #666;
+.roll-achievement {
+  border-color: #12886e;
+  background-color: #e0faee;
 }
-.roll-achievement .roll-header h4.header-title {
-  margin-top: 2px;
-  font-size: 16px;
-  margin-bottom: 0;
+.roll-achievement .roll-header .roll-img {
+  border-color: #12886e;
 }
-.roll-achievement .roll-header h4.header-name {
-  font-size: 23px;
+.roll-achievement .roll-header .header-label {
+  background-color: #12886e;
+}
+.roll-achievement .result-message {
+  border-color: #12886e;
+  background-color: #a3efcf;
+  color: #15443b;
+}
+.roll-achievement .extra-dice-label {
+  display: flex;
+  align-items: center;
+  font-size: 19px;
+  font-weight: 600;
+}
+.roll-achievement .roll .roll-dice.weakened, .roll-achievement .roll .roll-dice.resistance {
+  background-color: #ffef82;
+  width: 29px;
+  line-height: 25px;
+  grid-row: 1;
+  grid-column: 1;
+}
+.roll-achievement .roll .roll-dice.resistance {
+  background-color: #fca7bc;
 }
 .roll-achievement .rolls {
   margin-top: 6px;
@@ -2489,6 +2505,7 @@ select:focus {
 }
 .roll-power.power .roll-header .header-label {
   background-color: #6105b8;
+  border-bottom-left-radius: 40px;
 }
 .roll-power.power .result-message {
   border-color: #6105b8;
@@ -2584,6 +2601,7 @@ select:focus {
   height: 28px !important;
   margin-top: 14px !important;
   padding-top: 3px !important;
+  border-bottom-left-radius: 40px;
 }
 .roll-poison .result-message {
   border-bottom-left-radius: 9px;
@@ -3339,6 +3357,12 @@ select:focus {
   display: flex;
   flex-direction: row;
   width: 90%;
+}
+.item-card .item-header .item-title.name {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 70%;
 }
 .item-card .item-header span {
   color: #fff;

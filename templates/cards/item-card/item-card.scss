@@ -108,6 +108,16 @@ $maneuver-background: #e5e6f3   ;
         flex-direction: row;
         width: 90%;
 
+        .item-title {
+
+            &.name {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 70%;
+            }
+        }
+
         span {
             color: #fff;
         }

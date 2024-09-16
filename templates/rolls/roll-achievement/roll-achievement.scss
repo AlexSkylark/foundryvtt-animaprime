@@ -2,23 +2,48 @@
 @use '../roll.scss';
 
 .roll-achievement {
-    
-    .roll-header {        
-        h4 {                        
-            color: #666;
-            &.header-title {
-                margin-top: 2px;
-                font-size: 16px;
-                margin-bottom: 0;
+
+    border-color: #12886e;
+    background-color: #e0faee;
+    .roll-header {
+        .roll-img {
+            border-color: #12886e;
+        }
+        .header-label {
+            background-color: #12886e;
+        }
+    }
+
+    .result-message {
+        border-color: #12886e;
+        background-color: #a3efcf;
+        color: #15443b;
+    }
+
+    .extra-dice-label {
+        display: flex;
+        align-items: center;
+        font-size: 19px;
+        font-weight: 600;
+    }
+
+    .roll {
+        .roll-dice {
+            &.weakened, &.resistance {
+                background-color: #ffef82;
+                width: 29px;
+                line-height: 25px;
+                grid-row: 1;
+                grid-column: 1;
             }
 
-            &.header-name {
-                font-size: 23px;    
+            &.resistance {
+                background-color: #fca7bc;
             }
         }
     }
 
     .rolls {
         margin-top: 6px;
-    }    
+    }
 }
