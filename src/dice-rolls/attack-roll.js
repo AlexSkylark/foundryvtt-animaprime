@@ -23,6 +23,21 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         });
     }
 
+    // execute BeforeResolve script
+    let scriptResult = null;
+    let scriptBody = ""
+    if (game.combats.active.flags.actionBoost?.scriptBeforeResolve) {
+        scriptBody = game.combats.active.flags.actionBoost?.scriptBeforeResolve + "\n\n";
+    }
+
+    if (item.system.scriptBeforeResolve) {
+        scriptBody += item.system.scriptBeforeResolve;
+    }
+
+    if (scriptBody) {
+        scriptResult = await ScriptEngine.executeResolveScript(item, item.targets, scriptBody);
+    }
+
     if (!item.targets || !item.targets.length || item.targets.length != item.originalItemTargets.length) {
         ui.notifications.error(`Please select suitable targets for the <i>"${item.name}"</i> ${item.type} action. Targets de-selected`);
         game.user.updateTokenTargets([]);
@@ -113,29 +128,15 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         if (isSupported)
             dialogOptions[i].bonusDice += 1;
 
-        //execute scripts for each target
-        let scriptBody = ""
-        if (game.combats.active.flags.actionBoost?.scriptBeforeResolve) {
-            scriptBody = game.combats.active.flags.actionBoost?.scriptBeforeResolve + "\n\n";
-        }
+        // sum script dialog options values with real ones;
+        if (scriptResult && scriptResult.dialogOptions) {
+            for (let key in dialogOptions[i]) {
+                if (dialogOptions[i].hasOwnProperty(key)) {
+                    let val1 = dialogOptions[i][key];
+                    let val2 = scriptResult.dialogOptions[i][key];
 
-        if (item.system.scriptBeforeResolve) {
-            scriptBody += item.system.scriptBeforeResolve;
-        }
-
-        if (scriptBody) {
-            const scriptResult = await ScriptEngine.executeResolveScript(item, item.targets[i], scriptBody);
-
-            // sum script dialog options values with real ones;
-            if (scriptResult.dialogOptions) {
-                for (let key in dialogOptions[i]) {
-                    if (dialogOptions[i].hasOwnProperty(key)) {
-                        let val1 = dialogOptions[i][key];
-                        let val2 = scriptResult.dialogOptions[key];
-
-                        if (typeof val1 === 'number' && typeof val2 === 'number') {
-                            dialogOptions[i][key] = val1 + val2;
-                        }
+                    if (typeof val1 === 'number' && typeof val2 === 'number') {
+                        dialogOptions[i][key] = val1 + val2;
                     }
                 }
             }

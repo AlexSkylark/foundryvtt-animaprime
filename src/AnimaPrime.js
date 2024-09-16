@@ -161,6 +161,10 @@ Hooks.on("preUpdateActor", async (actor, change, context, userId) => {
     }
 });
 
+Hooks.on("updateItem", async (actor, change, context, userId) => {
+    await game.actionHud.render(true);
+});
+
 // refresh combat tracker
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
@@ -359,13 +363,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
             await game.combats.active.update({ "flags.actionBoost": boost });
         } else {
             if (message.flags.sourceItem.system.scriptAfterResolve) {
-                if (message.flags.sourceItem.targets && message.flags.sourceItem.targets.length) {
-                    for(let target of message.flags.sourceItem.targets) {
-                        await ScriptEngine.executeResolveScript(message.flags.sourceItem, target, message.flags.sourceItem.system.scriptAfterResolve);
-                    }
-                } else {
-                    await ScriptEngine.executeResolveScript(message.flags.sourceItem, null, message.flags.sourceItem.system.scriptAfterResolve);
-                }
+                await ScriptEngine.executeResolveScript(message.flags.sourceItem, message.flags.sourceItem.targets, message.flags.sourceItem.system.scriptAfterResolve);
             }
 
             // inactivate any boost scripts still active

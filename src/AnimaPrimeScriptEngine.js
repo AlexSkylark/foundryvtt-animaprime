@@ -1,28 +1,34 @@
 const AsyncFunction = async function () {}.constructor;
 
-export async function executeResolveScript(item, target, scriptBody) {
+export async function executeResolveScript(item, targets, scriptBody) {
 
     let action = item.system;
     let self = item.owner.system;
 
     action.name = item.name;
 
-    let targetObject = null;
-    if (target) {
-        targetObject = target
-        targetObject.name = target.name
-        if (!targetObject.id)
-            targetObject.id = target._id;
+    let targetsObject = [];
+    if (targets) {
+        for (let target of targets) {
+            let newTargetObject = target.system;
+            newTargetObject.name = target.name
+            if (!newTargetObject.id)
+                newTargetObject.id = target._id;
+            targetsObject.push(newTargetObject);
+        }
     }
 
     let executionScript = initializeScriptBody(scriptBody);
 
-    const scriptFunction = new AsyncFunction("action", "self", "target", executionScript);
+    const scriptFunction = new AsyncFunction("action", "self", "targets", executionScript);
 
-    const scriptResult = await scriptFunction(action, self, targetObject);
+    const scriptResult = await scriptFunction(action, self, targetsObject);
 
-    if (target && game.user.isGM)
-        await game.actors.get(targetObject.id).update({ system: targetObject })
+    if (targets && game.user.isGM) {
+        for (let target of targetsObject) {
+            await game.actors.get(target.id).update({ system: target })
+        }
+    }
     await game.actors.get(item.owner._id).update({ system: self });
 
     return scriptResult;
@@ -35,23 +41,24 @@ export async function executeValidations(item) {
 
         let action = item.system;
         let self = item.owner.system;
-        let target = [];
+        let targets = [];
 
         action.name = item.name;
 
-        if (game.user.targets.first()) {
-            target = game.user.targets.first().document.actor.system
-            target.name = game.user.targets.first().document.name
-            target.id = game.user.targets.first().document.id;
+        for (let target of game.user.targets) {
+            let targetObj = target.document.actor.system
+            targetObj.name = target.document.name
+            targetObj.id = target.document.id;
+            targets.push(targetObj);
         }
 
         for(let validation of validationBody.validations) {
 
             let validationScript = validationBody.scriptBody + "return " + JSON.parse(JSON.stringify(validation.script));
 
-            let validationFunction = new Function("action", "self", "target", validationScript);
+            let validationFunction = new Function("action", "self", "targets", validationScript);
 
-            let valResult = await validationFunction(action, self, target);
+            let valResult = await validationFunction(action, self, targets);
             if (!valResult) {
                 ui.notifications.error(validation.message);
                 return false;
@@ -73,7 +80,7 @@ function initializeScriptBody(originalScript) {
         scriptBody += checkCondition.toString() + "\n\n";
     }
 
-    scriptBody += "let dialogOptions = {};\n\n" + JSON.parse(JSON.stringify(originalScript)) + "\n\nreturn { dialogOptions: dialogOptions };";
+    scriptBody += "let dialogOptions = [];\n\n" + JSON.parse(JSON.stringify(originalScript)) + "\n\nreturn { dialogOptions: dialogOptions };";
 
     return scriptBody;
 }
