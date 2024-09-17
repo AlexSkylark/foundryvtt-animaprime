@@ -5,6 +5,20 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     // HTML template
     const messageTemplate = `systems/animaprime/templates/rolls/roll-${item.type}/roll-${item.type}.hbs`;
 
+    if (isReroll) {
+        let ownerActor = game.actors.get(item.originalOwner._id);
+        await ownerActor.update(item.originalOwner);
+        item.owner = ownerActor;
+
+        let rollTargets = []
+        for (let tg of item.originalTargets) {
+            let rollTarget = game.actors.get(tg._id);
+            await rollTarget.update(tg);
+            rollTargets.push(tg);
+        }
+        item.targets = rollTargets;
+    }
+
     const isEmpowered = item.owner.checkCondition("empowered") && item.type == "strike";
     const isWeakened = item.owner.checkCondition("weakened") && item.type == "strike";
     const isSupported = item.owner.checkCondition("supported");
@@ -34,6 +48,9 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         game.user.updateTokenTargets([]);
         return;
     }
+
+    item.originalTargets = JSON.parse(JSON.stringify(item.targets));
+    item.originalOwner = JSON.parse(JSON.stringify(item.owner));
 
     // execute BeforeResolve script
     let scriptResult = null;
@@ -103,8 +120,6 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         if (!options.weakness) options.weakness = 1;
     });
 
-
-
     for (let i = 0; i < item.targets.length; i++) {
         const resistance = item.targets[i].items.filter((it) => it.type == "resistance" && dialogOptions[i].damageType.toUpperCase().indexOf(it.name.toUpperCase()) >= 0);
         if (resistance.length) {
@@ -116,6 +131,9 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     await dialogOptions.forEach((options) => {
         abilityDice.push(parseInt(item.system.roll.split("d")[0]) * options.weakness);
     });
+
+    // snapshot original entities for rerolls
+    item.originalDialogOptions = JSON.parse(JSON.stringify(dialogOptions));
 
     let splittedResults = [];
     let rollResults = [];
@@ -223,34 +241,6 @@ async function isDialogResolved(promise) {
 
 async function checkDialogDelay(milliseconds = 0, returnValue) {
     return new Promise((done) => setTimeout(() => done(returnValue), milliseconds));
-}
-
-export async function commitResults(resultData, item, dialogOptions) {
-    const ownerData = item.owner.system;
-    const ownerStrikeDice = ownerData.strikeDice;
-    const ownerActionDice = ownerData.actionDice;
-
-    let totalStrikeDice = 0;
-    let totalActionDice = 0;
-
-    for (let i = 0; i < dialogOptions.length; i++) {
-        totalStrikeDice += dialogOptions[i].strikeDice;
-        totalActionDice += dialogOptions[i].actionDice;
-    }
-
-    await item.owner.update({
-        "system.strikeDice": Math.max(ownerStrikeDice - totalStrikeDice, 0),
-    });
-    await item.owner.update({
-        "system.actionDice": Math.max(ownerActionDice - totalActionDice, 0),
-    });
-
-    if (item.system.cost) {
-        const isHexed = item.owner.checkCondition("hexed");
-        await item.owner.update({
-            "system.chargeDice": ownerData.chargeDice - (item.system.cost + (isHexed ? 1 : 0)),
-        });
-    }
 }
 
 function checkItemResult(targetDefense, successes, variableGain, successModifier, powerScaleDiff, forceNoHit = false) {

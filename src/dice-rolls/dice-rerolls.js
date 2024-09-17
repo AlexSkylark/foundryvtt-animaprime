@@ -13,13 +13,15 @@ Hooks.on("renderChatMessage", (app, [html]) => {
                 ui.notifications.error("You did not perform this roll!");
                 return;
             }
+            const rerollListString = game.combats.active.flags.commitedRerolls
+            if (rerollListString) {
+                const rerollList = rerollListString.split(",");
+                flags.commit = rerollList.some((x) => x == flags.reroll);
 
-            const rerollList = game.combats.active.flags.commitedRerolls.split(",");
-            flags.commit = rerollList.some((x) => x == flags.reroll);
-
-            if (flags.commit) {
-                ui.notifications.error("This roll was already comitted.");
-                return;
+                if (flags.commit) {
+                    ui.notifications.error("This roll was already comitted.");
+                    return;
+                }
             }
 
             if (app.flags.tokenId) {
@@ -58,28 +60,29 @@ async function performReroll(flags) {
         "system.reroll": reroll - 1,
     });
 
+    flags.sourceItem.owner = flags.sourceItem.originalOwner;
+    flags.sourceItem.targets = flags.sourceItem.originalTargets;
+
     if (flags.sourceItem.type == "skill") SkillRoll.skillCheck(flags.sourceItem, flags.additionalData.withHelp);
-    else if (flags.sourceItem.type == "maneuver") ManeuverRoll.maneuverRoll(flags.sourceItem, true, flags.dialogOptions, flags.reroll);
+    else if (flags.sourceItem.type == "maneuver") ManeuverRoll.maneuverRoll(flags.sourceItem, true, flags.sourceItem.originalDialogOptions, flags.reroll);
     else if (flags.sourceItem.type == "strike" || flags.sourceItem.type == "achievement") {
-        AttackRoll.attackRoll(flags.sourceItem, true, flags.dialogOptions, flags.reroll);
+        AttackRoll.attackRoll(flags.sourceItem, true, flags.sourceItem.originalDialogOptions, flags.reroll);
     }
 }
 
 async function performCommit(flags) {
-    if (flags.sourceItem.type == "maneuver") {
-        ManeuverRoll.commitResults(flags.resultData, flags.sourceItem, flags.dialogOptions);
-    } else if (flags.sourceItem.type == "strike" || flags.sourceItem.type == "achievement") {
-        AttackRoll.commitResults(flags.resultData, flags.sourceItem, flags.dialogOptions, flags.itemTarget);
-    }
 
     flags.enableReroll = false;
 
-    let rerollList = game.combats.active.flags.commitedRerolls.split(",");
+    let rerollConfig = "";
+    const rerollListString = game.combats.active.flags.commitedRerolls ?? null;
+
+    let rerollList = rerollListString ? rerollListString.split(",") : [];
     rerollList.push(flags.reroll);
 
     if (rerollList.length > 10) rerollList.shift();
 
-    let rerollConfig = rerollList.join(",");
+    rerollConfig = rerollList.join(",");
     if (rerollConfig.charAt(0) == ",") rerollConfig.slice(1);
 
     return ChatMessage.create({

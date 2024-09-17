@@ -71,7 +71,9 @@
 </div>
 {{#if flavor.enableReroll}}
 <div class="button-reroll-container flexrow">
-    <div class="button-roll reroll">Reroll <i class="fas fa-redo"></i></div>
+    {{#if (gt flavor.entityData.owner.system.reroll 0)}}
+        <div class="button-roll reroll">Reroll <i class="fas fa-redo"></i></div>
+    {{/if}}
     <div class="button-roll commit">Commit <i class="fas fa-check"></i></div>
 </div>
 {{/if}}

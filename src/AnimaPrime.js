@@ -200,10 +200,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
     if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
-    if (game.user.isGM && message.flags.rerollConfig) {
-        if (message.flags.rerollConfig.charAt(0) == ",") message.flags.rerollConfig = message.flags.rerollConfig.slice(1);
-        await game.combats.active.update({ "flags.commitedRerolls": message.flags.rerollConfig });
-    }
+
 });
 
 // auto-delete player-created update messages
@@ -215,149 +212,178 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
     }
 });
 
-// GM proxy for maneuver commits
+// MASTER GM PROXY HOOK FOR ACTION CASTS
+// ==============================================================================
 Hooks.on("createChatMessage", async (message, data, options, userId) => {
+
     if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
 
-    const sleep = m => new Promise(r => setTimeout(r, m))
-    await sleep(800);
+    // set all rerolls from the sequence as commited when commiting rolls
+    if (game.user.isGM && message.flags.rerollConfig) {
+        if (message.flags.rerollConfig.charAt(0) == ",") message.flags.rerollConfig = message.flags.rerollConfig.slice(1);
+        await game.combats.active.update({ "flags.commitedRerolls": message.flags.rerollConfig });
+    }
 
     if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
+
         const item = message.flags.sourceItem;
-        const dialogOptions = message.flags.dialogOptions;
+        const dialogOptionsContainer = message.flags.dialogOptions;
+        const resultDataContainer = message.flags.resultData;
 
-        if (dialogOptions && dialogOptions.maneuverStyle) {
-            if (dialogOptions.maneuverStyle == "cunning" || dialogOptions.maneuverStyle == "methodical" || dialogOptions.maneuverStyle == "supportive") {
-                const token = game.scenes.active.tokens.get(message.flags.sourceItem.targetIds[0]);
+        const ownerData = item.owner.system;
+        const ownerStrikeDice = ownerData.strikeDice;
+        const ownerActionDice = ownerData.actionDice;
+        const ownerChargeDice = ownerData.chargeDice;
+        const itemOwnerActor = game.actors.get(item.owner._id);
 
-                let targetEntity = {};
-                if (token.isLinked) {
-                    targetEntity = game.actors.get(token.actor.id);
-                } else {
-                    targetEntity = token.actor ?? token.actorData;
+        let dialogOptions = {};
+        let resultData = {};
+
+        // handle strike/achievement/maneuver casts
+        switch (message.flags.sourceItem.type) {
+            case "strike":
+            case "achievement":
+                if (message.flags &&
+                    message.flags.sourceItem &&
+                    message.flags.sourceItem.targets
+                ) {
+
+                    let totalStrikeDice = 0;
+                    let totalActionDice = 0;
+
+                    for (let i = 0; i < message.flags.sourceItem.targets.length; i++) {
+                        resultData = resultDataContainer[i];
+                        dialogOptions = dialogOptionsContainer[i];
+
+                        const token = game.scenes.active.tokens.get(message.flags.sourceItem.targetIds[i]);
+
+                        let targetEntity = {};
+                        if (token.isLinked) {
+                            targetEntity = game.actors.get(token.actor.id);
+                        } else {
+                            targetEntity = token.actor ?? token.actorData;
+                        }
+
+                        let targetData = targetEntity.system;
+
+                        if (item.type == "strike") {
+                            if (resultData.hit) {
+                                targetData.health.value += resultData.wounds;
+                                targetData.threatDice = 0;
+                                targetEntity.effects.clear();
+                            } else {
+                                targetData.threatDice += resultData.variableGain;
+                            }
+
+                            await targetEntity.update({
+                                system: targetData,
+                            });
+                        } else if (item.type == "achievement") {
+                            const ownerDisposition = (item.owner.token ?? item.owner.prototypeToken).disposition;
+
+                            const itemOwnerActor = game.actors.get(item.owner._id);
+                            const isSupported = itemOwnerActor.checkCondition("supported");
+                            if (isSupported) {
+                                const supportedEffect = CONFIG.statusEffects.find((e) => e.id == "supported");
+                                const ownerToken = itemOwnerActor.getActiveTokens()[0];
+                                ownerToken.toggleEffect(supportedEffect, false);
+                            }
+
+                            if (resultData.hit) {
+                                targetData.progressDice = 0;
+                            } else {
+                                targetData.progressDice = Math.max(targetData.progressDice + resultData.variableGain * (ownerDisposition == token.disposition ? 1 : -1), 0);
+                            }
+
+                            await targetEntity.update({
+                                system: targetData,
+                            });
+
+                            item.targets[i] = targetEntity;
+                        }
+
+                        totalStrikeDice += dialogOptions.strikeDice;
+                        totalActionDice += dialogOptions.actionDice;
+                    }
+
+                    await itemOwnerActor.update({
+                        "system.strikeDice": Math.max(ownerStrikeDice - totalStrikeDice, 0),
+                    });
+                    await itemOwnerActor.update({
+                        "system.actionDice": Math.max(ownerActionDice - totalActionDice, 0),
+                    });
+
+                    if (item.system.cost) {
+                        const isHexed = itemOwnerActor.checkCondition("hexed");
+                        await itemOwnerActor.update({
+                            "system.chargeDice": ownerData.chargeDice - (item.system.cost + (isHexed ? 1 : 0)),
+                        });
+                    }
+                }
+                break;
+            case "maneuver":
+                dialogOptions = dialogOptionsContainer;
+                resultData = resultDataContainer;
+
+                if (dialogOptions && dialogOptions.maneuverStyle) {
+                    if (dialogOptions.maneuverStyle == "cunning" || dialogOptions.maneuverStyle == "methodical" || dialogOptions.maneuverStyle == "supportive") {
+                        const token = game.scenes.active.tokens.get(message.flags.sourceItem.targetIds[0]);
+
+                        let targetEntity = {};
+                        if (token.isLinked) {
+                            targetEntity = game.actors.get(token.actor.id);
+                        } else {
+                            targetEntity = token.actor ?? token.actorData;
+                        }
+
+                        let targetData = targetEntity.system;
+
+                        if (dialogOptions.maneuverStyle == "cunning") {
+                            targetData.threatDice += 1;
+                        } else if (dialogOptions.maneuverStyle == "methodical") {
+                            const ownerDisposition = (item.owner.token ?? item.owner.prototypeToken).disposition;
+                            if (ownerDisposition == token.disposition)
+                                targetData.progressDice += 1;
+                            else
+                                targetData.progressDice = Math.max(targetData.progressDice - 1, 0);
+                        } else if (dialogOptions.maneuverStyle == "supportive") {
+                            targetData.strikeDice += 1;
+                        }
+
+                        await targetEntity.update({
+                            system: targetData,
+                        });
+                    }
                 }
 
-                let targetData = targetEntity.system;
-
-                if (dialogOptions.maneuverStyle == "cunning") {
-                    targetData.threatDice += 1;
-                } else if (dialogOptions.maneuverStyle == "methodical") {
-                    const ownerDisposition = (item.owner.token ?? item.owner.prototypeToken).disposition;
-                    if (ownerDisposition == token.disposition)
-                        targetData.progressDice += 1;
-                    else
-                        targetData.progressDice = Math.max(targetData.progressDice - 1, 0);
-                } else if (dialogOptions.maneuverStyle == "supportive") {
-                    targetData.strikeDice += 1;
+                switch (dialogOptions.maneuverStyle) {
+                    case "aggressive":
+                        break;
+                    case "defensive":
+                        await itemOwnerActor.update({
+                            "system.threatDice": Math.max(item.owner.system.threatDice - 1, 0),
+                        });
+                        break;
+                    case "reckless":
+                        await itemOwnerActor.update({
+                            "system.threatDice": item.owner.system.threatDice + 1,
+                        });
+                        break;
                 }
 
-                await targetEntity.update({
-                    system: targetData,
+                await itemOwnerActor.update({
+                    "system.strikeDice": ownerStrikeDice + resultData[0].strike,
                 });
 
-                await restoreOriginalValues(item, message);
-            }
-
-            game.user.updateTokenTargets([]);
+                await itemOwnerActor.update({
+                    "system.chargeDice": ownerChargeDice + resultData[0].charge,
+                });
+                break;
         }
-    }
-});
 
-// GM proxy for strike/achievement commits
-Hooks.on("createChatMessage", async (message, data, options, userId) => {
-    if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+        item.owner = itemOwnerActor;
 
-    const sleep = m => new Promise(r => setTimeout(r, m))
-    await sleep(800);
-
-    if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
-        const item = message.flags.sourceItem;
-
-        if (message.flags &&
-            message.flags.sourceItem &&
-            message.flags.sourceItem.targets &&
-            (message.flags.sourceItem.type == "strike" || message.flags.sourceItem.type == "achievement")
-        ) {
-            for (let i = 0; i < message.flags.sourceItem.targets.length; i++) {
-                const resultData = message.flags.resultData[i];
-                const dialogOptions = message.flags.dialogOptions[i];
-
-                const token = game.scenes.active.tokens.get(message.flags.sourceItem.targetIds[i]);
-
-                let targetEntity = {};
-                if (token.isLinked) {
-                    targetEntity = game.actors.get(token.actor.id);
-                } else {
-                    targetEntity = token.actor ?? token.actorData;
-                }
-
-                let targetData = targetEntity.system;
-
-                if (item.type == "strike") {
-                    if (resultData.hit) {
-                        targetData.health.value += resultData.wounds;
-                        targetData.threatDice = 0;
-                        targetEntity.effects.clear();
-                    } else {
-                        targetData.threatDice += resultData.variableGain;
-                    }
-
-                    await targetEntity.update({
-                        system: targetData,
-                    });
-                } else if (item.type == "achievement") {
-                    const ownerDisposition = (item.owner.token ?? item.owner.prototypeToken).disposition;
-
-                    const itemOwnerActor = game.actors.get(item.owner._id);
-                    const isSupported = item.owner.checkCondition("supported");
-                    if (isSupported) {
-                        const supportedEffect = CONFIG.statusEffects.find((e) => e.id == "supported");
-                        const ownerToken = itemOwnerActor.getActiveTokens()[0];
-                        ownerToken.toggleEffect(supportedEffect, false);
-                    }
-
-                    if (resultData.hit) {
-                        targetData.progressDice = 0;
-                    } else {
-                        targetData.progressDice = Math.max(targetData.progressDice + resultData.variableGain * (ownerDisposition == token.disposition ? 1 : -1), 0);
-                    }
-
-                    await targetEntity.update({
-                        system: targetData,
-                    });
-
-                    game.user.updateTokenTargets([]);
-                }
-            }
-        }
-    }
-});
-
-// restore original values of items who were modified by GM
-Hooks.on("createChatMessage", async (message, data, options, userId) => {
-
-    if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
-
-    if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
-
-        const item = message.flags.sourceItem;
-
-        if (item.system.originalValues != null && Object.keys(item.system.originalValues).length) {
-            let itemOriginalValues = JSON.parse(JSON.stringify(item.system.originalValues));
-            itemOriginalValues.originalValues = null;
-            let originalItem = game.actors.get(item.owner._id).items.get(item.originalItem._id)
-            await originalItem.update({ system: itemOriginalValues });
-        }
-    }
-});
-
-// GM proxy for executing script actions
-Hooks.on("createChatMessage", async (message, data, options, userId) => {
-
-    if (game.dice3d && message.type == 5) await game.dice3d.waitFor3DAnimationByMessageID(message.id);
-
-    if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
-
+        // execute AfterResolve script actions
         if (message.flags.sourceItem.type == "boost") {
 
             let boost = {
@@ -376,7 +402,21 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
             await game.combats.active.update({ "flags.actionBoost": null });
         }
 
-        game.user.updateTokenTargets([]);
+        // restore original values of items who were modified by GM
+        if (item.system.originalValues != null && Object.keys(item.system.originalValues).length) {
+            let itemOriginalValues = JSON.parse(JSON.stringify(item.system.originalValues));
+            itemOriginalValues.originalValues = null;
+            let originalItem = itemOwnerActor.items.get(item.originalItem._id)
+            await originalItem.update({ system: itemOriginalValues });
+        }
+    }
+});
+
+// cancel boosts by deleting the boost chat log message
+Hooks.on("deleteChatMessage", async (app) => {
+
+    if (game.user.isGM && app.flags.sourceItem && app.flags.sourceItem.type == "boost") {
+        await game.combats.active.update({ "flags.actionBoost": null });
     }
 });
 
@@ -392,13 +432,6 @@ Hooks.once("canvasReady", async () => {
 
     await game.actionHud.render(true);
     await game.gmHud.render(true);
-});
-
-Hooks.on("deleteChatMessage", async (app) => {
-
-    if (game.user.isGM && app.flags.sourceItem && app.flags.sourceItem.type == "boost") {
-        await game.combats.active.update({ "flags.actionBoost": null });
-    }
 });
 
 Hooks.once("ready", async function () {

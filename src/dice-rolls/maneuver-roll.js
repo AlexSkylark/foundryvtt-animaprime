@@ -26,6 +26,9 @@ export async function maneuverRoll(item, isReroll = false, dialogOptions, reroll
         }
     }
 
+    // snapshot dialog options for rerolls
+    item.originalDialogOptions = JSON.parse(JSON.stringify(dialogOptions));
+
     item.targets = [];
     item.targetIds = [];
     await game.user.targets.forEach((element) => {
@@ -203,31 +206,3 @@ function checkManeuverResult(maneuverGain, results, isAggressive) {
     };
 }
 
-export async function commitResults(resultData, item, dialogOptions) {
-    const ownerStrikeDice = item.owner.system.strikeDice;
-    const ownerChargeDice = item.owner.system.chargeDice;
-
-    switch (dialogOptions.maneuverStyle) {
-        case "aggressive":
-            resultData[0].strike += 1;
-            break;
-        case "defensive":
-            await item.owner.update({
-                "system.threatDice": Math.max(item.owner.system.threatDice - 1, 0),
-            });
-            break;
-        case "reckless":
-            await item.owner.update({
-                "system.threatDice": item.owner.system.threatDice + 1,
-            });
-            break;
-    }
-
-    await item.owner.update({
-        "system.strikeDice": ownerStrikeDice + resultData[0].strike,
-    });
-
-    await item.owner.update({
-        "system.chargeDice": ownerChargeDice + resultData[0].charge,
-    });
-}

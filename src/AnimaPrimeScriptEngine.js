@@ -25,8 +25,8 @@ export async function executeResolveScript(item, targets, scriptBody) {
     const scriptResult = await scriptFunction(action, self, targetsObject);
 
     if (targets && game.user.isGM) {
-        for (let target of targetsObject) {
-            await game.actors.get(target.id).update({ system: target })
+        for (let tgi = 0; tgi < targets.length; tgi++) {
+            await game.actors.get(targets[tgi]._id).update({ system: targetsObject[tgi] })
         }
     }
     await game.actors.get(item.owner._id).update({ system: self });
@@ -80,7 +80,7 @@ function initializeScriptBody(originalScript) {
         scriptBody += checkCondition.toString() + "\n\n";
     }
 
-    scriptBody += "let dialogOptions = [];\n\n" + JSON.parse(JSON.stringify(originalScript)) + "\n\nreturn { dialogOptions: dialogOptions };";
+    scriptBody += "let target = targets[0];\nlet dialogOptions = [];\n\n" + JSON.parse(JSON.stringify(originalScript)) + "\n\nreturn { dialogOptions: dialogOptions };";
 
     return scriptBody;
 }
