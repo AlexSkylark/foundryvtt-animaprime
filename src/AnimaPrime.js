@@ -234,7 +234,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         const ownerStrikeDice = ownerData.strikeDice;
         const ownerActionDice = ownerData.actionDice;
         const ownerChargeDice = ownerData.chargeDice;
-        const itemOwnerActor = game.actors.get(item.owner._id);
+        const itemOwnerActor = game.scenes.active.tokens.get(message.speaker.token).actor;
 
         let dialogOptions = {};
         let resultData = {};
