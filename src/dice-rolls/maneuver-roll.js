@@ -141,10 +141,10 @@ export async function maneuverRoll(item, isReroll = false, dialogOptions, reroll
         isDefensive: dialogOptions.maneuverStyle == "defensive",
         isMethodical: dialogOptions.maneuverStyle == "methodical",
         isReckless: dialogOptions.maneuverStyle == "reckless",
-        isSupportive: dialogOptions.maneuverStyle == "supportive",
+        isSupportive: dialogOptions.maneuverStyle == "supportive"
     });
 
-    await DiceRolls.renderRoll(rollResult, item, resultData, messageTemplate, additionalData, isReroll, this.commitResults, dialogOptions, null, reroll);
+    await DiceRolls.renderRoll(rollResult, item, resultData, messageTemplate, additionalData, isReroll, item.owner.getActiveTokens()[0].id, dialogOptions, null, reroll);
 
     if (item.system.cost) {
         const isHexed = item.owner.checkCondition("hexed");

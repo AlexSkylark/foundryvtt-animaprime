@@ -1,4 +1,4 @@
-export async function renderRoll(rollResult, entityData, resultData, messageTemplate, additionalData, isReroll, commitCallback, dialogOptions, itemTarget, reroll) {
+export async function renderRoll(rollResult, entityData, resultData, messageTemplate, additionalData, isReroll, tokenId, dialogOptions, itemTarget, reroll) {
 
     let enableReroll = isReroll || checkForReroll(entityData.owner);
 
@@ -33,7 +33,8 @@ export async function renderRoll(rollResult, entityData, resultData, messageTemp
             enableReroll: enableReroll,
             isReroll: isReroll,
             targetData: targetData,
-            resultData: resultData
+            resultData: resultData,
+            tokenId: tokenId
         },
     });
 

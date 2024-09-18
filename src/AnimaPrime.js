@@ -234,7 +234,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         const ownerStrikeDice = ownerData.strikeDice;
         const ownerActionDice = ownerData.actionDice;
         const ownerChargeDice = ownerData.chargeDice;
-        const itemOwnerActor = game.scenes.active.tokens.get(message.speaker.token).actor;
+        const itemOwnerActor = message.flags.tokenId ? game.scenes.active.tokens.get(message.flags.tokenId).actor : game.actors.get(message.flags.actorId);
 
         let dialogOptions = {};
         let resultData = {};
@@ -443,18 +443,7 @@ Hooks.once("init", async () => {
     game.animaprime = {
         AnimaPrimeItem,
         AnimaPrimeCombat,
-        AnimaPrimeCombatant,
-        rollItemMacro: (itemName) => {
-            const speaker = ChatMessage.getSpeaker();
-            let actor;
-            if (speaker.token) actor = game.actors.tokens[speaker.token];
-            if (!actor) actor = game.actors.get(speaker.actor);
-            const item = actor ? actor.items.get(itemName) : null;
-            if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
-
-            // Trigger the item roll
-            return item.roll();
-        },
+        AnimaPrimeCombatant
     };
 
     CONFIG.Actor.documentClass = AnimaPrimeActor;
@@ -492,31 +481,6 @@ function changePrimaryColor(color) {
     r.style.setProperty("--hue", hslValue.hue);
     r.style.setProperty("--saturation", hslValue.saturation);
     r.style.setProperty("--light", hslValue.light);
-}
-
-async function createActionCardMacro(bar, data, slot) {
-    if (data.type !== "Item") return;
-
-    const splitData = data.uuid.split(".");
-    const item = game.actors.get(splitData[1]).items.get(splitData[3]);
-
-    // Create the macro command
-    const command = `game.animaprime.rollItemMacro("${splitData[3]}");`;
-    let macro = game.macros.find((m) => m.name === item.name && m.command === command);
-    if (!macro) {
-        macro = await Macro.create({
-            name: item.name,
-            type: "script",
-            img: item.img,
-            command: command,
-            flags: { "animaprime.itemMacro": true },
-        });
-    }
-    setTimeout(async () => {
-        await game.user.assignHotbarMacro(macro, slot);
-    }, 500);
-
-    return false;
 }
 
 function configureStatusEffects() {

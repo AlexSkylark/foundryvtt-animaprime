@@ -211,7 +211,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     }
 
     // chat message rendering
-    await DiceRolls.renderRoll(rollResults, item, resultData, messageTemplate, splittedResults, isReroll, this.commitResults, dialogOptions, item.targetId, previousRolls);
+    await DiceRolls.renderRoll(rollResults, item, resultData, messageTemplate, splittedResults, isReroll, item.owner.getActiveTokens()[0].id, dialogOptions, item.targetId, previousRolls);
 }
 
 function isPositiveGoal(goalType, ownerType) {
