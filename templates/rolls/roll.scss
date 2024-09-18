@@ -96,6 +96,12 @@
         font-weight: 600;
         font-family: 'Montserrat';
         background-color: #fff;
+
+        strong {
+            display: inline-block;
+            margin-top: 8px;
+            font-weight: 800;
+        }
     }
 }
 
@@ -229,7 +235,7 @@
     text-align: center;
     padding: 3px;
     padding-bottom: 6px;
-    font-weight: 800;
+    font-weight: 600;
     background-color: #bbb;
     width: 100%;
     display: block;

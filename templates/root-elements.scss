@@ -1,37 +1,8 @@
 
 @use 'variables';
 
-@font-face {
-	font-family: 'Montserrat';
-	font-style: normal;
-	font-weight: 400;
-	font-display: swap;
-	src: url(https://fonts.gstatic.com/s/montserrat/v24/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aXo.woff2) format('woff2');
-  }
 
-@font-face {
-	font-family: 'Montserrat';
-	font-style: normal;
-	font-weight: 600;
-	font-display: swap;
-	src: url(https://fonts.gstatic.com/s/montserrat/v24/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCu173w5aXo.woff2) format('woff2');
-}
-
-@font-face {
-	font-family: 'Montserrat';
-	font-style: normal;
-	font-weight: 700;
-	font-display: swap;
-	src: url(https://fonts.gstatic.com/s/montserrat/v24/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCu173w5aXo.woff2) format('woff2');
-}
-
-@font-face {
-	font-family: 'Montserrat';
-	font-style: normal;
-	font-weight: 900;
-	font-display: swap;
-	src: url(https://fonts.gstatic.com/s/montserrat/v24/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCu173w5aXo.woff2) format('woff2');
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 @font-face {
 	font-family: 'Caveat';
@@ -39,7 +10,7 @@
 	font-weight: 400;
 	font-display: swap;
 	src: url(https://fonts.gstatic.com/s/caveat/v15/WnznHAc5bAfYB2QRah7pcpNvOx-pjfJ9eIWpYQ.woff2) format('woff2');
-  }
+}
 
 @font-face {
 	font-family: 'Modesto Condensed';
