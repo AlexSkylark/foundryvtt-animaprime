@@ -116,10 +116,12 @@ export default class AnimaPrimeItem extends Item {
 
         itemData.targets = [];
         itemData.targetIds = [];
-        await game.user.targets.forEach((element) => {
+
+        for (let element of game.user.targets) {
             itemData.targets.push(element.document.actor);
             itemData.targetIds.push(element._id ?? element.id);
-        });
+            itemData.targets[itemData.targets.length - 1].tokenId = element.document.id;
+        }
 
         switch (this.type) {
             case "skill":

@@ -8,10 +8,16 @@ export async function executeResolveScript(item, targets, scriptBody) {
     action.name = item.name;
 
     let targetsObject = [];
+    let targetTokens = [];
     if (targets) {
-        for (let target of targets) {
-            let newTargetObject = target.system;
-            newTargetObject.name = target.name
+        for (let tga = 0; tga < targets.length; tga++) {
+
+            let target = targets[tga];
+
+            targetTokens.push(game.scenes.active.tokens.get(item.targetIds[tga]))
+
+            let newTargetObject = JSON.parse(JSON.stringify(targetTokens[tga].actor.system));
+            newTargetObject.name = targetTokens[tga].name
             if (!newTargetObject.id)
                 newTargetObject.id = target._id;
             targetsObject.push(newTargetObject);
@@ -26,10 +32,11 @@ export async function executeResolveScript(item, targets, scriptBody) {
 
     if (targets && game.user.isGM) {
         for (let tgi = 0; tgi < targets.length; tgi++) {
-            await game.actors.get(targets[tgi]._id).update({ system: targetsObject[tgi] })
+            await targetTokens[tgi].actor.update({ system: targetsObject[tgi] })
         }
     }
-    await game.actors.get(item.owner._id).update({ system: self });
+
+    await item.owner.update({ system: self });
 
     return scriptResult;
 }
