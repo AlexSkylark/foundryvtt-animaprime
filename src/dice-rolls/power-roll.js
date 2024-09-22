@@ -32,7 +32,7 @@ async function castPower(item) {
     );
 
     if (item.system.cost) {
-        const isHexed = item.owner.checkCondition(item.owner, "hexed");
+        const isHexed = item.owner.checkCondition("hexed");
         await item.owner.update({
             "system.chargeDice": item.owner.system.chargeDice - (item.system.cost + (isHexed ? 1 : 0)),
         });

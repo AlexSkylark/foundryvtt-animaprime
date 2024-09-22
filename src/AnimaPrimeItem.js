@@ -88,7 +88,11 @@ export default class AnimaPrimeItem extends Item {
         };
 
         // validate boost action type
-        if (game.combats.active && game.combats.active.flags.actionBoost?.validActions) {
+        const identifierId = this.actor.isToken ? this.actor.token.id : this.actor.id;
+        if (game.combats.active
+            && identifierId == game.combats.active.flags.actionBoost?.identifierId
+            && game.combats.active.flags.actionBoost?.validActions) {
+
             const boostedActionValid = game.combats.active.flags.actionBoost.validActions.indexOf(this.type) >= 0;
             if (!boostedActionValid) {
                 ui.notifications.error("The current active boost can only enhance these action types: " + game.combats.active.flags.actionBoost.validActions.replace(",", ", ").toUpperCase());

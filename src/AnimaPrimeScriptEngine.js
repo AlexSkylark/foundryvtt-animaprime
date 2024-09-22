@@ -114,7 +114,8 @@ function checkCondition(entity, condition) {
 
 async function addCondition(token, conditionId) {
 
-    const targetActor = game.actors.get(token.id);
+    const targetToken = game.scenes.active.tokens.get(token.id);
+    const targetActor = targetToken.actor;
     const effects = targetActor.temporaryEffects.filter((temp) => {
         return temp.name.toUpperCase() == conditionId.toUpperCase();
     });
@@ -122,6 +123,6 @@ async function addCondition(token, conditionId) {
     if (effects.length > 0) return;
 
     const activeEffectConf = CONFIG.statusEffects.find((se) => se.id == conditionId);
-    const targetToken = targetActor.getActiveTokens()[0].document;
+
     await targetToken.toggleActiveEffect(activeEffectConf, { active: true });
 }

@@ -389,7 +389,8 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
             let boost = {
                 scriptBeforeResolve: message.flags.sourceItem.system.scriptBeforeResolve,
                 scriptAfterResolve: message.flags.sourceItem.system.scriptAfterResolve,
-                validActions: message.flags.sourceItem.system.actionTypes
+                validActions: message.flags.sourceItem.system.actionTypes,
+                identifierId: message.flags.sourceItem.owner.token?.id ?? message.flags.sourceItem.owner.id
             }
 
             await game.combats.active.update({ "flags.actionBoost": boost });

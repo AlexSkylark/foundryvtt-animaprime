@@ -143,7 +143,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         successModifier = dialogOptions[i].rollModifier;
 
         // add a bonus dice if supported
-        if (isSupported)
+        if (item.type == "achievement" && isSupported)
             dialogOptions[i].bonusDice += 1;
 
         // sum script dialog options values with real ones;
