@@ -62,10 +62,6 @@ export function registerHandlebarsHelpers() {
         return value == 2 || value == 3;
     });
 
-    Handlebars.registerHelper("isSkillCriticalSuccess", function (value) {
-        return value >= 4;
-    });
-
     Handlebars.registerHelper("isAchievement", function (value) {
         return value.toUpperCase() == "ACHIEVEMENT";
     });

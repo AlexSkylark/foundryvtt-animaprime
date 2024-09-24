@@ -20,7 +20,7 @@
                     {{/each}}
                 </ol>
             </div>
-            {{#if (gte flavor.targetData.0.resultData.criticals 2)}}
+            {{#if (gte flavor.targetData.0.resultData.criticals 3)}}
             <span class="result-message critical">{{flavor.targetData.0.resultData.criticals}} crits. CRITICAL SUCCESS!</span>
             {{else}}
                 {{#if (gte flavor.targetData.0.resultData.successes 2)}}
