@@ -13,7 +13,8 @@ export default class AnimaPrimeActorSheet extends ActorSheet {
                     initial: "features",
                 },
             ],
-            resizable: false
+            resizable: false,
+            minimizable: false
         });
     }
 

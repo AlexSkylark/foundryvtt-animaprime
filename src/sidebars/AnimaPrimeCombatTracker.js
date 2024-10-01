@@ -139,6 +139,9 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
     }
 
     async updateRender(updating) {
+
+        const originalUpdating = duplicate(this.viewed.isUpdating);
+
         if (updating == false) {
             this.pauseForRender(500).then(async () => {
                 this.viewed.isUpdating = updating;
@@ -148,11 +151,13 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
                 });
             });
         } else {
-            this.viewed.isUpdating = updating;
+            if (!this.viewed.isUpdating)
+                this.viewed.isUpdating = updating;
+
             await ui.combat.render();
         }
 
-        if (game.user.isGM) {
+        if (game.user.isGM && this.viewed.isUpdating != originalUpdating) {
             game.socket.emit("system.animaprime", {
                 operation: "refreshSidebar",
                 isUpdating: updating,

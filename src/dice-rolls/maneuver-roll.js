@@ -156,10 +156,12 @@ export async function maneuverRoll(item, isReroll = false, dialogOptions, reroll
 
 function checkManeuverTarget(maneuver, maneuverStyle) {
     if (maneuverStyle == "cunning" || maneuverStyle == "methodical" || maneuverStyle == "supportive") {
+
         const originalTargets = duplicate(maneuver.targets);
+
         if (maneuverStyle == "cunning") {
             maneuver.targets = maneuver.targets.filter((i) => {
-                return i.type == "adversity";
+                return i.type == "adversity" || i.type == "vehicle";
             });
         } else if (maneuverStyle == "methodical") {
             maneuver.targets = maneuver.targets.filter((i) => {
@@ -167,7 +169,7 @@ function checkManeuverTarget(maneuver, maneuverStyle) {
             });
         } else if (maneuverStyle == "supportive") {
             maneuver.targets = maneuver.targets.filter((i) => {
-                return i.type == "character" || i.type == "ally";
+                return i.type == "character" || i.type == "ally" || i.type == "vehicle";
             });
         }
 
