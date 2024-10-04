@@ -6,13 +6,13 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     const messageTemplate = `systems/animaprime/templates/rolls/roll-${item.type}/roll-${item.type}.hbs`;
 
     if (isReroll) {
-        let ownerActor = game.actors.get(item.originalOwner._id);
-        await ownerActor.update(item.originalOwner);
-        item.owner = ownerActor;
+        item.owner = game.scenes.viewed.tokens.get(item.originalOwner.tokenId).actor;
+        await item.owner.update(item.originalOwner);
+        item.owner.tokenId = item.originalOwner.tokenId;
 
         let rollTargets = []
         for (let tg of item.originalTargets) {
-            let rollTarget = game.actors.get(tg._id);
+            let rollTarget = game.scenes.viewed.tokens.get(tg.tokenId).actor;
             await rollTarget.update(tg);
             rollTargets.push(tg);
         }
@@ -25,7 +25,8 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
 
     const ownerData = item.owner.system;
 
-    item.originalItemTargets = duplicate(item.targets);
+    const originalTargetsLength = item.targets.length;
+
     // validations
     if (item.type == "strike") {
         item.targets = item.targets.filter((i) => {
@@ -37,7 +38,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         });
     }
 
-    if (!item.targets || !item.targets.length || item.targets.length != item.originalItemTargets.length) {
+    if (!item.targets || !item.targets.length || item.targets.length != originalTargetsLength) {
         ui.notifications.error(`Please select suitable targets for the <i>"${item.name}"</i> ${item.type} action. Targets de-selected`);
         game.user.updateTokenTargets([]);
         return;
@@ -49,8 +50,8 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         return;
     }
 
-    item.originalTargets = JSON.parse(JSON.stringify(item.targets));
-    item.originalOwner = JSON.parse(JSON.stringify(item.owner));
+    item.originalTargets = item.targets;
+    item.originalOwner = duplicate(item.owner);
 
     // execute BeforeResolve script
     let scriptResult = null;
@@ -100,11 +101,11 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
                 type: item.type,
                 targetType: item.targets[i].type,
                 targetName: item.targets[i].name,
-                targetId: item.targetIds[i],
+                targetId: item.targets[i].tokenId,
             };
             dialogOptions.push({});
             dialogPromises.push(
-                DiceRolls.getItemRollOptions(itemForDialog, item.targetIds[i]).then((result) => {
+                DiceRolls.getItemRollOptions(itemForDialog, item.targets[i].tokenId).then((result) => {
                     dialogOptions[i] = result;
                 })
             );
@@ -121,7 +122,8 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     });
 
     for (let i = 0; i < item.targets.length; i++) {
-        const resistance = item.targets[i].items.filter((it) => it.type == "resistance" && dialogOptions[i].damageType.toUpperCase().indexOf(it.name.toUpperCase()) >= 0);
+        const targetActor = game.scenes.viewed.tokens.get(item.targets[i].tokenId).actor
+        const resistance = targetActor.items.filter((it) => it.type == "resistance" && dialogOptions[i].damageType.toUpperCase().indexOf(it.name.toUpperCase()) >= 0);
         if (resistance.length) {
             dialogOptions[i].resistance = parseInt(resistance[0].system.rating);
         }
@@ -170,14 +172,15 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
         let positiveGoal = true;
         if (item.type == "achievement") {
             // if sabotaging goal
-            const targetToken = game.scenes.active.tokens.find((tk) => tk.id == item.targetIds[i])
-            positiveGoal = isPositiveGoal(targetToken.disposition, (item.owner.token ?? item.owner.prototypeToken).disposition);
+            const targetToken = game.scenes.viewed.tokens.get(item.targets[i].tokenId);
+            const ownerToken = game.scenes.viewed.tokens.get(item.owner.tokenId);
+            positiveGoal = isPositiveGoal(targetToken.disposition, ownerToken.disposition);
             if (!positiveGoal) {
                 forceNoHit = true;
 
                 const naturalDice = abilityDice[i] + dialogOptions[i].strikeDice + dialogOptions[i].actionDice;
 
-                let resultsCopy = JSON.parse(JSON.stringify(rollResults[i].dice[0].results));
+                let resultsCopy = duplicate(rollResults[i].dice[0].results);
                 for (let d = naturalDice; d < rollResults[i].dice[0].results.length; d++) {
                     resultsCopy.pop();
                 }
@@ -211,7 +214,7 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     }
 
     // chat message rendering
-    await DiceRolls.renderRoll(rollResults, item, resultData, messageTemplate, splittedResults, isReroll, item.owner.getActiveTokens()[0].id, dialogOptions, item.targetId, previousRolls);
+    await DiceRolls.renderRoll(rollResults, item, resultData, messageTemplate, splittedResults, isReroll, item.owner.id, dialogOptions, item.targets[0]?.tokenId, previousRolls);
 }
 
 function isPositiveGoal(goalType, ownerType) {

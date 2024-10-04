@@ -12,8 +12,8 @@ export function registerHandlebarsHelpers() {
     });
 
     Handlebars.registerHelper("isPositiveGoal", function (value1, value2) {
-        const targetType = game.scenes.active.tokens.get(value1).disposition;
-        const ownerType = (value2.token ?? value2.prototypeToken).disposition;
+        const targetType = game.scenes.viewed.tokens.get(value1).disposition;
+        const ownerType = game.scenes.viewed.tokens.get(value2).disposition;
 
         return targetType == ownerType;
     });

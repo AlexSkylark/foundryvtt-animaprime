@@ -7,9 +7,9 @@ Hooks.on("renderChatMessage", (app, [html]) => {
         if ($(event.target).hasClass("button-roll")) {
             const flags = app.flags;
 
-            if (!app.flags.actorId) return;
+            if (!app.flags.ownerTokenId) return;
 
-            if (!game.actors.get(app.flags.actorId).isOwner) {
+            if (!game.scenes.viewed.tokens.get(app.flags.ownerTokenId).isOwner) {
                 ui.notifications.error("You did not perform this roll!");
                 return;
             }
@@ -24,16 +24,15 @@ Hooks.on("renderChatMessage", (app, [html]) => {
                 }
             }
 
-            if (app.flags.tokenId) {
-                app.flags.sourceItem.owner = game.scenes.active.tokens.get(app.flags.tokenId).actor;
-            } else {
-                app.flags.sourceItem.owner = game.actors.get(app.flags.actorId);
-            }
+
+            app.flags.sourceItem.owner = game.scenes.viewed.tokens.get(app.flags.ownerTokenId).actor;
+            app.flags.sourceItem.originalOwner.tokenId = app.flags.ownerTokenId;
 
             if ($(event.target).hasClass("reroll")) {
                 try {
                     if (!app.flags.previousApps) app.flags.previousApps = [];
                     flags.previousApps.push(app);
+                    $(event.target).addClass('hide-button')
                     await performReroll(app.flags);
                 } catch (ex) {
                     throw ex;
@@ -59,6 +58,7 @@ async function performReroll(flags) {
     await flags.sourceItem.owner.update({
         "system.reroll": reroll - 1,
     });
+    flags.sourceItem.originalOwner.system.reroll -= 1;
 
     flags.sourceItem.owner = flags.sourceItem.originalOwner;
     flags.sourceItem.targets = flags.sourceItem.originalTargets;

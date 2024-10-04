@@ -81,9 +81,13 @@ export default class AnimaPrimeItem extends Item {
             }
         }
 
+        let itemOwnerToken = (this.actor.isToken ? this.actor.token : this.actor.getActiveTokens()[0]);
+        let itemOwnerActor = itemOwnerToken.actor;
+        itemOwnerActor.tokenId = itemOwnerToken.id;
+
         let itemData = {
             ...this,
-            owner: this.parent,
+            owner: itemOwnerActor,
             originalItem: this
         };
 
@@ -119,12 +123,14 @@ export default class AnimaPrimeItem extends Item {
         }
 
         itemData.targets = [];
-        itemData.targetIds = [];
+        Array.from(game.user.targets.map(e => e.actor));
 
-        for (let element of game.user.targets) {
-            itemData.targets.push(element.document.actor);
-            itemData.targetIds.push(element._id ?? element.id);
-            itemData.targets[itemData.targets.length - 1].tokenId = element.document.id;
+        for(var tg of game.user.targets) {
+            let tgObject = {
+                ...tg.actor,
+                tokenId: tg.id
+            }
+            itemData.targets.push(tgObject);
         }
 
         switch (this.type) {

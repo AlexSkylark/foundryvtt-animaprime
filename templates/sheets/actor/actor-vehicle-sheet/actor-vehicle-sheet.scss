@@ -388,6 +388,7 @@
             margin-top: 36px;
             bottom: 10px;
             margin-left: 24px;
+            width: 40%;
 
             .select-vehicle-type {
 
@@ -413,6 +414,58 @@
                         color: var(--primary-color);
                         font-weight: 600;
                         font-size: 15px;
+                    }
+                }
+            }
+
+            .reroll-strike-container {
+
+                display: flex;
+                flex-wrap: nowrap;
+                flex-direction: row;
+                width: calc(100% - 4px);
+                margin-top: 16px;
+                margin-bottom: 12px;
+                position: relative;
+                right: 2px;
+
+                .dice-pool-strip {
+                    width: calc(50% - 16px);
+                    margin-bottom: 0;
+                    margin: 0px 12px;
+                    position: relative;
+                    right: 12px;
+
+                    label {
+                        font-size: 12px;
+                    }
+
+
+                    &.reroll-strip {
+                        background-color: #fff;
+                        border: 3px solid var(--primary-color);
+
+                        label {
+                            color: var(--primary-color);
+                            font-size: 12px;
+                        }
+                    }
+
+                    .attribute-value {
+                        min-width: 54px;
+                    }
+
+                    .button-changevalue {
+
+                        min-width: 20px;
+
+                        left: calc(100% + 20px);
+                        bottom: 18px;
+
+                        &.minus {
+                            top: 18px;
+                            left: calc(100% + 0px);
+                        }
                     }
                 }
             }

@@ -9,7 +9,8 @@
                 },
                 "defense": 5,
                 "powerScale": 0,
-                "enableEdit": false
+                "enableEdit": false,
+                "reroll": 0
             },
             "dice": {
                 "actionDiceMax": 2,
@@ -33,7 +34,7 @@
             "threatDice": 0
         },
         "character": {
-            "templates": ["base", "dice", "actions"],
+            "templates": ["base", "dice"],
             "race": "",
             "concept": "",
             "passion": "",
@@ -42,7 +43,6 @@
             "skills": [],
             "exp": 0,
             "expFragment": 0,
-            "reroll": 0,
             "traits": {
                 "trait1": {
                     "name": ""

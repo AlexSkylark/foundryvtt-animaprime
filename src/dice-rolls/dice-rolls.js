@@ -33,8 +33,7 @@ export async function renderRoll(rollResult, entityData, resultData, messageTemp
             enableReroll: enableReroll,
             isReroll: isReroll,
             targetData: targetData,
-            resultData: resultData,
-            tokenId: tokenId
+            resultData: resultData
         },
     });
 
@@ -49,6 +48,7 @@ export async function renderRoll(rollResult, entityData, resultData, messageTemp
         flags: {
             rollsId: chatMessageUniqueId,
             sourceItem: entityData,
+            ownerTokenId: entityData.owner.tokenId,
             resultData: resultData,
             additionalData: additionalData,
             dialogOptions: dialogOptions,
@@ -56,8 +56,6 @@ export async function renderRoll(rollResult, entityData, resultData, messageTemp
             enableReroll: enableReroll,
             reroll: false,
             commit: false,
-            tokenId: entityData.owner.token ? entityData.owner.token.id : null,
-            actorId: entityData.owner.id ?? entityData.owner._id,
             reroll: reroll,
         },
     };
@@ -340,7 +338,7 @@ export function checkVariableGain(splitResults, powerScaleDiff) {
 }
 
 export function checkForReroll(owner) {
-    if (owner.type != "character") return false;
+    if (owner.type != "character" && owner.type != "vehicle") return false;
 
     return owner.system.reroll > 0;
 }

@@ -118,7 +118,7 @@
                     </div>
                 </div>
             </div>
-            {{#if (isCharacter owner.type)}}
+            {{#if (eq owner.type "character")}}
             <div class=" dialog-field-container flexrow">
                 <label class="action">Add Focus Dice?</label>
                 <div class="flexrow dialog-buttons">
@@ -169,7 +169,7 @@
                     </div>
                 </div>
             </div>
-            {{#unless (isAchievement type)}}
+            {{#unless (eq type "achievement")}}
             <div class=" dialog-field-container flexrow dialog-weakresist">
                 <label>Target has Weakness?</label>
                 <div class="flexrow dialog-buttons">

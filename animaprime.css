@@ -1878,6 +1878,7 @@ select:focus {
   margin-top: 36px;
   bottom: 10px;
   margin-left: 24px;
+  width: 40%;
 }
 .vehicle-sheet .right-side.dice-pools .select-vehicle-type {
   width: 100%;
@@ -1902,6 +1903,46 @@ select:focus {
   color: var(--primary-color);
   font-weight: 600;
   font-size: 15px;
+}
+.vehicle-sheet .right-side.dice-pools .reroll-strike-container {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  width: calc(100% - 4px);
+  margin-top: 16px;
+  margin-bottom: 12px;
+  position: relative;
+  right: 2px;
+}
+.vehicle-sheet .right-side.dice-pools .reroll-strike-container .dice-pool-strip {
+  width: calc(50% - 16px);
+  margin-bottom: 0;
+  margin: 0px 12px;
+  position: relative;
+  right: 12px;
+}
+.vehicle-sheet .right-side.dice-pools .reroll-strike-container .dice-pool-strip label {
+  font-size: 12px;
+}
+.vehicle-sheet .right-side.dice-pools .reroll-strike-container .dice-pool-strip.reroll-strip {
+  background-color: #fff;
+  border: 3px solid var(--primary-color);
+}
+.vehicle-sheet .right-side.dice-pools .reroll-strike-container .dice-pool-strip.reroll-strip label {
+  color: var(--primary-color);
+  font-size: 12px;
+}
+.vehicle-sheet .right-side.dice-pools .reroll-strike-container .dice-pool-strip .attribute-value {
+  min-width: 54px;
+}
+.vehicle-sheet .right-side.dice-pools .reroll-strike-container .dice-pool-strip .button-changevalue {
+  min-width: 20px;
+  left: calc(100% + 20px);
+  bottom: 18px;
+}
+.vehicle-sheet .right-side.dice-pools .reroll-strike-container .dice-pool-strip .button-changevalue.minus {
+  top: 18px;
+  left: calc(100% + 0px);
 }
 .vehicle-sheet .right-side.dice-pools .dice-pool-strip {
   background-color: var(--primary-color);
@@ -2280,6 +2321,9 @@ select:focus {
 }
 .button-reroll-container .button-roll.commit {
   color: #0f9986;
+}
+.button-reroll-container .hide-button {
+  display: none;
 }
 
 .result-message {

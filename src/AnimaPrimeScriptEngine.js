@@ -14,7 +14,7 @@ export async function executeResolveScript(item, targets, scriptBody) {
 
             let target = targets[tga];
 
-            targetTokens.push(game.scenes.active.tokens.get(item.targetIds[tga]))
+            targetTokens.push(game.scenes.viewed.tokens.get(item.targets[tga].tokenId))
 
             let newTargetObject = JSON.parse(JSON.stringify(targetTokens[tga].actor.system));
             newTargetObject.name = targetTokens[tga].name

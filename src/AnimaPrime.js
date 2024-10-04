@@ -188,7 +188,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         }
 
         if (!game.user.isGM) {
-            const actorOwner = game.actors.get(item.owner._id);
+            const actorOwner = game.scenes.viewed.tokens.get(item.owner.id).actor;
             if (!message.flags.enableReroll && actorOwner.isOwner) {
                 await DiceRolls.getConfirmEndOfTurn(item.owner);
             }
@@ -226,7 +226,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
     if (game.user.isGM && message.flags.sourceItem && !message.flags.enableReroll) {
 
-        const item = message.flags.sourceItem;
+        let item = message.flags.sourceItem;
         const dialogOptionsContainer = message.flags.dialogOptions;
         const resultDataContainer = message.flags.resultData;
 
@@ -234,7 +234,13 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         const ownerStrikeDice = ownerData.strikeDice;
         const ownerActionDice = ownerData.actionDice;
         const ownerChargeDice = ownerData.chargeDice;
-        const itemOwnerActor = message.flags.tokenId ? game.scenes.active.tokens.get(message.flags.tokenId).actor : game.actors.get(message.flags.actorId);
+        const itemOwnerToken = game.scenes.viewed.tokens.get(message.flags.ownerTokenId);
+
+        item.owner = itemOwnerToken.actor;
+        item.owner.tokenId = itemOwnerToken.id;
+
+        if (item.originalOwner)
+            item.originalOwner.tokenId = itemOwnerToken.id;
 
         let dialogOptions = {};
         let resultData = {};
@@ -255,38 +261,29 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                         resultData = resultDataContainer[i];
                         dialogOptions = dialogOptionsContainer[i];
 
-                        const token = game.scenes.active.tokens.get(message.flags.sourceItem.targetIds[i]);
+                        const token = game.scenes.viewed.tokens.get(message.flags.sourceItem.targets[i].tokenId);
 
-                        let targetEntity = {};
-                        if (token.isLinked) {
-                            targetEntity = game.actors.get(token.actor.id);
-                        } else {
-                            targetEntity = token.actor ?? token.actorData;
-                        }
-
-                        let targetData = targetEntity.system;
+                        let targetData = token.actor.system;
 
                         if (item.type == "strike") {
                             if (resultData.hit) {
                                 targetData.health.value += resultData.wounds;
                                 targetData.threatDice = 0;
-                                targetEntity.effects.clear();
+                                token.actor.effects.clear();
                             } else {
                                 targetData.threatDice += resultData.variableGain;
                             }
 
-                            await targetEntity.update({
+                            await token.actor.update({
                                 system: targetData,
                             });
                         } else if (item.type == "achievement") {
-                            const ownerDisposition = (item.owner.token ?? item.owner.prototypeToken).disposition;
+                            const ownerDisposition = itemOwnerToken.disposition;
 
-                            const itemOwnerActor = game.actors.get(item.owner._id);
-                            const isSupported = itemOwnerActor.checkCondition("supported");
+                            const isSupported = item.owner.checkCondition("supported");
                             if (isSupported) {
                                 const supportedEffect = CONFIG.statusEffects.find((e) => e.id == "supported");
-                                const ownerToken = itemOwnerActor.getActiveTokens()[0];
-                                ownerToken.toggleEffect(supportedEffect, false);
+                                itemOwnerToken.toggleEffect(supportedEffect, false);
                             }
 
                             if (resultData.hit) {
@@ -295,27 +292,27 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                                 targetData.progressDice = Math.max(targetData.progressDice + resultData.variableGain * (ownerDisposition == token.disposition ? 1 : -1), 0);
                             }
 
-                            await targetEntity.update({
+                            await token.actor.update({
                                 system: targetData,
                             });
 
-                            item.targets[i] = targetEntity;
+                            item.targets[i] = token.actor;
                         }
 
                         totalStrikeDice += dialogOptions.strikeDice;
                         totalActionDice += dialogOptions.actionDice;
                     }
 
-                    await itemOwnerActor.update({
+                    await item.owner.update({
                         "system.strikeDice": Math.max(ownerStrikeDice - totalStrikeDice, 0),
                     });
-                    await itemOwnerActor.update({
+                    await item.owner.update({
                         "system.actionDice": Math.max(ownerActionDice - totalActionDice, 0),
                     });
 
                     if (item.system.cost) {
-                        const isHexed = itemOwnerActor.checkCondition("hexed");
-                        await itemOwnerActor.update({
+                        const isHexed = item.owner.checkCondition("hexed");
+                        await item.owner.update({
                             "system.chargeDice": ownerData.chargeDice - (item.system.cost + (isHexed ? 1 : 0)),
                         });
                     }
@@ -327,21 +324,14 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
                 if (dialogOptions && dialogOptions.maneuverStyle) {
                     if (dialogOptions.maneuverStyle == "cunning" || dialogOptions.maneuverStyle == "methodical" || dialogOptions.maneuverStyle == "supportive") {
-                        const token = game.scenes.active.tokens.get(message.flags.sourceItem.targetIds[0]);
 
-                        let targetEntity = {};
-                        if (token.isLinked) {
-                            targetEntity = game.actors.get(token.actor.id);
-                        } else {
-                            targetEntity = token.actor ?? token.actorData;
-                        }
-
-                        let targetData = targetEntity.system;
+                        const token = game.scenes.viewed.tokens.get(message.flags.sourceItem.targets[0].id);
+                        let targetData = token.actor.system;
 
                         if (dialogOptions.maneuverStyle == "cunning") {
                             targetData.threatDice += 1;
                         } else if (dialogOptions.maneuverStyle == "methodical") {
-                            const ownerDisposition = (item.owner.token ?? item.owner.prototypeToken).disposition;
+                            const ownerDisposition = item.owner.disposition;
                             if (ownerDisposition == token.disposition)
                                 targetData.progressDice += 1;
                             else
@@ -350,7 +340,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                             targetData.strikeDice += 1;
                         }
 
-                        await targetEntity.update({
+                        await token.actor.update({
                             system: targetData,
                         });
                     }
@@ -360,28 +350,26 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                     case "aggressive":
                         break;
                     case "defensive":
-                        await itemOwnerActor.update({
+                        await item.owner.update({
                             "system.threatDice": Math.max(item.owner.system.threatDice - 1, 0),
                         });
                         break;
                     case "reckless":
-                        await itemOwnerActor.update({
+                        await item.owner.update({
                             "system.threatDice": item.owner.system.threatDice + 1,
                         });
                         break;
                 }
 
-                await itemOwnerActor.update({
+                await item.owner.update({
                     "system.strikeDice": ownerStrikeDice + resultData[0].strike,
                 });
 
-                await itemOwnerActor.update({
+                await item.owner.update({
                     "system.chargeDice": ownerChargeDice + resultData[0].charge,
                 });
                 break;
         }
-
-        item.owner = itemOwnerActor;
 
         // execute AfterResolve script actions
         if (message.flags.sourceItem.type == "boost") {
@@ -390,13 +378,13 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                 scriptBeforeResolve: message.flags.sourceItem.system.scriptBeforeResolve,
                 scriptAfterResolve: message.flags.sourceItem.system.scriptAfterResolve,
                 validActions: message.flags.sourceItem.system.actionTypes,
-                identifierId: message.flags.sourceItem.owner.token?.id ?? message.flags.sourceItem.owner.id
+                identifierId: message.flags.sourceItem.owner.id
             }
 
             await game.combats.active.update({ "flags.actionBoost": boost });
         } else {
             if (message.flags.sourceItem.system.scriptAfterResolve) {
-                await ScriptEngine.executeResolveScript(message.flags.sourceItem, message.flags.sourceItem.targets, message.flags.sourceItem.system.scriptAfterResolve);
+                await ScriptEngine.executeResolveScript(item, item.targets, item.system.scriptAfterResolve);
             }
 
             // inactivate any boost scripts still active
@@ -407,7 +395,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         if (item.system.originalValues != null && Object.keys(item.system.originalValues).length) {
             let itemOriginalValues = JSON.parse(JSON.stringify(item.system.originalValues));
             itemOriginalValues.originalValues = null;
-            let originalItem = itemOwnerActor.items.get(item.originalItem._id)
+            let originalItem = item.owner.items.get(item.originalItem._id)
             await originalItem.update({ system: itemOriginalValues });
         }
     }

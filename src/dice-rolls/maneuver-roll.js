@@ -3,6 +3,20 @@ import * as DiceRolls from "./dice-rolls.js";
 export async function maneuverRoll(item, isReroll = false, dialogOptions, reroll) {
     const messageTemplate = "systems/animaprime/templates/rolls/roll-maneuver/roll-maneuver.hbs";
 
+    if (isReroll) {
+        item.owner = game.scenes.viewed.tokens.get(item.originalOwner.tokenId).actor;
+        await item.owner.update(item.originalOwner);
+        item.owner.tokenId = item.originalOwner.tokenId;
+
+        let rollTargets = []
+        for (let tg of item.originalTargets) {
+            let rollTarget = game.scenes.viewed.tokens.get(tg.tokenId).actor;
+            await rollTarget.update(tg);
+            rollTargets.push(tg);
+        }
+        item.targets = rollTargets;
+    }
+
     let maneuverDice = parseInt(item.system.roll.replace("d"));
     const isQuickened = item.owner.checkCondition("quickened");
     const isDazed = item.owner.checkCondition("dazed");
@@ -29,12 +43,8 @@ export async function maneuverRoll(item, isReroll = false, dialogOptions, reroll
     // snapshot dialog options for rerolls
     item.originalDialogOptions = JSON.parse(JSON.stringify(dialogOptions));
 
-    item.targets = [];
-    item.targetIds = [];
-    await game.user.targets.forEach((element) => {
-        item.targets.push(element.document.actor);
-        item.targetIds.push(element._id ?? element.id);
-    });
+    item.originalTargets = item.targets;
+    item.originalOwner = duplicate(item.owner);
 
     if (!checkManeuverTarget(item, dialogOptions.maneuverStyle)) return;
 
@@ -121,7 +131,9 @@ export async function maneuverRoll(item, isReroll = false, dialogOptions, reroll
     }
 
     // is the target of equal disposition to the user?
-    const isPositive = !item.targetIds[0] ? true : game.scenes.active.tokens.find((tk) => tk.id == item.targetIds[0]).disposition == (item.owner.token ?? item.owner.prototypeToken).disposition;
+    const isPositive = !item.targets[0] ?
+        true :
+        game.scenes.viewed.tokens.find((tk) => tk.id == item.targets[0].tokenId).disposition == (item.owner.token ?? item.owner.prototypeToken).disposition;
 
     let additionalData = [];
     additionalData.push({
@@ -161,15 +173,18 @@ function checkManeuverTarget(maneuver, maneuverStyle) {
 
         if (maneuverStyle == "cunning") {
             maneuver.targets = maneuver.targets.filter((i) => {
-                return i.type == "adversity" || i.type == "vehicle";
+                const tokenActor = game.scenes.viewed.tokens.get(i.actor)
+                return tokenActor.type == "adversity" || tokenActor.type == "vehicle";
             });
         } else if (maneuverStyle == "methodical") {
             maneuver.targets = maneuver.targets.filter((i) => {
-                return i.type == "goal";
+                const tokenActor = game.scenes.viewed.tokens.get(i.actor)
+                return tokenActor.type == "goal";
             });
         } else if (maneuverStyle == "supportive") {
             maneuver.targets = maneuver.targets.filter((i) => {
-                return i.type == "character" || i.type == "ally" || i.type == "vehicle";
+                const tokenActor = game.scenes.viewed.tokens.get(i.actor)
+                return tokenActor.type == "character" || tokenActor.type == "ally" || tokenActor.type == "vehicle";
             });
         }
 

@@ -46,8 +46,8 @@ async function castPower(item) {
         content: templateHtml,
         flags: {
             sourceItem: item,
-            cancelled: false,
-            tokenId: item.owner.getActiveTokens()[0].id
+            ownerTokenId: item.owner.tokenId,
+            cancelled: false
         },
     });
 }

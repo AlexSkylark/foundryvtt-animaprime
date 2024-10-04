@@ -62,7 +62,7 @@
                     <option value="-1" {{#if (eq data.token.disposition -1)}} selected {{/if}}>Type: Hostile</option>
                 </select>
             </div>
-        {{/if}}
+            {{/if}}
             {{#if owner}}
             <div class="dice-pool-strip icon-container flex0">
                 <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="strikeDice" data-operation="plus"><i class="fas fa-plus"></i></div>
@@ -81,6 +81,26 @@
                 </div>
             </div>
             {{/if}}
+            {{#if (or isGM system.reroll)}}
+            <div class="reroll-strike-container">
+                <div class="dice-pool-strip icon-container flex0{{#unless owner}} threat-only{{/unless}}">
+                    <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="threatDice" data-operation="plus"><i class="fas fa-plus"></i></div>
+                    <div class="icon button-changevalue minus{{#unless editUnlocked}} edit-hidden{{/unless}}"data-property="threatDice" data-operation="minus"><i class="fas fa-minus"></i></div>
+                    <label>Threat Dice</label>
+                    <div class="attribute-value">
+                        <span>{{system.threatDice}}</span>
+                    </div>
+                </div>
+                <div class="dice-pool-strip reroll-strip icon-container flex0 reroll-label">
+                    <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="reroll" data-operation="plus"><i class="fas fa-plus"></i></div>
+                    <div class="icon button-changevalue minus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="reroll" data-operation="minus"><i class="fas fa-minus"></i></div>
+                    <label>Rerolls</label>
+                    <div class="attribute-value">
+                        <span>{{system.reroll}}</span>
+                    </div>
+                </div>
+            </div>
+            {{else}}
             <div class="dice-pool-strip icon-container flex0{{#unless owner}} threat-only{{/unless}}">
                 <div class="icon button-changevalue plus{{#unless editUnlocked}} edit-hidden{{/unless}}" data-property="threatDice" data-operation="plus"><i class="fas fa-plus"></i></div>
                 <div class="icon button-changevalue minus{{#unless editUnlocked}} edit-hidden{{/unless}}"data-property="threatDice" data-operation="minus"><i class="fas fa-minus"></i></div>
@@ -89,6 +109,7 @@
                     <span>{{system.threatDice}}</span>
                 </div>
             </div>
+            {{/if}}
         </div>
     </div>
 

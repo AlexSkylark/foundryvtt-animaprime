@@ -33,13 +33,7 @@ export async function commitResults(resultData, poisonData) {
         const poisonEffect = CONFIG.statusEffects.find((e) => e.id == poisonData.name);
         owner.object.toggleEffect(poisonEffect, false);
     } else {
-        let ownerActor = {};
-        if (owner.isLinked) {
-            ownerActor = game.actors.get(owner.actor.id);
-        } else {
-            ownerActor = owner.actor ?? owner.actorData;
-        }
-
+        let ownerActor = game.scenes.viewed.tokens.get(owner.id).actor;
         await ownerActor.update({
             "system.threatDice": ownerActor.system.threatDice + 1,
         });
