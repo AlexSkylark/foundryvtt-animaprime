@@ -338,6 +338,7 @@ export function checkVariableGain(splitResults, powerScaleDiff) {
 }
 
 export function checkForReroll(owner) {
+    if (!owner) return false;
     if (owner.type != "character" && owner.type != "vehicle") return false;
 
     return owner.system.reroll > 0;

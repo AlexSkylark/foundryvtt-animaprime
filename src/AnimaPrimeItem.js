@@ -82,8 +82,9 @@ export default class AnimaPrimeItem extends Item {
         }
 
         let itemOwnerToken = (this.actor.isToken ? this.actor.token : this.actor.getActiveTokens()[0]);
-        let itemOwnerActor = itemOwnerToken.actor;
-        itemOwnerActor.tokenId = itemOwnerToken.id;
+        let itemOwnerActor = itemOwnerToken?.actor ?? this.actor;
+        if (itemOwnerActor)
+            itemOwnerActor.tokenId = itemOwnerToken?.id;
 
         let itemData = {
             ...this,
@@ -111,15 +112,17 @@ export default class AnimaPrimeItem extends Item {
         }
 
         // check if unit has enough charge to cast action
-        itemData.capitalizedType = itemData.type.charAt(0).toUpperCase() + itemData.type.slice(1);
-        const ownerChargeDice = itemData.owner.system.chargeDice;
-        const isHexed = itemData.owner.checkCondition("hexed");
-        const itemCost = itemData.system.cost + (isHexed && itemData.system.cost ? 1 : 0);
-        if (ownerChargeDice < itemCost) {
-            ui.notifications.error(
-                `Not enough available charge dice to cast this ${itemData.capitalizedType}.`
-            );
-            return;
+        if (itemOwnerActor) {
+            itemData.capitalizedType = itemData.type.charAt(0).toUpperCase() + itemData.type.slice(1);
+            const ownerChargeDice = itemData.owner.system.chargeDice;
+            const isHexed = itemData.owner.checkCondition("hexed");
+            const itemCost = itemData.system.cost + (isHexed && itemData.system.cost ? 1 : 0);
+            if (ownerChargeDice < itemCost) {
+                ui.notifications.error(
+                    `Not enough available charge dice to cast this ${itemData.capitalizedType}.`
+                );
+                return;
+            }
         }
 
         itemData.targets = [];
