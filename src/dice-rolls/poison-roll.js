@@ -14,7 +14,9 @@ export async function poisonRoll(poison, isReroll = false) {
     if (poison.name == "burning") poison.label = "Burning";
     else if (poison.name == "bleeding") poison.label = "Bleeding";
 
-    await DiceRolls.renderRoll(rollResult, poison, resultData, messageTemplate, [], isReroll, this.commitResults);
+    poison.owner.tokenId = poison.owner.id;
+
+    await DiceRolls.renderRoll(rollResult, poison, resultData, messageTemplate, [], isReroll, poison.owner.id);
 }
 
 function checkPoisonResult(conditionName, results) {

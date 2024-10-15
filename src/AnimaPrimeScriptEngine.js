@@ -19,7 +19,7 @@ export async function executeResolveScript(item, targets, scriptBody) {
             let newTargetObject = JSON.parse(JSON.stringify(targetTokens[tga].actor.system));
             newTargetObject.name = targetTokens[tga].name
             if (!newTargetObject.id)
-                newTargetObject.id = target._id;
+                newTargetObject.id = target.tokenId;
             targetsObject.push(newTargetObject);
         }
     }

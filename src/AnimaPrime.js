@@ -231,10 +231,26 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         const resultDataContainer = message.flags.resultData;
 
         const ownerData = item.owner.system;
+        const itemOwnerToken = game.scenes.viewed.tokens.get(message.flags.ownerTokenId);
+
+        // handle threat over time effects
+        if (item.name == "poisoned" || item.name == "burning" || item.name == "bleeding") {
+
+            if (resultDataContainer[0] == true) {
+                const poisonEffect = CONFIG.statusEffects.find((e) => e.id == item.name);
+                itemOwnerToken.object.toggleEffect(poisonEffect, false);
+            } else {
+                await itemOwnerToken.actor.update({
+                    "system.threatDice": itemOwnerToken.actor.system.threatDice + 1,
+                });
+            }
+
+            return;
+        }
+
         const ownerStrikeDice = ownerData.strikeDice;
         const ownerActionDice = ownerData.actionDice;
         const ownerChargeDice = ownerData.chargeDice;
-        const itemOwnerToken = game.scenes.viewed.tokens.get(message.flags.ownerTokenId);
 
         item.owner = itemOwnerToken.actor;
         item.owner.tokenId = itemOwnerToken.id;
@@ -244,6 +260,8 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
 
         let dialogOptions = {};
         let resultData = {};
+
+
 
         // handle strike/achievement/maneuver casts
         switch (message.flags.sourceItem.type) {
@@ -283,7 +301,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                             const isSupported = item.owner.checkCondition("supported");
                             if (isSupported) {
                                 const supportedEffect = CONFIG.statusEffects.find((e) => e.id == "supported");
-                                itemOwnerToken.toggleEffect(supportedEffect, false);
+                                itemOwnerToken.object.toggleEffect(supportedEffect, false);
                             }
 
                             if (resultData.hit) {

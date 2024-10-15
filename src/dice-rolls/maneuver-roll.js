@@ -156,14 +156,14 @@ export async function maneuverRoll(item, isReroll = false, dialogOptions, reroll
         isSupportive: dialogOptions.maneuverStyle == "supportive"
     });
 
-    await DiceRolls.renderRoll(rollResult, item, resultData, messageTemplate, additionalData, isReroll, item.owner.getActiveTokens()[0].id, dialogOptions, null, reroll);
-
     if (item.system.cost) {
         const isHexed = item.owner.checkCondition("hexed");
         await item.owner.update({
             "system.chargeDice": item.owner.system.chargeDice - (item.system.cost + (isHexed ? 1 : 0)),
         });
     }
+
+    await DiceRolls.renderRoll(rollResult, item, resultData, messageTemplate, additionalData, isReroll, item.owner.getActiveTokens()[0].id, dialogOptions, null, reroll);
 }
 
 function checkManeuverTarget(maneuver, maneuverStyle) {

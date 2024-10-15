@@ -114,8 +114,8 @@ export default class AnimaPrimeItem extends Item {
         itemData.capitalizedType = itemData.type.charAt(0).toUpperCase() + itemData.type.slice(1);
         const ownerChargeDice = itemData.owner.system.chargeDice;
         const isHexed = itemData.owner.checkCondition("hexed");
-        if (isHexed) itemData.system.cost += 1;
-        if (ownerChargeDice < itemData.system.cost) {
+        const itemCost = itemData.system.cost + (isHexed && itemData.system.cost ? 1 : 0);
+        if (ownerChargeDice < itemCost) {
             ui.notifications.error(
                 `Not enough available charge dice to cast this ${itemData.capitalizedType}.`
             );
