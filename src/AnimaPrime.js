@@ -343,7 +343,7 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                 if (dialogOptions && dialogOptions.maneuverStyle) {
                     if (dialogOptions.maneuverStyle == "cunning" || dialogOptions.maneuverStyle == "methodical" || dialogOptions.maneuverStyle == "supportive") {
 
-                        const token = game.scenes.viewed.tokens.get(message.flags.sourceItem.targets[0].id);
+                        const token = game.scenes.viewed.tokens.get(message.flags.sourceItem.targets[0].tokenId);
                         let targetData = token.actor.system;
 
                         if (dialogOptions.maneuverStyle == "cunning") {

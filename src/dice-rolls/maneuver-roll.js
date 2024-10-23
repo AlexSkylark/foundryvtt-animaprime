@@ -173,17 +173,17 @@ function checkManeuverTarget(maneuver, maneuverStyle) {
 
         if (maneuverStyle == "cunning") {
             maneuver.targets = maneuver.targets.filter((i) => {
-                const tokenActor = game.scenes.viewed.tokens.get(i.actor)
+                const tokenActor = game.scenes.viewed.tokens.get(i.tokenId).actor;
                 return tokenActor.type == "adversity" || tokenActor.type == "vehicle";
             });
         } else if (maneuverStyle == "methodical") {
             maneuver.targets = maneuver.targets.filter((i) => {
-                const tokenActor = game.scenes.viewed.tokens.get(i.actor)
+                const tokenActor = game.scenes.viewed.tokens.get(i.tokenId).actor;
                 return tokenActor.type == "goal";
             });
         } else if (maneuverStyle == "supportive") {
             maneuver.targets = maneuver.targets.filter((i) => {
-                const tokenActor = game.scenes.viewed.tokens.get(i.actor)
+                const tokenActor = game.scenes.viewed.tokens.get(i.tokenId).actor;
                 return tokenActor.type == "character" || tokenActor.type == "ally" || tokenActor.type == "vehicle";
             });
         }
