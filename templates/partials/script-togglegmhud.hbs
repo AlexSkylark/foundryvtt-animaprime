@@ -1,11 +1,11 @@
-<script>        
+<script>
     $(document).ready(() => {
-        $(document).keypress(function(e){            
-            if(e.code == "KeyS" && e.ctrlKey && e.shiftKey) {                
+        $(document).keypress(function(e){
+            if(e.code == "KeyL" && e.ctrlKey && e.shiftKey) {
                 $(".gm-hud-container").toggle();
                 $("#gm-customskill-actor").focus();
                 $("#gm-customskill-actor").select();
             }
-        });        
+        });
     });
 </script>

@@ -1,3 +1,9 @@
-2024/10/15-10:36:53.363 355c Recovering log #366
-2024/10/15-10:36:53.365 355c Delete type=0 #366
-2024/10/15-10:36:53.366 355c Delete type=3 #365
+2025/04/23-23:27:54.613 7f8 Log #370: 0 ops saved to Table #377 OK
+2025/04/23-23:27:54.613 7f8 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-vehicle-actions/000370.log: OK
+2025/04/23-23:27:54.613 7f8 Log #376: 0 ops saved to Table #378 OK
+2025/04/23-23:27:54.614 7f8 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-vehicle-actions/000376.log: OK
+2025/04/23-23:27:54.614 7f8 Table #211: 6 entries OK
+2025/04/23-23:27:54.614 7f8 Table #343: 13 entries OK
+2025/04/23-23:27:54.616 7f8 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-vehicle-actions/MANIFEST-000369: OK
+2025/04/23-23:27:54.616 7f8 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-vehicle-actions/MANIFEST-000375: OK
+2025/04/23-23:27:54.619 7f8 **** Repaired leveldb C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-vehicle-actions; recovered 2 files; 5505 bytes. Some data may have been lost. ****

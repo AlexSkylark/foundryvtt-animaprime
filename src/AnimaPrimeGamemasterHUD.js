@@ -70,7 +70,9 @@ export default class AnimaPrimeGamemasterHUD extends Application {
 
         await item.roll(ev.ctrlKey, ev.shiftKey);
 
-        await skillActor.delete();
+        setTimeout(async () => {
+            await skillActor.delete();
+        }, 1000);
 
         $(".gm-hud-container").hide();
     }

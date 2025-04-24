@@ -252,16 +252,16 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
         const ownerActionDice = ownerData.actionDice;
         const ownerChargeDice = ownerData.chargeDice;
 
-        item.owner = itemOwnerToken.actor;
-        item.owner.tokenId = itemOwnerToken.id;
+        if (message.flags.sourceItem.type != "skill") {
+            item.owner = itemOwnerToken ? itemOwnerToken.actor : message.flags.item.owner;
+            item.owner.tokenId = itemOwnerToken.id;
 
-        if (item.originalOwner)
-            item.originalOwner.tokenId = itemOwnerToken.id;
+            if (item.originalOwner)
+                item.originalOwner.tokenId = itemOwnerToken.id;
+        }
 
         let dialogOptions = {};
         let resultData = {};
-
-
 
         // handle strike/achievement/maneuver casts
         switch (message.flags.sourceItem.type) {

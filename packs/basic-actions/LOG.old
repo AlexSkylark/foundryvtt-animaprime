@@ -1,3 +1,11 @@
-2024/10/15-10:36:53.357 3710 Recovering log #378
-2024/10/15-10:36:53.360 3710 Delete type=0 #378
-2024/10/15-10:36:53.360 3710 Delete type=3 #377
+2025/04/23-23:27:54.595 4788 Log #383: 0 ops saved to Table #390 OK
+2025/04/23-23:27:54.596 4788 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-actions/000383.log: OK
+2025/04/23-23:27:54.596 4788 Log #389: 0 ops saved to Table #391 OK
+2025/04/23-23:27:54.596 4788 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-actions/000389.log: OK
+2025/04/23-23:27:54.596 4788 Table #338: 7 entries OK
+2025/04/23-23:27:54.597 4788 Table #352: 1 entries OK
+2025/04/23-23:27:54.597 4788 Table #355: 1 entries OK
+2025/04/23-23:27:54.597 4788 Table #382: 1 entries OK
+2025/04/23-23:27:54.599 4788 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-actions/MANIFEST-000381: OK
+2025/04/23-23:27:54.600 4788 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-actions/MANIFEST-000388: OK
+2025/04/23-23:27:54.602 4788 **** Repaired leveldb C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-actions; recovered 4 files; 7605 bytes. Some data may have been lost. ****
