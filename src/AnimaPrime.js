@@ -21,7 +21,11 @@ import * as DiceRolls from "./dice-rolls/dice-rolls.js";
 import * as ScriptEngine from "./AnimaPrimeScriptEngine.js";
 
 async function preloadTemplates() {
-    const templatePaths = ["systems/animaprime/templates/cards/item-card/item-card.hbs", "systems/animaprime/templates/partials/script-health.hbs", "systems/animaprime/templates/partials/script-reformbasics.hbs", "systems/animaprime/templates/partials/script-togglegmhud.hbs", "systems/animaprime/templates/partials/health-defense-container.hbs"];
+    const templatePaths = ["systems/animaprime/templates/cards/item-card/item-card.hbs",
+        "systems/animaprime/templates/partials/script-health.hbs",
+        "systems/animaprime/templates/partials/script-reformbasics.hbs",
+        "systems/animaprime/templates/partials/script-togglegmhud.hbs",
+        "systems/animaprime/templates/partials/health-defense-container.hbs"];
 
     return loadTemplates(templatePaths);
 }

@@ -1,9 +1,7 @@
-2025/04/23-23:27:54.613 7f8 Log #370: 0 ops saved to Table #377 OK
-2025/04/23-23:27:54.613 7f8 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-vehicle-actions/000370.log: OK
-2025/04/23-23:27:54.613 7f8 Log #376: 0 ops saved to Table #378 OK
-2025/04/23-23:27:54.614 7f8 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-vehicle-actions/000376.log: OK
-2025/04/23-23:27:54.614 7f8 Table #211: 6 entries OK
-2025/04/23-23:27:54.614 7f8 Table #343: 13 entries OK
-2025/04/23-23:27:54.616 7f8 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-vehicle-actions/MANIFEST-000369: OK
-2025/04/23-23:27:54.616 7f8 Archiving C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-vehicle-actions/MANIFEST-000375: OK
-2025/04/23-23:27:54.619 7f8 **** Repaired leveldb C:\Users\Alessandro\AppData\Local\FoundryVTT\Data\systems\animaprime\packs\basic-vehicle-actions; recovered 2 files; 5505 bytes. Some data may have been lost. ****
+2025/08/02-17:35:40.648 6830 Recovering log #412
+2025/08/02-17:35:40.652 6830 Delete type=0 #412
+2025/08/02-17:35:40.652 6830 Delete type=3 #410
+2025/08/02-17:40:32.950 6964 Level-0 table #417: started
+2025/08/02-17:40:32.950 6964 Level-0 table #417: 0 bytes OK
+2025/08/02-17:40:32.951 6964 Delete type=0 #415
+2025/08/02-17:40:32.953 6964 Manual compaction at level-0 from '!items!MiuVPBkx0kaUFrmz' @ 72057594037927935 : 1 .. '!items!v9X0oJAGOP6jlk9e' @ 0 : 0; will stop at (end)
