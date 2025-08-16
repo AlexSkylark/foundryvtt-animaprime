@@ -22,6 +22,10 @@ export default class AnimaPrimeActor extends Actor {
         }
     }
 
+    get disposition() {
+        return this.token?.disposition ?? this.prototypeToken.disposition;
+    }
+
     checkCondition(condition) {
         const effects = this.temporaryEffects.filter((temp) => {
             return temp.name.toUpperCase() == condition.toUpperCase();

@@ -48,7 +48,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
         for (let t of context.turns) {
             const comb = await this.viewed.getEmbeddedDocument("Combatant", t.id);
 
-            if (comb.actor.type == "goal") continue;
+            if (comb.actor.type == "goal" || comb.hidden) continue;
 
             t.name = comb.actor.name;
             t.faction = comb.faction;
@@ -298,7 +298,7 @@ export default class AnimaPrimeCombatTracker extends CombatTracker {
             nextFaction = this.getInverseFaction(nextFaction);
 
             for (let t of this.viewed.turns) {
-                if (t.faction == nextFaction && (t.initiative <= 1000 || t.initiative == null) && !t.isDefeated) combsToReset.push(t);
+                if (t.faction == nextFaction && t.hidden == false && (t.initiative <= 1000 || t.initiative == null) && !t.isDefeated) combsToReset.push(t);
             }
         }
 

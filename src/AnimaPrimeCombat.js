@@ -127,37 +127,37 @@ export default class AnimaPrimeCombat extends Combat {
 
     get combsOnQueue() {
         return this.turns.filter((i) => {
-            return i.initiative > 1000;
+            return i.initiative > 1000 && i.hidden == false;
         });
     }
 
     get combsOutofQueue() {
         return this.turns.filter((i) => {
-            return i.initiative <= 1000;
+            return i.initiative <= 1000 && i.hidden == false;
         });
     }
 
     get combsWaitingTurn() {
         return this.turns.filter((i) => {
-            return i.initiative <= 1000 && i.initiative > 0;
+            return i.initiative <= 1000 && i.initiative > 0 && i.hidden == false;
         });
     }
 
     get combsNotWaitingTurn() {
         return this.turns.filter((i) => {
-            return i.initiative <= 0;
+            return i.initiative <= 0 && i.hidden == false;
         });
     }
 
     get combsFriendly() {
         return this.turns.filter((i) => {
-            return i.faction == "friendly";
+            return i.faction == "friendly" && i.hidden == false;
         });
     }
 
     get combsFriendlyWaitingTurn() {
         const friendlies = this.turns.filter((i) => {
-            return i.faction == "friendly" && i.actor.type != "ally";
+            return i.faction == "friendly" && i.actor.type != "ally" && i.hidden == false;
         });
 
         return friendlies.filter((i) => {
@@ -167,7 +167,7 @@ export default class AnimaPrimeCombat extends Combat {
 
     get combsHostile() {
         return this.turns.filter((i) => {
-            return i.faction == "hostile";
+            return i.faction == "hostile" && i.hidden == false;
         });
     }
 

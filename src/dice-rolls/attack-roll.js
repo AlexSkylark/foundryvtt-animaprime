@@ -27,6 +27,8 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
 
     const originalTargetsLength = item.targets.length;
 
+    var validTargets = true;
+
     // validations
     if (item.type == "strike") {
         item.targets = item.targets.filter((i) => {
@@ -39,6 +41,34 @@ export async function attackRoll(item, isReroll = false, dialogOptions, previous
     }
 
     if (!item.targets || !item.targets.length || item.targets.length != originalTargetsLength) {
+        validTargets = false;
+    }
+
+    // Ensure item.targets only contains allowed types according to rules
+    const types = item.targets.map(t => t.type);
+    const hasCharacter = types.includes("character");
+    const hasAlly = types.includes("ally");
+    const hasAdversity = types.includes("adversity");
+    const hasVehicle = types.includes("vehicle");
+
+    if (hasCharacter || hasAlly) {
+        // Only allow character and ally
+        if (types.some(t => t !== "character" && t !== "ally")) {
+            validTargets = false;
+        }
+    } else if (hasAdversity) {
+        // Only allow adversity
+        if (types.some(t => t !== "adversity")) {
+            validTargets = false;
+        }
+    } else if (hasVehicle) {
+        // Only allow vehicle
+        if (types.some(t => t !== "vehicle")) {
+            validTargets = false;
+        }
+    }
+
+    if (!validTargets) {
         ui.notifications.error(`Please select suitable targets for the <i>"${item.name}"</i> ${item.type} action. Targets de-selected`);
         game.user.updateTokenTargets([]);
         return;

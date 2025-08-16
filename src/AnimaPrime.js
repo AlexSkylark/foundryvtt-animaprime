@@ -354,8 +354,9 @@ Hooks.on("createChatMessage", async (message, data, options, userId) => {
                             targetData.threatDice += 1;
                         } else if (dialogOptions.maneuverStyle == "methodical") {
                             const ownerDisposition = item.owner.disposition;
-                            if (ownerDisposition == token.disposition)
+                            if (ownerDisposition == token.disposition) {
                                 targetData.progressDice += 1;
+                            }
                             else
                                 targetData.progressDice = Math.max(targetData.progressDice - 1, 0);
                         } else if (dialogOptions.maneuverStyle == "supportive") {
